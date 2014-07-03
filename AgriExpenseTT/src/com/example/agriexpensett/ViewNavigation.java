@@ -77,6 +77,7 @@ public class ViewNavigation extends ActionBarActivity {
 				if(li.isEmpty()){
 					n2=new FragmentEmpty();
 					data.putString("type", "cycle");
+					n2.setArguments(data);
 					ft.add(R.id.navContent, n2);
 				}else{
 					n2=new FragmentViewCycles();
