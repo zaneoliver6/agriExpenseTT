@@ -23,5 +23,6 @@
     <string name="title_activity_edit_cycle">EditCycle</string>
     <string name="title_activity_edit_purchase">EditPurchase</string>
     <string name="title_activity_edit_data">EditData</string>
+    <string name="title_activity_manage_data">ManageData</string>
 
 </resources>

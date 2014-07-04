@@ -73,6 +73,9 @@
 # view AndroidManifest.xml #generated:26
 -keep class com.example.agriexpensett.MainMenu { <init>(...); }
 
+# view AndroidManifest.xml #generated:91
+-keep class com.example.agriexpensett.ManageData { <init>(...); }
+
 # view AndroidManifest.xml #generated:22
 -keep class com.example.agriexpensett.NewCycle { <init>(...); }
 

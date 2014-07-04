@@ -42,8 +42,8 @@ public class MainMenu extends ActionBarActivity {
 		btn_SignIn.setOnClickListener(c);
 		btn_HireLabour.setOnClickListener(c);
 		
-		Button btn_del=(Button)findViewById(R.id.DelData);
-		btn_del.setOnClickListener(c);
+		Button btn_manageD=(Button)findViewById(R.id.manageData);
+		btn_manageD.setOnClickListener(c);
 	}
 	public class click implements OnClickListener{
 
@@ -65,8 +65,8 @@ public class MainMenu extends ActionBarActivity {
 				return;
 			}else if(v.getId()==R.id.HireLabour){
 				nextActivity=new Intent(MainMenu.this,HireLabour.class);
-			}else if(v.getId()==R.id.DelData){
-				nextActivity=new Intent(MainMenu.this,DeleteData.class);
+			}else if(v.getId()==R.id.manageData){
+				nextActivity=new Intent(MainMenu.this,ManageData.class);
 			}
 			startActivity(nextActivity);
 		}

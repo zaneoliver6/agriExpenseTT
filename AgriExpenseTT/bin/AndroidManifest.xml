@@ -88,6 +88,10 @@
             android:name=".EditData"
             android:label="@string/title_activity_edit_data" >
         </activity>
+        <activity
+            android:name=".ManageData"
+            android:label="@string/title_activity_manage_data" >
+        </activity>
     </application>
 
 </manifest>
