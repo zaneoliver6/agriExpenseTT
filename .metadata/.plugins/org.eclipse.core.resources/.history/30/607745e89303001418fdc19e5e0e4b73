@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.agriexpensett.MainMenu"
+    tools:ignore="MergeRootFrame" 
+    
+    
+    >
+
+    <TextView
+        android:id="@+id/tv_cycleList_crop"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Main Menu"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/newCycle"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:text="New Cycle" />
+
+    <Button
+        android:id="@+id/NewPurchase"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Purchase" />
+    
+    <Button
+        android:id="@+id/HireLabour"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Hire Labour" />
+
+    
+     <Button
+        android:id="@+id/ResDetail"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Manage Resources" />
+      <Button
+        android:id="@+id/DelData"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Delete Resources" />
+     
+     <Button
+        android:id="@+id/btn_SignIn"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Sign In" />
+
+</LinearLayout>
+

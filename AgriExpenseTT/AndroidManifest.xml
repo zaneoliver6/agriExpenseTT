@@ -38,13 +38,13 @@
         </activity>
         <activity
             android:name=".UseResource"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_use_resource" >
+            android:label="@string/title_activity_use_resource"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="fragments.ChoosePurchase"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_choose_purchase" >
+            android:label="@string/title_activity_choose_purchase"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".UsePurchaseFrag"
@@ -52,13 +52,13 @@
         </activity>
         <activity
             android:name=".NewCycleRedesigned"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_cycle_redesigned" >
+            android:label="@string/title_activity_new_cycle_redesigned"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".NewPurchaseRedesign"
-            android:windowSoftInputMode="stateHidden"
-            android:label="@string/title_activity_new_purchase_redesign" >
+            android:label="@string/title_activity_new_purchase_redesign"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".ViewNavigation"
@@ -75,6 +75,18 @@
         <activity
             android:name=".DeleteData"
             android:label="@string/title_activity_delete_data" >
+        </activity>
+        <activity
+            android:name=".EditCycle"
+            android:label="@string/title_activity_edit_cycle" >
+        </activity>
+        <activity
+            android:name=".EditPurchase"
+            android:label="@string/title_activity_edit_purchase" >
+        </activity>
+        <activity
+            android:name=".EditData"
+            android:label="@string/title_activity_edit_data" >
         </activity>
     </application>
 

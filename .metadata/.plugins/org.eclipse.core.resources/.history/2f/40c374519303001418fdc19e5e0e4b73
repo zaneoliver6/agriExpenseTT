@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/newCycleLastcont"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	 <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="1">
+
+	     <LinearLayout
+	         android:layout_width="match_parent"
+	         android:layout_height="match_parent"
+	         android:orientation="vertical" >
+
+	         <TextView
+	             android:id="@+id/tv_newCycle_error"
+	             android:textColor="#FF0000"
+	             android:visibility="GONE"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:text="TextView" />
+
+	     </LinearLayout>
+
+    </FrameLayout>
+    <FrameLayout
+        android:id="@+id/lowerCont_newCycle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_newCyclelast_landQty"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#cccccc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enter Land Quantity" />
+
+                <EditText
+                    android:id="@+id/et_newCycleLast_landqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="Quantity of land"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                   android:textSize="13sp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#cccccc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select date" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:id="@+id/btn_newCycleLast_date"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="#4ddedede"
+                        android:text="Date" />
+
+                    <TextView
+                        android:id="@+id/tv_newCycle_date"
+                         android:textSize="13sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="#cccccc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--no date--" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_newCyclelast_dne"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:background="#4ddedede"
+                android:text="Done" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+   
+
+</LinearLayout>

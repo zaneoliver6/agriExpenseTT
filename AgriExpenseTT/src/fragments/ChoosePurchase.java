@@ -8,6 +8,7 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.example.agriexpensett.EditPurchase;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.localResourcePurchase;
@@ -21,6 +22,7 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -119,7 +121,10 @@ public class ChoosePurchase extends ListFragment {
 	 
 	 @Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			if(type!=null&&type.equals("delete")){//when called by delete data
+		 	if(type!=null&&type.equals("edit")){//when called by edit data
+		 		Intent i=new Intent(getActivity(),EditPurchase.class);
+		 		startActivity(i);
+		 	}else if(type!=null&&type.equals("delete")){//when called by delete data
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 	            builder1.setMessage("Are you sure you want to delete");
 	            builder1.setCancelable(true);

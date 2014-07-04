@@ -55,6 +55,15 @@
 # view AndroidManifest.xml #generated:75
 -keep class com.example.agriexpensett.DeleteData { <init>(...); }
 
+# view AndroidManifest.xml #generated:79
+-keep class com.example.agriexpensett.EditCycle { <init>(...); }
+
+# view AndroidManifest.xml #generated:87
+-keep class com.example.agriexpensett.EditData { <init>(...); }
+
+# view AndroidManifest.xml #generated:83
+-keep class com.example.agriexpensett.EditPurchase { <init>(...); }
+
 # view AndroidManifest.xml #generated:71
 -keep class com.example.agriexpensett.HireLabour { <init>(...); }
 

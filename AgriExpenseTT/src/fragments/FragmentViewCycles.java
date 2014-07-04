@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.example.agriexpensett.CycleUseageRedesign;
+import com.example.agriexpensett.EditCycle;
+import com.example.agriexpensett.EditPurchase;
 import com.example.agriexpensett.HireLabour;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.localCycle;
@@ -155,6 +157,9 @@ public class FragmentViewCycles extends ListFragment{
             builder1.setNegativeButton("Nope",c);
             AlertDialog alert1 = builder1.create();
             alert1.show();
+		}else if(type!=null&&type.equals("edit")){//when called by edit data
+	 		Intent i=new Intent(getActivity(),EditCycle.class);
+	 		startActivity(i);
 		}
 	}
 

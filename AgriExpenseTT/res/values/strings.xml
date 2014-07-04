@@ -20,5 +20,8 @@
     <string name="title_activity_hire_labour">HireLabour</string>
     <string name="title_activity_delete_resoure">DeleteResoure</string>
     <string name="title_activity_delete_data">DeleteData</string>
+    <string name="title_activity_edit_cycle">EditCycle</string>
+    <string name="title_activity_edit_purchase">EditPurchase</string>
+    <string name="title_activity_edit_data">EditData</string>
 
 </resources>
