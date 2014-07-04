@@ -18,5 +18,7 @@
     <string name="title_activity_view_navigation">ViewNavigation</string>
     <string name="title_activity_cycle_useage_redesign">CycleUseageRedesign</string>
     <string name="title_activity_hire_labour">HireLabour</string>
+    <string name="title_activity_delete_resoure">DeleteResoure</string>
+    <string name="title_activity_delete_data">DeleteData</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.agriexpensett;
 
+import fragments.NewCycleLists;
 import helper.DHelper;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -38,6 +39,7 @@ public class NewCycleRedesigned extends ActionBarActivity {
 		ListFragment listfrag=new NewCycleLists();
 		listfrag.setArguments(pass);
 		ft.add(R.id.NewCycleListContainer,listfrag);
+		ft.addToBackStack(null);
 		ft.commit();
 	}
 

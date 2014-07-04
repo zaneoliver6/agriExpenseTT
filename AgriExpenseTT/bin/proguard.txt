@@ -46,16 +46,16 @@
 # view res/layout/abc_search_view.xml #generated:85
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:55
--keep class com.example.agriexpensett.ChoosePurchase { <init>(...); }
-
-# view AndroidManifest.xml #generated:47
+# view AndroidManifest.xml #generated:35
 -keep class com.example.agriexpensett.CycleUseage { <init>(...); }
 
-# view AndroidManifest.xml #generated:75
+# view AndroidManifest.xml #generated:67
 -keep class com.example.agriexpensett.CycleUseageRedesign { <init>(...); }
 
-# view AndroidManifest.xml #generated:79
+# view AndroidManifest.xml #generated:75
+-keep class com.example.agriexpensett.DeleteData { <init>(...); }
+
+# view AndroidManifest.xml #generated:71
 -keep class com.example.agriexpensett.HireLabour { <init>(...); }
 
 # view AndroidManifest.xml #generated:18
@@ -67,27 +67,21 @@
 # view AndroidManifest.xml #generated:22
 -keep class com.example.agriexpensett.NewCycle { <init>(...); }
 
-# view AndroidManifest.xml #generated:63
+# view AndroidManifest.xml #generated:53
 -keep class com.example.agriexpensett.NewCycleRedesigned { <init>(...); }
 
-# view AndroidManifest.xml #generated:67
+# view AndroidManifest.xml #generated:58
 -keep class com.example.agriexpensett.NewPurchaseRedesign { <init>(...); }
 
-# view AndroidManifest.xml #generated:35
--keep class com.example.agriexpensett.New_Cycle { <init>(...); }
-
-# view AndroidManifest.xml #generated:39
--keep class com.example.agriexpensett.Purchase { <init>(...); }
-
-# view AndroidManifest.xml #generated:59
+# view AndroidManifest.xml #generated:49
 -keep class com.example.agriexpensett.UsePurchaseFrag { <init>(...); }
 
-# view AndroidManifest.xml #generated:51
+# view AndroidManifest.xml #generated:39
 -keep class com.example.agriexpensett.UseResource { <init>(...); }
 
-# view AndroidManifest.xml #generated:43
--keep class com.example.agriexpensett.ViewCycles { <init>(...); }
-
-# view AndroidManifest.xml #generated:71
+# view AndroidManifest.xml #generated:63
 -keep class com.example.agriexpensett.ViewNavigation { <init>(...); }
+
+# view AndroidManifest.xml #generated:44
+-keep class fragments.ChoosePurchase { <init>(...); }
 

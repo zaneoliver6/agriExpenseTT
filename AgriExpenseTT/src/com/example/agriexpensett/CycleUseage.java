@@ -1,13 +1,17 @@
 package com.example.agriexpensett;
 
 import helper.DHelper;
+import helper.DbHelper;
+import helper.DbQuery;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
-import com.example.agriexpensett.ViewCycles.cycleAdapter;
+
+
+//import com.example.agriexpensett.ViewCycles.cycleAdapter;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 

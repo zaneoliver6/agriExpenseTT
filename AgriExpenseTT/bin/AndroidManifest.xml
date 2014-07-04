@@ -16,15 +16,15 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.agriexpensett.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.NewCycle"
+            android:name=".NewCycle"
             android:label="@string/title_activity_new_cycle" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.MainMenu"
+            android:name=".MainMenu"
             android:label="@string/title_activity_main_menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,52 +33,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.agriexpensett.New_Cycle"
-            android:label="@string/title_activity_new__cycle" >
-        </activity>
-        <activity
-            android:name="com.example.agriexpensett.Purchase"
-            android:label="@string/title_activity_purchase" >
-        </activity>
-        <activity
-            android:name="com.example.agriexpensett.ViewCycles"
-            android:label="@string/title_activity_view_cycles" >
-        </activity>
-        <activity
-            android:name="com.example.agriexpensett.CycleUseage"
+            android:name=".CycleUseage"
             android:label="@string/title_activity_cycle_useage" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.UseResource"
+            android:name=".UseResource"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_use_resource" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.ChoosePurchase"
+            android:name="fragments.ChoosePurchase"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_choose_purchase" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.UsePurchaseFrag"
+            android:name=".UsePurchaseFrag"
             android:label="@string/title_activity_use_purchase_frag" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.NewCycleRedesigned"
+            android:name=".NewCycleRedesigned"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_new_cycle_redesigned" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.NewPurchaseRedesign"
+            android:name=".NewPurchaseRedesign"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_new_purchase_redesign" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.ViewNavigation"
+            android:name=".ViewNavigation"
             android:label="@string/title_activity_view_navigation" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.CycleUseageRedesign"
+            android:name=".CycleUseageRedesign"
             android:label="@string/title_activity_cycle_useage_redesign" >
         </activity>
         <activity
-            android:name="com.example.agriexpensett.HireLabour"
+            android:name=".HireLabour"
             android:label="@string/title_activity_hire_labour" >
+        </activity>
+        <activity
+            android:name=".DeleteData"
+            android:label="@string/title_activity_delete_data" >
         </activity>
     </application>
 

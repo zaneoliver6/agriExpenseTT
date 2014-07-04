@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:text="New Cycle" />
+        android:text="Create new Cycle" />
 
     <Button
         android:id="@+id/NewPurchase"
@@ -55,6 +55,14 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:text="Manage Resources" />
+      <Button
+        android:id="@+id/DelData"
+        android:layout_width="180dp"
+        android:background="#4ddedede"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Delete Resources" />
      
      <Button
         android:id="@+id/btn_SignIn"

@@ -1,9 +1,16 @@
 package com.example.agriexpensett;
 
+import helper.DbHelper;
+import helper.DbQuery;
+
 import java.util.ArrayList;
 
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import fragments.ChoosePurchase;
+import fragments.FragmentEmpty;
+import fragments.FragmentViewCycles;
+import fragments.FragmentViewResources;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -81,9 +88,9 @@ public class ViewNavigation extends ActionBarActivity {
 					ft.add(R.id.navContent, n2);
 				}else{
 					n2=new FragmentViewCycles();
-					currFragment=n2;
 					ft.add(R.id.navContent, n2);
 				}
+				currFragment=n2;
 				return;
 			}
 			if(tab.getText().toString().equals("Purchases")){
@@ -93,13 +100,17 @@ public class ViewNavigation extends ActionBarActivity {
 				}else{
 					n2=new ChoosePurchase();
 				}
-				currFragment=n2;
 			}else if(tab.getText().toString().equals("Cycles")){
-				n2=new FragmentViewCycles();
-				currFragment=n2;
+				if(li.isEmpty()){
+					n2=new FragmentEmpty();
+					data.putString("type", "cycle");
+				}else{
+					n2=new FragmentViewCycles();
+				}
 			}else if(tab.getText().toString().equals("Resources")){
 				n2=new FragmentViewResources();
 			}
+			currFragment=n2;
 			n2.setArguments(data);
 			ft.replace(R.id.navContent, n2);
 		}

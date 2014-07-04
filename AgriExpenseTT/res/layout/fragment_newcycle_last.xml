@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/newCycleLastcont"
+    android:background="#ffffff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -8,6 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" 
         android:layout_weight="1">
+
+	     <LinearLayout
+	         android:layout_width="match_parent"
+	         android:layout_height="match_parent"
+	         android:orientation="vertical" >
+
+	         <TextView
+	             android:id="@+id/tv_newCycle_error"
+	             android:textColor="#FF0000"
+	             android:visibility="gone"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:text="TextView" />
+
+	     </LinearLayout>
+
     </FrameLayout>
     <FrameLayout
         android:id="@+id/lowerCont_newCycle"
@@ -72,7 +89,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="20dp"
                         android:background="#4ddedede"
-                        android:text="Date" />
+                        android:text="Start Date" />
 
                     <TextView
                         android:id="@+id/tv_newCycle_date"

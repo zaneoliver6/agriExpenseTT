@@ -30,18 +30,20 @@ public class MainMenu extends ActionBarActivity {
 	private void setupButtons() {
 		Button btn_newCycle=(Button)findViewById(R.id.newCycle);
 		Button btn_purchase=(Button)findViewById(R.id.NewPurchase);
-		//Button btn_useResource=(Button)findViewById(R.id.UseResources);
+		
 		Button btn_CycleDet=(Button)findViewById(R.id.ResDetail);
 		Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);
 		Button btn_HireLabour=(Button)findViewById(R.id.HireLabour);
 		click c=new click();
 		btn_newCycle.setOnClickListener(c);
 		btn_purchase.setOnClickListener(c);
-		//btn_useResource.setOnClickListener(c);
+		
 		btn_CycleDet.setOnClickListener(c);
 		btn_SignIn.setOnClickListener(c);
 		btn_HireLabour.setOnClickListener(c);
 		
+		Button btn_del=(Button)findViewById(R.id.DelData);
+		btn_del.setOnClickListener(c);
 	}
 	public class click implements OnClickListener{
 
@@ -54,9 +56,6 @@ public class MainMenu extends ActionBarActivity {
 			}else if(v.getId()==R.id.NewPurchase){
 				System.out.println("New Purchase");
 				nextActivity=new Intent(MainMenu.this,NewPurchaseRedesign.class);
-			/*}else if(v.getId()==R.id.UseResources){
-				System.out.println("Use Resources");
-				nextActivity=new Intent(MainMenu.this,ViewCycles.class);*/
 			}else if(v.getId()==R.id.ResDetail){
 				nextActivity=new Intent(MainMenu.this,ViewNavigation.class);
 			}else if(v.getId()==R.id.btn_SignIn){
@@ -66,6 +65,8 @@ public class MainMenu extends ActionBarActivity {
 				return;
 			}else if(v.getId()==R.id.HireLabour){
 				nextActivity=new Intent(MainMenu.this,HireLabour.class);
+			}else if(v.getId()==R.id.DelData){
+				nextActivity=new Intent(MainMenu.this,DeleteData.class);
 			}
 			startActivity(nextActivity);
 		}
