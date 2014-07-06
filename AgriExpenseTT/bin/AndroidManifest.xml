@@ -78,10 +78,12 @@
         </activity>
         <activity
             android:name=".EditCycle"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_edit_cycle" >
         </activity>
         <activity
             android:name=".EditPurchase"
+            android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_edit_purchase" >
         </activity>
         <activity
@@ -91,6 +93,11 @@
         <activity
             android:name=".ManageData"
             android:label="@string/title_activity_manage_data" >
+        </activity>
+        <activity
+            android:name=".EditChooseLists"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/title_activity_edit_choose_lists" >
         </activity>
     </application>
 

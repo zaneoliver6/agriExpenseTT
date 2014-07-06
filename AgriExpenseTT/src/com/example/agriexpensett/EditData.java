@@ -72,8 +72,6 @@ public class EditData extends ActionBarActivity {
 			Fragment n2=null;
 			Bundle data=new Bundle();
 			if(currFragment==null){
-				
-				
 				if(li.isEmpty()){
 					n2=new FragmentEmpty();
 					data.putString("type", "cycle");
@@ -81,6 +79,8 @@ public class EditData extends ActionBarActivity {
 					ft.add(R.id.navContent, n2);
 				}else{
 					n2=new FragmentViewCycles();
+					data.putString("type", "edit");
+					n2.setArguments(data);
 					ft.add(R.id.navContent, n2);
 				}
 				currFragment=n2;
@@ -92,7 +92,7 @@ public class EditData extends ActionBarActivity {
 					data.putString("type", "purchase");
 				}else{
 					n2=new ChoosePurchase();
-					data.putString("det", "edit");
+					data.putString("det","edit");
 				}
 			}else if(tab.getText().toString().equals("Cycles")){
 				if(li.isEmpty()){
@@ -100,7 +100,7 @@ public class EditData extends ActionBarActivity {
 					data.putString("type", "cycle");
 				}else{
 					n2=new FragmentViewCycles();
-					data.putString("type", "edit");
+					data.putString("type","edit");
 				}
 			}
 			currFragment=n2;

@@ -157,8 +157,9 @@ public class FragmentViewCycles extends ListFragment{
             builder1.setNegativeButton("Nope",c);
             AlertDialog alert1 = builder1.create();
             alert1.show();
-		}else if(type!=null&&type.equals("edit")){//when called by edit data
+		}else if(type.equals("edit")){//when called by edit data
 	 		Intent i=new Intent(getActivity(),EditCycle.class);
+	 		i.putExtra("cycle", cList.get(position));
 	 		startActivity(i);
 		}
 	}

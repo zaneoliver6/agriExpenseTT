@@ -1,0 +1,86 @@
+package com.example.agriexpensett;
+
+import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class EditPurchase extends ActionBarActivity {
+	Button btn_res;
+	Button btn_qtfr;
+	EditText et_qty;
+	EditText et_cost;
+	
+	final int REQ_RES=1;
+	String resource;
+	final int REQ_QTFR=2;
+	String quantifier;
+	
+	localResourcePurchase p;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_edit_purchase);
+		btn_res=(Button)findViewById(R.id.btn_editPurchase_crop);
+		btn_qtfr=(Button)findViewById(R.id.btn_editPurchase_quantifier);
+		et_qty=(EditText)findViewById(R.id.et_editPurchase_Qty);
+		et_cost=(EditText)findViewById(R.id.et_editPurchase_cost);
+		p=getIntent().getExtras().getParcelable("purchase");
+		Click c=new Click();
+		btn_res.setOnClickListener(c);
+		btn_qtfr.setOnClickListener(c);
+	}
+	public class Click implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			Intent i=new Intent(EditPurchase.this,EditChooseLists.class);
+			if(v.getId()==R.id.btn_editPurchase_crop){
+				i.putExtra("desc",p.getType());
+			}else if(v.getId()==R.id.btn_editPurchase_quantifier){
+				i.putExtra("desc", "quantifier");
+				i.putExtra("category", p.getType());
+			}
+			System.out.println("request");
+			startActivityForResult(i, RESULT_OK);
+		}
+		
+	}
+	@Override
+	public void onActivityResult(int requestCode,int resultCode,Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+		System.out.print("okayyy");
+		
+		String content=data.getExtras().getString("content");
+		System.out.println("result String"+content);
+		Toast.makeText(EditPurchase.this,content, Toast.LENGTH_SHORT).show();
+		TextView t=(TextView)findViewById(R.id.tv_editPurchase_resLbl);
+		t.setText(content);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.edit_purchase, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}

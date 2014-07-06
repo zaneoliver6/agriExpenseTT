@@ -20,6 +20,7 @@
             tools:context="com.example.agriexpensett.EditCycle" >
 
             <LinearLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
@@ -60,6 +61,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -101,6 +103,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -144,6 +147,7 @@
             </LinearLayout>
             
              <LinearLayout
+                 android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -183,6 +187,15 @@
                     android:background="#4ddedede"
                     android:text="Change Date" />
             </LinearLayout>
+            
+            <Button
+            	android:id="@+id/btn_editCycle_done"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="14dp"
+                android:background="#4ddedede"
+                android:text="Finished" />
             
         </LinearLayout>
     </ScrollView>

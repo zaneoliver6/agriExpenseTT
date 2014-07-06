@@ -1,6 +1,9 @@
 package com.example.agriexpensett;
 
-public class localResourcePurchase {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class localResourcePurchase implements Parcelable{
 	private int pId;
 	private int resourceId;
 	private String quantifier;
@@ -71,7 +74,44 @@ public class localResourcePurchase {
 		String n="purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 		return n;
 	}
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		// TODO Auto-generated method stub
+		dest.writeInt(pId);
+		dest.writeInt(resourceId);
+		dest.writeString(type);
+		dest.writeString(quantifier);
+		dest.writeDouble(cost);
+		dest.writeDouble(qty);
+		dest.writeDouble(qtyRemaining);
+	}
+	public localResourcePurchase(Parcel dest){
+		pId=dest.readInt();
+		resourceId=dest.readInt();
+		type=dest.readString();
+		quantifier=dest.readString();
+		cost=dest.readDouble();
+		qty=dest.readDouble();
+		qtyRemaining=dest.readDouble();
+	}
+	public static Parcelable.Creator<localResourcePurchase> CREATOR = new Parcelable.Creator<localResourcePurchase>() {
+
+		@Override
+		public localResourcePurchase createFromParcel(Parcel source) {
+			return new localResourcePurchase(source);
+		}
+
+		@Override
+		public localResourcePurchase[] newArray(int size) {
+			return new localResourcePurchase[size];
+		}
+	};
 	
 	
 }
