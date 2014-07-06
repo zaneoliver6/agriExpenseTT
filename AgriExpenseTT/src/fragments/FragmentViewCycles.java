@@ -10,17 +10,10 @@ import java.util.Date;
 
 import com.example.agriexpensett.CycleUseageRedesign;
 import com.example.agriexpensett.EditCycle;
-import com.example.agriexpensett.EditData;
-import com.example.agriexpensett.EditPurchase;
 import com.example.agriexpensett.HireLabour;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.localCycle;
-import com.example.agriexpensett.R.drawable;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
@@ -32,10 +25,8 @@ import android.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -189,7 +180,9 @@ public class FragmentViewCycles extends ListFragment{
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==dialog.BUTTON_POSITIVE){
-				DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
+				db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_CYCLEID+"="+cList.get(position).getId(), null);
+				db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+cList.get(position).getId(), null);
+				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
 				cList.remove(position);
 				l.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Cycle deleted", Toast.LENGTH_SHORT).show();			

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.example.agriexpensett.localCycleUse;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class DataManager {
@@ -164,4 +166,41 @@ public class DataManager {
 		TransactionLog tl=new TransactionLog(dbh, db);
 		tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, id, "up");
 	}
+	
+	//------------------------------------------------------------------fixed deletes
+	public void delPurchase(int pId){
+		String code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "
+				+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+"="+pId;
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return;
+		
+		while(cursor.moveToNext()){
+			int cId=cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID));
+			
+			try{
+				db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_CYCLEID+"="+cId, null);
+				db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+cId, null);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			System.out.println("del");
+		}
+		db.delete(DbHelper.TABLE_RESOURCE_PURCHASES, DbHelper.RESOURCE_PURCHASE_ID+"="+pId, null);
+	}
+	
+	public void delResource(int resId){
+		String code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
+				+DbHelper.RESOURCE_PURCHASE_RESID+"="+resId;
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return;
+		while(cursor.moveToNext()){
+			int pId=cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID));
+			this.delPurchase(pId);
+		}
+		db.delete(DbHelper.TABLE_RESOURCES, DbHelper.RESOURCES_ID+"="+resId, null);
+	}
+	
+	
 }

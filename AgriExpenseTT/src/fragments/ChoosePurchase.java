@@ -2,6 +2,7 @@ package fragments;
 
 
 import fragments.FragmentViewCycles.CycleListAdapter;
+import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
@@ -39,7 +40,7 @@ public class ChoosePurchase extends ListFragment {
 	ArrayList<localResourcePurchase> pList;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	
+	DataManager dm;
 	String type=null;
 	int cycleId;
 	localCycle curr=null;
@@ -51,6 +52,7 @@ public class ChoosePurchase extends ListFragment {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getReadableDatabase();
+		dm=new DataManager(getActivity(), db, dbh);
 		try{//when called by ViewNavigation we dont need any particular cycle
 			curr = getArguments().getParcelable("cycle");
 		}catch(Exception e){
@@ -147,7 +149,7 @@ public class ChoosePurchase extends ListFragment {
 				Bundle b=new Bundle();
 				if(curr!=null)
 					b.putParcelable("cycleMain", curr);
-				b.putString("pId",getListView().getItemAtPosition(position).toString());//passes the id of the purchase
+				b.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
 				b.putString("cycleId",""+cycleId);// passes the id of the cycle
 				newFragment.setArguments(b);
 				// Replace whatever is in the fragment_container view with this fragment,
@@ -180,10 +182,10 @@ public class ChoosePurchase extends ListFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(which==dialog.BUTTON_POSITIVE){
-					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, pList.get(position).getpId());
+					dm.delPurchase(pList.get(position).getpId());
 					pList.remove(position);
 					l.notifyDataSetChanged();
-					Toast.makeText(getActivity(),"Cycle deleted", Toast.LENGTH_SHORT).show();			
+					Toast.makeText(getActivity(),"Purchase and related cycles deleted", Toast.LENGTH_SHORT).show();			
 					dialog.cancel();
 					//DeleteExpenseList.this.finish();
 				}else if(which==dialog.BUTTON_NEGATIVE){

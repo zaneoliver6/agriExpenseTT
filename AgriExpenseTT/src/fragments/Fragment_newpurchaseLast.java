@@ -5,31 +5,19 @@ import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.localCycle;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Fragment_newpurchaseLast extends Fragment{

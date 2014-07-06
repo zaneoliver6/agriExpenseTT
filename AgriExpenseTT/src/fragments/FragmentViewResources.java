@@ -1,6 +1,7 @@
 package fragments;
 
 import fragments.FragmentViewCycles.CycleListAdapter;
+import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
@@ -31,10 +32,12 @@ public class FragmentViewResources extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	ArrayList<String> rList;
+	DataManager dm;
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getReadableDatabase();
+		dm = new DataManager(getActivity(), db, dbh);
 		populateList();
 		Collections.sort(rList);
 		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
@@ -82,7 +85,8 @@ public class FragmentViewResources extends ListFragment{
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==dialog.BUTTON_POSITIVE){
-				DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_RESOURCES,id);
+				dm.delResource(id);
+				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_RESOURCES,id);
 				rList.remove(position);
 				adpt.notifyDataSetChanged();
 				 System.out.println(position);
