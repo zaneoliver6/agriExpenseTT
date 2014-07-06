@@ -194,6 +194,7 @@ public class DataManager {
 				+DbHelper.RESOURCE_PURCHASE_RESID+"="+resId;
 		db.delete(DbHelper.TABLE_RESOURCES, DbHelper.RESOURCES_ID+"="+resId, null);
 		db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_CROPID+"="+resId, null);
+	
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;

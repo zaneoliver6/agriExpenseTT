@@ -192,14 +192,15 @@ public class DataManager {
 	public void delResource(int resId){
 		String code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
 				+DbHelper.RESOURCE_PURCHASE_RESID+"="+resId;
-		db.delete(DbHelper.TABLE_RESOURCES, DbHelper.RESOURCES_ID+"="+resId, null);
-		db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_CROPID+"="+resId, null);
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
 			int pId=cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID));
-			delPurchase(pId);
+			this.delPurchase(pId);
 		}
+		db.delete(DbHelper.TABLE_RESOURCES, DbHelper.RESOURCES_ID+"="+resId, null);
 	}
+	
+	
 }
