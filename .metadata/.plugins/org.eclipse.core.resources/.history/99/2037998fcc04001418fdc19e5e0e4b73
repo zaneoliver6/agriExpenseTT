@@ -172,7 +172,6 @@ public class FragmentViewCycles extends ListFragment{
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
-		cList=new ArrayList<localCycle>();
 		DbQuery.getCycles(db, dbh, cList);
 		cycAdapt.notifyDataSetChanged();
 		//call notify dataset changed

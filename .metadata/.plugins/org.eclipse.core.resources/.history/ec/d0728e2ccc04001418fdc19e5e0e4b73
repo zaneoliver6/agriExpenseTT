@@ -163,9 +163,8 @@ public class ChoosePurchase extends ListFragment {
 		public void onActivityResult(int requestCode,int resultCode,Intent data){
 			super.onActivityResult(requestCode, resultCode, data);
 			//refill list
-			pList=new ArrayList<localResourcePurchase>();
 			DbQuery.getResourcePurchases(db, dbh, pList, null, null);
-			myListAdapter.notifyDataSetChanged();
+			cycAdapt.notifyDataSetChanged();
 			//call notify dataset changed
 			Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();
 		}

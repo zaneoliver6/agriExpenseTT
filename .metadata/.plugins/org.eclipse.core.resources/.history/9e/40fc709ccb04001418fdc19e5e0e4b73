@@ -35,17 +35,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ChoosePurchase extends ListFragment {
-	MyListAdapter myListAdapter;
 	ArrayList<localResourcePurchase> pList;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	
 	String type=null;
 	int cycleId;
 	localCycle curr=null;
 	
 	final int req_edit=1;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -72,7 +69,7 @@ public class ChoosePurchase extends ListFragment {
 			DbQuery.getResourcePurchases(db, dbh, pList, type, null);
 		
 		
-		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
+		MyListAdapter myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
 	}
 		
@@ -129,7 +126,7 @@ public class ChoosePurchase extends ListFragment {
 		 		System.out.println("type+"+type);
 		 		Intent i=new Intent(getActivity(),EditPurchase.class);
 		 		i.putExtra("purchase",pList.get(position));
-		 		startActivityForResult(i, req_edit);
+		 		startActivityForResult(i, 1);
 		 	}else if(type!=null&&type.equals("delete")){//when called by delete data
 				AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 	            builder1.setMessage("Are you sure you want to delete");
@@ -158,16 +155,6 @@ public class ChoosePurchase extends ListFragment {
 				// Commit the transaction
 				transaction.commit();
 			}
-		}
-	 @Override
-		public void onActivityResult(int requestCode,int resultCode,Intent data){
-			super.onActivityResult(requestCode, resultCode, data);
-			//refill list
-			pList=new ArrayList<localResourcePurchase>();
-			DbQuery.getResourcePurchases(db, dbh, pList, null, null);
-			myListAdapter.notifyDataSetChanged();
-			//call notify dataset changed
-			Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();
 		}
 	 
 	 private class Confirm implements DialogInterface.OnClickListener{

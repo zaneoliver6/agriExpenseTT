@@ -109,7 +109,7 @@ public class EditPurchase extends ActionBarActivity {
 		c.put(DbHelper.RESOURCE_PURCHASE_QTY, qty);
 		c.put(DbHelper.RESOURCE_PURCHASE_COST, cost);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
-		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, c, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getpId(), null);
+		//db.update(DbHelper.TABLE_RESOURCE_PURCHASES, c, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getpId(), null);
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();

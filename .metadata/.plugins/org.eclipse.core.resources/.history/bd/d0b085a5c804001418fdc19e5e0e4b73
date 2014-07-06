@@ -10,7 +10,6 @@ import java.util.Date;
 
 import com.example.agriexpensett.CycleUseageRedesign;
 import com.example.agriexpensett.EditCycle;
-import com.example.agriexpensett.EditData;
 import com.example.agriexpensett.EditPurchase;
 import com.example.agriexpensett.HireLabour;
 import com.example.agriexpensett.R;
@@ -44,11 +43,7 @@ public class FragmentViewCycles extends ListFragment{
 	String type=null;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	final int req_edit=1;
-	
 	ArrayList<localCycle> cList=new ArrayList<localCycle>();
-	CycleListAdapter cycAdapt;
-	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
@@ -57,7 +52,7 @@ public class FragmentViewCycles extends ListFragment{
 			type=getArguments().getString("type");
 		}catch (Exception e){}
 		populateList();
-		cycAdapt=new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cList);
+		CycleListAdapter cycAdapt=new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cList);
 		setListAdapter(cycAdapt);
 	}
 	
@@ -165,18 +160,8 @@ public class FragmentViewCycles extends ListFragment{
 		}else if(type.equals("edit")){//when called by edit data
 	 		Intent i=new Intent(getActivity(),EditCycle.class);
 	 		i.putExtra("cycle", cList.get(position));
-	 		startActivityForResult(i,req_edit);
+	 		startActivity(i);
 		}
-	}
-	@Override
-	public void onActivityResult(int requestCode,int resultCode,Intent data){
-		super.onActivityResult(requestCode, resultCode, data);
-		//refill list
-		cList=new ArrayList<localCycle>();
-		DbQuery.getCycles(db, dbh, cList);
-		cycAdapt.notifyDataSetChanged();
-		//call notify dataset changed
-		Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();
 	}
 
 	private class Confirm implements DialogInterface.OnClickListener{

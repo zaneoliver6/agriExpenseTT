@@ -59,7 +59,11 @@ public class EditData extends ActionBarActivity {
     	getActionBar().addTab(t1);
     	
 	}
-
+	@Override
+	public void onActivityResult(int requestCode,int resultCode,Intent data){
+		super.onActivityResult(requestCode, resultCode, data);
+		Toast.makeText(this, "yay", Toast.LENGTH_SHORT);
+	}
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
 		Fragment currFragment;

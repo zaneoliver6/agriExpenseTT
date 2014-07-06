@@ -131,7 +131,7 @@ public class EditCycle extends ActionBarActivity {
 		cv.put(DbHelper.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(DbHelper.CROPCYCLE_DATE, date);
 		//Toast.makeText(EditCycle.this, crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
-		db.update(DbHelper.TABLE_CROPCYLE, cv , DbHelper.CROPCYCLE_ID+"="+c.getId(),null);
+		//db.update(DbHelper.TABLE_CROPCYLE, cv , DbHelper.CROPCYCLE_ID+"="+c.getId(),null);
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();
