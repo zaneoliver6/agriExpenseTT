@@ -12,7 +12,7 @@
      <Button
         android:id="@+id/btn_manageData_edit"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+        android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
@@ -21,7 +21,7 @@
     <Button
         android:id="@+id/btn_manageData_delete"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+        android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
     <Button
         android:id="@+id/btn_manageData_add"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+        android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"

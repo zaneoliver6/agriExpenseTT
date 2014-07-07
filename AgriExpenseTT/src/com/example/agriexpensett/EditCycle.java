@@ -88,6 +88,9 @@ public class EditCycle extends ActionBarActivity {
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode==RESULT_CANCELED){
+			return;
+		}
 		if(requestCode==REQ_CROP){
 			crop=data.getExtras().getString("content");
 			System.out.println("result String"+crop);

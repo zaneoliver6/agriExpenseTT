@@ -24,4 +24,12 @@ public class DHelper {
 	
 	public static final String qtf_soilAmendment_truck="Truck";
 	public static final String qtf_soilAmendment_bag="Bag";
+	
+	//colour codes
+	public static final String colour_pm="#8001DF01";
+	public static final String colour_fertilizer="#800431B4";
+	public static final String colour_chemical="#806A0888";
+	public static final String colour_soilam="#8061380B";
+	public static final String colour_labour="#80D7DF01";
+
 }

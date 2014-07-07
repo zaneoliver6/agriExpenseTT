@@ -19,6 +19,8 @@ import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,16 +61,33 @@ public class FragmentCycleUseCategory extends Fragment{
 		catDet2=(TextView)view.findViewById(R.id.tv_cycle_catDet2);;
 		btn_useage=(Button)view.findViewById(R.id.btn_Cycle_useage);
 		btn_useMore=(Button)view.findViewById(R.id.btn_Cycle_useMore);
-		
+		View line=view.findViewById(R.id.line);
 		//getting data
 		category=getArguments().getString("category");
 		
 		if(category.equals(DHelper.cat_labour)){
 			btn_useage.setText(category+" useage");
 			btn_useMore.setText("Add Labour");
+		//	line.set("#ffffff");
+			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+			//line.getBackground().setColorFilter(Color.parseColor("#00ff00"), PorterDuff.Mode.ADD);
+			btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
 		}else{
 			btn_useage.setText(category+" useage");
 			btn_useMore.setText("Use more "+category);
+			if(category.equals(DHelper.cat_plantingMaterial)){
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_plantmaterial);
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
+			}else if(category.equals(DHelper.cat_chemical)){
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_chem);
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
+			}else if(category.equals(DHelper.cat_fertilizer)){
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_fertilizer);
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
+			}else if(category.equals(DHelper.cat_soilAmendment)){
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_soilam);
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
+			}
 		}
 		//getArguments().getParcelable("Cycle");
 		currCycle=getArguments().getParcelable("cycle");

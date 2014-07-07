@@ -52,19 +52,19 @@
 # view AndroidManifest.xml #generated:67
 -keep class com.example.agriexpensett.CycleUseageRedesign { <init>(...); }
 
-# view AndroidManifest.xml #generated:75
+# view AndroidManifest.xml #generated:76
 -keep class com.example.agriexpensett.DeleteData { <init>(...); }
 
-# view AndroidManifest.xml #generated:97
+# view AndroidManifest.xml #generated:99
 -keep class com.example.agriexpensett.EditChooseLists { <init>(...); }
 
-# view AndroidManifest.xml #generated:79
+# view AndroidManifest.xml #generated:81
 -keep class com.example.agriexpensett.EditCycle { <init>(...); }
 
-# view AndroidManifest.xml #generated:89
+# view AndroidManifest.xml #generated:91
 -keep class com.example.agriexpensett.EditData { <init>(...); }
 
-# view AndroidManifest.xml #generated:84
+# view AndroidManifest.xml #generated:86
 -keep class com.example.agriexpensett.EditPurchase { <init>(...); }
 
 # view AndroidManifest.xml #generated:71
@@ -76,7 +76,7 @@
 # view AndroidManifest.xml #generated:26
 -keep class com.example.agriexpensett.MainMenu { <init>(...); }
 
-# view AndroidManifest.xml #generated:93
+# view AndroidManifest.xml #generated:95
 -keep class com.example.agriexpensett.ManageData { <init>(...); }
 
 # view AndroidManifest.xml #generated:22

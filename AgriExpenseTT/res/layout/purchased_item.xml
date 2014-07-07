@@ -24,12 +24,17 @@
             android:textSize="16sp"
             android:text="TextView"
              />
-
+		<View
+			android:id="@+id/line_pitem"
+			android:layout_width="280dp"
+			android:layout_height="2dp"
+			android:background="@android:color/darker_gray" />
         <TextView
             android:id="@+id/tv_pitem_det1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#cccccc"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="14dp"
             android:text="TextView"

@@ -14,7 +14,6 @@
 <fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="android.R.layout"/>
-<fullyQualifiedTypeName name="helper.DHelper"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
 <fullyQualifiedTypeName name="android.content.Intent"/>
@@ -22,8 +21,17 @@
 <fullyQualifiedTypeName name="helper.DbQuery"/>
 <fullyQualifiedTypeName name="android.database.sqlite.SQLiteDatabase"/>
 <fullyQualifiedTypeName name="helper.DbHelper"/>
-<fullyQualifiedTypeName name="com.example.agriexpensett.R.id"/>
 <fullyQualifiedTypeName name="android.content.ContentValues"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.EditData"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
+<fullyQualifiedTypeName name="android.database.Cursor"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.localCycleUse"/>
+<fullyQualifiedTypeName name="helper.DataManager"/>
+<fullyQualifiedTypeName name="android.graphics.PorterDuff"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.R.id"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.R.color"/>
+<fullyQualifiedTypeName name="helper.DHelper"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.R.drawable"/>
 </qualifiedTypeNameHistroy>

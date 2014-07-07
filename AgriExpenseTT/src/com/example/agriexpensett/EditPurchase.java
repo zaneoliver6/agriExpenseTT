@@ -1,11 +1,13 @@
 package com.example.agriexpensett;
 
+import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +77,24 @@ public class EditPurchase extends ActionBarActivity {
 		tv_qtfr.setText(quantifier);
 		tv_qty.setText("previous quantity:"+p.getQty());
 		tv_cost.setText("previous cost:$"+p.getCost());
+		
+		View line=findViewById(R.id.line_header);
+		//line.setBackgroundColor(Color.parseColor("#80000000"));
+		//line.getBackground().setAlpha(50);
+		if(p.getType().equals(DHelper.cat_plantingMaterial)){
+			line.setBackgroundResource(R.color.colourPM);
+			btn_dne.setBackgroundResource(R.drawable.btn_custom_plantmaterial);
+		}else if(p.getType().equals(DHelper.cat_fertilizer)){
+			line.setBackgroundResource(R.color.colourFer);
+			btn_dne.setBackgroundResource(R.drawable.btn_custom_fertilizer);
+		}else if(p.getType().equals(DHelper.cat_soilAmendment)){
+			line.setBackgroundResource(R.color.colourSoil);
+			btn_dne.setBackgroundResource(R.drawable.btn_custom_soilam);
+		}else if(p.getType().equals(DHelper.cat_chemical)){
+			line.setBackgroundResource(R.color.colourChem);
+			btn_dne.setBackgroundResource(R.drawable.btn_custom_chem);
+		}
+		
 	}
 	public class Click implements OnClickListener{
 
@@ -117,6 +137,9 @@ public class EditPurchase extends ActionBarActivity {
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode==RESULT_CANCELED){
+			return;
+		}
 		if(requestCode==REQ_RES){
 			resource=data.getExtras().getString("content");
 			TextView t=(TextView)findViewById(R.id.tv_editPurchase_resVal);

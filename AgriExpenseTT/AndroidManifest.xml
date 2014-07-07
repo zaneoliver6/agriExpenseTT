@@ -70,10 +70,12 @@
         </activity>
         <activity
             android:name=".HireLabour"
+             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_hire_labour" >
         </activity>
         <activity
             android:name=".DeleteData"
+             android:windowSoftInputMode="stateHidden"
             android:label="@string/title_activity_delete_data" >
         </activity>
         <activity

@@ -5,24 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.agriexpensett.MainMenu"
-    tools:ignore="MergeRootFrame" 
-    
-    
-    >
+    tools:ignore="MergeRootFrame" >
 
-    <TextView
-        android:id="@+id/tv_cycleList_crop"
-        android:layout_marginTop="20dp"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Main Menu"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:adjustViewBounds="true"
+          android:layout_gravity="center_horizontal"
+        android:maxWidth="180dp"
+        android:src="@drawable/logo_agrinet" />
 
+   
     <Button
         android:id="@+id/newCycle"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+        android:clickable="true"
+        android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
@@ -31,7 +31,7 @@
     <Button
         android:id="@+id/NewPurchase"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+        android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -40,7 +40,7 @@
     <Button
         android:id="@+id/HireLabour"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+          android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -50,7 +50,7 @@
      <Button
         android:id="@+id/ResDetail"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+          android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -58,7 +58,7 @@
       <Button
         android:id="@+id/manageData"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+         android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -67,7 +67,7 @@
      <Button
         android:id="@+id/btn_SignIn"
         android:layout_width="180dp"
-        android:background="#4ddedede"
+         android:background="@drawable/btn_custom"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"

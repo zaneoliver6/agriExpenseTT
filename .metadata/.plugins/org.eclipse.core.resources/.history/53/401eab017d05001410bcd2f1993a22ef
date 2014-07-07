@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/purchase_item_cont"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="4"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_pItem_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#999999"
+            android:textStyle="bold"
+            android:layout_gravity="fill"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="7dp"
+            android:textSize="16sp"
+            android:text="TextView"
+             />
+		<View
+			android:id="@+id/line_pitem"
+			android:layout_width="280dp"
+			android:layout_height="2dp"
+			android:background="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/tv_pitem_det1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#cccccc"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="14dp"
+            android:text="TextView"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_pitem_det2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#cccccc"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="14dp"
+            android:text="TextView"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/icon_pitem_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:maxHeight="128dp"
+            android:maxWidth="128dp"
+            android:src="@drawable/ic_launcher" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package fragments;
 
 
 import fragments.FragmentViewCycles.CycleListAdapter;
+import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
@@ -25,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,9 +105,22 @@ public class ChoosePurchase extends ListFragment {
 			   
 			   LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			   localResourcePurchase curr=pList.get(position);
-			   
 			   //Get Layout of An Item and Store it in a view
 			   View row=inflater.inflate(R.layout.purchased_item, parent, false);
+			   //setting the colours
+			   View line=row.findViewById(R.id.line_pitem);
+			   if(curr.getType().equals(DHelper.cat_plantingMaterial)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
+			   }else if(curr.getType().equals(DHelper.cat_fertilizer)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
+			   }else if(curr.getType().equals(DHelper.cat_soilAmendment)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
+			   }else if(curr.getType().equals(DHelper.cat_chemical)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
+			   }else if(curr.getType().equals(DHelper.cat_labour)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+			   }
+			 
 			   //get the elements of that view and set them accordingly
 			   TextView header=(TextView)row.findViewById(R.id.tv_pItem_header);
 			   TextView det1=(TextView)row.findViewById(R.id.tv_pitem_det1);
