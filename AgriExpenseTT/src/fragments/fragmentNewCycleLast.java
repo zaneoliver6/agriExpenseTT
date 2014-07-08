@@ -61,7 +61,7 @@ public class fragmentNewCycleLast extends Fragment{
 		TextView landLbl=(TextView)view.findViewById(R.id.tv_newCyclelast_landQty);
 		et_landQty=(EditText)view.findViewById(R.id.et_newCycleLast_landqty);
 		tv_dte=(TextView)view.findViewById(R.id.tv_newCycle_date);
-		error=(TextView)view.findViewById(R.id.tv_newCycle_error);;
+		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
 		
 		Button btn_dne=(Button)view.findViewById(R.id.btn_newCyclelast_dne);
 		Button date=(Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date

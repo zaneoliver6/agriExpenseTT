@@ -25,5 +25,7 @@
     <string name="title_activity_edit_data">EditData</string>
     <string name="title_activity_manage_data">ManageData</string>
     <string name="title_activity_edit_choose_lists">EditChooseLists</string>
+    <string name="title_activity_add_data">AddData</string>
+    <string name="title_activity_view_cycle_usege">ViewCycleUsege</string>
 
 </resources>

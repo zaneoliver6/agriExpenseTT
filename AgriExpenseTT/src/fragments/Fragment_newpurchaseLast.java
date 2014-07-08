@@ -18,12 +18,14 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Fragment_newpurchaseLast extends Fragment{
 	View view;
 	EditText et_qty;
 	EditText et_cost;
+	TextView error;
 	String category;
 	String resource;
 	String quantifier;
@@ -39,6 +41,8 @@ public class Fragment_newpurchaseLast extends Fragment{
 		//curr=savedInstanceState.getParcelable("details");
 		et_qty=(EditText)view.findViewById(R.id.et_newPurchaselast_qty);
 		et_cost=(EditText)view.findViewById(R.id.et_newPurchaselast_cost);
+		
+		error=(TextView)view.findViewById(R.id.tv_newPurchase_error);
 		category=getArguments().getString("category");
 		resource=getArguments().getString("resource");
 		quantifier=getArguments().getString("quantifier");
@@ -71,12 +75,16 @@ public class Fragment_newpurchaseLast extends Fragment{
 			if(v.getId()==R.id.btn_newpurchaselast_done){
 				double qty,cost;
 				if( ((et_qty.getText().toString()).equals(null))||((et_qty.getText().toString()).equals(""))  ){
+					error.setVisibility(error.VISIBLE);
+					error.setText("Enter Quantity");
 					Toast.makeText(getActivity(),"Enter Quantity", Toast.LENGTH_SHORT).show();
 					return;
 				}else{
 					qty=Double.parseDouble(et_qty.getText().toString());
 				}
 				if( (et_cost.getText().toString().equals(null)) || ((et_cost.getText().toString()).equals("")) ){
+					error.setVisibility(error.VISIBLE);
+					error.setText("Enter cost");
 					Toast.makeText(getActivity(),"Enter Cost", Toast.LENGTH_SHORT).show();
 					return;
 				}else{

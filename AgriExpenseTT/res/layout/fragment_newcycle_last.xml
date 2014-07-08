@@ -44,7 +44,7 @@
 
                 <TextView
                     android:id="@+id/tv_newCyclelast_landQty"
-                    android:textSize="13sp"
+                    android:textSize="17sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:textColor="#cccccc"
@@ -69,8 +69,8 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/textView2"
-                   android:textSize="13sp"
+                    android:id="@+id/tv_cycUseItem_sub1_2"
+                   android:textSize="17sp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:textColor="#cccccc"
@@ -88,12 +88,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="20dp"
-                        android:background="#4ddedede"
+                        android:background="@drawable/btn_custom"
                         android:text="Start Date" />
 
                     <TextView
                         android:id="@+id/tv_newCycle_date"
-                         android:textSize="13sp"
+                         android:textSize="17sp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="20dp"
                     android:textColor="#cccccc"
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="20dp"
-                android:background="#4ddedede"
+                android:background="@drawable/btn_custom"
                 android:text="Done" />
         </LinearLayout>
 

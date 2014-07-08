@@ -202,4 +202,10 @@ public class DataManager {
 			delPurchase(pId);
 		}
 	}
+	public void insertResource(String name,String type) {
+		ContentValues cv=new ContentValues();
+		cv.put(DbHelper.RESOURCES_NAME, name);
+		cv.put(DbHelper.RESOURCES_TYPE, type);
+		db.insert(DbHelper.TABLE_RESOURCES, null, cv);
+	}
 }

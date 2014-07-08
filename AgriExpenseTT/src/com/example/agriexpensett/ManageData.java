@@ -26,6 +26,8 @@ public class ManageData extends ActionBarActivity {
 		Click c=new Click();
 		edit.setOnClickListener(c);
 		delete.setOnClickListener(c);
+		add.setOnClickListener(c);
+		
 	}
 	public class Click implements OnClickListener{
 
@@ -33,8 +35,7 @@ public class ManageData extends ActionBarActivity {
 		public void onClick(View v) {
 			Intent i=null;
 			if(v.getId()==R.id.btn_manageData_add){
-				//i=new Intent(ManageData.this,EditData.class);
-				return;
+				i=new Intent(ManageData.this,AddData.class);
 			}else if(v.getId()==R.id.btn_manageData_edit){
 				i=new Intent(ManageData.this,EditData.class);
 			}else if(v.getId()==R.id.btn_manageData_delete){

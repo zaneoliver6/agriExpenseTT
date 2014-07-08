@@ -46,6 +46,9 @@
 # view res/layout/abc_search_view.xml #generated:85
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
+# view AndroidManifest.xml #generated:104
+-keep class com.example.agriexpensett.AddData { <init>(...); }
+
 # view AndroidManifest.xml #generated:35
 -keep class com.example.agriexpensett.CycleUseage { <init>(...); }
 
@@ -94,9 +97,15 @@
 # view AndroidManifest.xml #generated:39
 -keep class com.example.agriexpensett.UseResource { <init>(...); }
 
+# view AndroidManifest.xml #generated:109
+-keep class com.example.agriexpensett.ViewCycleUsege { <init>(...); }
+
 # view AndroidManifest.xml #generated:63
 -keep class com.example.agriexpensett.ViewNavigation { <init>(...); }
 
 # view AndroidManifest.xml #generated:44
 -keep class fragments.ChoosePurchase { <init>(...); }
+
+# view res/layout/activity_main_menu.xml #generated:1
+-keep class helper.FlyOutContainer { <init>(...); }
 

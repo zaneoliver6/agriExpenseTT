@@ -1,0 +1,65 @@
+package com.example.agriexpensett;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import helper.DbHelper;
+import android.support.v7.app.ActionBarActivity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+public class ViewCycleUsege extends ActionBarActivity {
+	SQLiteDatabase db;
+	DbHelper dbh;
+	ArrayList<localCycleUse> list;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_view_cycle_usege);
+		dbh=new DbHelper(this);
+		db=dbh.getReadableDatabase();
+		ListView listview=(ListView)findViewById(R.id.listview_cycleUse);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.view_cycle_usege, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	public class CycUseAdpt extends ArrayAdapter<localCycleUse>{
+
+		public CycUseAdpt(Context context, int resource,int textViewResourceId,
+				List<localCycleUse> objects) {
+			super(context, resource, textViewResourceId, objects);
+			// TODO Auto-generated constructor stub
+		}
+		 @Override
+		  public View getView(int position, View convertView, ViewGroup parent) {
+			 View row;
+			 row=getLayoutInflater().inflate(R.layout.cycleuse_item,parent,false);
+			 localCycleUse curr=list.get(position);
+			 return row;
+		 }
+	}
+}

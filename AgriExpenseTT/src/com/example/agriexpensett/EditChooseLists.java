@@ -7,6 +7,8 @@ import helper.DbQuery;
 import java.util.ArrayList;
 
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +41,9 @@ public class EditChooseLists extends ActionBarActivity {
 		lv.setAdapter(listAdapt);
 		ItemClick c=new ItemClick();
 		lv.setOnItemClickListener(c);
+		TWatch tw=new TWatch(listAdapt);
+		EditText et_search=(EditText)findViewById(R.id.et_listReuse_search);
+		et_search.addTextChangedListener(tw);
 		//on click events
 		
 	}
@@ -121,4 +127,33 @@ public class EditChooseLists extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	public class TWatch implements TextWatcher{
+		 ArrayAdapter<String> adpt;
+		 public TWatch(ArrayAdapter<String> adpt){
+			 super();
+			 this.adpt=adpt;
+		 }
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			adpt.getFilter().filter(s);
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+			
+		}
+		 
+	 }
+
 }

@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.agriexpensett.MainMenu" >
+
+     <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        app:showAsAciton="always"
+        android:showAsAction="never"
+        android:title="@string/action_settings" android:visible="false"/>
+	
+    <item 
+	    android:id="@+id/toggleSide_mainMenu"
+	    android:title="menu"
+	    android:showAsAction="always|withText"
+	    android:orderInCategory="200"
+	    android:visible="true"/>
+	<item 
+	    android:id="@+id/other_mainMenu"
+	    android:title="other"
+	    android:orderInCategory="300"
+	    android:showAsAction="always|withText"
+	    android:visible="true" android:enabled="true"/>
+   
+</menu>

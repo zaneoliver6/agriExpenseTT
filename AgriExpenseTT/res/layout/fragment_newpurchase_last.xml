@@ -21,8 +21,19 @@
             android:orientation="vertical" >
 
             <TextView
+                android:id="@+id/tv_newPurchase_error"
+                android:textSize="14sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#ff0000"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity" />
+            
+            <TextView
                 android:id="@+id/tv_mainNew_header"
-                android:textSize="13sp"
+                android:textSize="17sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:textColor="#cccccc"
@@ -44,8 +55,8 @@
             </EditText>
 
             <TextView
-                android:id="@+id/textView2"
-                android:textSize="13sp"
+                android:id="@+id/tv_cycUseItem_sub1_2"
+                android:textSize="17sp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:textColor="#cccccc"

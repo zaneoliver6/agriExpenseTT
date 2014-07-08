@@ -33,7 +33,7 @@ public class FragmentPurchaseUse extends Fragment {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	localCycle c=null;
-	int useAmount=0;
+	double useAmount=0;
 	double calcost=0.0,TypeSpent=0.0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,6 +99,7 @@ public class FragmentPurchaseUse extends Fragment {
 			if(v.getId()==R.id.btn_UsePurchase_cal){
 				
 				calcost=Double.parseDouble(et_amt.getText().toString());
+				useAmount=calcost;
 				calcost=(calcost/p.getQty())*p.getCost();
 				calcost=(Double.valueOf(df.format(calcost)));
 				d_buttom1.setText("Using "+useAmount+" "+p.getQuantifier()+" adds $"+calcost+" to the current crop cycle");
@@ -117,7 +118,7 @@ public class FragmentPurchaseUse extends Fragment {
 					
 					calcost=(qty/p.getQty())*p.getCost();
 					calcost=(Double.valueOf(df.format(calcost)));
-					c.setTotalSpent(c.getTotalSpent()+calcost);
+					c.setTotalSpent(Double.valueOf(c.getTotalSpent()+calcost));
 					dm.updateCycleSpent(c.getId(), c.getTotalSpent());
 					
 					//getActivity().finish();

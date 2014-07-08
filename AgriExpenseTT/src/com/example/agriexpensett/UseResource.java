@@ -1,5 +1,6 @@
 package com.example.agriexpensett;
 
+import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 
@@ -78,6 +79,20 @@ public class UseResource extends ActionBarActivity {
 		listfrag.setArguments(pass);
 		ft.add(R.id.useExpenseFrag,listfrag);
 		ft.commit();
+		
+		View line=findViewById(R.id.line_header_useRes);
+		//line.setBackgroundColor(Color.parseColor("#80000000"));
+		//line.getBackground().setAlpha(50);
+		String category=getIntent().getStringExtra("type");
+		if(category.equals(DHelper.cat_plantingMaterial)){
+			line.setBackgroundResource(R.color.colourPM);
+		}else if(category.equals(DHelper.cat_fertilizer)){
+			line.setBackgroundResource(R.color.colourFer);
+		}else if(category.equals(DHelper.cat_soilAmendment)){
+			line.setBackgroundResource(R.color.colourSoil);
+		}else if(category.equals(DHelper.cat_chemical)){
+			line.setBackgroundResource(R.color.colourChem);
+		}
 	}
 
 	@Override

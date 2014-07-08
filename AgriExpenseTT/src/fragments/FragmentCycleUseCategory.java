@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.UseResource;
+import com.example.agriexpensett.ViewCycleUsege;
 import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.localCycleUse;
 import com.example.agriexpensett.R.id;
@@ -28,6 +29,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class FragmentCycleUseCategory extends Fragment{
@@ -170,7 +172,13 @@ public class FragmentCycleUseCategory extends Fragment{
 		@Override
 		public void onClick(View v) {
 			if(v.getId()==R.id.btn_Cycle_useage){
+				Intent n=new Intent(getActivity(),ViewCycleUsege.class);
+				n.putExtra("type",category);
+				currCycle=getArguments().getParcelable("cycle");
 				
+				//Toast.makeText(getActivity(), currCycle.getId(), Toast.LENGTH_SHORT).show();
+				n.putExtra("id",""+currCycle.getId());
+				getActivity().startActivity(n);
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
 				/*Bundle b=new Bundle();
 				b.putParcelable("cyc",currCycle);

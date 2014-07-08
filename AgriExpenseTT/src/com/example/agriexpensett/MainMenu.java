@@ -1,5 +1,6 @@
 package com.example.agriexpensett;
 
+import helper.FlyOutContainer;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +11,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class MainMenu extends ActionBarActivity {
-
+	FlyOutContainer root;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main_menu);
+		this.root=(FlyOutContainer) this.getLayoutInflater().inflate(R.layout.activity_main_menu, null);
+		this.setContentView(root);
+		//setContentView(R.layout.activity_main_menu);
 
 		setupButtons();
 	}
@@ -84,7 +87,9 @@ public class MainMenu extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	public void toggleMenu(View v){
+		this.root.toggleMenu();
+	}
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
