@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.example.agriexpensett.localCycleUse;
+import uwi.dcit.agriexpensett.localCycle;
+import uwi.dcit.agriexpensett.localCycleUse;
+import uwi.dcit.agriexpensett.localResourcePurchase;
+
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
@@ -59,32 +62,115 @@ public class DataManager {
 		//update database last updated time
 	}
 	
-	public void deleteCycleUse( int id){
-		//delete from database
-		DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CYCLE_RESOURCES,id);
-		//insert into transaction table
-		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CYCLE_RESOURCES, id,"del");
-		//try delete from cloud
-		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-		c.deleteCycleUse();
-			//if successful
-				//delete from transaction table
-				//and update cloud's last updated time
-		//update database last updated time
+	//------------------------------------------READY TO USE (FROM FRONT)
+	public void deleteCycleUse(localCycleUse l){
+		//update the Purchase that was used (local) add back the amount that was used
+		//update cloud, record it in the redo Log purchase Id and the table
+		//update the Cycle's total spent (local) subtract the usage cost from the cycle's total spent
+		//update cloud, record the update in the redo log
+		//finally delete cycleUse (locally)
+		//delete cycleUse in cloud, by recording the delete in the redo log
+		
+		//PURCHASE
+		//updating local Purchase
+		RPurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
+		ContentValues cv=new ContentValues();
+		cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
+		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, cv, DbHelper.RESOURCE_PURCHASE_ID+"="+l.getPurchaseId(), null);
+		//record transaction in log
+		tL.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, l.getPurchaseId(), TransactionLog.TL_DEL);
+		//redo log (cloud)
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, l.getPurchaseId(),TransactionLog.TL_UPDATE);
+		
+		//CYCLE
+		//updating local Cycle
+		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
+		cv=new ContentValues();
+		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
+		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+l.getCycleid(), null);
+		//record transaction in log
+		tL.insertTransLog(DbHelper.TABLE_CROPCYLE, l.getCycleid(), TransactionLog.TL_UPDATE);
+		//redo log (cloud)
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, l.getCycleid(), TransactionLog.TL_UPDATE);
+		
+		//CYCLEUSE
+		//Delete CycleUse
+		db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
+		tL.insertTransLog(DbHelper.TABLE_CYCLE_RESOURCES, l.getId(), TransactionLog.TL_DEL);
+		//redo log (cloud)
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CYCLE_RESOURCES, l.getId(), TransactionLog.TL_DEL);
 	}
+	
+	//--------------------------------------READY TO USE (FROM FRONT)
+	public void deletePurchase(RPurchase p){
+		//get all cycleUse with the purchase's id
+		//delete each one using the deleteCycleUse to remove the cost added to each cycle
+		//delete the purchase (locally)
+		//put the delete in the redo log
+		
+		//getting all the cycleUse
+		ArrayList<localCycleUse> list=new ArrayList<localCycleUse>();
+		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
+		Iterator<localCycleUse> itr=list.iterator();
+		while(itr.hasNext()){
+			localCycleUse l=itr.next();
+			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+		}
+		//delete purchase 
+		db.delete(DbHelper.TABLE_RESOURCE_PURCHASES, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getPId(), null);
+		tL.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId(), TransactionLog.TL_DEL);
+		//redo log (cloud)
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId(), TransactionLog.TL_DEL);
+	}
+	
+	//-----------------------------------READY TO USE (FROM FRONT)
+	public void deleteCycle(localCycle c){
+		//get all cycleUse wih cid
+		//delete each one using delete cycleUse as to restore to purchase the amounts used by the cycleUse
+		//delete the cycle Locally
+		//insert into redo log (cloud)
 
-	public void deletePurchase( int id){
-		//delete from database
-		DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES,id);
-		//insert into transaction table
-		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id,"del");
-		//try delete from cloud
-		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-		c.deletePurchase();
-			//if successful
-				//delete from transaction table
-				//and update cloud's last updated time
-		//update database last updated time
+		ArrayList<localCycleUse> list=new ArrayList<localCycleUse>();
+		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
+		Iterator<localCycleUse> itr=list.iterator();
+		while(itr.hasNext()){
+			localCycleUse l=itr.next();
+			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+		}
+		//delete cycle
+		db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
+		tL.insertTransLog(DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_DEL);
+		//insert into redo log (cloud)
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_DEL);
+	}
+	//---------------------- READY TO USE [WITHOUT INCLUSION OF RESOURCES TABLE]
+	public void deleteResource(int rId){
+		//get all purchases of rId
+		//delete them all using the deletePurchase above (ready to use version)
+		//get all cycles who's cycleId is rId
+		//delete them all using the deleteCycle above (ready to use version)
+		//delete resource and record in transaction log
+		//-----Not Sure If we're having resources in the cloud
+
+		ArrayList<localResourcePurchase> pList=new ArrayList<localResourcePurchase>();
+		DbQuery.getResourcePurchases(db, dbh, pList, rId);
+		Iterator<localResourcePurchase>pI=pList.iterator();
+		while(pI.hasNext()){
+			this.deletePurchase(pI.next().toRPurchase());
+		}
+		
+		ArrayList<localCycle> cList=new ArrayList<localCycle>();
+		DbQuery.getCycles(db, dbh, cList);
+		Iterator<localCycle> cI=cList.iterator();
+		while(cI.hasNext()){
+			localCycle c=cI.next();
+			if(c.getCropId()==rId)
+				this.deleteCycle(c);
+		}
+		//delete resource
+		db.delete(DbHelper.TABLE_RESOURCES, DbHelper.RESOURCES_ID+"="+rId, null);
+		//not bothering to record in transaction log if not storing resources in clouf
+		//not bothering to store in redo log if res not going to cloud
 	}
 	
 	public void insertCycleUse(int cycleId, int resPurchaseId, double qty,String type){

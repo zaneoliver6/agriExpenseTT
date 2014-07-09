@@ -1,6 +1,7 @@
 package fragments;
 
-import com.example.agriexpensett.HireLabour;
+import uwi.dcit.agriexpensett.HireLabour;
+
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;

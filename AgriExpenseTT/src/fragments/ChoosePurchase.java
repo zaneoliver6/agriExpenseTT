@@ -10,10 +10,11 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.example.agriexpensett.EditPurchase;
+import uwi.dcit.agriexpensett.EditPurchase;
+import uwi.dcit.agriexpensett.localCycle;
+import uwi.dcit.agriexpensett.localResourcePurchase;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.localCycle;
-import com.example.agriexpensett.localResourcePurchase;
 import com.example.agriexpensett.R.drawable;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
@@ -71,9 +72,9 @@ public class ChoosePurchase extends ListFragment {
 		
 		pList=new ArrayList<localResourcePurchase>();
 		if(type!=null&&(type.equals("delete")||type.equals("edit")))
-			DbQuery.getResourcePurchases(db, dbh, pList, null, null);
+			DbQuery.getPurchases(db, dbh, pList, null, null);
 		else
-			DbQuery.getResourcePurchases(db, dbh, pList, type, null);
+			DbQuery.getPurchases(db, dbh, pList, type, null);
 		
 		
 		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
@@ -181,7 +182,7 @@ public class ChoosePurchase extends ListFragment {
 			super.onActivityResult(requestCode, resultCode, data);
 			//refill list
 			pList=new ArrayList<localResourcePurchase>();
-			DbQuery.getResourcePurchases(db, dbh, pList, null, null);
+			DbQuery.getPurchases(db, dbh, pList, null, null);
 			myListAdapter.notifyDataSetChanged();
 			//call notify dataset changed
 			Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();

@@ -6,9 +6,10 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import com.example.agriexpensett.HireLabour;
+import uwi.dcit.agriexpensett.HireLabour;
+import uwi.dcit.agriexpensett.localCycle;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
 

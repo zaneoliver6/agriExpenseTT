@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.example.agriexpensett.CycleUseageRedesign;
-import com.example.agriexpensett.EditCycle;
-import com.example.agriexpensett.HireLabour;
+import uwi.dcit.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.EditCycle;
+import uwi.dcit.agriexpensett.HireLabour;
+import uwi.dcit.agriexpensett.localCycle;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.localCycle;
+
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;

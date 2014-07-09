@@ -16,15 +16,15 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="uwi.dcit.agriexpensett.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".NewCycle"
+            android:name="uwi.dcit.agriexpensett.NewCycle"
             android:label="@string/title_activity_new_cycle" >
         </activity>
         <activity
-            android:name=".MainMenu"
+            android:name="uwi.dcit.agriexpensett.MainMenu"
             android:label="Menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CycleUseage"
+            android:name="uwi.dcit.agriexpensett.CycleUseage"
             android:label="@string/title_activity_cycle_useage" >
         </activity>
         <activity
-            android:name=".UseResource"
+            android:name="uwi.dcit.agriexpensett.UseResource"
             android:label="@string/title_activity_use_resource"
             android:windowSoftInputMode="stateHidden" >
         </activity>
@@ -47,67 +47,67 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".UsePurchaseFrag"
+            android:name="uwi.dcit.agriexpensett.UsePurchaseFrag"
             android:label="@string/title_activity_use_purchase_frag" >
         </activity>
         <activity
-            android:name=".NewCycleRedesigned"
+            android:name="uwi.dcit.agriexpensett.NewCycleRedesigned"
             android:label="Use resources"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".NewPurchaseRedesign"
+            android:name="uwi.dcit.agriexpensett.NewPurchaseRedesign"
             android:label="@string/title_activity_new_purchase_redesign"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".ViewNavigation"
+            android:name="uwi.dcit.agriexpensett.ViewNavigation"
             android:label="View" >
         </activity>
         <activity
-            android:name=".CycleUseageRedesign"
+            android:name="uwi.dcit.agriexpensett.CycleUseageRedesign"
             android:label="Use resources" >
         </activity>
         <activity
-            android:name=".HireLabour"
+            android:name="uwi.dcit.agriexpensett.HireLabour"
             android:label="Hire Labour"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".DeleteData"
+            android:name="uwi.dcit.agriexpensett.DeleteData"
             android:label="Delete data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".EditCycle"
+            android:name="uwi.dcit.agriexpensett.EditCycle"
             android:label="Edit cycle"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".EditPurchase"
+            android:name="uwi.dcit.agriexpensett.EditPurchase"
             android:label="Edit purchase"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".EditData"
+            android:name="uwi.dcit.agriexpensett.EditData"
             android:label="Edit data" >
         </activity>
         <activity
-            android:name=".ManageData"
+            android:name="uwi.dcit.agriexpensett.ManageData"
             android:label="Manage data" >
         </activity>
         <activity
-            android:name=".EditChooseLists"
+            android:name="uwi.dcit.agriexpensett.EditChooseLists"
             android:label="Edit data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".AddData"
+            android:name="uwi.dcit.agriexpensett.AddData"
             android:label="@string/title_activity_add_data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".ViewCycleUsege"
+            android:name="uwi.dcit.agriexpensett.ViewCycleUsege"
             android:label="@string/title_activity_view_cycle_usege" >
         </activity>
     </application>

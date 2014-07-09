@@ -2,9 +2,10 @@ package helper;
 
 import java.util.ArrayList;
 
-import com.example.agriexpensett.localCycle;
-import com.example.agriexpensett.localCycleUse;
-import com.example.agriexpensett.localResourcePurchase;
+import uwi.dcit.agriexpensett.localCycle;
+import uwi.dcit.agriexpensett.localCycleUse;
+import uwi.dcit.agriexpensett.localResourcePurchase;
+
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
@@ -48,7 +49,7 @@ public class DbQuery {
 		cv.put(DbHelper.CYCLE_RESOURCE_QTY, qty);
 		cv.put(DbHelper.CYCLE_RESOURCE_TYPE, type);
 		//get the cost of using this resource
-		RPurchase p=DbQuery.getAPurchase(db, dbh, resourcePurchasedId);
+		RPurchase p=DbQuery.getARPurchase(db, dbh, resourcePurchasedId);
 		double useCost=(qty/p.getQty())*(p.getCost());
 		cv.put(DbHelper.CYCLE_RESOURCE_USECOST, useCost);
 		
@@ -119,7 +120,7 @@ public class DbQuery {
 		return null;
 	}
 	
-	public static void getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,String type,String quantifier){
+	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,String type,String quantifier){
 		String code;
 		if(type==null)
 			code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+";";
@@ -140,7 +141,27 @@ public class DbQuery {
 			list.add(m);
 		}
 	}
-	public static RPurchase getAPurchase(SQLiteDatabase db, DbHelper dbh,int id){
+	public static void getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,int resId){
+		String code;
+		code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
+		+DbHelper.RESOURCE_PURCHASE_RESID+"="+resId+";";
+		Cursor cursor =db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return;
+		while(cursor.moveToNext()){
+			localResourcePurchase m=new localResourcePurchase();
+			m.setpId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID)));
+			m.setResourceId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_RESID)));
+			m.setType(cursor.getString(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_TYPE)));
+			m.setQuantifier(cursor.getString(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_QUANTIFIER)));
+			m.setQty(cursor.getDouble(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_QTY)));
+			m.setCost(cursor.getDouble(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_COST)));
+			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_REMAINING)));
+			list.add(m);
+		}
+	}
+	
+	public static RPurchase getARPurchase(SQLiteDatabase db, DbHelper dbh,int id){
 		String code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
 				+DbHelper.RESOURCE_PURCHASE_ID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
@@ -168,6 +189,7 @@ public class DbQuery {
 			return;
 		while(cursor.moveToNext()){
 			localCycleUse l=new localCycleUse();
+			l.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_ID)));
 			l.setAmount(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QTY)));
 			l.setCycleid(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID)));
 			l.setPurchaseId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_PURCHASE_ID)));
@@ -176,6 +198,27 @@ public class DbQuery {
 			list.add(l);
 		}
 	}
+	public static void getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<localCycleUse> list,String type){
+		String code;
+		if(type==null)
+			code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+"="+purchaseId+";";
+		else
+			code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+"="+purchaseId+" and "+DbHelper.CYCLE_RESOURCE_TYPE+"='"+type+"';";
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return;
+		while(cursor.moveToNext()){
+			localCycleUse l=new localCycleUse();
+			l.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_ID)));
+			l.setAmount(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QTY)));
+			l.setCycleid(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID)));
+			l.setPurchaseId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_PURCHASE_ID)));
+			l.setResource(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_TYPE)));
+			l.setUseCost(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_USECOST)));
+			list.add(l);
+		}
+	}
+	
 	public static CycleUse getACycleUse(SQLiteDatabase db, DbHelper dbh,int id){
 		String code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "+DbHelper.CYCLE_RESOURCE_ID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);

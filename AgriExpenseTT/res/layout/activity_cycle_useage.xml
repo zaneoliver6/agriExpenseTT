@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#d3d3d3"
     android:orientation="vertical"
-    tools:context="com.example.agriexpensett.CycleUseage"
+    tools:context="uwi.dcit.agriexpensett.CycleUseage"
     tools:ignore="MergeRootFrame" >
 
         

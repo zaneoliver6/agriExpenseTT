@@ -7,11 +7,12 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.agriexpensett.UseResource;
+import uwi.dcit.agriexpensett.ViewCycleUsege;
+import uwi.dcit.agriexpensett.localCycle;
+import uwi.dcit.agriexpensett.localCycleUse;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.UseResource;
-import com.example.agriexpensett.ViewCycleUsege;
-import com.example.agriexpensett.localCycle;
-import com.example.agriexpensett.localCycleUse;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
@@ -119,7 +120,7 @@ public class FragmentCycleUseCategory extends Fragment{
 				localCycleUse lcu=itr.next();
 				catTotal+=lcu.getUseCost();//stores the total amount of money spent on plantMaterials
 						
-				RPurchase purchaseUse=DbQuery.getAPurchase(db, dbh,lcu.getPurchaseId());
+				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
 				String name=DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
 						
 				//calculates the total spent on each plantMaterial

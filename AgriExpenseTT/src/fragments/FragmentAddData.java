@@ -7,6 +7,8 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.agriexpensett.AddData;
+import uwi.dcit.agriexpensett.NewPurchaseRedesign;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -22,8 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.agriexpensett.AddData;
-import com.example.agriexpensett.NewPurchaseRedesign;
 import com.example.agriexpensett.R;
 
 import fragments.NewPurchaseLists.TWatch;

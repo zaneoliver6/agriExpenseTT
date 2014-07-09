@@ -8,9 +8,10 @@ import helper.DbQuery;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.example.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.localCycle;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
 

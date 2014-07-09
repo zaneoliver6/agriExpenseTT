@@ -6,10 +6,11 @@ import helper.DbQuery;
 
 import java.text.DecimalFormat;
 
-import com.example.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.UseResource;
+import uwi.dcit.agriexpensett.localCycle;
+
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.UseResource;
-import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
@@ -53,7 +54,7 @@ public class FragmentPurchaseUse extends Fragment {
 	TextView d_buttom3;
 	EditText et_amt;
 	private void setDetails(int pId,int cycleId) {
-		RPurchase p=DbQuery.getAPurchase(db, dbh,pId);
+		RPurchase p=DbQuery.getARPurchase(db, dbh,pId);
 		c=getArguments().getParcelable("cycleMain");
 		TextView h_main=(TextView)view.findViewById(R.id.tv_usePurchase_header1);
 		TextView h_sub=(TextView)view.findViewById(R.id.tv_usePurchase_header2);

@@ -22,3 +22,6 @@
 1404791386809	Rename field 'button1'
 1404822799876	Rename field 'textView2'
 1404824269356	Rename field 'tv_cycItem_sub1_1'
+1404829162584	Wrap in Container
+1404829214828	Rename package 'com.example.agriexpensett'
+1404879470121	Encapsulate field 'id'

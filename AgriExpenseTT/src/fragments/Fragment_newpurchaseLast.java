@@ -1,12 +1,12 @@
 package fragments;
 
+import uwi.dcit.agriexpensett.localCycle;
 import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.localCycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import android.app.Fragment;
@@ -100,7 +100,7 @@ public class Fragment_newpurchaseLast extends Fragment{
 					//insert purchase
 					dm.insertPurchase(resId, quantifier, qty, category, cost);
 					int pId=DbQuery.getLast(db, dbh,DbHelper.TABLE_RESOURCE_PURCHASES);
-					RPurchase p=DbQuery.getAPurchase(db, dbh, pId);
+					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
 					//use all of the qty of that purchase in the given cycle
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType());
 					dm.updatePurchase(p.getPId(),(p.getQtyRemaining()-qty));

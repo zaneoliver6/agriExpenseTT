@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="#d3d3d3"
     android:orientation="vertical"
-    tools:context="com.example.agriexpensett.CycleUseageRedesign"
+    tools:context="uwi.dcit.agriexpensett.CycleUseageRedesign"
     tools:ignore="MergeRootFrame" >
 
         
@@ -51,10 +51,18 @@
             	
             	android:layout_marginBottom="10dp"
                 android:orientation="vertical" >
+                
+                 <FrameLayout
+                    android:id="@+id/cat_general_frag"
+                    android:layout_marginTop="270dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                </FrameLayout>
 
                 <FrameLayout
                     android:id="@+id/cat_plantMaterial_frag"
-                    android:layout_marginTop="270dp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
 
