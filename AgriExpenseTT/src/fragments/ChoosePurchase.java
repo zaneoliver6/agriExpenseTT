@@ -172,7 +172,7 @@ public class ChoosePurchase extends ListFragment {
 				// and add the transaction to the back stack
 				transaction.replace(R.id.useExpenseFrag, newFragment);
 				transaction.addToBackStack(null);
-				db.close();
+				//db.close();
 				// Commit the transaction
 				transaction.commit();
 			}
@@ -198,7 +198,7 @@ public class ChoosePurchase extends ListFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				if(which==dialog.BUTTON_POSITIVE){
-					dm.delPurchase(pList.get(position).getpId());
+					dm.deletePurchase(pList.get(position).toRPurchase());
 					pList.remove(position);
 					l.notifyDataSetChanged();
 					Toast.makeText(getActivity(),"Purchase and related cycles deleted", Toast.LENGTH_SHORT).show();			

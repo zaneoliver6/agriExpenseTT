@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="error" key="selection"/>
+		<item value="getResourcePurchase" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="error"/>
-			<item value="19sp"/>
-			<item value="13sp"/>
-			<item value="16sp"/>
-			<item value="twatch"/>
-			<item value="category"/>
-			<item value="cat"/>
+			<item value="getResourcePurchase"/>
+			<item value="getCycleUse"/>
 			<item value="delete"/>
+			<item value="deleterow"/>
+			<item value="geta"/>
+			<item value="getaresourcePurchase"/>
+			<item value="deleteCycleUse"/>
+			<item value="currCycle"/>
 		</list>
 		<list key="replacehistory">
 			<item value="17sp"/>

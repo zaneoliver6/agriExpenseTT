@@ -1,20 +1,27 @@
 package uwi.dcit.agriexpensett;
 
+import uwi.dcit.agriexpensett.NewCycleRedesigned.TouchL;
+
 import com.example.agriexpensett.R;
 
 import fragments.NewPurchaseLists;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -26,6 +33,7 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
 		tv_main.setText("Purchasing new materials");
+		setupUI();
 		setupInitialFrag();
 	}
 	private void setupInitialFrag() {
@@ -38,11 +46,39 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 		ft.add(R.id.NewCycleListContainer,listfrag);
 		ft.commit();
 	}
-	public void appendSub(String extras){
+	
+	public static void hideSoftKeyboard(Activity activity) {
+	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+	}
+	public void setupUI() {
+		View v=findViewById(R.id.container_newcycle);
+		TouchL l=new TouchL();
+		v.setOnTouchListener(l);
+	}
+	public class TouchL implements OnTouchListener{
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if(v.getId()!=R.id.et_listReuse_search)
+				hideSoftKeyboard(NewPurchaseRedesign.this);
+			return false;
+		}
+	   
+   }
+	@Override
+	public void onBackPressed(){
+	    FragmentManager fm = getFragmentManager();
+	    if (fm.getBackStackEntryCount() > 0) {
+	        Log.i("MainActivity", "popping backstack");
+	        fm.popBackStack();
+	    } else {
+	        Log.i("MainActivity", "nothing on backstack, calling super");
+	        super.onBackPressed();  
+	    }
+	}
+	public void replaceSub(String text){
 		sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
-		String s=sub_head.getText().toString();
-		s=s+" "+extras;
-		sub_head.setText(s);
+		sub_head.setText(text);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -165,7 +165,7 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				RPurchase purchase=DbQuery.getAPurchase(db, dbh, rowId);
+				RPurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
 				try{
 					purchase=endpoint.insertRPurchase(purchase).execute();
 				}catch(Exception e){

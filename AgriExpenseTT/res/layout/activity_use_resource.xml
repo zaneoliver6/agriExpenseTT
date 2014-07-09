@@ -1,6 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/container_useResource"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="uwi.dcit.agriexpensett.UseResource"
@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -36,18 +36,13 @@
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/useResScroll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5" >
 
             <FrameLayout
                 android:id="@+id/useExpenseFrag"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" >
+                android:layout_height="wrap_content" >
             </FrameLayout>
-        </ScrollView>
+       
     </LinearLayout>
 
 </FrameLayout>

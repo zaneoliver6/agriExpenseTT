@@ -101,14 +101,15 @@ public class NewCycleLists extends ListFragment {
 			if(type.equals(DHelper.cat_plantingMaterial)){
 				b.putString("type","land");//passes the type of the data we want in the new listfragment
 				b.putString(DHelper.cat_plantingMaterial, list.get(position));//passes the crop chosen to the land listfragment
-				((NewCycleRedesigned)getActivity()).appendSub(" "+list.get(position));
+				((NewCycleRedesigned)getActivity()).replaceSub("Details: "+list.get(position));
 				newFragment =new NewCycleLists();
 			}else if(type.equals("land")){
 				b.putString(DHelper.cat_plantingMaterial, getArguments().getString(DHelper.cat_plantingMaterial));
-				System.out.println("planting material: "+getArguments().getString(DHelper.cat_plantingMaterial));
-				System.out.println(list.get(position));
+				//System.out.println("planting material: "+getArguments().getString(DHelper.cat_plantingMaterial));
+				//System.out.println(list.get(position));
 				b.putString("land", list.get(position));
-				((NewCycleRedesigned)getActivity()).appendSub(", "+list.get(position));
+				((NewCycleRedesigned)getActivity()).replaceSub("Details: "+getArguments().getString(DHelper.cat_plantingMaterial)
+						+" "+list.get(position));
 				newFragment =new fragmentNewCycleLast();
 			}
 			newFragment.setArguments(b);

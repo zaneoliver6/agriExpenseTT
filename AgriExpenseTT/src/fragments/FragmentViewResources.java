@@ -85,8 +85,7 @@ public class FragmentViewResources extends ListFragment{
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==dialog.BUTTON_POSITIVE){
-				dm.delResource(id);
-				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_RESOURCES,id);
+				dm.deleteResource(id);
 				rList.remove(position);
 				adpt.notifyDataSetChanged();
 				 System.out.println(position);

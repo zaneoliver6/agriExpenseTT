@@ -67,7 +67,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";
 	public static final String UPDATE_ACCOUNT_ID="id";
 	
-	public static final int VERSION=67;
+	public static final int VERSION=68;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	

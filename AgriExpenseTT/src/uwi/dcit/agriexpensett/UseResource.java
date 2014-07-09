@@ -6,6 +6,8 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
+import uwi.dcit.agriexpensett.NewPurchaseRedesign.TouchL;
+
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
@@ -13,35 +15,62 @@ import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 import android.os.Build;
 
 public class UseResource extends ActionBarActivity {
 	Double total;
+	localCycle c;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Bundle data=this.getIntent().getExtras();
 		Bundle b=data.getParcelable("cyc");
-		localCycle c=b.getParcelable("cyc");
+		c=b.getParcelable("cyc");
 		String s=getIntent().getStringExtra("type");
 		System.out.println("type before:"+s);
 		String tS=getIntent().getStringExtra("total");
 		total=Double.parseDouble(tS);
 		setContentView(R.layout.activity_use_resource);
+		setupUI();
 		start(c,s);
 			
 	}
+	public static void hideSoftKeyboard(Activity activity) {
+	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+	}
+	public void setupUI() {
+		View v=findViewById(R.id.container_useResource);
+		TouchL l=new TouchL();
+		v.setOnTouchListener(l);
+	}
+	public class TouchL implements OnTouchListener{
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			if(v.getId()==R.id.container_useResource||v.getId()==R.id.container_useResource_frag)
+				hideSoftKeyboard(UseResource.this);
+			return false;
+		}
+	   
+   }
 	
 	private void start(localCycle c, String s) {
 		DbHelper dbh=new DbHelper(this);
@@ -95,7 +124,30 @@ public class UseResource extends ActionBarActivity {
 			line.setBackgroundResource(R.color.colourChem);
 		}
 	}
-
+	@Override
+	public void onBackPressed(){
+	    FragmentManager fm = getFragmentManager();
+	    if (fm.getBackStackEntryCount() > 0) {
+	        Log.i("MainActivity", "popping backstack");
+	        fm.popBackStack();
+	    } else {
+	        Log.i("MainActivity", "nothing on backstack, calling super");
+	        IntentLauncher l=new IntentLauncher();
+	        l.run();
+	        //super.onBackPressed();  
+	    }
+	}
+	private class IntentLauncher extends Thread{
+		@Override
+		public void run(){
+			Bundle b=new Bundle();
+			Intent i =new Intent(UseResource.this,CycleUseageRedesign.class);
+	        i.putExtra("cycleMain", c);
+			startActivity(i);
+			finish();
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

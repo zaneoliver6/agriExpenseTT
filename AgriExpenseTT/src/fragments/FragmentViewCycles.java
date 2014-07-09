@@ -1,6 +1,7 @@
 package fragments;
 
 import helper.DHelper;
+import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
@@ -182,8 +183,8 @@ public class FragmentViewCycles extends ListFragment{
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==dialog.BUTTON_POSITIVE){
-				db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_CYCLEID+"="+cList.get(position).getId(), null);
-				db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+cList.get(position).getId(), null);
+				DataManager dm=new DataManager(getActivity(), db, dbh);
+				dm.deleteCycle(cList.get(position));
 				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
 				cList.remove(position);
 				l.notifyDataSetChanged();

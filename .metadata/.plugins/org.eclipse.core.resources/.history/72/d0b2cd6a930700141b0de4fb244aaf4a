@@ -1,0 +1,143 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uwi.dcit.agriexpensett.UsePurchaseFrag"
+    tools:ignore="MergeRootFrame" >
+
+    <ScrollView
+        android:id="@+id/scrollview_useResourceLast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_header1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="7dp"
+                    android:text="TextView"
+                    android:textColor="#999999"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_top_det1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="19dp"
+                    android:text="TextView"
+                    android:textColor="#cccccc"
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/tv_mainNew_header"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="19dp"
+                        android:text="Enter amount"
+                        android:textColor="#cccccc"
+                        android:textSize="17sp" />
+
+                    <EditText
+                        android:id="@+id/et_useAmt"
+                        android:layout_width="109dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.67"
+                        android:ems="10"
+                        android:inputType="numberDecimal" >
+
+                        <requestFocus />
+                    </EditText>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_UsePurchase_cal"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Calculate" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_header2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="7dp"
+                    android:text="TextView"
+                    android:textColor="#999999"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_buttom_det1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="19dp"
+                    android:text="TextView"
+                    android:textColor="#cccccc"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_buttom_det2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="19dp"
+                    android:text="TextView"
+                    android:textColor="#cccccc"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_usePurchase_buttom_det3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="19dp"
+                    android:text="TextView"
+                    android:textColor="#cccccc"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/btn_usePurchase_done"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Use It !" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

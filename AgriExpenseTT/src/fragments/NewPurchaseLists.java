@@ -127,7 +127,7 @@ public class NewPurchaseLists extends ListFragment {
 				b.putString("type", "resource");
 				//pass the category to the resource
 				b.putString("category", list.get(position));
-				((NewPurchaseRedesign)getActivity()).appendSub(" "+list.get(position));
+				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+list.get(position));
 				newFragment =new NewPurchaseLists();
 				
 			}else if(type.equals("resource")){
@@ -137,7 +137,8 @@ public class NewPurchaseLists extends ListFragment {
 				b.putString("resource",list.get(position));
 				//pass the type as quantifier
 				b.putString("type","quantifier");
-				((NewPurchaseRedesign)getActivity()).appendSub(", "+list.get(position));
+				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "
+				+getArguments().getString("category")+", "+list.get(position));
 				
 				newFragment =new NewPurchaseLists();
 				
@@ -149,7 +150,8 @@ public class NewPurchaseLists extends ListFragment {
 				//pass the type as quantifier
 				b.putString("quantifier",list.get(position));
 				//to final Purchase fragment
-				((NewPurchaseRedesign)getActivity()).appendSub(", "+list.get(position));
+				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+getArguments().getString("category")
+						+", "+getArguments().getString("resource")+", "+list.get(position));
 				
 				newFragment =new Fragment_newpurchaseLast();
 			}
