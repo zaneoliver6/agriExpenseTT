@@ -90,7 +90,7 @@ public class DbQuery {
 		String code="select "+DbHelper.RESOURCES_ID+" from "+DbHelper.TABLE_RESOURCES+" where "+DbHelper.RESOURCES_NAME+"='"+name+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return 0;
+			return -1;
 		cursor.moveToFirst();
 		return cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCES_ID));
 	}

@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getResourcePurchase" key="selection"/>
+		<item value="getResources" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="getResourcePurchase"/>
-			<item value="getCycleUse"/>
-			<item value="delete"/>
-			<item value="deleterow"/>
-			<item value="geta"/>
-			<item value="getaresourcePurchase"/>
-			<item value="deleteCycleUse"/>
-			<item value="currCycle"/>
+			<item value="getresources"/>
+			<item value="other"/>
+			<item value="resId"/>
+			<item value="getname"/>
+			<item value="quantifer"/>
+			<item value="tv_newPurchase_other_quantifier"/>
+			<item value="type"/>
+			<item value="choose"/>
 		</list>
 		<list key="replacehistory">
+			<item value="quantifier"/>
 			<item value="17sp"/>
 			<item value="20sp"/>
 			<item value="Purchase"/>

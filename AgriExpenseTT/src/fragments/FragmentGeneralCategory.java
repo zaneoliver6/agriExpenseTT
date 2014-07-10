@@ -61,7 +61,7 @@ public class FragmentGeneralCategory extends Fragment{
 		cat_soilam=(TextView)view.findViewById(R.id.tv_catTotal_soilam);
 		cat_chem=(TextView)view.findViewById(R.id.tv_catTotal_chemical);
 		cat_labr=(TextView)view.findViewById(R.id.tv_catTotal_labour);
-		
+		Button btn_calc=(Button)view.findViewById(R.id.btn_general_calculate);
 		
 		cat_pm.setText("Planting Material:$"+pm);
 		cat_fer.setText("Fertilizer:$"+fer);
@@ -71,6 +71,27 @@ public class FragmentGeneralCategory extends Fragment{
 		
 		TextView sum=(TextView)view.findViewById(R.id.tv_catTotal_sum);
 		sum.setText("Total:$"+currCycle.getTotalSpent());
+	}
+	public class Click implements OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			if(v.getId()==R.id.btn_general_calculate){
+				IntentLauncher i=new IntentLauncher();
+				i.run();
+			}
+		}	
+	}
+	private class IntentLauncher extends Thread{
+		@Override
+		public void run(){
+			Bundle b=new Bundle();
+			b.putParcelable("cyc",currCycle);
+			Intent n=new Intent(getActivity(),UseResource.class);
+			n.putExtra("cyc",b);
+			getActivity().startActivity(n);
+			getActivity().finish();
+		}
 	}
 	private void calcTotals(){
 		currCycle=getArguments().getParcelable("cycle");

@@ -110,6 +110,10 @@
             android:name="uwi.dcit.agriexpensett.ViewCycleUsege"
             android:label="@string/title_activity_view_cycle_usege" >
         </activity>
+        <activity
+            android:name=".SalesCost"
+            android:label="@string/title_activity_sales_cost" >
+        </activity>
     </application>
 
 </manifest>

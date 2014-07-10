@@ -90,7 +90,6 @@ public class UseResource extends ActionBarActivity {
 			ft.add(R.id.useExpenseFrag, f);
 			ft.commit();
 		}else{
-		// TODO Auto-generated method stub
 			initialFrag(c,s);
 		}
 	}
@@ -122,6 +121,8 @@ public class UseResource extends ActionBarActivity {
 			line.setBackgroundResource(R.color.colourSoil);
 		}else if(category.equals(DHelper.cat_chemical)){
 			line.setBackgroundResource(R.color.colourChem);
+		}else if(category.equals(DHelper.cat_other)){
+			line.setBackgroundResource(R.color.colourOther);
 		}
 	}
 	@Override

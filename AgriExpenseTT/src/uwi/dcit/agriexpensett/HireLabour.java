@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -35,11 +36,20 @@ public class HireLabour extends ActionBarActivity {
 		ft.commit();
 	}
 	
-	public void appendSub(String extras){
+	public void replaceSub(String extras){
 		TextView sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
-		String s=sub_head.getText().toString();
-		s=s+" "+extras;
-		sub_head.setText(s);
+		sub_head.setText(extras);
+	}
+	@Override
+	public void onBackPressed(){
+	    FragmentManager fm = getFragmentManager();
+	    if (fm.getBackStackEntryCount() > 0) {
+	        Log.i("MainActivity", "popping backstack");
+	        fm.popBackStack();
+	    } else {
+	        Log.i("MainActivity", "nothing on backstack, calling super");
+	        super.onBackPressed();  
+	    }
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

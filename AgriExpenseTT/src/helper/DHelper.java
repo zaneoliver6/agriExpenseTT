@@ -6,6 +6,7 @@ public class DHelper {
 	public static final String cat_fertilizer="Fertilizer";
 	public static final String cat_soilAmendment="Soil amendment";
 	public static final String cat_labour="Labour";
+	public static final String cat_other="Other";
 	
 	public static final String qtf_plantingMaterial_seed="Seed";
 	public static final String qtf_plantingMaterial_seedling="Seedling";
@@ -31,5 +32,6 @@ public class DHelper {
 	public static final String colour_chemical="#806A0888";
 	public static final String colour_soilam="#8061380B";
 	public static final String colour_labour="#80D7DF01";
+	public static final String colour_other="#80E60000";
 
 }

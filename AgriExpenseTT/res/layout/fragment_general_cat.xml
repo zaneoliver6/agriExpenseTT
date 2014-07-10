@@ -92,7 +92,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="40dp" 
-        android:background="#80000000"
+        android:background="#4ddedede"
         />
+    <Button
+		android:id="@+id/btn_general_calculate"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="0dp"
+		android:background="@drawable/btn_custom_general"
+		android:text="Calculate sales" />
 
 </LinearLayout>

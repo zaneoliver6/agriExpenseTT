@@ -77,7 +77,6 @@ public class Fragment_newpurchaseLast extends Fragment{
 				if( ((et_qty.getText().toString()).equals(null))||((et_qty.getText().toString()).equals(""))  ){
 					error.setVisibility(error.VISIBLE);
 					error.setText("Enter Quantity");
-					Toast.makeText(getActivity(),"Enter Quantity", Toast.LENGTH_SHORT).show();
 					return;
 				}else{
 					qty=Double.parseDouble(et_qty.getText().toString());
@@ -85,12 +84,11 @@ public class Fragment_newpurchaseLast extends Fragment{
 				if( (et_cost.getText().toString().equals(null)) || ((et_cost.getText().toString()).equals("")) ){
 					error.setVisibility(error.VISIBLE);
 					error.setText("Enter cost");
-					Toast.makeText(getActivity(),"Enter Cost", Toast.LENGTH_SHORT).show();
 					return;
 				}else{
 					cost=Double.parseDouble(et_cost.getText().toString());
 				}
-				System.out.println("qty "+qty+" cost"+cost);
+				
 				DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);
 				try{
 					currC=getArguments().getParcelable("cycle");
@@ -107,6 +105,11 @@ public class Fragment_newpurchaseLast extends Fragment{
 					//cost=(Double.valueOf(df.format(cost)));
 					dm.updateCycleSpent(currC.getId(), currC.getTotalSpent()+cost);
 				}else{
+					if(category.equals(DHelper.cat_other)){//if its the other category
+						if(resId==-1){//and the resource does not exist
+							resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, resource);//then insert it !
+						}
+					}
 					dm.insertPurchase(resId, quantifier, qty, category, cost);
 				}
 				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);

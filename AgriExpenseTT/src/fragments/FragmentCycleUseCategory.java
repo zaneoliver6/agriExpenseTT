@@ -13,16 +13,12 @@ import uwi.dcit.agriexpensett.localCycle;
 import uwi.dcit.agriexpensett.localCycleUse;
 
 import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +26,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class FragmentCycleUseCategory extends Fragment{
@@ -75,6 +70,11 @@ public class FragmentCycleUseCategory extends Fragment{
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
 			//line.getBackground().setColorFilter(Color.parseColor("#00ff00"), PorterDuff.Mode.ADD);
 			btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
+		}else if(category.equals(DHelper.cat_other)){
+			btn_useage.setText("useage of"+category);
+			btn_useMore.setText("Add other expense");
+			line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
+			btn_useMore.setBackgroundResource(R.drawable.btn_custom_other);
 		}else{
 			btn_useage.setText(category+" useage");
 			btn_useMore.setText("Use more "+category);
@@ -176,18 +176,9 @@ public class FragmentCycleUseCategory extends Fragment{
 				Intent n=new Intent(getActivity(),ViewCycleUsege.class);
 				n.putExtra("type",category);
 				currCycle=getArguments().getParcelable("cycle");
-				
-				//Toast.makeText(getActivity(), currCycle.getId(), Toast.LENGTH_SHORT).show();
 				n.putExtra("id",""+currCycle.getId());
 				getActivity().startActivity(n);
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-				/*Bundle b=new Bundle();
-				b.putParcelable("cyc",currCycle);
-				Intent n=new Intent(getActivity(),UseResource.class);
-				n.putExtra("cyc",b);
-				n.putExtra("type",category);
-				n.putExtra("total",""+catTotal);
-				startActivity(n);*/
 				IntentLauncher launcher=new IntentLauncher();
 				launcher.start();
 			}

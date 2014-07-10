@@ -61,6 +61,7 @@ public class NewPurchaseLists extends ListFragment {
 			list.add(DHelper.cat_chemical);
 			list.add(DHelper.cat_fertilizer);
 			list.add(DHelper.cat_soilAmendment);
+			list.add(DHelper.cat_other);
 		}else if(type.equals("resource")){
 			DbQuery.getResources(db, dbh,getArguments().getString("category"), list);
 		}else if(type.equals("quantifier")){
@@ -124,11 +125,24 @@ public class NewPurchaseLists extends ListFragment {
 			Bundle b=new Bundle();
 			if(type.equals("category")){
 				//pass type as resource
-				b.putString("type", "resource");
-				//pass the category to the resource
-				b.putString("category", list.get(position));
 				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+list.get(position));
-				newFragment =new NewPurchaseLists();
+				if(list.get(position).equals(DHelper.cat_other)){
+					ArrayList<String> test=new ArrayList<String>();
+					DbQuery.getResources(db, dbh, DHelper.cat_other, test);
+					if(test.isEmpty()){
+						newFragment= new FragmentNewPurchaseOther();
+						b.putString("category",DHelper.cat_other);
+						b.putString("found", "no");
+					}else{
+						newFragment= new FragmentOtherResourceList();
+						b.putString("category",DHelper.cat_other);
+					}
+				}else{
+					b.putString("type", "resource");
+					//pass the category to the resource
+					b.putString("category", list.get(position));
+					newFragment =new NewPurchaseLists();
+				}
 				
 			}else if(type.equals("resource")){
 				//pass the category to quantifier

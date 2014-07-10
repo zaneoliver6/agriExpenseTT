@@ -30,6 +30,8 @@ public class CycleUseageRedesign extends ActionBarActivity {
 		Fragment catSoilAmendment=new FragmentCycleUseCategory();
 		Fragment catChemical=new FragmentCycleUseCategory();
 		Fragment catLabour = new FragmentCycleUseCategory();
+		Fragment catOther = new FragmentCycleUseCategory();
+		
 		
 		Bundle data = getIntent().getExtras();
 		localCycle curr = (localCycle) data.getParcelable("cycleMain");
@@ -59,6 +61,11 @@ public class CycleUseageRedesign extends ActionBarActivity {
 		data5.putString("category", DHelper.cat_labour);
 		catLabour.setArguments(data5);
 		
+		Bundle data6=new Bundle();
+		data6.putParcelable("cycle", curr);
+		data6.putString("category", DHelper.cat_other);
+		catOther.setArguments(data6);
+		
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
 		ft.add(R.id.cat_general_frag, catGeneral);
@@ -67,6 +74,7 @@ public class CycleUseageRedesign extends ActionBarActivity {
 		ft.add(R.id.cat_soilAmendment_frag, catSoilAmendment);
 		ft.add(R.id.cat_chemical_frag, catChemical);
 		ft.add(R.id.cat_labour_frag, catLabour);
+		ft.add(R.id.cat_other_frag, catOther);
 		ft.commit();
 	}
 

@@ -100,6 +100,14 @@
 
                 </FrameLayout>
                 
+                <FrameLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/cat_other_frag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                </FrameLayout>
+                
             </LinearLayout>
             
         </ScrollView>

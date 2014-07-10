@@ -48,7 +48,7 @@ public class FragmentLabourType extends Fragment{
 			Bundle data=new Bundle();
 			if(v.getId()==R.id.btn_labour_multipleCycle){
 				ListFragment lf=new HireLabourLists();
-				((HireLabour)getActivity()).appendSub(",many cycles");
+				//((HireLabour)getActivity()).appendSub(",many cycles");
 				data.putString("type", "quantifier");
 				data.putString("name",getArguments().getString("name"));
 				lf.setArguments(data);
@@ -57,11 +57,12 @@ public class FragmentLabourType extends Fragment{
 				ft.commit();
 			}else if(v.getId()==R.id.btn_labour_oneCycle){
 				ListFragment lf=new FragmentViewCycles();
-				((HireLabour)getActivity()).appendSub(",one cycle");
+				//((HireLabour)getActivity()).appendSub(",one cycle");
 				data.putString("name",getArguments().getString("name"));
 				data.putString("type", DHelper.cat_labour);
 				lf.setArguments(data);
 				ft.replace(R.id.NewCycleListContainer,lf);
+				ft.addToBackStack(null);
 				ft.commit();
 			}
 			

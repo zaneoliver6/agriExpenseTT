@@ -27,5 +27,6 @@
     <string name="title_activity_edit_choose_lists">EditChooseLists</string>
     <string name="title_activity_add_data">AddData</string>
     <string name="title_activity_view_cycle_usege">ViewCycleUsege</string>
+    <string name="title_activity_sales_cost">SalesCost</string>
 
 </resources>

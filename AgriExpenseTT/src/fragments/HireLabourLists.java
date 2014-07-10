@@ -84,7 +84,7 @@ public class HireLabourLists extends ListFragment {
 			if(type.equals("workers")){
 				b.putString("type", "quantifier");
 				b.putString("name", list.get(position));
-				((HireLabour)getActivity()).appendSub(list.get(position));
+				((HireLabour)getActivity()).replaceSub("Details:"+list.get(position));
 				newFragment=new FragmentLabourType();
 			}else if(type.equals("quantifier")){
 				try{
@@ -98,7 +98,8 @@ public class HireLabourLists extends ListFragment {
 				b.putString("quantifier",list.get(position));
 				System.out.println("res "+getArguments().getString("name"));
 				b.putString("resource",getArguments().getString("name"));
-				((HireLabour)getActivity()).appendSub(","+list.get(position));
+				((HireLabour)getActivity()).replaceSub("Details:"+getArguments().getString("name")
+						+", "+list.get(position));
 				newFragment=new Fragment_newpurchaseLast();
 			}
 			newFragment.setArguments(b);

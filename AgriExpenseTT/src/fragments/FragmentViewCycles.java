@@ -142,7 +142,8 @@ public class FragmentViewCycles extends ListFragment{
 			Bundle data=new Bundle();
 			data.putString("type", "quantifier");
 			data.putString("name", getArguments().getString("name"));
-			((HireLabour)getActivity()).appendSub(",cycle#"+cList.get(position).getId());
+			((HireLabour)getActivity()).replaceSub("Details:"+getArguments().getString("name")
+					+", cycle#"+cList.get(position).getId());
 			data.putParcelable("cycle", cList.get(position));
 			lf.setArguments(data);
 			ft.replace(R.id.NewCycleListContainer, lf);

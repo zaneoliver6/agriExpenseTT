@@ -46,6 +46,9 @@
 # view res/layout/abc_search_view.xml #generated:85
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
+# view AndroidManifest.xml #generated:113
+-keep class com.example.agriexpensett.SalesCost { <init>(...); }
+
 # view AndroidManifest.xml #generated:44
 -keep class fragments.ChoosePurchase { <init>(...); }
 

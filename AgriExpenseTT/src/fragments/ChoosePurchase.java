@@ -120,6 +120,8 @@ public class ChoosePurchase extends ListFragment {
 				   line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
 			   }else if(curr.getType().equals(DHelper.cat_labour)){
 				   line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+			   }else if(curr.getType().equals(DHelper.cat_other)){
+				   line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
 			   }
 			 
 			   //get the elements of that view and set them accordingly
