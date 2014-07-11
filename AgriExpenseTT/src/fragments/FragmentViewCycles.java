@@ -12,10 +12,10 @@ import java.util.Date;
 import uwi.dcit.agriexpensett.CycleUseageRedesign;
 import uwi.dcit.agriexpensett.EditCycle;
 import uwi.dcit.agriexpensett.HireLabour;
-import uwi.dcit.agriexpensett.localCycle;
 
 import com.example.agriexpensett.R;
 
+import dataObjects.localCycle;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;

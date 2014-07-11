@@ -11,6 +11,8 @@ import uwi.dcit.agriexpensett.NewPurchaseRedesign.TouchL;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
+import dataObjects.localResourcePurchase;
 import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
 import android.support.v7.app.ActionBarActivity;

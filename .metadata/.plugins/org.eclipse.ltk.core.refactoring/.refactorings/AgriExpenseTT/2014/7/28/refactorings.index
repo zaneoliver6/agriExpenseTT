@@ -34,3 +34,13 @@
 1404965256040	Delete element
 1404966522774	Rename field 'editText1'
 1405012657575	Wrap in Container
+1405020111242	Move compilation unit
+1405037527555	Delete element
+1405052475778	Rename field 'tv_harvestDet_saleDesc'
+1405053282179	Rename field 'editText1'
+1405057021455	Move compilation unit
+1405057028957	Delete element
+1405057067169	Move compilation unit
+1405057075614	Move compilation unit
+1405057084678	Move compilation unit
+1405057158424	Encapsulate field 'harvestAmt'

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import uwi.dcit.agriexpensett.localCycle;
-import uwi.dcit.agriexpensett.localCycleUse;
-import uwi.dcit.agriexpensett.localResourcePurchase;
-
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
+import dataObjects.localResourcePurchase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -242,10 +241,10 @@ public class DataManager {
 		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "up");
 	}
 	public void updateCycleSpent(int id,double amt){
-		String strFilter = DbHelper.CROPCYCLE_ID+"="+id;
-		ContentValues args = new ContentValues();
-		args.put(DbHelper.CROPCYCLE_TOTALSPENT,amt);
-		db.update(DbHelper.TABLE_CROPCYLE, args, strFilter, null);
+		ContentValues cv=new ContentValues();
+		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, amt);
+		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+id, null);
+		
 		//update the cloud
 		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, id, "up");
 		//record in transaction log

@@ -111,8 +111,12 @@
             android:label="@string/title_activity_view_cycle_usege" >
         </activity>
         <activity
-            android:name=".SalesCost"
+            android:name="uwi.dcit.agriexpensett.SalesCost"
             android:label="@string/title_activity_sales_cost" >
+        </activity>
+        <activity
+            android:name="uwi.dcit.agriexpensett.HarvestDetails"
+            android:label="@string/title_activity_harvest_details" >
         </activity>
     </application>
 

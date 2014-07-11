@@ -7,12 +7,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.agriexpensett.SalesCost" >
+    tools:context="uwi.dcit.agriexpensett.SalesCost" >
 
-    <View
-        android:id="@+id/line_header_sales"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp" />
+   
 
     <TextView
         android:id="@+id/textView1"
@@ -33,7 +30,6 @@
 		<LinearLayout
 		    android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
             android:orientation="vertical" >
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,14 +66,7 @@
                 android:textColor="#cccccc"
                 android:textSize="17sp" />
 
-            <Button
-                android:id="@+id/btn_salesCost_harvest"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/btn_custom"
-                android:text="Change Harvest" />
+            
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDetHead"
@@ -119,6 +108,14 @@
                 android:text="Crop measurement"
                 android:textColor="#cccccc"
                 android:textSize="16sp" />
+            <Button
+                android:id="@+id/btn_salesCost_harvest"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/btn_custom"
+                android:text="Change Harvest" />
         </LinearLayout>
 
         <LinearLayout
@@ -157,22 +154,14 @@
                 android:textColor="#cccccc"
                 android:textSize="17sp" />
 
-            <Button
-                android:id="@+id/btn_salesCost_sell"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:layout_marginTop="7dp"
-                android:background="@drawable/btn_custom"
-                android:text="Change selling details" />
-
+          
             <TextView
                 android:id="@+id/tv_salesCost_saleDetHead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="7dp"
-                android:text="Harvest Details"
+                android:text="Profit/Loss Details"
                 android:textColor="#999999"
                 android:textSize="17sp"
                 android:textStyle="bold" />
@@ -206,6 +195,27 @@
                 android:text="Crop measurement"
                 android:textColor="#cccccc"
                 android:textSize="16sp" />
+            
+             <EditText
+                  android:id="@+id/et_salsesCost_sell"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:ems="10"
+                  android:inputType="numberDecimal" >
+
+                  <requestFocus />
+              </EditText>
+              <Button
+                android:id="@+id/btn_salesCost_dne"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/btn_custom"
+                android:text="Save" />
+
+             
+            
         </LinearLayout>
 		</LinearLayout>
     </ScrollView>

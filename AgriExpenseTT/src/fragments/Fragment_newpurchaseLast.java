@@ -1,6 +1,5 @@
 package fragments;
 
-import uwi.dcit.agriexpensett.localCycle;
 import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
@@ -9,6 +8,7 @@ import helper.DbQuery;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
 import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;

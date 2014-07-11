@@ -4,13 +4,13 @@ import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.agriexpensett.SalesCost;
 import uwi.dcit.agriexpensett.UseResource;
 import uwi.dcit.agriexpensett.ViewCycleUsege;
-import uwi.dcit.agriexpensett.localCycle;
-import uwi.dcit.agriexpensett.localCycleUse;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +26,8 @@ import android.widget.TextView;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
 import fragments.FragmentCycleUseCategory.Click;
 
 public class FragmentGeneralCategory extends Fragment{
@@ -35,7 +37,7 @@ public class FragmentGeneralCategory extends Fragment{
 	TextView cat_soilam;//soil amendment
 	TextView cat_chem;//chemical
 	TextView cat_labr;//labour
-	
+	TextView statement1;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	
@@ -55,22 +57,29 @@ public class FragmentGeneralCategory extends Fragment{
 	}
 	
 	private void setup() {
-		totalLbl=(TextView)view.findViewById(R.id.tv_catTotal_lbl);
+		//totalLbl=(TextView)view.findViewById(R.id.tv_catTotal_lbl);
 		cat_pm=(TextView)view.findViewById(R.id.tv_catTotal_pm);
 		cat_fer=(TextView)view.findViewById(R.id.tv_catTotal_fertilizer);
 		cat_soilam=(TextView)view.findViewById(R.id.tv_catTotal_soilam);
 		cat_chem=(TextView)view.findViewById(R.id.tv_catTotal_chemical);
 		cat_labr=(TextView)view.findViewById(R.id.tv_catTotal_labour);
 		Button btn_calc=(Button)view.findViewById(R.id.btn_general_calculate);
-		
-		cat_pm.setText("Planting Material:$"+pm);
-		cat_fer.setText("Fertilizer:$"+fer);
-		cat_soilam.setText("Soil Amendment:$"+soilam);
-		cat_chem.setText("Chemical:$"+chem);
-		cat_labr.setText("Labour:$"+labr);
+		Click c=new Click();
+		btn_calc.setOnClickListener(c);
+		DecimalFormat df = new DecimalFormat("#.00"); 
+		cat_pm.setText("Planting Material:$"+Double.valueOf(df.format(pm)));
+		cat_fer.setText("Fertilizer:$"+Double.valueOf(df.format(fer)));
+		cat_soilam.setText("Soil Amendment:$"+Double.valueOf(df.format(soilam)));
+		cat_chem.setText("Chemical:$"+Double.valueOf(df.format(chem)));
+		cat_labr.setText("Labour:$"+Double.valueOf(df.format(labr)));
 		
 		TextView sum=(TextView)view.findViewById(R.id.tv_catTotal_sum);
-		sum.setText("Total:$"+currCycle.getTotalSpent());
+		sum.setText("Total:$"+Double.valueOf(df.format(currCycle.getTotalSpent())));
+		TextView harvest=(TextView)view.findViewById(R.id.tv_catTotal_harvest);
+		harvest.setText("Harvested:"+currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
+		statement1=(TextView)view.findViewById(R.id.tv_catTotal_harvest1);
+		statement1.setText("Sales:$"+Double.valueOf(df.format(currCycle.getCostPer()))+" "
+				+currCycle.getHarvestType()+" = "+(currCycle.getCostPer()*currCycle.getHarvestAmt()));
 	}
 	public class Click implements OnClickListener{
 
@@ -85,10 +94,10 @@ public class FragmentGeneralCategory extends Fragment{
 	private class IntentLauncher extends Thread{
 		@Override
 		public void run(){
-			Bundle b=new Bundle();
-			b.putParcelable("cyc",currCycle);
-			Intent n=new Intent(getActivity(),UseResource.class);
-			n.putExtra("cyc",b);
+			//Bundle b=new Bundle();
+			//b.putParcelable("cycle",currCycle);
+			Intent n=new Intent(getActivity(),SalesCost.class);
+			n.putExtra("cycle", currCycle);
 			getActivity().startActivity(n);
 			getActivity().finish();
 		}

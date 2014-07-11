@@ -1,0 +1,59 @@
+package uwi.dcit.agriexpensett;
+
+import com.example.agriexpensett.R;
+import com.example.agriexpensett.R.id;
+import com.example.agriexpensett.R.layout;
+import com.example.agriexpensett.R.menu;
+
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+public class SalesCost extends ActionBarActivity {
+	
+	TextView harvestDesc;
+	TextView salesDesc;
+	TextView harvestDet1;
+	TextView harvestDet2;
+	TextView harvestDet3;
+	TextView salesDet1;
+	TextView salesDet2;
+	TextView salesDet3;
+	
+	localCycle currCycle;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_sales_cost);
+		currCycle=getIntent().getExtras().getParcelable("cyc");
+		setup();
+	}
+
+	private void setup() {
+		harvestDesc=(TextView)findViewById(R.id.tv_salesCost_harvestDesc);
+		
+		salesDesc=(TextView)findViewById(R.id.tv_salesCost_saleDesc);
+		
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.sales_cost, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+}

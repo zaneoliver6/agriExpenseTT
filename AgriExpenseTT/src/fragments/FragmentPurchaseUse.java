@@ -8,7 +8,6 @@ import java.text.DecimalFormat;
 
 import uwi.dcit.agriexpensett.CycleUseageRedesign;
 import uwi.dcit.agriexpensett.UseResource;
-import uwi.dcit.agriexpensett.localCycle;
 
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.R.id;
@@ -16,10 +15,13 @@ import com.example.agriexpensett.R.layout;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,19 +111,22 @@ public class FragmentPurchaseUse extends Fragment {
 			}else if(v.getId()==R.id.btn_usePurchase_done){
 				Toast.makeText(getActivity().getBaseContext(),"yea", Toast.LENGTH_SHORT).show();
 				
-				System.out.println("cycleId"+c.getId()+" purchaseId"+p.getPId());
+				//System.out.println("cycleId"+c.getId()+" purchaseId"+p.getPId());
 				double qty=Double.parseDouble(et_amt.getText().toString());
-				System.out.println("qty"+qty+" qty remaining"+p.getQtyRemaining());
+				//System.out.println("qty"+qty+" qty remaining"+p.getQtyRemaining());
 				if(qty<=p.getQtyRemaining()){
 					DataManager dm=new DataManager(getActivity().getBaseContext());
 					dm.insertCycleUse(c.getId(), p.getPId(), qty, p.getType());
 					dm.updatePurchase(p.getPId(),(p.getQtyRemaining()-qty));
 					
 					calcost=(qty/p.getQty())*p.getCost();
-					calcost=(Double.valueOf(df.format(calcost)));
-					c.setTotalSpent(Double.valueOf(c.getTotalSpent()+calcost));
-					dm.updateCycleSpent(c.getId(), c.getTotalSpent());
+					c.setTotalSpent(c.getTotalSpent()+calcost);
+					System.out.println("total spent"+c.getTotalSpent());
+					dm.updateCycleSpent(c.getId(), c.getTotalSpent()); 					//ContentValues cv=new ContentValues();
+					//cv.put(DbHelper.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+					//db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
 					
+					Log.i(getTag(), ""+c.getId());
 					//getActivity().finish();
 					IntentLauncher i=new IntentLauncher();
 					i.start();

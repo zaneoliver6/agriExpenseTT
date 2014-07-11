@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.example.agriexpensett.R;
 
+import dataObjects.localCycleUse;
+import dataObjects.localResourcePurchase;
 import helper.DbHelper;
 import helper.DbQuery;
 import android.support.v7.app.ActionBarActivity;

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
+import dataObjects.localResourcePurchase;
 import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
 import fragments.FragmentViewCycles;

@@ -2,6 +2,7 @@ package uwi.dcit.agriexpensett;
 
 import com.example.agriexpensett.R;
 
+import dataObjects.localCycle;
 import fragments.FragmentCycleUseCategory;
 import fragments.FragmentGeneralCategory;
 import helper.DHelper;

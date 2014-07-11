@@ -96,6 +96,14 @@ public class EditChooseLists extends ActionBarActivity {
 				list.add(DHelper.qtf_chemical_g);
 				list.add(DHelper.qtf_chemical_kg);
 			}
+		}else if(content.equals("measurement")){
+			list.add("Lb");
+			list.add("Kg");
+			list.add("Bag");
+			list.add("Bundle");
+			list.add("Head");
+			list.add("100's");
+			list.add("5lb Bundle");
 		}
 	}
 

@@ -46,9 +46,6 @@
 # view res/layout/abc_search_view.xml #generated:85
 -keep class android.support.v7.widget.SearchView$SearchAutoComplete { <init>(...); }
 
-# view AndroidManifest.xml #generated:113
--keep class com.example.agriexpensett.SalesCost { <init>(...); }
-
 # view AndroidManifest.xml #generated:44
 -keep class fragments.ChoosePurchase { <init>(...); }
 
@@ -79,6 +76,9 @@
 # view AndroidManifest.xml #generated:86
 -keep class uwi.dcit.agriexpensett.EditPurchase { <init>(...); }
 
+# view AndroidManifest.xml #generated:117
+-keep class uwi.dcit.agriexpensett.HarvestDetails { <init>(...); }
+
 # view AndroidManifest.xml #generated:71
 -keep class uwi.dcit.agriexpensett.HireLabour { <init>(...); }
 
@@ -99,6 +99,9 @@
 
 # view AndroidManifest.xml #generated:58
 -keep class uwi.dcit.agriexpensett.NewPurchaseRedesign { <init>(...); }
+
+# view AndroidManifest.xml #generated:113
+-keep class uwi.dcit.agriexpensett.SalesCost { <init>(...); }
 
 # view AndroidManifest.xml #generated:49
 -keep class uwi.dcit.agriexpensett.UsePurchaseFrag { <init>(...); }

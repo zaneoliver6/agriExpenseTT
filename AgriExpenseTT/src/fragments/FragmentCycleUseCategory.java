@@ -4,17 +4,18 @@ import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import uwi.dcit.agriexpensett.UseResource;
 import uwi.dcit.agriexpensett.ViewCycleUsege;
-import uwi.dcit.agriexpensett.localCycle;
-import uwi.dcit.agriexpensett.localCycleUse;
 
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -64,7 +65,7 @@ public class FragmentCycleUseCategory extends Fragment{
 		category=getArguments().getString("category");
 		
 		if(category.equals(DHelper.cat_labour)){
-			btn_useage.setText(category+" useage");
+			btn_useage.setText(category+" usage");
 			btn_useMore.setText("Add Labour");
 		//	line.set("#ffffff");
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
@@ -76,7 +77,7 @@ public class FragmentCycleUseCategory extends Fragment{
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
 			btn_useMore.setBackgroundResource(R.drawable.btn_custom_other);
 		}else{
-			btn_useage.setText(category+" useage");
+			btn_useage.setText(category+" usage");
 			btn_useMore.setText("Use more "+category);
 			if(category.equals(DHelper.cat_plantingMaterial)){
 				btn_useMore.setBackgroundResource(R.drawable.btn_custom_plantmaterial);
@@ -94,7 +95,7 @@ public class FragmentCycleUseCategory extends Fragment{
 		}
 		//getArguments().getParcelable("Cycle");
 		currCycle=getArguments().getParcelable("cycle");
-		System.out.println(category);
+		
 		//default texts
 		catMain.setText(category);
 		
@@ -105,14 +106,11 @@ public class FragmentCycleUseCategory extends Fragment{
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		//getting aggregate and complex data 
 		ArrayList<localCycleUse> useList=new ArrayList<localCycleUse>();
-		System.out.println("cycle id"+currCycle.getId());
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> Names=null;
 		double[] Totals=null;
-		if(useList.isEmpty()){
-			System.out.println(currCycle.getId()+" :plantMaterial empty");
-		}else{
+		if(!(useList.isEmpty())){
 			Names=new ArrayList<String>();
 			Totals=new double[useList.size()];
 			Iterator<localCycleUse> itr=useList.iterator();
@@ -142,8 +140,8 @@ public class FragmentCycleUseCategory extends Fragment{
 			}
 		}
 		//----------------------SETUP SUB CATEGORYS IF ANY
-		
-		catDet1.setText("$"+catTotal+" has been spent on "+category+" for this cycle so far");
+		DecimalFormat df = new DecimalFormat("#.00"); 
+		catDet1.setText("$"+Double.valueOf(df.format(catTotal))+" has been spent on "+category+" for this cycle so far");
 		catDet2.setText("No main expense yet");
 		if(Names!=null){
 			int x=0,maxPos=0;
@@ -155,7 +153,8 @@ public class FragmentCycleUseCategory extends Fragment{
 				System.out.println(category+" "+namesItr.next());
 				x++;
 			}
-			catDet2.setText("The most amount of money was spent on "+Names.get(maxPos)+" which costed $"+Totals[maxPos]);
+			catDet2.setText("The most amount of money was spent on "
+			+Names.get(maxPos)+" which costed $"+Double.valueOf(df.format(Totals[maxPos])));
 		}else{
 			catDet2.setText("No main expense yet");
 		}

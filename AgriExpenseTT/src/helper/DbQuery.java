@@ -2,15 +2,14 @@ package helper;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.localCycle;
-import uwi.dcit.agriexpensett.localCycleUse;
-import uwi.dcit.agriexpensett.localResourcePurchase;
-
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import com.example.agriexpensett.translogendpoint.model.TransLog;
 
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
+import dataObjects.localResourcePurchase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -66,6 +65,9 @@ public class DbQuery {
 		cv.put(DbHelper.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(DbHelper.CROPCYCLE_DATE, time);
 		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, 0.0);
+		cv.put(DbHelper.CROPCYCLE_COSTPER, 0.0);
+		cv.put(DbHelper.CROPCYCLE_HARVEST_AMT, 0.0);
+		cv.put(DbHelper.CROPCYCLE_HARVEST_TYPE,"Lb");
 		db.insert(DbHelper.TABLE_CROPCYLE, null,cv);
 		int rowId=getLast(db, dbh, DbHelper.TABLE_CROPCYLE);
 		tl.insertTransLog(DbHelper.TABLE_CROPCYLE,rowId,TransactionLog.TL_INS );
@@ -106,6 +108,10 @@ public class DbQuery {
 			n.setLandType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_TYPE)));
 			n.setLandQty(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_AMOUNT)));
 			n.setTime(cursor.getLong(cursor.getColumnIndex(DbHelper.CROPCYCLE_DATE)));
+			n.setTotalSpent(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_TOTALSPENT)));
+			n.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_AMT)));
+			n.setHarvestType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_TYPE)));
+			n.setCostPer(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_COSTPER)));
 			list.add(n);
 		}
 	}
@@ -295,6 +301,9 @@ public class DbQuery {
 		c.setLandQty(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_AMOUNT)));
 		c.setLandType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_TYPE)));
 		c.setTotalSpent(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_TOTALSPENT)));
+		//c.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_AMT)));
+		//c.setHarvestType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_TYPE)));
+		//c.setCostPer(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_COSTPER)));
 		return c;
 	}
 	

@@ -2,6 +2,7 @@ package uwi.dcit.agriexpensett;
 
 import com.example.agriexpensett.R;
 
+import dataObjects.localResourcePurchase;
 import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;

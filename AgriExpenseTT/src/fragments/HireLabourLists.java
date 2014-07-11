@@ -7,12 +7,12 @@ import helper.DbQuery;
 import java.util.ArrayList;
 
 import uwi.dcit.agriexpensett.HireLabour;
-import uwi.dcit.agriexpensett.localCycle;
 
 import com.example.agriexpensett.R;
 import com.example.agriexpensett.R.id;
 import com.example.agriexpensett.R.layout;
 
+import dataObjects.localCycle;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
