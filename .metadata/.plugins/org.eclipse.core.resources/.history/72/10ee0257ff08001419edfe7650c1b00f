@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_labourType_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:text="Will name be working on one cycle or many cycles?"
+        android:textSize="22sp" />
+    
+    <Button
+        android:id="@+id/btn_labour_oneCycle"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="220dp"
+        android:layout_height="80dp"
+        android:textSize="25sp"
+        android:background="#4ddedede"
+        android:text="One Cycle" />
+
+    <Button
+        android:id="@+id/btn_labour_multipleCycle"
+        android:layout_marginTop="30dp"
+       android:layout_gravity="center_horizontal"
+        android:layout_width="220dp"
+        android:layout_height="80dp"
+        android:textSize="25sp"
+        android:background="#4ddedede"
+        android:text="Many Cycles" />
+
+</LinearLayout>
