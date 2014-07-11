@@ -12,6 +12,7 @@
         android:orientation="vertical" >
 
         <FrameLayout
+            
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" >
@@ -30,7 +31,6 @@
                     android:text="Creating new crop cycle"
                     android:textColor="#999999"
                     android:textSize="25sp" />
-
                 <TextView
                     android:id="@+id/tv_mainNew_subheader"
                     android:layout_width="wrap_content"
@@ -40,21 +40,20 @@
                     android:text="Details:"
                     android:textColor="#999999"
                     android:textSize="16sp" />
+
             </LinearLayout>
+
         </FrameLayout>
 
-        <ScrollView
-            android:id="@+id/srollnewcycle"
+        <FrameLayout
+            android:id="@+id/NewCycleListContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4" >
+            android:layout_height="0dp" 
+            android:layout_weight="4">
 
-            <FrameLayout
-                android:id="@+id/NewCycleListContainer"
-                android:layout_width="match_parent"
-                android:layout_height="0dp" >
-            </FrameLayout>
-        </ScrollView>
+        </FrameLayout>
+
     </LinearLayout>
 
 </FrameLayout>
+

@@ -58,7 +58,6 @@ public class FragmentAddData extends ListFragment {
 			list.add(DHelper.cat_chemical);
 			list.add(DHelper.cat_fertilizer);
 			list.add(DHelper.cat_soilAmendment);
-			list.add(DHelper.cat_labour);
 		//}
 	}
 

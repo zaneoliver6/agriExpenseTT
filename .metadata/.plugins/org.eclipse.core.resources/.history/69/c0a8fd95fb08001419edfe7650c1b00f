@@ -43,8 +43,8 @@
             </LinearLayout>
         </FrameLayout>
 
-        <ScrollView
-            android:id="@+id/srollnewcycle"
+        <helper.FlyOutContainer
+            android:id="@+id/scrollviewcyclenew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="4" >
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp" >
             </FrameLayout>
-        </ScrollView>
+        </helper.FlyOutContainer>
     </LinearLayout>
 
 </FrameLayout>
