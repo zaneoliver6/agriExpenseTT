@@ -8,13 +8,8 @@ import helper.DbQuery;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
-import dataObjects.localCycle;
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -24,15 +19,15 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class fragmentNewCycleLast extends Fragment{
 	String plantMaterial;

@@ -6,18 +6,11 @@ import helper.DbQuery;
 
 import java.text.DecimalFormat;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-import uwi.dcit.agriexpensett.UseResource;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import dataObjects.localCycle;
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.UseResource;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import android.app.Fragment;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -30,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class FragmentPurchaseUse extends Fragment {
 	View view;

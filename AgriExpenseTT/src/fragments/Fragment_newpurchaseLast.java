@@ -4,22 +4,19 @@ import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import dataObjects.localCycle;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class Fragment_newpurchaseLast extends Fragment{
 	View view;

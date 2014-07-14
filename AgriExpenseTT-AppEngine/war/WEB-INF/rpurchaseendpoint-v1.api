@@ -23,59 +23,23 @@
     "type" : "no-cache",
     "maxAge" : 0
   },
-  "ownerDomain" : "example.com",
-  "ownerName" : "example.com",
-  "packagePath" : "agriexpensett",
+  "ownerDomain" : "dcit.uwi",
+  "ownerName" : "dcit.uwi",
+  "packagePath" : "AgriExpenseTT",
   "methods" : {
-    "rpurchaseendpoint.updateRPurchase" : {
-      "path" : "rpurchase",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "rpurchaseendpoint.insertRPurchase" : {
-      "path" : "rpurchase",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "rpurchaseendpoint.listRPurchase" : {
-      "path" : "rpurchase",
+    "rpurchaseendpoint.getRPurchase" : {
+      "path" : "rpurchase/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.listRPurchase",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.getRPurchase",
       "request" : {
         "parameters" : {
-          "cursor" : {
+          "id" : {
             "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
+            "required" : true
           }
         },
         "body" : "empty"
@@ -91,7 +55,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.removeRPurchase",
       "request" : {
         "parameters" : {
           "id" : {
@@ -105,19 +69,55 @@
         "body" : "empty"
       }
     },
-    "rpurchaseendpoint.getRPurchase" : {
-      "path" : "rpurchase/{id}",
+    "rpurchaseendpoint.updateRPurchase" : {
+      "path" : "rpurchase",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.updateRPurchase",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.insertRPurchase" : {
+      "path" : "rpurchase",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.insertRPurchase",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.listRPurchase" : {
+      "path" : "rpurchase",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.listRPurchase",
       "request" : {
         "parameters" : {
-          "id" : {
+          "cursor" : {
             "type" : "string",
-            "required" : true
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
           }
         },
         "body" : "empty"
@@ -210,7 +210,14 @@
       }
     },
     "methods" : {
-      "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase" : {
+      "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.getRPurchase" : {
+        "response" : {
+          "$ref" : "RPurchase"
+        }
+      },
+      "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.removeRPurchase" : {
+      },
+      "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.updateRPurchase" : {
         "request" : {
           "$ref" : "RPurchase"
         },
@@ -218,7 +225,7 @@
           "$ref" : "RPurchase"
         }
       },
-      "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase" : {
+      "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.insertRPurchase" : {
         "request" : {
           "$ref" : "RPurchase"
         },
@@ -226,16 +233,9 @@
           "$ref" : "RPurchase"
         }
       },
-      "com.example.agriexpensett.RPurchaseEndpoint.listRPurchase" : {
+      "uwi.dcit.AgriExpenseTT.RPurchaseEndpoint.listRPurchase" : {
         "response" : {
           "$ref" : "CollectionResponse_RPurchase"
-        }
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase" : {
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase" : {
-        "response" : {
-          "$ref" : "RPurchase"
         }
       }
     }

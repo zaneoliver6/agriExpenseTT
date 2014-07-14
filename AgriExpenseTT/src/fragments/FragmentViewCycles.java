@@ -9,14 +9,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-import uwi.dcit.agriexpensett.EditCycle;
-import uwi.dcit.agriexpensett.HireLabour;
-
-import com.example.agriexpensett.R;
-
-import dataObjects.localCycle;
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.EditCycle;
+import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
@@ -24,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class FragmentViewCycles extends ListFragment{
 	String type=null;

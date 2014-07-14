@@ -6,18 +6,12 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
-import uwi.dcit.agriexpensett.NewPurchaseRedesign;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
+import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,8 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;

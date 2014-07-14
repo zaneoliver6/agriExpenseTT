@@ -1,33 +1,26 @@
-package uwi.dcit.agriexpensett;
+package uwi.dcit.AgriExpenseTT;
 
+import fragments.ChoosePurchase;
+import fragments.FragmentEmpty;
+import fragments.FragmentViewCycles;
+import fragments.FragmentViewResources;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import dataObjects.localCycle;
-import dataObjects.localResourcePurchase;
-import fragments.ChoosePurchase;
-import fragments.FragmentEmpty;
-import fragments.FragmentViewCycles;
-import fragments.FragmentViewResources;
-import android.app.ActionBar.Tab;
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
+import android.app.ActionBar.Tab;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import dataObjects.localCycle;
+import dataObjects.localResourcePurchase;
 
 public class ViewNavigation extends ActionBarActivity {
 	ArrayList<localCycle> li;

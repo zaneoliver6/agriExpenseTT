@@ -1,12 +1,7 @@
 package fragments;
 
-import uwi.dcit.agriexpensett.HireLabour;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
 import helper.DHelper;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

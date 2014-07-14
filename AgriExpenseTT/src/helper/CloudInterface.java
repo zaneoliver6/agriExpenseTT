@@ -1,32 +1,21 @@
 package helper;
 
-import java.io.IOException;
-import java.security.KeyFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.Cycleendpoint;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.Cycleuseendpoint;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.model.CycleUse;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.Rpurchaseendpoint;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.AgriExpenseTT.translogendpoint.Translogendpoint;
+import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.widget.Toast;
 
-import com.example.agriexpensett.cycleendpoint.*;
-import com.example.agriexpensett.cycleendpoint.model.*;
-import com.example.agriexpensett.cycleuseendpoint.*;
-import com.example.agriexpensett.cycleuseendpoint.model.CollectionResponseCycleUse;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.*;
-import com.example.agriexpensett.rpurchaseendpoint.model.CollectionResponseRPurchase;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.Translogendpoint;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 //import com.google.appengine.api.datastore.Key;

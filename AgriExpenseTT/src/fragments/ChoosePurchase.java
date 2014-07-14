@@ -1,24 +1,15 @@
 package fragments;
 
 
-import fragments.FragmentViewCycles.CycleListAdapter;
 import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import uwi.dcit.agriexpensett.EditPurchase;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.drawable;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
-import dataObjects.localCycle;
-import dataObjects.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.EditPurchase;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -37,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
+import dataObjects.localResourcePurchase;
 
 public class ChoosePurchase extends ListFragment {
 	MyListAdapter myListAdapter;

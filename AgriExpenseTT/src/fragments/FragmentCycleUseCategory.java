@@ -8,14 +8,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.agriexpensett.UseResource;
-import uwi.dcit.agriexpensett.ViewCycleUsege;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import dataObjects.localCycle;
-import dataObjects.localCycleUse;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.UseResource;
+import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +23,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
 
 
 public class FragmentCycleUseCategory extends Fragment{

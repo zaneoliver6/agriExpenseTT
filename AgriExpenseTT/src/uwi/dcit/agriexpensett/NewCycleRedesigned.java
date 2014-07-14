@@ -1,24 +1,20 @@
-package uwi.dcit.agriexpensett;
-
-import com.example.agriexpensett.R;
+package uwi.dcit.AgriExpenseTT;
 
 import fragments.NewCycleLists;
 import helper.DHelper;
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class NewCycleRedesigned extends ActionBarActivity {

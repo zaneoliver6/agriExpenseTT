@@ -1,4 +1,4 @@
-package uwi.dcit.agriexpensett;
+package uwi.dcit.AgriExpenseTT;
 
 import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
@@ -9,22 +9,18 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.ViewNavigation.TabListener;
-
-import com.example.agriexpensett.R;
-
-import dataObjects.localCycle;
-import dataObjects.localResourcePurchase;
-import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.app.ActionBar.Tab;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import dataObjects.localCycle;
+import dataObjects.localResourcePurchase;
 
 public class DeleteData extends ActionBarActivity {
 

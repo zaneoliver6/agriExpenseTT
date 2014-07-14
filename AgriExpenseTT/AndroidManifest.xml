@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.agriexpensett"
+    package="uwi.dcit.AgriExpenseTT"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -16,15 +16,15 @@
         android:label="AgriExpenseTT"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="uwi.dcit.agriexpensett.MainActivity"
+            android:name="uwi.dcit.AgriExpenseTT.MainActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.NewCycle"
+            android:name="uwi.dcit.AgriExpenseTT.NewCycle"
             android:label="@string/title_activity_new_cycle" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.MainMenu"
+            android:name="uwi.dcit.AgriExpenseTT.MainMenu"
             android:label="Menu" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +33,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.CycleUseage"
+            android:name="uwi.dcit.AgriExpenseTT.CycleUseage"
             android:label="@string/title_activity_cycle_useage" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.UseResource"
+            android:name="uwi.dcit.AgriExpenseTT.UseResource"
             android:label="@string/title_activity_use_resource"
             android:windowSoftInputMode="stateHidden" >
         </activity>
@@ -47,75 +47,75 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.UsePurchaseFrag"
+            android:name="uwi.dcit.AgriExpenseTT.UsePurchaseFrag"
             android:label="@string/title_activity_use_purchase_frag" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.NewCycleRedesigned"
+            android:name="uwi.dcit.AgriExpenseTT.NewCycleRedesigned"
             android:label="Use resources"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.NewPurchaseRedesign"
+            android:name="uwi.dcit.AgriExpenseTT.NewPurchaseRedesign"
             android:label="@string/title_activity_new_purchase_redesign"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.ViewNavigation"
+            android:name="uwi.dcit.AgriExpenseTT.ViewNavigation"
             android:label="View" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.CycleUseageRedesign"
+            android:name="uwi.dcit.AgriExpenseTT.CycleUseageRedesign"
             android:label="Use resources" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.HireLabour"
+            android:name="uwi.dcit.AgriExpenseTT.HireLabour"
             android:label="Hire Labour"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.DeleteData"
+            android:name="uwi.dcit.AgriExpenseTT.DeleteData"
             android:label="Delete data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.EditCycle"
+            android:name="uwi.dcit.AgriExpenseTT.EditCycle"
             android:label="Edit cycle"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.EditPurchase"
+            android:name="uwi.dcit.AgriExpenseTT.EditPurchase"
             android:label="Edit purchase"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.EditData"
+            android:name="uwi.dcit.AgriExpenseTT.EditData"
             android:label="Edit data" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.ManageData"
+            android:name="uwi.dcit.AgriExpenseTT.ManageData"
             android:label="Manage data" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.EditChooseLists"
+            android:name="uwi.dcit.AgriExpenseTT.EditChooseLists"
             android:label="Edit data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.AddData"
+            android:name="uwi.dcit.AgriExpenseTT.AddData"
             android:label="@string/title_activity_add_data"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.ViewCycleUsege"
+            android:name="uwi.dcit.AgriExpenseTT.ViewCycleUsege"
             android:label="@string/title_activity_view_cycle_usege" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.SalesCost"
+            android:name="uwi.dcit.AgriExpenseTT.SalesCost"
             android:label="@string/title_activity_sales_cost" >
         </activity>
         <activity
-            android:name="uwi.dcit.agriexpensett.HarvestDetails"
+            android:name="uwi.dcit.AgriExpenseTT.HarvestDetails"
             android:label="@string/title_activity_harvest_details" >
         </activity>
     </application>

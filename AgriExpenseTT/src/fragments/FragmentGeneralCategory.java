@@ -8,27 +8,20 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.agriexpensett.SalesCost;
-import uwi.dcit.agriexpensett.UseResource;
-import uwi.dcit.agriexpensett.ViewCycleUsege;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.SalesCost;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;
-import fragments.FragmentCycleUseCategory.Click;
 
 public class FragmentGeneralCategory extends Fragment{
 	TextView totalLbl;

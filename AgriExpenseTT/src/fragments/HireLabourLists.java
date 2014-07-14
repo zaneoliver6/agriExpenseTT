@@ -6,13 +6,8 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.HireLabour;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
-import dataObjects.localCycle;
+import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -25,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class HireLabourLists extends ListFragment {
 	String type;

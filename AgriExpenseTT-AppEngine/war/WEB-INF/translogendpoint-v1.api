@@ -23,37 +23,26 @@
     "type" : "no-cache",
     "maxAge" : 0
   },
-  "ownerDomain" : "example.com",
-  "ownerName" : "example.com",
-  "packagePath" : "agriexpensett",
+  "ownerDomain" : "dcit.uwi",
+  "ownerName" : "dcit.uwi",
+  "packagePath" : "AgriExpenseTT",
   "methods" : {
-    "translogendpoint.updateTransLog" : {
-      "path" : "translog",
-      "httpMethod" : "PUT",
+    "translogendpoint.getTransLog" : {
+      "path" : "translog/{id}",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.updateTransLog",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.getTransLog",
       "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "translogendpoint.insertTransLog" : {
-      "path" : "translog",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -66,7 +55,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.removeTransLog",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.removeTransLog",
       "request" : {
         "parameters" : {
           "id" : {
@@ -87,7 +76,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.Logs",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.Logs",
       "request" : {
         "parameters" : {
           "time" : {
@@ -101,6 +90,38 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "translogendpoint.insertTransLog" : {
+      "path" : "translog",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.insertTransLog",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "translogendpoint.updateTransLog" : {
+      "path" : "translog",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.updateTransLog",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "translogendpoint.listTransLog" : {
       "path" : "translog",
       "httpMethod" : "GET",
@@ -108,7 +129,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.listTransLog",
+      "rosyMethod" : "uwi.dcit.AgriExpenseTT.TransLogEndpoint.listTransLog",
       "request" : {
         "parameters" : {
           "cursor" : {
@@ -118,27 +139,6 @@
           "limit" : {
             "type" : "int32",
             "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "translogendpoint.getTransLog" : {
-      "path" : "translog/{id}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getTransLog",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "int64",
-            "required" : true
           }
         },
         "body" : "empty"
@@ -238,37 +238,37 @@
       }
     },
     "methods" : {
-      "com.example.agriexpensett.TransLogEndpoint.updateTransLog" : {
-        "request" : {
-          "$ref" : "TransLog"
-        },
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.getTransLog" : {
         "response" : {
           "$ref" : "TransLog"
         }
       },
-      "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
-        "request" : {
-          "$ref" : "TransLog"
-        },
-        "response" : {
-          "$ref" : "TransLog"
-        }
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.removeTransLog" : {
       },
-      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
-      },
-      "com.example.agriexpensett.TransLogEndpoint.Logs" : {
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.Logs" : {
         "response" : {
           "$ref" : "TransLogCollection"
         }
       },
-      "com.example.agriexpensett.TransLogEndpoint.listTransLog" : {
-        "response" : {
-          "$ref" : "CollectionResponse_TransLog"
-        }
-      },
-      "com.example.agriexpensett.TransLogEndpoint.getTransLog" : {
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.insertTransLog" : {
+        "request" : {
+          "$ref" : "TransLog"
+        },
         "response" : {
           "$ref" : "TransLog"
+        }
+      },
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.updateTransLog" : {
+        "request" : {
+          "$ref" : "TransLog"
+        },
+        "response" : {
+          "$ref" : "TransLog"
+        }
+      },
+      "uwi.dcit.AgriExpenseTT.TransLogEndpoint.listTransLog" : {
+        "response" : {
+          "$ref" : "CollectionResponse_TransLog"
         }
       }
     }

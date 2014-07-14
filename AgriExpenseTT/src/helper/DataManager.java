@@ -2,19 +2,16 @@ package helper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import dataObjects.localCycle;
-import dataObjects.localCycleUse;
-import dataObjects.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import dataObjects.localCycle;
+import dataObjects.localCycleUse;
+import dataObjects.localResourcePurchase;
 
 public class DataManager {
 	SQLiteDatabase db;
