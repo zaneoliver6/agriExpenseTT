@@ -6,11 +6,11 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.HireLabour;
+import uwi.dcit.AgriExpenseTT.HireLabour;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.R.id;
+import uwi.dcit.AgriExpenseTT.R.layout;
 
 import dataObjects.localCycle;
 import android.app.Fragment;

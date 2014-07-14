@@ -1,8 +1,8 @@
 package fragments;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.R.id;
+import uwi.dcit.AgriExpenseTT.R.layout;
 
 import android.app.Fragment;
 import android.os.Bundle;

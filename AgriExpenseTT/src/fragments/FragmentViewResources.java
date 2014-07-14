@@ -10,8 +10,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.layout;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.R.layout;
 
 import android.app.AlertDialog;
 import android.app.ListFragment;

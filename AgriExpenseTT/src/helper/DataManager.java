@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.model.CycleUse;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;
 import dataObjects.localResourcePurchase;

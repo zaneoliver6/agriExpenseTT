@@ -6,17 +6,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.example.agriexpensett.cycleendpoint.Cycleendpoint;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.Cycleuseendpoint;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.Rpurchaseendpoint;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.Translogendpoint;
-import com.example.agriexpensett.translogendpoint.model.CollectionResponseTransLog;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
-import com.example.agriexpensett.translogendpoint.model.TransLogCollection;
-//import com.example.agriexpensett.translogendpoint.model.TransLogCollection;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.Cycleendpoint;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.Cycleuseendpoint;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.model.CycleUse;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.Rpurchaseendpoint;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.AgriExpenseTT.translogendpoint.Translogendpoint;
+import uwi.dcit.AgriExpenseTT.translogendpoint.model.CollectionResponseTransLog;
+import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLog;
+import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLogCollection;
+
+//import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLogCollection;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 

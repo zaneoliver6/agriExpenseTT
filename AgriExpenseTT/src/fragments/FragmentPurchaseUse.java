@@ -6,14 +6,14 @@ import helper.DbQuery;
 
 import java.text.DecimalFormat;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-import uwi.dcit.agriexpensett.UseResource;
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.UseResource;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.R.id;
+import uwi.dcit.AgriExpenseTT.R.layout;
 
 import dataObjects.localCycle;
 import android.app.Fragment;
