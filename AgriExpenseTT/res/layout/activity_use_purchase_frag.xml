@@ -3,7 +3,7 @@
     android:id="@+id/container_useResource_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.UsePurchaseFrag"
+    tools:context="uwi.dcit.agriexpensett.UsePurchaseFrag"
     android:background="#ffffff"
     tools:ignore="MergeRootFrame" >
 

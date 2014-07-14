@@ -23,8 +23,8 @@
     "type" : "no-cache",
     "maxAge" : 0
   },
-  "ownerDomain" : "dcit.uwi",
-  "ownerName" : "dcit.uwi",
+  "ownerDomain" : "example.com",
+  "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
     "deviceinfoendpoint.listDeviceInfo" : {
@@ -34,7 +34,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.listDeviceInfo",
+      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.listDeviceInfo",
       "request" : {
         "parameters" : {
           "cursor" : {
@@ -59,23 +59,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.insertDeviceInfo",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "deviceinfoendpoint.updateDeviceInfo" : {
-      "path" : "deviceinfo",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.updateDeviceInfo",
+      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.insertDeviceInfo",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -91,7 +75,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.getDeviceInfo",
+      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo",
       "request" : {
         "parameters" : {
           "id" : {
@@ -112,7 +96,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.removeDeviceInfo",
+      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.removeDeviceInfo",
       "request" : {
         "parameters" : {
           "id" : {
@@ -124,6 +108,22 @@
       },
       "response" : {
         "body" : "empty"
+      }
+    },
+    "deviceinfoendpoint.updateDeviceInfo" : {
+      "path" : "deviceinfo",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.updateDeviceInfo",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
       }
     }
   },
@@ -162,12 +162,12 @@
       }
     },
     "methods" : {
-      "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.listDeviceInfo" : {
+      "com.example.agriexpensett.DeviceInfoEndpoint.listDeviceInfo" : {
         "response" : {
           "$ref" : "CollectionResponse_DeviceInfo"
         }
       },
-      "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.insertDeviceInfo" : {
+      "com.example.agriexpensett.DeviceInfoEndpoint.insertDeviceInfo" : {
         "request" : {
           "$ref" : "DeviceInfo"
         },
@@ -175,20 +175,20 @@
           "$ref" : "DeviceInfo"
         }
       },
-      "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.updateDeviceInfo" : {
+      "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo" : {
+        "response" : {
+          "$ref" : "DeviceInfo"
+        }
+      },
+      "com.example.agriexpensett.DeviceInfoEndpoint.removeDeviceInfo" : {
+      },
+      "com.example.agriexpensett.DeviceInfoEndpoint.updateDeviceInfo" : {
         "request" : {
           "$ref" : "DeviceInfo"
         },
         "response" : {
           "$ref" : "DeviceInfo"
         }
-      },
-      "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.getDeviceInfo" : {
-        "response" : {
-          "$ref" : "DeviceInfo"
-        }
-      },
-      "uwi.dcit.AgriExpenseTT.DeviceInfoEndpoint.removeDeviceInfo" : {
       }
     }
   }

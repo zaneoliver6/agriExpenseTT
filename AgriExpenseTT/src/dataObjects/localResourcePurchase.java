@@ -1,6 +1,7 @@
 package dataObjects;
 
-import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 

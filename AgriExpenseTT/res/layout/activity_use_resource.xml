@@ -3,7 +3,7 @@
     android:id="@+id/container_useResource"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.UseResource"
+    tools:context="uwi.dcit.agriexpensett.UseResource"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout

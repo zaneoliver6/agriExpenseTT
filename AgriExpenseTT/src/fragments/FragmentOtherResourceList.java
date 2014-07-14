@@ -8,9 +8,9 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import uwi.dcit.AgriExpenseTT.NewCycleRedesigned;
+import uwi.dcit.agriexpensett.NewCycleRedesigned;
 
-import uwi.dcit.AgriExpenseTT.R;
+import com.example.agriexpensett.R;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

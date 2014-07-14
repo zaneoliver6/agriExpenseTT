@@ -10,12 +10,12 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.AgriExpenseTT.EditPurchase;
+import uwi.dcit.agriexpensett.EditPurchase;
 
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.R.drawable;
-import uwi.dcit.AgriExpenseTT.R.id;
-import uwi.dcit.AgriExpenseTT.R.layout;
+import com.example.agriexpensett.R;
+import com.example.agriexpensett.R.drawable;
+import com.example.agriexpensett.R.id;
+import com.example.agriexpensett.R.layout;
 
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;

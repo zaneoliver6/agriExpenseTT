@@ -2,10 +2,11 @@ package helper;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
-import uwi.dcit.AgriExpenseTT.cycleuseendpoint.model.CycleUse;
-import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
-import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLog;
+import com.example.agriexpensett.cycleendpoint.model.Cycle;
+import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.example.agriexpensett.translogendpoint.model.TransLog;
+
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;
 import dataObjects.localResourcePurchase;

@@ -23,18 +23,18 @@
     "type" : "no-cache",
     "maxAge" : 0
   },
-  "ownerDomain" : "dcit.uwi",
-  "ownerName" : "dcit.uwi",
+  "ownerDomain" : "example.com",
+  "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
-    "upaccendpoint.getUpAcc" : {
+    "upaccendpoint.removeUpAcc" : {
       "path" : "upacc/{id}",
-      "httpMethod" : "GET",
+      "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.UpAccEndpoint.getUpAcc",
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.removeUpAcc",
       "request" : {
         "parameters" : {
           "id" : {
@@ -45,7 +45,7 @@
         "body" : "empty"
       },
       "response" : {
-        "body" : "autoTemplate(backendResponse)"
+        "body" : "empty"
       }
     },
     "upaccendpoint.listUpAcc" : {
@@ -55,7 +55,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.UpAccEndpoint.listUpAcc",
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.listUpAcc",
       "request" : {
         "parameters" : {
           "cursor" : {
@@ -73,17 +73,22 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "upaccendpoint.updateUpAcc" : {
-      "path" : "upacc",
-      "httpMethod" : "PUT",
+    "upaccendpoint.getUpAcc" : {
+      "path" : "upacc/{id}",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.UpAccEndpoint.updateUpAcc",
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.getUpAcc",
       "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -96,7 +101,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.UpAccEndpoint.insertUpAcc",
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.insertUpAcc",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -105,30 +110,40 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "upaccendpoint.removeUpAcc" : {
-      "path" : "upacc/{id}",
-      "httpMethod" : "DELETE",
+    "upaccendpoint.updateUpAcc" : {
+      "path" : "upacc",
+      "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.UpAccEndpoint.removeUpAcc",
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.updateUpAcc",
       "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     }
   },
   "descriptor" : {
     "schemas" : {
+      "CollectionResponse_UpAcc" : {
+        "id" : "CollectionResponse_UpAcc",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "UpAcc"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
       "UpAcc" : {
         "id" : "UpAcc",
         "type" : "object",
@@ -168,42 +183,29 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "complete" : {
             "type" : "boolean"
-          }
-        }
-      },
-      "CollectionResponse_UpAcc" : {
-        "id" : "CollectionResponse_UpAcc",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "UpAcc"
-            }
           },
-          "nextPageToken" : {
+          "namespace" : {
             "type" : "string"
           }
         }
       }
     },
     "methods" : {
-      "uwi.dcit.AgriExpenseTT.UpAccEndpoint.getUpAcc" : {
-        "response" : {
-          "$ref" : "UpAcc"
-        }
+      "com.example.agriexpensett.UpAccEndpoint.removeUpAcc" : {
       },
-      "uwi.dcit.AgriExpenseTT.UpAccEndpoint.listUpAcc" : {
+      "com.example.agriexpensett.UpAccEndpoint.listUpAcc" : {
         "response" : {
           "$ref" : "CollectionResponse_UpAcc"
         }
       },
-      "uwi.dcit.AgriExpenseTT.UpAccEndpoint.updateUpAcc" : {
+      "com.example.agriexpensett.UpAccEndpoint.getUpAcc" : {
+        "response" : {
+          "$ref" : "UpAcc"
+        }
+      },
+      "com.example.agriexpensett.UpAccEndpoint.insertUpAcc" : {
         "request" : {
           "$ref" : "UpAcc"
         },
@@ -211,15 +213,13 @@
           "$ref" : "UpAcc"
         }
       },
-      "uwi.dcit.AgriExpenseTT.UpAccEndpoint.insertUpAcc" : {
+      "com.example.agriexpensett.UpAccEndpoint.updateUpAcc" : {
         "request" : {
           "$ref" : "UpAcc"
         },
         "response" : {
           "$ref" : "UpAcc"
         }
-      },
-      "uwi.dcit.AgriExpenseTT.UpAccEndpoint.removeUpAcc" : {
       }
     }
   }

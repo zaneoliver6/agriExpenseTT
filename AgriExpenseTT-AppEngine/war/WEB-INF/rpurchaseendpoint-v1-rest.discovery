@@ -1,13 +1,13 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/96HWaYdFUNXT6FrbfMnGMzBZo7k\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/hMKZd851gjerth3vnx35zv4L3Ho\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",
  "version": "v1",
  "description": "This is an API",
- "ownerDomain": "dcit.uwi",
- "ownerName": "dcit.uwi",
+ "ownerDomain": "example.com",
+ "ownerName": "example.com",
  "packagePath": "agriexpensett",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",

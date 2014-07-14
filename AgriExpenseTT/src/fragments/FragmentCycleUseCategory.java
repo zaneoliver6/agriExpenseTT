@@ -8,11 +8,11 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.AgriExpenseTT.UseResource;
-import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
-import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.UseResource;
+import uwi.dcit.agriexpensett.ViewCycleUsege;
 
-import uwi.dcit.AgriExpenseTT.R;
+import com.example.agriexpensett.R;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;

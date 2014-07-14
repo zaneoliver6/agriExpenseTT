@@ -1,9 +1,9 @@
 package fragments;
 
-import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign;
+import uwi.dcit.agriexpensett.NewPurchaseRedesign;
 import helper.DataManager;
 
-import uwi.dcit.AgriExpenseTT.R;
+import com.example.agriexpensett.R;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;

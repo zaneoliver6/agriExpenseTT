@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign;
+import uwi.dcit.agriexpensett.NewPurchaseRedesign;
 
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.R.id;
-import uwi.dcit.AgriExpenseTT.R.layout;
+import com.example.agriexpensett.R;
+import com.example.agriexpensett.R.id;
+import com.example.agriexpensett.R.layout;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;

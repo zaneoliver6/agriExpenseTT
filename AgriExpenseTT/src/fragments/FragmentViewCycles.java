@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
-import uwi.dcit.AgriExpenseTT.EditCycle;
-import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.agriexpensett.CycleUseageRedesign;
+import uwi.dcit.agriexpensett.EditCycle;
+import uwi.dcit.agriexpensett.HireLabour;
 
-import uwi.dcit.AgriExpenseTT.R;
+import com.example.agriexpensett.R;
 
 import dataObjects.localCycle;
 import android.app.AlertDialog;

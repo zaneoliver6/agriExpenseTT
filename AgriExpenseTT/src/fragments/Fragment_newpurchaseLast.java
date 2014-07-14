@@ -1,12 +1,12 @@
 package fragments;
 
-import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
 import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
-import uwi.dcit.AgriExpenseTT.R;
+import com.example.agriexpensett.R;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
 import android.app.Fragment;

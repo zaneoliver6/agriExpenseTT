@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.ViewCycles"
+    tools:context="uwi.dcit.agriexpensett.ViewCycles"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
