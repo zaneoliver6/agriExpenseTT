@@ -1,7 +1,5 @@
 package uwi.dcit.agriexpensett;
 
-import com.example.agriexpensett.R;
-
 import helper.CSVHelper;
 import helper.FlyOutContainer;
 import android.support.v7.app.ActionBarActivity;

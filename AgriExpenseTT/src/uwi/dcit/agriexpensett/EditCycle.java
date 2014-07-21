@@ -1,18 +1,16 @@
 package uwi.dcit.agriexpensett;
 
-import java.util.Calendar;
-
-import com.example.agriexpensett.R;
-
-import dataObjects.localCycle;
 import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
-import android.support.v7.app.ActionBarActivity;
+
+import java.util.Calendar;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class EditCycle extends ActionBarActivity {
 	Button btn_crop;

@@ -6,18 +6,10 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-
-import uwi.dcit.agriexpensett.NewPurchaseRedesign;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,8 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,7 +87,7 @@ public class NewPurchaseLists extends ListFragment {
 		et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
 		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 		if(getArguments().getString("type").equals("category")||getArguments().getString("type").equals("quantifier")){
-			et_search.setVisibility(et_search.GONE);
+			et_search.setVisibility(View.GONE);
 		}else{
 			TWatch tw=new TWatch(listAdapt);
 			et_search.addTextChangedListener(tw);

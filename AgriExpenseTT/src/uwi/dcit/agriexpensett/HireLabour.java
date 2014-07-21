@@ -1,17 +1,15 @@
 package uwi.dcit.agriexpensett;
 
-import com.example.agriexpensett.R;
-
-import fragments.HireLabourLists;
-import android.support.v7.app.ActionBarActivity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import fragments.HireLabourLists;
 
 public class HireLabour extends ActionBarActivity {
 

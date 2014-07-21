@@ -9,14 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-import uwi.dcit.agriexpensett.EditCycle;
-import uwi.dcit.agriexpensett.HireLabour;
-
-import com.example.agriexpensett.R;
-
-import dataObjects.localCycle;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
@@ -24,7 +18,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import dataObjects.localCycle;
 
 public class FragmentViewCycles extends ListFragment{
 	String type=null;
@@ -43,6 +37,7 @@ public class FragmentViewCycles extends ListFragment{
 	ArrayList<localCycle> cList=new ArrayList<localCycle>();
 	CycleListAdapter cycAdapt;
 	
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
@@ -183,7 +178,7 @@ public class FragmentViewCycles extends ListFragment{
 		}
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			if(which==dialog.BUTTON_POSITIVE){
+			if(which==DialogInterface.BUTTON_POSITIVE){
 				DataManager dm=new DataManager(getActivity(), db, dbh);
 				dm.deleteCycle(cList.get(position));
 				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
@@ -192,7 +187,7 @@ public class FragmentViewCycles extends ListFragment{
 				Toast.makeText(getActivity(),"Cycle deleted", Toast.LENGTH_SHORT).show();			
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
-			}else if(which==dialog.BUTTON_NEGATIVE){
+			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();
 			}
 		}

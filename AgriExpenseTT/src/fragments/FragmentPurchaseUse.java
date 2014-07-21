@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import uwi.dcit.agriexpensett.CycleUseageRedesign;
 import uwi.dcit.agriexpensett.UseResource;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 

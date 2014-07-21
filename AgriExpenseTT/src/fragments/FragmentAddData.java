@@ -2,13 +2,10 @@ package fragments;
 
 import helper.DHelper;
 import helper.DbHelper;
-import helper.DbQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import uwi.dcit.agriexpensett.AddData;
-import uwi.dcit.agriexpensett.NewPurchaseRedesign;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -23,10 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.agriexpensett.R;
-
-import fragments.NewPurchaseLists.TWatch;
 
 public class FragmentAddData extends ListFragment {
 	String type;

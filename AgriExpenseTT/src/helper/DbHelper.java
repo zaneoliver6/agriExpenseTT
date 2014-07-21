@@ -105,11 +105,11 @@ public class DbHelper extends SQLiteOpenHelper{
 	}
 	
 	private void createUpdateAccount(SQLiteDatabase db){
-		String code="create table "+this.TABLE_UPDATE_ACCOUNT+"("
-			+this.UPDATE_ACCOUNT_ID+" integer primary key autoincrement"
-			+this.UPDATE_ACCOUNT_ACC+" text"
-			+this.UPDATE_ACCOUNT_UPDATED+" integer"
-			+this.UPDATE_ACCOUNT_CLOUD_KEY+" text);";
+		String code="create table "+DbHelper.TABLE_UPDATE_ACCOUNT+"("
+			+DbHelper.UPDATE_ACCOUNT_ID+" integer primary key autoincrement"
+			+DbHelper.UPDATE_ACCOUNT_ACC+" text"
+			+DbHelper.UPDATE_ACCOUNT_UPDATED+" integer"
+			+DbHelper.UPDATE_ACCOUNT_CLOUD_KEY+" text);";
 		db.execSQL(code);
 	}
 	private void createCloudKeys(SQLiteDatabase db) {

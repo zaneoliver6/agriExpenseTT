@@ -1,9 +1,5 @@
 package fragments;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

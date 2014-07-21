@@ -1,16 +1,11 @@
 package fragments;
 
-import fragments.NewCycleLists.TWatch;
 import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import uwi.dcit.agriexpensett.NewCycleRedesigned;
-
-import com.example.agriexpensett.R;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -28,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentOtherResourceList  extends ListFragment{
@@ -38,6 +32,7 @@ public class FragmentOtherResourceList  extends ListFragment{
 	View view;
 	ArrayAdapter<String> listAdapt;
 	EditText et_search;
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());

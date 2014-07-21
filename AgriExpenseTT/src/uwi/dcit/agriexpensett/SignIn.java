@@ -7,7 +7,6 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
 
 public class SignIn {
@@ -24,7 +23,8 @@ public class SignIn {
 	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
 	    builder.setTitle("Select Account");
 	    builder.setItems(items, new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int item) {
+	        @Override
+			public void onClick(DialogInterface dialog, int item) {
 	            Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
 	        }
 	    }).show();
@@ -36,7 +36,8 @@ public class SignIn {
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 		    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		    builder.setTitle("Select Account").setItems(accs, new DialogInterface.OnClickListener() {
-		               public void onClick(DialogInterface dialog, int which) {
+		               @Override
+					public void onClick(DialogInterface dialog, int which) {
 			               // The 'which' argument contains the index position
 			               // of the selected item
 		            	   Toast.makeText(context, accs[which]+" clicked", Toast.LENGTH_SHORT).show();

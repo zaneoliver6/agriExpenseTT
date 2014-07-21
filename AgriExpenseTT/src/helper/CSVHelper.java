@@ -36,7 +36,6 @@ import android.util.Log;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
-import com.example.agriexpensett.R;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
@@ -202,7 +201,7 @@ public class CSVHelper {
 		noti.setOnlyAlertOnce(true);
 		noti.setTicker("Agrinet excel file");
 		noti.setContentIntent(pIntent);
-		NotificationManager notificationManager = (NotificationManager) activity.getSystemService(activity.NOTIFICATION_SERVICE);
+		NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(0, noti.build()); 
 		//activity.finish();
 	}

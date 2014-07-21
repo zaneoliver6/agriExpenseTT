@@ -5,7 +5,6 @@ import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
-import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
@@ -75,14 +74,14 @@ public class Fragment_newpurchaseLast extends Fragment{
 			if(v.getId()==R.id.btn_newpurchaselast_done){
 				double qty,cost;
 				if( ((et_qty.getText().toString()).equals(null))||((et_qty.getText().toString()).equals(""))  ){
-					error.setVisibility(error.VISIBLE);
+					error.setVisibility(View.VISIBLE);
 					error.setText("Enter Quantity");
 					return;
 				}else{
 					qty=Double.parseDouble(et_qty.getText().toString());
 				}
 				if( (et_cost.getText().toString().equals(null)) || ((et_cost.getText().toString()).equals("")) ){
-					error.setVisibility(error.VISIBLE);
+					error.setVisibility(View.VISIBLE);
 					error.setText("Enter cost");
 					return;
 				}else{

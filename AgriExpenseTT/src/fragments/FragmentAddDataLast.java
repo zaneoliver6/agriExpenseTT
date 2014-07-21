@@ -1,9 +1,6 @@
 package fragments;
 
 import helper.DataManager;
-
-import com.example.agriexpensett.R;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -1,18 +1,16 @@
 package uwi.dcit.agriexpensett;
 
-import com.example.agriexpensett.R;
-
-import dataObjects.localCycle;
-import fragments.FragmentCycleUseCategory;
-import fragments.FragmentGeneralCategory;
 import helper.DHelper;
-import android.support.v7.app.ActionBarActivity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import dataObjects.localCycle;
+import fragments.FragmentCycleUseCategory;
+import fragments.FragmentGeneralCategory;
 
 public class CycleUseageRedesign extends ActionBarActivity {
 

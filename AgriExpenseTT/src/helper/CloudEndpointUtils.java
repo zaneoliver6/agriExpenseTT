@@ -1,16 +1,16 @@
 package helper;
 
-import com.google.api.client.googleapis.json.GoogleJsonError;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.googleapis.services.AbstractGoogleClient;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.google.api.client.googleapis.json.GoogleJsonError;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.google.api.client.googleapis.services.AbstractGoogleClient;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 /**
  * Common utilities for working with Cloud Endpoints.
@@ -68,7 +68,8 @@ public class CloudEndpointUtils {
     final boolean enableGZip = builder.getRootUrl().startsWith("https:");
 
     builder.setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-      public void initialize(AbstractGoogleClientRequest<?> request)
+      @Override
+	public void initialize(AbstractGoogleClientRequest<?> request)
           throws IOException {
         if (!enableGZip) {
           request.setDisableGZipContent(true);
@@ -132,7 +133,8 @@ public class CloudEndpointUtils {
     final String errorMessage = message == null ? "Error" : "[Error ] "
         + message;
     activity.runOnUiThread(new Runnable() {
-      public void run() {
+      @Override
+	public void run() {
         Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG)
             .show();
       }

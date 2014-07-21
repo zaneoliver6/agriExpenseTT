@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.example.agriexpensett.R;
-
 import dataObjects.localCycleUse;
 import dataObjects.localResourcePurchase;
 import helper.DbHelper;

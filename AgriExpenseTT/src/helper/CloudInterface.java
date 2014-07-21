@@ -1,32 +1,21 @@
 package helper;
 
-import java.io.IOException;
-import java.security.KeyFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.Cycleendpoint;
+import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.Cycleuseendpoint;
+import uwi.dcit.AgriExpenseTT.cycleuseendpoint.model.CycleUse;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.Rpurchaseendpoint;
+import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.AgriExpenseTT.translogendpoint.Translogendpoint;
+import uwi.dcit.AgriExpenseTT.translogendpoint.model.TransLog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.widget.Toast;
 
-import com.example.agriexpensett.cycleendpoint.*;
-import com.example.agriexpensett.cycleendpoint.model.*;
-import com.example.agriexpensett.cycleuseendpoint.*;
-import com.example.agriexpensett.cycleuseendpoint.model.CollectionResponseCycleUse;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.*;
-import com.example.agriexpensett.rpurchaseendpoint.model.CollectionResponseRPurchase;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.Translogendpoint;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 //import com.google.appengine.api.datastore.Key;
@@ -82,13 +71,13 @@ public class CloudInterface {
 					//remove from redo log
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
-					String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"='"+dbh.TABLE_CROPCYLE+"' and "
-					+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='ins'";
+					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CROPCYLE+"' and "
+					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int id=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
 				}
 			}
 			return null;
@@ -133,13 +122,13 @@ public class CloudInterface {
 					//remove from redo log
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
-					String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"='"+dbh.TABLE_CYCLE_RESOURCES+"' and "
-							+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='ins'";
+					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CYCLE_RESOURCES+"' and "
+							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int id=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
 				}
 			}
 			return null;
@@ -180,13 +169,13 @@ public class CloudInterface {
 					//remove from redo log
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
-					String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"='"+dbh.TABLE_RESOURCE_PURCHASES+"' and "
-							+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='ins'";
+					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_RESOURCE_PURCHASES+"' and "
+							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int id=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
 				
 				}
 			}
@@ -233,13 +222,13 @@ public class CloudInterface {
 						//remove from redo log
 						DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 						//getting the transaction from the transaction log that matches this operation
-						String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"="+dbh.TABLE_CROPCYLE+
-								" and "+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='del'";
+						String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"="+DbHelper.TABLE_CROPCYLE+
+								" and "+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='del'";
 						Cursor cursor=db.rawQuery(code, null);
 						cursor.moveToFirst();
-						int Tid=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, Tid, "ins");
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
 					
 					}
 			}
@@ -287,13 +276,13 @@ public class CloudInterface {
 						//remove from redo log
 						DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 						//getting the transaction from the transaction log that matches this operation
-						String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"="+dbh.TABLE_CYCLE_RESOURCES+
-								" and "+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='del'";
+						String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"="+DbHelper.TABLE_CYCLE_RESOURCES+
+								" and "+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='del'";
 						Cursor cursor=db.rawQuery(code, null);
 						cursor.moveToFirst();
-						int Tid=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, Tid, "ins");
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
 					
 					}
 			}
@@ -341,13 +330,13 @@ public class CloudInterface {
 						//remove from redo log
 						DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 						//getting the transaction from the transaction log that matches this operation
-						String code="select * from "+dbh.TABLE_TRANSACTION_LOG+" where "+dbh.TRANSACTION_LOG_TABLE+"="+dbh.TABLE_RESOURCE_PURCHASES+
-								" and "+dbh.TRANSACTION_LOG_ROWID+"="+rowId+" and "+dbh.TRANSACTION_LOG_OPERATION+"='del'";
+						String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"="+DbHelper.TABLE_RESOURCE_PURCHASES+
+								" and "+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='del'";
 						Cursor cursor=db.rawQuery(code, null);
 						cursor.moveToFirst();
-						int Tid=cursor.getInt(cursor.getColumnIndex(dbh.TRANSACTION_LOG_LOGID));
+						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, dbh.TABLE_TRANSACTION_LOG, Tid, "ins");
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
 					
 					}
 			}

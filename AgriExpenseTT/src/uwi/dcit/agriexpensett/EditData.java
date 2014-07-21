@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import uwi.dcit.agriexpensett.ViewNavigation.TabListener;
 
-import com.example.agriexpensett.R;
-
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import android.support.v7.app.ActionBarActivity;

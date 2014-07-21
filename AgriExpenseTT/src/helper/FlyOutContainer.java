@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 

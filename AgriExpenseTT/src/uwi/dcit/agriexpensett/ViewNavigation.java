@@ -5,7 +5,6 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import com.example.agriexpensett.R;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;

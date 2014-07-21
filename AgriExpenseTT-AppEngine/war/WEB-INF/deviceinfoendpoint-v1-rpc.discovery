@@ -1,14 +1,14 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/qJHTUbKNuCOZBhl2Q4qwUSvYD08\"",
+ "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/sbW22FZQEavoSYst8WoBnBg95p8\"",
  "discoveryVersion": "v1",
  "id": "deviceinfoendpoint:v1",
  "name": "deviceinfoendpoint",
  "version": "v1",
  "description": "This is an API",
- "ownerDomain": "example.com",
- "ownerName": "example.com",
- "packagePath": "agriexpensett",
+ "ownerDomain": "dcit.uwi",
+ "ownerName": "dcit.uwi",
+ "packagePath": "AgriExpenseTT",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

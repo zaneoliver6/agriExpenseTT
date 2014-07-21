@@ -1,17 +1,13 @@
 package uwi.dcit.agriexpensett;
 
-import com.example.agriexpensett.R;
-
-import dataObjects.localResourcePurchase;
 import helper.DHelper;
 import helper.DbHelper;
 import helper.DbQuery;
-import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import dataObjects.localResourcePurchase;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;

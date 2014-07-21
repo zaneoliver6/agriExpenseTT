@@ -1,29 +1,21 @@
 package uwi.dcit.agriexpensett;
 
-import uwi.dcit.agriexpensett.NewCycleRedesigned.TouchL;
-
-import com.example.agriexpensett.R;
-
-import fragments.NewPurchaseLists;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.os.Build;
+import fragments.NewPurchaseLists;
 
 public class NewPurchaseRedesign extends ActionBarActivity {
 	TextView sub_head;
@@ -48,7 +40,7 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 	}
 	
 	public static void hideSoftKeyboard(Activity activity) {
-	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
 	}
 	public void setupUI() {

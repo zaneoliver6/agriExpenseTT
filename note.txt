@@ -1,5 +1,0 @@
-Problem -- in  StartT activity, the execute is not being called
-when the execute is called the doInBackgroud(StartT overrides) is called
-which contains the creation of the object and the insert
-the InsertExpense Calls the insertExpense in the ExpenseEndpoint class which then 
-uses the EntityManager to insert the expense mgr.persist(expense)

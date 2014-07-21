@@ -12,11 +12,6 @@ import java.util.Iterator;
 
 import uwi.dcit.agriexpensett.EditPurchase;
 
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.drawable;
-import com.example.agriexpensett.R.id;
-import com.example.agriexpensett.R.layout;
-
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import android.app.AlertDialog;
@@ -200,14 +195,14 @@ public class ChoosePurchase extends ListFragment {
 			}
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				if(which==dialog.BUTTON_POSITIVE){
+				if(which==DialogInterface.BUTTON_POSITIVE){
 					dm.deletePurchase(pList.get(position).toRPurchase());
 					pList.remove(position);
 					l.notifyDataSetChanged();
 					Toast.makeText(getActivity(),"Purchase and related cycles deleted", Toast.LENGTH_SHORT).show();			
 					dialog.cancel();
 					//DeleteExpenseList.this.finish();
-				}else if(which==dialog.BUTTON_NEGATIVE){
+				}else if(which==DialogInterface.BUTTON_NEGATIVE){
 					dialog.cancel();
 				}
 			}

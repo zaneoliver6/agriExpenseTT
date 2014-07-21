@@ -1,21 +1,14 @@
 package fragments;
 
-import fragments.FragmentViewCycles.CycleListAdapter;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-
-import com.example.agriexpensett.R;
-import com.example.agriexpensett.R.layout;
 
 import android.app.AlertDialog;
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,9 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentViewResources extends ListFragment{
@@ -33,6 +24,7 @@ public class FragmentViewResources extends ListFragment{
 	DbHelper dbh;
 	ArrayList<String> rList;
 	DataManager dm;
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
@@ -84,7 +76,7 @@ public class FragmentViewResources extends ListFragment{
 		}
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			if(which==dialog.BUTTON_POSITIVE){
+			if(which==DialogInterface.BUTTON_POSITIVE){
 				dm.deleteResource(id);
 				rList.remove(position);
 				adpt.notifyDataSetChanged();
@@ -92,7 +84,7 @@ public class FragmentViewResources extends ListFragment{
 				Toast.makeText(getActivity(),"Resource deleted", Toast.LENGTH_SHORT).show();			
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
-			}else if(which==dialog.BUTTON_NEGATIVE){
+			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();
 			}
 		}
