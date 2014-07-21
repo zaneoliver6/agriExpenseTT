@@ -78,7 +78,7 @@ public class UseResource extends ActionBarActivity {
 		DbHelper dbh=new DbHelper(this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		ArrayList<localResourcePurchase> pList=new ArrayList<localResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, s, null);
+		DbQuery.getPurchases(db, dbh, pList, s, null,false);
 		db.close();
 		if(pList.isEmpty()){
 			//View view=getLayoutInflater().inflate(R.layout.fragment_empty_purchaselist, R.id.useExpenseFrag);

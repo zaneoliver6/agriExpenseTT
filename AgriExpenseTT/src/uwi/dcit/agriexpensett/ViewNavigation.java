@@ -45,7 +45,7 @@ public class ViewNavigation extends ActionBarActivity {
 		li=new ArrayList<localCycle>();
 		DbQuery.getCycles(db, dbh, li);
 		pli=new ArrayList<localResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pli, null, null);
+		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		TabListener tL=new TabListener();
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

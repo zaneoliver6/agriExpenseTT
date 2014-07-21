@@ -37,6 +37,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String CYCLE_RESOURCE_PURCHASE_ID="pId";
 	public static final String CYCLE_RESOURCE_TYPE="type";
 	public static final String CYCLE_RESOURCE_QTY="qty";
+	public static final String CYCLE_RESOURCE_QUANTIFIER="quantifier";
 	public static final String CYCLE_RESOURCE_CYCLEID="cycleId";
 	public static final String CYCLE_RESOURCE_USECOST="useCost";
 	
@@ -70,7 +71,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";
 	public static final String UPDATE_ACCOUNT_ID="id";
 	
-	public static final int VERSION=71;
+	public static final int VERSION=73;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	
@@ -174,6 +175,7 @@ public class DbHelper extends SQLiteOpenHelper{
 			+DbHelper.CYCLE_RESOURCE_TYPE+" text,"
 			+DbHelper.CYCLE_RESOURCE_QTY+" integer,"
 			+DbHelper.CYCLE_RESOURCE_USECOST+" real,"
+			+DbHelper.CYCLE_RESOURCE_QUANTIFIER+" text,"
 			+"foreign key("+DbHelper.CYCLE_RESOURCE_CYCLEID+") references "+DbHelper.TABLE_CROPCYLE+"("+DbHelper.CROPCYCLE_ID+"),"
 			+"foreign key("+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+") references "+DbHelper.TABLE_RESOURCE_PURCHASES+"("+DbHelper.RESOURCE_PURCHASE_ID+"))";
 		db.execSQL(code);

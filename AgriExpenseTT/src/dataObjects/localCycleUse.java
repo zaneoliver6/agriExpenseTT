@@ -7,6 +7,7 @@ public class localCycleUse {
 	private double amount;
 	private String resource;
 	private double useCost;
+	private String quantifier;
 	public localCycleUse() {
 		super();
 	}
@@ -52,6 +53,12 @@ public class localCycleUse {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getQuantifier() {
+		return quantifier;
+	}
+	public void setQuantifier(String quantifier) {
+		this.quantifier = quantifier;
 	}
 	
 }

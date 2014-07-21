@@ -14,5 +14,10 @@
 			<type>2</type>
 			<location>C:/Users/Steffan/Desktop/Android/adt-bundle-windows-x86_64-20140321/sdk/sources/android-19</location>
 		</link>
+		<link>
+			<name>.link2</name>
+			<type>2</type>
+			<location>C:/Users/Steffan/Desktop/eclipse/dropins/opencsv-2.3/doc/api/au/com</location>
+		</link>
 	</linkedResources>
 </projectDescription>

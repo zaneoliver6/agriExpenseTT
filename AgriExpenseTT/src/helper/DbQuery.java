@@ -41,15 +41,13 @@ public class DbQuery {
 		return rowId;
 	}
 	//based on the material being used inserts USE of a particular material for a particular CYCLE
-	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,TransactionLog tl){
+	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
 		ContentValues cv= new ContentValues();
 		cv.put(DbHelper.CYCLE_RESOURCE_CYCLEID, cycleId);
 		cv.put(DbHelper.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
 		cv.put(DbHelper.CYCLE_RESOURCE_QTY, qty);
 		cv.put(DbHelper.CYCLE_RESOURCE_TYPE, type);
-		//get the cost of using this resource
-		RPurchase p=DbQuery.getARPurchase(db, dbh, resourcePurchasedId);
-		double useCost=(qty/p.getQty())*(p.getCost());
+		cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, quantifier);
 		cv.put(DbHelper.CYCLE_RESOURCE_USECOST, useCost);
 		
 		db.insert(DbHelper.TABLE_CYCLE_RESOURCES, null, cv);
@@ -126,12 +124,15 @@ public class DbQuery {
 		return null;
 	}
 	
-	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,String type,String quantifier){
+	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,String type,String quantifier,boolean allowFinished){
 		String code;
 		if(type==null)
 			code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+";";
 		else
-			code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "+DbHelper.RESOURCE_PURCHASE_TYPE+"='"+type+"';";
+			//if(!allowFinished)//not allowing finished
+				//code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "+DbHelper.RESOURCE_PURCHASE_TYPE+"='"+type+"' and "+DbHelper.RESOURCE_PURCHASE_REMAINING+">0;";
+			//else
+				code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "+DbHelper.RESOURCE_PURCHASE_TYPE+"='"+type+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1 || cursor==null)
 			return;
@@ -201,6 +202,7 @@ public class DbQuery {
 			l.setPurchaseId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_PURCHASE_ID)));
 			l.setResource(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_TYPE)));
 			l.setUseCost(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_USECOST)));
+			l.setQuantifier(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QUANTIFIER)));
 			list.add(l);
 		}
 	}

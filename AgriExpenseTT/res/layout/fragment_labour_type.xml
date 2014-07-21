@@ -28,7 +28,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="#4ddedede"
-            android:text="One Cycle"
+            android:text="One Crop Cycle"
             android:textSize="25sp" />
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="#4ddedede"
-            android:text="Many Cycles"
+            android:text="Many Crop Cycles"
             android:textSize="25sp" />
     </LinearLayout>
 

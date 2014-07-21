@@ -37,11 +37,12 @@ public class FragmentGeneralCategory extends Fragment{
 	TextView cat_soilam;//soil amendment
 	TextView cat_chem;//chemical
 	TextView cat_labr;//labour
+	TextView cat_other;
 	TextView statement1;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	
-	double catTotal=0,pm=0,fer=0,soilam=0,chem=0,labr=0;//totals
+	double catTotal=0,pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
 	View view;
 	localCycle currCycle;
 	
@@ -63,6 +64,7 @@ public class FragmentGeneralCategory extends Fragment{
 		cat_soilam=(TextView)view.findViewById(R.id.tv_catTotal_soilam);
 		cat_chem=(TextView)view.findViewById(R.id.tv_catTotal_chemical);
 		cat_labr=(TextView)view.findViewById(R.id.tv_catTotal_labour);
+		cat_other=(TextView)view.findViewById(R.id.tv_catTotal_other);;
 		Button btn_calc=(Button)view.findViewById(R.id.btn_general_calculate);
 		Click c=new Click();
 		btn_calc.setOnClickListener(c);
@@ -72,6 +74,7 @@ public class FragmentGeneralCategory extends Fragment{
 		cat_soilam.setText("Soil Amendment:$"+Double.valueOf(df.format(soilam)));
 		cat_chem.setText("Chemical:$"+Double.valueOf(df.format(chem)));
 		cat_labr.setText("Labour:$"+Double.valueOf(df.format(labr)));
+		cat_other.setText("Other:$"+Double.valueOf(df.format(other)));
 		
 		TextView sum=(TextView)view.findViewById(R.id.tv_catTotal_sum);
 		sum.setText("Total:$"+Double.valueOf(df.format(currCycle.getTotalSpent())));
@@ -123,6 +126,10 @@ public class FragmentGeneralCategory extends Fragment{
 		list=new ArrayList<localCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_labour);
 		labr=getTotal(list);
+
+		list=new ArrayList<localCycleUse>();
+		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_other);
+		other=getTotal(list);
 	}
 
 	private double getTotal(ArrayList<localCycleUse> list) {

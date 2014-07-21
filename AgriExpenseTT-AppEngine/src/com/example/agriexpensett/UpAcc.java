@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Key;
 
 @Entity
@@ -19,6 +20,7 @@ public class UpAcc {
 	
 	public UpAcc() {
 		super();
+		
 		// TODO Auto-generated constructor stub
 	}
 	public UpAcc(Key key, String keyrep, long lastUpdated, String acc) {

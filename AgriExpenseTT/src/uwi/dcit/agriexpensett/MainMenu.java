@@ -2,6 +2,7 @@ package uwi.dcit.agriexpensett;
 
 import com.example.agriexpensett.R;
 
+import helper.CSVHelper;
 import helper.FlyOutContainer;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -29,18 +30,20 @@ public class MainMenu extends ActionBarActivity {
 		Button btn_purchase=(Button)findViewById(R.id.NewPurchase);
 		
 		Button btn_CycleDet=(Button)findViewById(R.id.ResDetail);
-		Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);
+		//Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);
 		Button btn_HireLabour=(Button)findViewById(R.id.HireLabour);
 		click c=new click();
 		btn_newCycle.setOnClickListener(c);
 		btn_purchase.setOnClickListener(c);
 		
 		btn_CycleDet.setOnClickListener(c);
-		btn_SignIn.setOnClickListener(c);
+		//btn_SignIn.setOnClickListener(c);
 		btn_HireLabour.setOnClickListener(c);
 		
 		Button btn_manageD=(Button)findViewById(R.id.manageData);
 		btn_manageD.setOnClickListener(c);
+		Button btn_gen=(Button)findViewById(R.id.generateFile);
+		btn_gen.setOnClickListener(c);
 	}
 	public class click implements OnClickListener{
 
@@ -55,15 +58,19 @@ public class MainMenu extends ActionBarActivity {
 				nextActivity=new Intent(MainMenu.this,NewPurchaseRedesign.class);
 			}else if(v.getId()==R.id.ResDetail){
 				nextActivity=new Intent(MainMenu.this,ViewNavigation.class);
-			}else if(v.getId()==R.id.btn_SignIn){
+			/*}else if(v.getId()==R.id.btn_SignIn){
 				SignIn s=new SignIn(MainMenu.this);
 				s.signIn();
 				System.out.println("sigh");
-				return;
+				return;*/
 			}else if(v.getId()==R.id.HireLabour){
 				nextActivity=new Intent(MainMenu.this,HireLabour.class);
 			}else if(v.getId()==R.id.manageData){
 				nextActivity=new Intent(MainMenu.this,ManageData.class);
+			}else if(v.getId()==R.id.generateFile){
+				CSVHelper cvh=new CSVHelper(MainMenu.this);
+				cvh.stuff(MainMenu.this);
+				return;
 			}
 			startActivity(nextActivity);
 		}

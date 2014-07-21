@@ -100,7 +100,7 @@ public class Fragment_newpurchaseLast extends Fragment{
 					int pId=DbQuery.getLast(db, dbh,DbHelper.TABLE_RESOURCE_PURCHASES);
 					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
 					//use all of the qty of that purchase in the given cycle
-					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType());
+					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
 					dm.updatePurchase(p.getPId(),(p.getQtyRemaining()-qty));
 					//cost=(Double.valueOf(df.format(cost)));
 					dm.updateCycleSpent(currC.getId(), currC.getTotalSpent()+cost);

@@ -39,7 +39,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 		db=dbh.getReadableDatabase();
 		
 		pList=new ArrayList<localResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, type, null);
+		DbQuery.getPurchases(db, dbh, pList, type, null,true);
 		ListView listview=(ListView)findViewById(R.id.listview_cycleUse);
 		
 		DbQuery.getCycleUse(db, dbh, cycleId, list, type);
@@ -82,8 +82,8 @@ public class ViewCycleUsege extends ActionBarActivity {
 			 TextView tv_m1=(TextView)row.findViewById(R.id.tv_cycUseItem_head1);
 			 TextView tv_s1_1=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_1);
 			 TextView tv_s1_2=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_2);
-			 tv_m1.setText(curr.getResource()+" "+p.getQuantifier()+"s Used");
-			 tv_s1_1.setText("Used:"+curr.getAmount()+" "+p.getQuantifier());
+			 tv_m1.setText(curr.getResource()+" "+curr.getQuantifier()+"s Used");
+			 tv_s1_1.setText("Used:"+curr.getAmount()+" "+curr.getQuantifier());
 			 tv_s1_2.setText("Cost:$"+curr.getUseCost());
 			 
 			 TextView tv_m2=(TextView)row.findViewById(R.id.tv_cycUseItem_head2);

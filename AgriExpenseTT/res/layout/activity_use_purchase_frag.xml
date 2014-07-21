@@ -22,7 +22,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
-
+				 <TextView
+                    android:id="@+id/tv_usePurchase_headerTypeUse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="7dp"
+                    android:text="Type of Use"
+                    android:textColor="#999999"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+				  <Button
+                    android:id="@+id/btn_UsePurchase_useType"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="19dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_custom"
+                    android:text="Default" />
                 <TextView
                     android:id="@+id/tv_usePurchase_header1"
                     android:layout_width="wrap_content"
@@ -30,7 +49,7 @@
                     android:layout_gravity="fill"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="14dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="17dp"
                     android:text="TextView"
                     android:textColor="#999999"
                     android:textSize="20sp"

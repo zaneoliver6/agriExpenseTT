@@ -2,25 +2,26 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="cat" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="crop"/>
-			<item value="harvest"/>
-			<item value="createcrop"/>
-			<item value="getCycle"/>
-			<item value="createcropcycle"/>
-			<item value="create"/>
-			<item value="insertcycle"/>
-			<item value="qtfr"/>
+			<item value="cat"/>
+			<item value="getPurchases"/>
+			<item value="getResourcepurchase"/>
+			<item value="getResourcepurchases"/>
+			<item value="getResources"/>
+			<item value="adapter"/>
+			<item value="insertResourceUse"/>
+			<item value="insertCycleUse"/>
 		</list>
 		<list key="replacehistory">
+			<item value="qtfr"/>
+			<item value="quantifier"/>
 			<item value="harvestDet"/>
 			<item value="salesCost"/>
-			<item value="quantifier"/>
 			<item value="17sp"/>
 			<item value="20sp"/>
 			<item value="Purchase"/>

@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -116,6 +117,7 @@ public class CycleEndpoint {
    */
   @ApiMethod(name = "insertCycle")
   public Cycle insertCycle(Cycle cycle) {
+	  //NamespaceManager.set("steffanBoodhoo");
 	  Key k=KeyFactory.createKey("Cycle",cycle.getId());
 	  cycle.setKey(k);
 	  cycle.setKeyrep(KeyFactory.keyToString(k));

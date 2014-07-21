@@ -89,6 +89,16 @@
         android:layout_height="wrap_content"
 	    android:textColor="#cccccc"
         android:text="Labour" />
+     <TextView
+        android:id="@+id/tv_catTotal_other"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:textSize="17sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:textColor="#cccccc"
+        android:text="Other" />
     
     <TextView
         android:id="@+id/tv_catTotal_harvest"
