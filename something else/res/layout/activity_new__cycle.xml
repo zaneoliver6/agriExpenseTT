@@ -1,0 +1,134 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="uwi.dcit.AgriExpenseTT.New_Cycle"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/tv_cycleList_crop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Cycle"
+        android:textAppearance="?android:attr/textAppearanceLarge">
+       
+    </TextView> 
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_purchase_resType"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Choose crop"
+                android:textSize="25sp" />
+            <View
+    			android:layout_width="280dp"
+   	 			android:layout_height="2dp"
+    			android:background="@android:color/darker_gray"/>
+
+            <Button
+                android:id="@+id/btn_newCycle_cCrop"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:text="Button" />
+            
+            
+            
+            <TextView
+                android:id="@+id/tv_purchase_selRes"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="Select Land Type"
+                android:textSize="25sp" />
+			 <View
+    			android:layout_width="280dp"
+   	 			android:layout_height="2dp"
+    			android:background="@android:color/darker_gray"/>
+            <Button
+                android:id="@+id/btn_newCycle_sLand"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:text="Button" />
+
+            
+            
+            <TextView
+                android:id="@+id/tv_landQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Select Acre amount"
+                android:textSize="25sp" />
+			<View
+    			android:layout_width="280dp"
+   	 			android:layout_height="2dp"
+    			android:background="@android:color/darker_gray"/>
+
+            <EditText
+                android:id="@+id/et_purchase_qty"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:hint="amount"
+                android:inputType="number" >
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/tv_purchase_qtfr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Select Date"
+                android:textSize="25sp" />
+
+			<View
+    			android:layout_width="280dp"
+   	 			android:layout_height="2dp"
+    			android:background="@android:color/darker_gray"/>
+            <Button
+                android:id="@+id/btn_newCycle_date"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:text="Button" />
+
+            <Button
+                android:id="@+id/btn_NewCycle_done"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="10dp"
+                android:text="Done" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/storage-v1r5lv1.16.0-rc"/>
+	<classpathentry kind="lib" path="C:/Users/Steffan/Desktop/eclipse/dropins/poi tar/poi-3.10-FINAL/poi-3.10-FINAL-20140208.jar"/>
+	<classpathentry kind="src" path="endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
