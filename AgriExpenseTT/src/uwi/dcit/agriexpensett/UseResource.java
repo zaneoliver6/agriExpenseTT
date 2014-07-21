@@ -1,4 +1,4 @@
-package uwi.dcit.agriexpensett;
+package uwi.dcit.AgriExpenseTT;
 
 import helper.DHelper;
 import helper.DbHelper;
@@ -6,7 +6,7 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.NewPurchaseRedesign.TouchL;
+import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign.TouchL;
 
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 

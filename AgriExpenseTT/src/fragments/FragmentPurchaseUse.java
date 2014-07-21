@@ -8,8 +8,9 @@ import helper.DbQuery;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.CycleUseageRedesign;
-import uwi.dcit.agriexpensett.UseResource;
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.UseResource;
 
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;

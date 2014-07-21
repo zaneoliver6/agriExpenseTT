@@ -1,4 +1,4 @@
-package uwi.dcit.agriexpensett;
+package uwi.dcit.AgriExpenseTT;
 
 import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
@@ -9,8 +9,7 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.agriexpensett.ViewNavigation.TabListener;
-
+import uwi.dcit.AgriExpenseTT.ViewNavigation.TabListener;
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import android.support.v7.app.ActionBarActivity;

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import uwi.dcit.AgriExpenseTT.CycleUseage;
+import uwi.dcit.AgriExpenseTT.EditCycle;
+import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -127,7 +131,7 @@ public class FragmentViewCycles extends ListFragment{
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		if(type==null){
-			Intent nextActivity=new Intent(getActivity(),CycleUseageRedesign.class);
+			Intent nextActivity=new Intent(getActivity(),CycleUseage.class);
 			nextActivity.putExtra("cycleMain",cList.get(position));
 			startActivity(nextActivity);
 		}else if(type.equals(DHelper.cat_labour)){

@@ -8,9 +8,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.agriexpensett.SalesCost;
-import uwi.dcit.agriexpensett.UseResource;
-import uwi.dcit.agriexpensett.ViewCycleUsege;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.SalesCost;
+import uwi.dcit.AgriExpenseTT.UseResource;
+import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;

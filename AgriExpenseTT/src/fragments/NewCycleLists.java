@@ -7,6 +7,8 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.AgriExpenseTT.NewCycleRedesigned;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;

@@ -1,4 +1,4 @@
-package uwi.dcit.agriexpensett;
+package uwi.dcit.AgriExpenseTT;
 
 import helper.DHelper;
 import helper.DbHelper;
@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 
-//import uwi.dcit.AgriExpenseTT.ViewCycles.cycleAdapter;
-import uwi.dcit.AgriExpenseTT.cycleendpoint.model.Cycle;
-import uwi.dcit.AgriExpenseTT.rpurchaseendpoint.model.RPurchase;
+
+
+
+import com.example.agriexpensett.cycleendpoint.model.Cycle;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

@@ -7,6 +7,7 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;

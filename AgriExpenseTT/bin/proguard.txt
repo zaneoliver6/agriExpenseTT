@@ -53,62 +53,62 @@
 -keep class helper.FlyOutContainer { <init>(...); }
 
 # view AndroidManifest.xml #generated:101
--keep class uwi.dcit.agriexpensett.AddData { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.AddData { <init>(...); }
 
 # view AndroidManifest.xml #generated:32
--keep class uwi.dcit.agriexpensett.CycleUseage { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.CycleUseage { <init>(...); }
 
 # view AndroidManifest.xml #generated:64
--keep class uwi.dcit.agriexpensett.CycleUseageRedesign { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.CycleUseageRedesign { <init>(...); }
 
 # view AndroidManifest.xml #generated:73
--keep class uwi.dcit.agriexpensett.DeleteData { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.DeleteData { <init>(...); }
 
 # view AndroidManifest.xml #generated:96
--keep class uwi.dcit.agriexpensett.EditChooseLists { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.EditChooseLists { <init>(...); }
 
 # view AndroidManifest.xml #generated:78
--keep class uwi.dcit.agriexpensett.EditCycle { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.EditCycle { <init>(...); }
 
 # view AndroidManifest.xml #generated:88
--keep class uwi.dcit.agriexpensett.EditData { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.EditData { <init>(...); }
 
 # view AndroidManifest.xml #generated:83
--keep class uwi.dcit.agriexpensett.EditPurchase { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.EditPurchase { <init>(...); }
 
 # view AndroidManifest.xml #generated:114
--keep class uwi.dcit.agriexpensett.HarvestDetails { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.HarvestDetails { <init>(...); }
 
 # view AndroidManifest.xml #generated:68
--keep class uwi.dcit.agriexpensett.HireLabour { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.HireLabour { <init>(...); }
 
 # view AndroidManifest.xml #generated:23
--keep class uwi.dcit.agriexpensett.MainMenu { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.MainMenu { <init>(...); }
 
 # view AndroidManifest.xml #generated:92
--keep class uwi.dcit.agriexpensett.ManageData { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.ManageData { <init>(...); }
 
 # view AndroidManifest.xml #generated:19
--keep class uwi.dcit.agriexpensett.NewCycle { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.NewCycle { <init>(...); }
 
 # view AndroidManifest.xml #generated:50
--keep class uwi.dcit.agriexpensett.NewCycleRedesigned { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.NewCycleRedesigned { <init>(...); }
 
 # view AndroidManifest.xml #generated:55
--keep class uwi.dcit.agriexpensett.NewPurchaseRedesign { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.NewPurchaseRedesign { <init>(...); }
 
 # view AndroidManifest.xml #generated:110
--keep class uwi.dcit.agriexpensett.SalesCost { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.SalesCost { <init>(...); }
 
 # view AndroidManifest.xml #generated:46
--keep class uwi.dcit.agriexpensett.UsePurchaseFrag { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.UsePurchaseFrag { <init>(...); }
 
 # view AndroidManifest.xml #generated:36
--keep class uwi.dcit.agriexpensett.UseResource { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.UseResource { <init>(...); }
 
 # view AndroidManifest.xml #generated:106
--keep class uwi.dcit.agriexpensett.ViewCycleUsege { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.ViewCycleUsege { <init>(...); }
 
 # view AndroidManifest.xml #generated:60
--keep class uwi.dcit.agriexpensett.ViewNavigation { <init>(...); }
+-keep class uwi.dcit.AgriExpenseTT.ViewNavigation { <init>(...); }
 

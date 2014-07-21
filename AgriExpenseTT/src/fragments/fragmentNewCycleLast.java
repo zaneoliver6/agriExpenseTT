@@ -8,6 +8,8 @@ import helper.DbQuery;
 import java.util.Calendar;
 import java.util.Date;
 
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
