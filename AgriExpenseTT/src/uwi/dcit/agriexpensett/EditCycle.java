@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
 import helper.DHelper;
+import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
@@ -135,7 +136,8 @@ public class EditCycle extends ActionBarActivity {
 		cv.put(DbHelper.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(DbHelper.CROPCYCLE_DATE, date);
 		//Toast.makeText(EditCycle.this, crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
-		db.update(DbHelper.TABLE_CROPCYLE, cv , DbHelper.CROPCYCLE_ID+"="+c.getId(),null);
+		DataManager dm=new DataManager(EditCycle.this, db, dbh);
+		dm.updateCycle(c, cv);
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();

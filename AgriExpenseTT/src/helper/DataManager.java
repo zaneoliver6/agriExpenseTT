@@ -228,9 +228,7 @@ public class DataManager {
 			//-- call the insert method for each kind
 		//set cloud last updated to local db's last updated
 	}
-	public void updatePurchase(RPurchase p){
-		ContentValues cv=new ContentValues();
-		cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+	public void updatePurchase(RPurchase p,ContentValues cv){
 		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, cv, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getPId(),null);
 		//update the cloud
 		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES,p.getPId(), TransactionLog.TL_UPDATE);
@@ -241,9 +239,7 @@ public class DataManager {
 		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 		cloud.updatePurchaseC();
 	}
-	public void updateCycleSpent(localCycle c){
-		ContentValues cv=new ContentValues();
-		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+	public void updateCycle(localCycle c,ContentValues cv){
 		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
 		//update the cloud
 		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_UPDATE);

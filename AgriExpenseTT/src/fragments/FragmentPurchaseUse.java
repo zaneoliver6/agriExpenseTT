@@ -153,10 +153,14 @@ public class FragmentPurchaseUse extends Fragment {
 					Toast.makeText(getActivity(), rem+" ", Toast.LENGTH_SHORT).show();
 					//updating purchase
 					p.setQtyRemaining(rem);
-					dm.updatePurchase(p);
+					ContentValues cv=new ContentValues();
+					cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+					dm.updatePurchase(p,cv);
 					//updating cycle
 					c.setTotalSpent(c.getTotalSpent()+calcost);
-					dm.updateCycleSpent(c); 
+					cv=new ContentValues();
+					cv.put(DbHelper.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+					dm.updateCycle(c,cv); 
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
 					IntentLauncher i=new IntentLauncher();
 					i.start();

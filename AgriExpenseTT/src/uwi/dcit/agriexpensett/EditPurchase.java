@@ -1,6 +1,9 @@
 package uwi.dcit.AgriExpenseTT;
 
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
 import helper.DHelper;
+import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 import android.content.ContentValues;
@@ -122,13 +125,15 @@ public class EditPurchase extends ActionBarActivity {
 		if(!(et_cost.getText().toString().equals(null)||et_cost.getText().toString().equals(""))){
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
-		ContentValues c = new ContentValues();
-		c.put(DbHelper.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
-		c.put(DbHelper.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
-		c.put(DbHelper.RESOURCE_PURCHASE_QTY, qty);
-		c.put(DbHelper.RESOURCE_PURCHASE_COST, cost);
+		ContentValues cv = new ContentValues();
+		cv.put(DbHelper.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
+		cv.put(DbHelper.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
+		cv.put(DbHelper.RESOURCE_PURCHASE_QTY, qty);
+		cv.put(DbHelper.RESOURCE_PURCHASE_COST, cost);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
-		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, c, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getpId(), null);
+		DataManager dm=new DataManager(EditPurchase.this, db, dbh);
+		RPurchase rp=p.toRPurchase();
+		dm.updatePurchase(rp, cv);
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();

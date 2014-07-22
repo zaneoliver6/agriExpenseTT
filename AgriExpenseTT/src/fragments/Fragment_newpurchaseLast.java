@@ -10,6 +10,7 @@ import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -103,10 +104,14 @@ public class Fragment_newpurchaseLast extends Fragment{
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
 					//update purchase
 					p.setQtyRemaining(p.getQtyRemaining()-qty);
-					dm.updatePurchase(p);
+					ContentValues cv=new ContentValues();
+					cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+					dm.updatePurchase(p,cv);
 					//update cycle
 					currC.setTotalSpent(currC.getTotalSpent()+cost);
-					dm.updateCycleSpent(currC);
+					cv=new ContentValues();
+					cv.put(DbHelper.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
+					dm.updateCycle(currC,cv);
 				}else{
 					if(category.equals(DHelper.cat_other)){//if its the other category
 						if(resId==-1){//and the resource does not exist
