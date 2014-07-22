@@ -5,13 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="src" path="endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source"/>
-	<classpathentry kind="src" path="endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Steffan/Desktop/eclipse/dropins/opencsv-2.3/deploy/opencsv-2.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Steffan/Desktop/eclipse/dropins/opencsv-2.3/doc/api/au/com"/>
 	<classpathentry exported="true" kind="lib" path="C:/Users/Steffan/Desktop/eclipse/dropins/poi tar/poi-3.10-FINAL/poi-3.10-FINAL-20140208.jar"/>
@@ -20,5 +13,12 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source"/>
+	<classpathentry kind="src" path="endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

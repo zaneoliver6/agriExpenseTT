@@ -39,11 +39,19 @@ public class DataManager {
 		int id=DbQuery.insertCycle(db, dbh, cropId, landType, landQty,tL,time);
 		//insert into transaction table
 		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, id, "ins");
-		
 		//try insert into cloud
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 		c.insertCycleC();
 		//update database last updated time
+	}
+	public void insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
+		//insert into database
+		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
+		//insert into redo log table
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "ins");
+		//try to insert into cloud
+		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+		c.insertPurchase();
 	}
 	
 	//pass in the cycleId
@@ -183,18 +191,7 @@ public class DataManager {
 		c.insertCycleUseC();
 	}
 	
-	public void insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
-		
-		//insert into database
-		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
-		//DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tl)
-		//insert into redo log table
-		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "ins");
-		//try to insert into cloud
-		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-		c.insertPurchase();
-		//c.
-	}
+	
 	public void update(){
 		//check time-updated in cloud
 		long locaupdated;
@@ -231,25 +228,31 @@ public class DataManager {
 			//-- call the insert method for each kind
 		//set cloud last updated to local db's last updated
 	}
-	public void updatePurchase(int id,double amt){
-		TransactionLog tl=new TransactionLog(dbh, db);
-		tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, id, "up");
-		String code="update "+DbHelper.TABLE_RESOURCE_PURCHASES+
-				" set "+DbHelper.RESOURCE_PURCHASE_REMAINING+"="+amt+
-				" where "+DbHelper.RESOURCE_PURCHASE_ID+"="+id;
-		db.execSQL(code);
-		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "up");
-	}
-	public void updateCycleSpent(int id,double amt){
+	public void updatePurchase(RPurchase p){
 		ContentValues cv=new ContentValues();
-		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, amt);
-		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+id, null);
-		
+		cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, cv, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getPId(),null);
 		//update the cloud
-		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, id, "up");
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES,p.getPId(), TransactionLog.TL_UPDATE);
 		//record in transaction log
 		TransactionLog tl=new TransactionLog(dbh, db);
-		tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, id, "up");
+		tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId(), TransactionLog.TL_UPDATE);
+		
+		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		cloud.updatePurchaseC();
+	}
+	public void updateCycleSpent(localCycle c){
+		ContentValues cv=new ContentValues();
+		cv.put(DbHelper.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
+		//update the cloud
+		DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_UPDATE);
+		//record in transaction log
+		TransactionLog tl=new TransactionLog(dbh, db);
+		tl.insertTransLog(DbHelper.TABLE_CROPCYLE, c.getId(),TransactionLog.TL_UPDATE);
+		
+		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		cloud.updateCycleC();
 	}
 	
 	//------------------------------------------------------------------fixed deletes

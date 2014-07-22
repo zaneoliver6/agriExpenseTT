@@ -23,9 +23,9 @@
     "type" : "no-cache",
     "maxAge" : 0
   },
-  "ownerDomain" : "dcit.uwi",
-  "ownerName" : "dcit.uwi",
-  "packagePath" : "AgriExpenseTT",
+  "ownerDomain" : "example.com",
+  "ownerName" : "example.com",
+  "packagePath" : "agriexpensett",
   "methods" : {
     "messageEndpoint.sendMessage" : {
       "path" : "sendMessage/{message}",
@@ -34,7 +34,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.MessageEndpoint.sendMessage",
+      "rosyMethod" : "com.example.agriexpensett.MessageEndpoint.sendMessage",
       "request" : {
         "parameters" : {
           "message" : {
@@ -55,7 +55,7 @@
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "uwi.dcit.AgriExpenseTT.MessageEndpoint.listMessages",
+      "rosyMethod" : "com.example.agriexpensett.MessageEndpoint.listMessages",
       "request" : {
         "parameters" : {
           "cursor" : {
@@ -127,19 +127,19 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       }
     },
     "methods" : {
-      "uwi.dcit.AgriExpenseTT.MessageEndpoint.sendMessage" : {
+      "com.example.agriexpensett.MessageEndpoint.sendMessage" : {
       },
-      "uwi.dcit.AgriExpenseTT.MessageEndpoint.listMessages" : {
+      "com.example.agriexpensett.MessageEndpoint.listMessages" : {
         "response" : {
           "$ref" : "CollectionResponse_MessageData"
         }

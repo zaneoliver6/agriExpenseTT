@@ -151,10 +151,12 @@ public class FragmentPurchaseUse extends Fragment {
 					
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
 					Toast.makeText(getActivity(), rem+" ", Toast.LENGTH_SHORT).show();
-					dm.updatePurchase(p.getPId(),(rem));
+					//updating purchase
+					p.setQtyRemaining(rem);
+					dm.updatePurchase(p);
+					//updating cycle
 					c.setTotalSpent(c.getTotalSpent()+calcost);
-						
-					dm.updateCycleSpent(c.getId(), c.getTotalSpent()); 
+					dm.updateCycleSpent(c); 
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
 					IntentLauncher i=new IntentLauncher();
 					i.start();

@@ -101,9 +101,12 @@ public class Fragment_newpurchaseLast extends Fragment{
 					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
 					//use all of the qty of that purchase in the given cycle
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
-					dm.updatePurchase(p.getPId(),(p.getQtyRemaining()-qty));
-					//cost=(Double.valueOf(df.format(cost)));
-					dm.updateCycleSpent(currC.getId(), currC.getTotalSpent()+cost);
+					//update purchase
+					p.setQtyRemaining(p.getQtyRemaining()-qty);
+					dm.updatePurchase(p);
+					//update cycle
+					currC.setTotalSpent(currC.getTotalSpent()+cost);
+					dm.updateCycleSpent(currC);
 				}else{
 					if(category.equals(DHelper.cat_other)){//if its the other category
 						if(resId==-1){//and the resource does not exist

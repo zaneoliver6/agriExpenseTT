@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/bBrVLHqtYEuVpBc3FRuBktUQBJY\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/ORW-dlSaLp_lbXWW37haP_pWqxM\"",
  "discoveryVersion": "v1",
  "id": "cycleuseendpoint:v1",
  "name": "cycleuseendpoint",
  "version": "v1",
  "description": "This is an API",
- "ownerDomain": "dcit.uwi",
- "ownerName": "dcit.uwi",
- "packagePath": "AgriExpenseTT",
+ "ownerDomain": "example.com",
+ "ownerName": "example.com",
+ "packagePath": "agriexpensett",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

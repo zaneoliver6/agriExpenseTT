@@ -1,14 +1,14 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"p_qcyFV0KQVqSB1Aq3pqmPu-2MY/Xfcf2OJcZ4RHAWdQpeHbj7EbDLw\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/ZpvupGcdXQbgvenOqXLhsDKbvL0\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
  "version": "v1",
  "description": "This is an API",
- "ownerDomain": "dcit.uwi",
- "ownerName": "dcit.uwi",
- "packagePath": "AgriExpenseTT",
+ "ownerDomain": "example.com",
+ "ownerName": "example.com",
+ "packagePath": "agriexpensett",
  "icons": {
   "x16": "http://www.google.com/images/icons/product/search-16.gif",
   "x32": "http://www.google.com/images/icons/product/search-32.gif"

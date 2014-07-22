@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Layout" key="selection"/>
+		<item value="System" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="layout"/>
-			<item value="removeCycleuse"/>
-			<item value="signin"/>
-			<item value="salescos"/>
-			<item value="newpurchasere"/>
-			<item value="newcycleredesign"/>
-			<item value="managedata"/>
-			<item value="mainmenu"/>
+			<item value="system"/>
+			<item value="update"/>
+			<item value="updatepur"/>
+			<item value="getCycle"/>
+			<item value="updateCycle"/>
+			<item value="cloud"/>
+			<item value="clour"/>
+			<item value="getARpurchase"/>
 		</list>
 		<list key="replacehistory">
 			<item value="qtfr"/>
@@ -31,7 +31,7 @@
 		<item value="257" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="381" key="DIALOG_HEIGHT"/>
-		<item value="1104" key="DIALOG_X_ORIGIN"/>
-		<item value="168" key="DIALOG_Y_ORIGIN"/>
+		<item value="768" key="DIALOG_X_ORIGIN"/>
+		<item value="83" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

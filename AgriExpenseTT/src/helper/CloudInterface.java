@@ -35,7 +35,111 @@ public class CloudInterface {
 		this.db=db;
 		tL=new TransactionLog(dbh,db);
 	}
-	
+	public void updateCycleC(){
+		new updateCycle().execute();
+	}
+	public class updateCycle extends AsyncTask<Void,Void,Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);         
+			builder = CloudEndpointUtils.updateBuilder(builder);
+			Cycleendpoint endpoint = builder.build();
+			ArrayList<Integer> rowIds=new ArrayList<Integer>();
+			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, DbHelper.TABLE_CROPCYLE);
+			Iterator<Integer> logI=logIds.iterator();
+			Iterator<Integer> rowI=rowIds.iterator();
+			while(logI.hasNext()){
+				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
+				Cycle c=DbQuery.getCycle(db, dbh, rowId);
+				String keyrep=DbQuery.getKey(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId());
+				c.setKeyrep(keyrep);
+				try{
+					//c=endpoint.insertCycle(c).execute();
+					c=endpoint.updateCycle(c).execute();
+				}catch(Exception e){
+					
+					System.out.println("could not update cycle");
+					return null;
+				}
+				if(c!=null){
+					//we stored they key as text in the account field of c when we returned
+					//System.out.println(c.getAccount());
+					//store key of inserted cycle into cloud - cloud key table
+					//DbQuery.insertCloudKey(db, dbh, DbHelper.TABLE_CROPCYLE, c.getAccount(),rowId);
+					//remove from redo log
+					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
+					
+					//getting the transaction from the transaction log that matches this operation
+					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CROPCYLE+"' and "
+					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
+					Cursor cursor=db.rawQuery(code, null);
+					cursor.moveToFirst();
+					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
+					//inserting this record of the transaction to the redo log to later be inserted into the cloud
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+				}
+			}
+			return null;
+		}
+		
+	}
+	public void updatePurchaseC(){
+		new updatePurchase().execute();
+	}
+	public class updatePurchase extends AsyncTask<Void,Void,Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);         
+			builder = CloudEndpointUtils.updateBuilder(builder);
+			Rpurchaseendpoint endpoint = builder.build();
+			ArrayList<Integer> rowIds=new ArrayList<Integer>();
+			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, DbHelper.TABLE_RESOURCE_PURCHASES);
+			Iterator<Integer> logI=logIds.iterator();
+			Iterator<Integer> rowI=rowIds.iterator();
+			while(logI.hasNext()){
+				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
+				RPurchase p=DbQuery.getARPurchase(db, dbh, rowId);
+				String keyrep=DbQuery.getKey(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId());
+				System.out.println("purchase key rep"+keyrep);
+				p.setKeyrep(keyrep);
+				try{
+					//c=endpoint.insertCycle(c).execute();
+					p=endpoint.updateRPurchase(p).execute();
+				}catch(Exception e){
+					
+					System.out.println("could not update Purchase");
+					return null;
+				}
+				if(p!=null){
+					//we stored they key as text in the account field of c when we returned
+					//System.out.println(c.getAccount());
+					//store key of inserted cycle into cloud - cloud key table
+					//DbQuery.insertCloudKey(db, dbh, DbHelper.TABLE_CROPCYLE, c.getAccount(),rowId);
+					//remove from redo log
+					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
+					
+					//getting the transaction from the transaction log that matches this operation
+					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_RESOURCE_PURCHASES+"' and "
+					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
+					Cursor cursor=db.rawQuery(code, null);
+					cursor.moveToFirst();
+					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
+					//inserting this record of the transaction to the redo log to later be inserted into the cloud
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+				}
+			}
+			return null;
+		}
+		
+	}
 	public void insertCycleC(){
 		new InsertCycle().execute();
 	}
@@ -183,6 +287,7 @@ public class CloudInterface {
 		}
 		
 	}
+	
 	public void deleteCycle(){
 		new DeleteCycle().execute();
 	}
