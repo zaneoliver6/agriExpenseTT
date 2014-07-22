@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.widget.PopupWindow"/>
 <fullyQualifiedTypeName name="android.view.Gravity"/>
 <fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
 <fullyQualifiedTypeName name="android.widget.ListView"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="com.example.agriexpensett.translogendpoint.model.TransLog"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.cycleendpoint.model.Cycle"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.rpurchaseendpoint.model.RPurchase"/>
+<fullyQualifiedTypeName name="org.datanucleus.store.appengine.query.JPACursorHelper"/>
 </qualifiedTypeNameHistroy>

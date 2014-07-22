@@ -13,7 +13,6 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,6 +24,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.datanucleus.store.appengine.query.JPACursorHelper;
 
 import com.google.appengine.api.datastore.Query.FilterPredicate;
 @Api(name = "translogendpoint", namespace = @ApiNamespace(ownerDomain = "example.com", ownerName = "example.com", packagePath="agriexpensett"))
