@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.widget.ListView"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.R.id"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -55,9 +54,10 @@
 <fullyQualifiedTypeName name="com.example.agriexpensett.translogendpoint.Translogendpoint"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.translogendpoint.model.TransLog"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.cycleendpoint.model.Cycle"/>
-<fullyQualifiedTypeName name="com.example.agriexpensett.rpurchaseendpoint.model.RPurchase"/>
 <fullyQualifiedTypeName name="org.datanucleus.store.appengine.query.JPACursorHelper"/>
 <fullyQualifiedTypeName name="com.google.appengine.datanucleus.query.JPACursorHelper"/>
 <fullyQualifiedTypeName name="uwi.dcit.AgriExpenseTT.CycleUseageRedesign"/>
 <fullyQualifiedTypeName name="helper.TransactionLog"/>
+<fullyQualifiedTypeName name="helper.DataManager"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.rpurchaseendpoint.model.RPurchase"/>
 </qualifiedTypeNameHistroy>

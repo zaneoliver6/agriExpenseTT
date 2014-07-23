@@ -77,10 +77,17 @@ public class CloudInterface {
 					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CROPCYLE+"' and "
 					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
 					Cursor cursor=db.rawQuery(code, null);
-					cursor.moveToFirst();
+					//select from transaction log
+						//where transaction's rowId = rowId
+						//and transactions's table = table
+						//and transactions's operation = operation
+					//but there can be multiple operations (updates) on a particular object (row[Id] of a Table)
+					//what should we do in this case !? :s 
+					cursor.moveToLast();//only for updaates we should move to last because the last update would hold the most current data
 					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, TransactionLog.TL_INS);
+					insertLog();
 				}
 			}
 			return null;
@@ -130,10 +137,12 @@ public class CloudInterface {
 					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_RESOURCE_PURCHASES+"' and "
 					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
 					Cursor cursor=db.rawQuery(code, null);
-					cursor.moveToFirst();
+					
+					cursor.moveToLast();//only for updates explained in cycleUpdate
 					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, TransactionLog.TL_INS);
+					insertLog();
 				}
 			}
 			return null;
@@ -154,7 +163,7 @@ public class CloudInterface {
 			Cycleendpoint endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", DbHelper.TABLE_CROPCYLE);
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, DbHelper.TABLE_CROPCYLE);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
@@ -176,12 +185,13 @@ public class CloudInterface {
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CROPCYLE+"' and "
-					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
+					+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, TransactionLog.TL_INS);
+					insertLog();
 				}
 			}
 			return null;
@@ -206,7 +216,7 @@ public class CloudInterface {
 			Cycleuseendpoint endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", DbHelper.TABLE_CYCLE_RESOURCES);
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, DbHelper.TABLE_CYCLE_RESOURCES);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
@@ -227,12 +237,13 @@ public class CloudInterface {
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_CYCLE_RESOURCES+"' and "
-							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
+							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, TransactionLog.TL_INS);
+					insertLog();
 				}
 			}
 			return null;
@@ -253,7 +264,7 @@ public class CloudInterface {
 			Rpurchaseendpoint endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", DbHelper.TABLE_RESOURCE_PURCHASES);
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, DbHelper.TABLE_RESOURCE_PURCHASES);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
@@ -274,13 +285,13 @@ public class CloudInterface {
 					DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_REDO_LOG, logId);
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+DbHelper.TABLE_TRANSACTION_LOG+" where "+DbHelper.TRANSACTION_LOG_TABLE+"='"+DbHelper.TABLE_RESOURCE_PURCHASES+"' and "
-							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='ins'";
+							+DbHelper.TRANSACTION_LOG_ROWID+"="+rowId+" and "+DbHelper.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, "ins");
-				
+					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, id, TransactionLog.TL_INS);
+					insertLog();
 				}
 			}
 			return null;
@@ -303,7 +314,7 @@ public class CloudInterface {
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
-			//DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", dbh.TABLE_RESOURCE_PURCHASES);
+			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", DbHelper.TABLE_CROPCYLE);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -333,8 +344,8 @@ public class CloudInterface {
 						cursor.moveToFirst();
 						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
-					
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, TransactionLog.TL_INS);
+						insertLog();
 					}
 			}
 			return null;
@@ -357,7 +368,7 @@ public class CloudInterface {
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
-			//DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", dbh.TABLE_RESOURCE_PURCHASES);
+			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", DbHelper.TABLE_CYCLE_RESOURCES);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -387,8 +398,8 @@ public class CloudInterface {
 						cursor.moveToFirst();
 						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
-					
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, TransactionLog.TL_INS);
+						insertLog();
 					}
 			}
 			return null;
@@ -411,7 +422,7 @@ public class CloudInterface {
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
-			//DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", dbh.TABLE_RESOURCE_PURCHASES);
+			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", DbHelper.TABLE_RESOURCE_PURCHASES);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -441,8 +452,8 @@ public class CloudInterface {
 						cursor.moveToFirst();
 						int Tid=cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID));
 						//inserting this record of the transaction to the redo log to later be inserted into the cloud
-						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, "ins");
-					
+						DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, TransactionLog.TL_INS);
+						insertLog();
 					}
 			}
 			return null;
@@ -463,22 +474,9 @@ public class CloudInterface {
 			Translogendpoint endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, "ins", DbHelper.TABLE_TRANSACTION_LOG);
+			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, DbHelper.TABLE_TRANSACTION_LOG);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
-			/*TransLog t=new TransLog();
-			t.setId(999);
-			t.setOperation("ins");
-			t.setTableKind("hisone");
-			t.setTransTime((long) 299221212);
-			t.setAccount("meh");
-			try {
-				endpoint.insertTransLog(t).execute();
-			} catch (IOException e) {
-				System.out.println("could not insert Log");
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				//Cycle c=DbQuery.getCycle(db, dbh, rowId);
