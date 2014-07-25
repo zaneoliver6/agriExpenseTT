@@ -238,6 +238,7 @@ public class DbQuery {
 		c.setCycleid(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID)));
 		c.setPurchaseId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_PURCHASE_ID)));
 		c.setAmount(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QTY)));
+		c.setCost(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_USECOST)));
 		c.setResource(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_TYPE)));
 		return c;
 	}
@@ -261,6 +262,15 @@ public class DbQuery {
 	//can be used for all tables so far
 	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id){
 		db.delete(table, "id="+id, null);
+	}
+	public static void insertUpAcc(SQLiteDatabase db,String acc){
+		long time = 0;
+		time=System.currentTimeMillis()/1000L;
+		ContentValues cv=new ContentValues();
+		cv.put(DbHelper.UPDATE_ACCOUNT_ACC,acc);
+		cv.put(DbHelper.UPDATE_ACCOUNT_UPDATED, time);
+		//cv.put(DbHelper.u)
+		db.insert(DbHelper.TABLE_UPDATE_ACCOUNT, null, cv);
 	}
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
 		ContentValues cv = new ContentValues();
@@ -336,5 +346,12 @@ public class DbQuery {
 		t.setRowId(cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_ROWID)));
 		
 		return t;
+	}
+	public static String getAccount(SQLiteDatabase db){
+		String code="select "+DbHelper.UPDATE_ACCOUNT_ACC+" from "+
+				DbHelper.TABLE_UPDATE_ACCOUNT;
+		Cursor cursor=db.rawQuery(code, null);
+		cursor.moveToFirst();
+		return cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC));
 	}
 }

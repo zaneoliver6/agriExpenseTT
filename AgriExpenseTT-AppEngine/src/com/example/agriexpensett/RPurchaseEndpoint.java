@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -87,7 +88,7 @@ public class RPurchaseEndpoint {
 	  try {
 		et=datastore.get(k);
 	} catch (com.google.appengine.api.datastore.EntityNotFoundException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	}
 	 RPurchase p=new RPurchase();
@@ -123,6 +124,8 @@ public class RPurchaseEndpoint {
    */
   @ApiMethod(name = "insertRPurchase")
   public RPurchase insertRPurchase(RPurchase rpurchase) {
+	  //TODO
+	NamespaceManager.set(rpurchase.getAccount());
 	Key k=KeyFactory.createKey("RPurchase",rpurchase.getpId());
 	rpurchase.setKey(k);
 	rpurchase.setKeyrep(KeyFactory.keyToString(k));

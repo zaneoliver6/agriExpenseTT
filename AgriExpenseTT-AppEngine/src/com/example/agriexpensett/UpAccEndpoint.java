@@ -5,7 +5,10 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 import java.util.List;
@@ -96,7 +99,11 @@ public class UpAccEndpoint {
    */
   @ApiMethod(name = "insertUpAcc")
   public UpAcc insertUpAcc(UpAcc upacc) {
+	NamespaceManager.set(upacc.getAcc());
     EntityManager mgr = getEntityManager();
+    Key k=KeyFactory.createKey("UpAcc",1);
+    System.out.println("llllll");
+    upacc.setKey(k);
     try {
       if(containsUpAcc(upacc)) {
         throw new EntityExistsException("Object already exists");

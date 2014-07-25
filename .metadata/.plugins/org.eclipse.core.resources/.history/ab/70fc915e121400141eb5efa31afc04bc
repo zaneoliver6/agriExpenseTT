@@ -1,0 +1,68 @@
+package uwi.dcit.AgriExpenseTT;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import helper.CloudInterface;
+
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.util.Patterns;
+import android.widget.Toast;
+
+public class SignIn {
+	Context context;
+	
+	public SignIn(Context context){
+		this.context=context;
+	}
+	public void signIn(){
+		System.out.println("sign in mc");
+		//final CharSequence[] items = {"steffan_boodhoo@hotmail.com", "boodhoo100@gmail.com"};
+		ArrayList<String> accs=new ArrayList<String>(); 
+	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	    builder.setTitle("Select Account");
+	    builder.setItems(items, new DialogInterface.OnClickListener() {
+	        @Override
+			public void onClick(DialogInterface dialog, int item) {
+	           // Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
+	            Toast.makeText(context, "----"+convertString(items[item].toString()), Toast.LENGTH_LONG).show();
+	        }
+	    }).show();
+	
+	}
+	private void populateAcc(ArrayList<String> accs){
+		Pattern emailPattern = Patterns.EMAIL_ADDRESS; 
+		Account[] accounts = AccountManager.get(context).getAccounts();
+		for (Account account : accounts) {
+		    if (emailPattern.matcher(account.name).matches()) {
+		       accs.add(account.name);
+		    }
+		}
+	}
+	private String convertString(String str){
+		int len=str.length();
+		String newStr="_";
+		for(int i=0;i<len;i++){
+			if(isChar(str.charAt(i)))
+					newStr+=str.charAt(i);
+			else if(str.charAt(i)=='@')
+				break;
+		}
+		return newStr;
+	}
+	private boolean isChar(char c){
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z'))
+			return true;
+		return false;
+	}
+}

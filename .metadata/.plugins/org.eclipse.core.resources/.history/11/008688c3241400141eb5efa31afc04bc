@@ -1,0 +1,112 @@
+package uwi.dcit.AgriExpenseTT;
+
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
+import helper.CloudInterface;
+import helper.DbHelper;
+
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Patterns;
+import android.widget.Toast;
+
+public class SignIn {
+	Context context;
+	
+	public SignIn(Context context){
+		this.context=context;
+	}
+	public void signIn(){
+		UpAcc acc=isExisting();
+		if(acc==null){
+			accSetUp();
+		}
+	}
+	public void accSetUp(){
+		System.out.println("sign in mc");
+		ArrayList<String> accs=new ArrayList<String>();
+		populateAcc(accs);
+		if(accs.size()==0)
+			
+		final CharSequence[] items= new CharSequence[accs.size()];
+		int i=0;
+		for(String k:accs)
+			items[i]=accs.get(i++);
+		
+	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	    builder.setTitle("Select Account");
+	    builder.setItems(items, new DialogInterface.OnClickListener() {
+	        @Override
+			public void onClick(DialogInterface dialog, int item) {
+	           // Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
+	            Toast.makeText(context, convertString((items[item].toString())), Toast.LENGTH_LONG).show();
+	        }
+	    }).show();
+	
+	}
+	private void noAccs(){
+		AlertDialog.Builder builder=new AlertDialog.Builder(context);
+		builder.setTitle("No accounts available");
+		builder.setMessage("There are no accounts available to sign in with,"
+				+ " please go to your phone's settings and create and account");
+		builder.setNeutralButton("ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				
+			}
+		});
+		builder.show();
+	}
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				
+			}
+		})
+	}
+	private void populateAcc(ArrayList<String> accs){
+		Account[] accounts = AccountManager.get(context).getAccountsByType("com.google");
+		for(Account a:accounts)
+		  accs.add(a.name);
+	}
+	private String convertString(String str){
+		int len=str.length();
+		String newStr="_";
+		for(int i=0;i<len;i++){
+			if(isChar(str.charAt(i)))
+					newStr+=str.charAt(i);
+			else if(str.charAt(i)=='@')
+				break;
+		}
+		return newStr;
+	}
+	private boolean isChar(char c){
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z'))
+			return true;
+		return false;
+	}
+	private UpAcc isExisting(){
+		DbHelper dbh=new DbHelper(context);
+		SQLiteDatabase db=dbh.getReadableDatabase();
+		String code="select * from "+DbHelper.TABLE_UPDATE_ACCOUNT;
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return null;
+		UpAcc acc=new UpAcc();
+		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
+		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
+		return acc;
+	}
+}	

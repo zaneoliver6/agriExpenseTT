@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -117,6 +118,8 @@ public class CycleUseEndpoint {
    */
   @ApiMethod(name = "insertCycleUse")
   public CycleUse insertCycleUse(CycleUse cycleuse) {
+	//TODO
+	NamespaceManager.set(cycleuse.getAccount());
 	Key k=KeyFactory.createKey("CycleUse", cycleuse.getId());
 	cycleuse.setKey(k);
 	cycleuse.setKeyrep(KeyFactory.keyToString(k));

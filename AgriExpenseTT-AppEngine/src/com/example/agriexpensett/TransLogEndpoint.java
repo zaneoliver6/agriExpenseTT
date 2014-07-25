@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -148,6 +149,7 @@ public class TransLogEndpoint {
    */
   @ApiMethod(name = "insertTransLog")
   public TransLog insertTransLog(TransLog translog) {
+	NamespaceManager.set(translog.getAccount());
     EntityManager mgr = getEntityManager();
     Key k=KeyFactory.createKey("TransLog", translog.getId());
     translog.setKey(k);

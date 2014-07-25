@@ -2,22 +2,23 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="System" key="selection"/>
+		<item value="populateAcc" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="system"/>
-			<item value="update"/>
-			<item value="updatepur"/>
-			<item value="getCycle"/>
-			<item value="updateCycle"/>
-			<item value="cloud"/>
-			<item value="clour"/>
-			<item value="getARpurchase"/>
+			<item value="populateAcc"/>
+			<item value="signin"/>
+			<item value="usecost"/>
+			<item value="insert"/>
+			<item value="use_cost"/>
+			<item value="cycleuse"/>
+			<item value="endpoint.insert"/>
+			<item value="get"/>
 		</list>
 		<list key="replacehistory">
+			<item value="TransactionLog.TL_INS"/>
 			<item value="qtfr"/>
 			<item value="quantifier"/>
 			<item value="harvestDet"/>
@@ -31,7 +32,7 @@
 		<item value="257" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="381" key="DIALOG_HEIGHT"/>
-		<item value="768" key="DIALOG_X_ORIGIN"/>
-		<item value="83" key="DIALOG_Y_ORIGIN"/>
+		<item value="1117" key="DIALOG_X_ORIGIN"/>
+		<item value="136" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

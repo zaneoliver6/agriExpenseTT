@@ -1,5 +1,6 @@
 package helper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -16,6 +17,8 @@ import com.example.agriexpensett.rpurchaseendpoint.Rpurchaseendpoint;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import com.example.agriexpensett.translogendpoint.Translogendpoint;
 import com.example.agriexpensett.translogendpoint.model.TransLog;
+import com.example.agriexpensett.upaccendpoint.Upaccendpoint;
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 //import com.google.appengine.api.datastore.Key;
@@ -169,6 +172,7 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
 				Cycle c=DbQuery.getCycle(db, dbh, rowId);
+				c.setAccount(DbQuery.getAccount(db));//uses the account rep as the namespace
 				try{
 					c=endpoint.insertCycle(c).execute();
 				}catch(Exception e){
@@ -222,6 +226,8 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				CycleUse c=DbQuery.getACycleUse(db, dbh, rowId);
+				c.setAccount(DbQuery.getAccount(db));
+				
 				try{
 					c=endpoint.insertCycleUse(c).execute();
 				}catch(Exception e){
@@ -270,6 +276,7 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				RPurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
+				purchase.setAccount(DbQuery.getAccount(db));
 				try{
 					purchase=endpoint.insertRPurchase(purchase).execute();
 				}catch(Exception e){
@@ -485,6 +492,7 @@ public class CloudInterface {
 				String k=DbQuery.getKey(db, dbh, t.getTableKind(), t.getRowId());//gets the key for the related object in the cloud
 				t.setKeyrep(k);//stores the keyrep for its relating object
 				t.setId(logId);
+				t.setAccount(DbQuery.getAccount(db));
 				System.out.println(t.toString());
 				try{
 					System.out.println(t.getId());
@@ -507,7 +515,66 @@ public class CloudInterface {
 		}
 		
 	}
-	
+	public void insertUpAccC(UpAcc acc){
+		String code="select "+DbHelper.UPDATE_ACCOUNT_UPDATED+" from "+DbHelper.TABLE_UPDATE_ACCOUNT
+				+" where "+DbHelper.UPDATE_ACCOUNT_ID+"=1";
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1){
+			DbQuery.insertUpAcc(db, acc.getAcc());
+			cursor=db.rawQuery(code, null);
+		}
+		cursor.moveToFirst();
+		if(cursor.getCount()<1)
+			System.out.println("not being inserted");
+		long time=cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED));
+		acc.setLastUpdated(time);
+		new insertUpAcc().execute(acc);
+	}
+	public class insertUpAcc extends AsyncTask<UpAcc,Void,Void>{
+
+		@Override
+		protected Void doInBackground(UpAcc... params) {
+			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);         
+			builder = CloudEndpointUtils.updateBuilder(builder);
+			Upaccendpoint endpoint = builder.build();
+			UpAcc acc = params[0];
+			try {
+				endpoint.insertUpAcc(acc).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	}
+	private void updateUpAccC(UpAcc acc){
+		//DbQuery.get
+		//String code="select "+DbHelper.UPDATE_ACCOUNT_CLOUD_KEY+" from "
+		new updateUpAcc().execute(acc);
+	}
+	public class updateUpAcc extends AsyncTask<UpAcc,Void,Void>{
+
+		@Override
+		protected Void doInBackground(UpAcc... params) {
+			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);         
+			builder = CloudEndpointUtils.updateBuilder(builder);
+			Upaccendpoint endpoint = builder.build();
+			UpAcc acc=params[0];
+			try {
+				endpoint.updateUpAcc(acc).execute();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+	}
 	/*
 	public void updateLocal(){
 		new UpdateLocal().execute();

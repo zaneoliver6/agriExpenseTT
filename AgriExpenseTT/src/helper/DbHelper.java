@@ -71,7 +71,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";
 	public static final String UPDATE_ACCOUNT_ID="id";
 	
-	public static final int VERSION=74;
+	public static final int VERSION=79;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	
@@ -101,14 +101,16 @@ public class DbHelper extends SQLiteOpenHelper{
 		createResourceUse(db);
 		createRedoLog(db);
 		createCloudKeys(db);
+		createUpdateAccount(db);
 		createTransactionLog(db);
 	}
 	
+
 	private void createUpdateAccount(SQLiteDatabase db){
 		String code="create table "+DbHelper.TABLE_UPDATE_ACCOUNT+"("
-			+DbHelper.UPDATE_ACCOUNT_ID+" integer primary key autoincrement"
-			+DbHelper.UPDATE_ACCOUNT_ACC+" text"
-			+DbHelper.UPDATE_ACCOUNT_UPDATED+" integer"
+			+DbHelper.UPDATE_ACCOUNT_ID+" integer primary key autoincrement,"
+			+DbHelper.UPDATE_ACCOUNT_ACC+" text,"
+			+DbHelper.UPDATE_ACCOUNT_UPDATED+" integer,"
 			+DbHelper.UPDATE_ACCOUNT_CLOUD_KEY+" text);";
 		db.execSQL(code);
 	}
@@ -199,6 +201,7 @@ public class DbHelper extends SQLiteOpenHelper{
 		db.execSQL("drop table if exists "+DbHelper.TABLE_CLOUD_KEY);
 		db.execSQL("drop table if exists "+DbHelper.TABLE_LABOUR);
 		db.execSQL("drop table if exists "+DbHelper.TABLE_TRANSACTION_LOG);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_UPDATE_ACCOUNT);
 	}
 	
 	private void populate(SQLiteDatabase db,TransactionLog tL) {
