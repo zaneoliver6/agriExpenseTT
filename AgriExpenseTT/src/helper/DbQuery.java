@@ -6,6 +6,7 @@ import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import com.example.agriexpensett.translogendpoint.model.TransLog;
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;
@@ -269,7 +270,7 @@ public class DbQuery {
 		ContentValues cv=new ContentValues();
 		cv.put(DbHelper.UPDATE_ACCOUNT_ACC,acc);
 		cv.put(DbHelper.UPDATE_ACCOUNT_UPDATED, time);
-		//cv.put(DbHelper.u)
+		cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN,1);
 		db.insert(DbHelper.TABLE_UPDATE_ACCOUNT, null, cv);
 	}
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
@@ -313,6 +314,9 @@ public class DbQuery {
 		c.setLandQty(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_AMOUNT)));
 		c.setLandType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_TYPE)));
 		c.setTotalSpent(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_TOTALSPENT)));
+		c.setHarvestType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_TYPE)));
+		c.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_AMT)));
+		c.setCostPer(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_COSTPER)));
 		return c;
 	}
 	
@@ -353,5 +357,17 @@ public class DbQuery {
 		Cursor cursor=db.rawQuery(code, null);
 		cursor.moveToFirst();
 		return cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC));
+	}
+	public static UpAcc getUpAcc(SQLiteDatabase db){
+		String code="select * from "+DbHelper.TABLE_UPDATE_ACCOUNT;
+		Cursor cursor=db.rawQuery(code, null);
+		if(cursor.getCount()<1)
+			return null;
+		cursor.moveToFirst();
+		UpAcc acc=new UpAcc();
+		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
+		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
+		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
+		return acc;
 	}
 }

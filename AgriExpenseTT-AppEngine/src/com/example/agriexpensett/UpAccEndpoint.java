@@ -78,7 +78,8 @@ public class UpAccEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name = "getUpAcc")
-  public UpAcc getUpAcc(@Named("id") Long id) {
+  public UpAcc getUpAcc(@Named("id") Long id, @Named("acc") String acc) {
+	NamespaceManager.set(acc);
     EntityManager mgr = getEntityManager();
     UpAcc upacc  = null;
     try {

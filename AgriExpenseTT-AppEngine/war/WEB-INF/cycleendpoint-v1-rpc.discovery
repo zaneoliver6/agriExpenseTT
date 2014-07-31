@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/lr7DPLoFOr0yC2dtznsg4VVoO7M\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/c3fYI-Ni7GDFOLZ3eWzX8pyrPbQ\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -94,9 +94,20 @@
     "account": {
      "type": "string"
     },
+    "costPer": {
+     "type": "number",
+     "format": "double"
+    },
     "cropId": {
      "type": "integer",
      "format": "int32"
+    },
+    "harvestAmt": {
+     "type": "number",
+     "format": "double"
+    },
+    "harvestType": {
+     "type": "string"
     },
     "id": {
      "type": "integer",
@@ -118,6 +129,18 @@
     "totalSpent": {
      "type": "number",
      "format": "double"
+    }
+   }
+  },
+  "CycleCollection": {
+   "id": "CycleCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Cycle"
+     }
     }
    }
   },
@@ -151,17 +174,41 @@
   }
  },
  "methods": {
-  "cycleendpoint.getCycle": {
-   "id": "cycleendpoint.getCycle",
+  "cycleendpoint.getAllCycles": {
+   "id": "cycleendpoint.getAllCycles",
    "allowGet": true,
    "parameters": {
-    "id": {
+    "namespace": {
      "type": "string",
      "required": true
     }
    },
    "parameterOrder": [
-    "id"
+    "namespace"
+   ],
+   "returns": {
+    "$ref": "CycleCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "cycleendpoint.getCycle": {
+   "id": "cycleendpoint.getCycle",
+   "allowGet": true,
+   "parameters": {
+    "keyrep": {
+     "type": "string",
+     "required": true
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace",
+    "keyrep"
    ],
    "returns": {
     "$ref": "Cycle"

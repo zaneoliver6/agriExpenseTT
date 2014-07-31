@@ -21,8 +21,28 @@ public class Cycle {
 	private String keyrep;
 	private double landQty;
 	private double totalSpent;
+	private double harvestAmt;
+	private String harvestType;
+	private double costPer;
 	
-	
+	public double getHarvestAmt() {
+		return harvestAmt;
+	}
+	public void setHarvestAmt(double harvestAmt) {
+		this.harvestAmt = harvestAmt;
+	}
+	public String getHarvestType() {
+		return harvestType;
+	}
+	public void setHarvestType(String harvestType) {
+		this.harvestType = harvestType;
+	}
+	public double getCostPer() {
+		return costPer;
+	}
+	public void setCostPer(double costPer) {
+		this.costPer = costPer;
+	}
 	public double getTotalSpent() {
 		return totalSpent;
 	}

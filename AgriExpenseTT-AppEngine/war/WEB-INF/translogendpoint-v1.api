@@ -81,7 +81,7 @@
       }
     },
     "translogendpoint.logs" : {
-      "path" : "Logs/{time}",
+      "path" : "Logs/{time}/{namespace}",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -92,6 +92,10 @@
         "parameters" : {
           "time" : {
             "type" : "int64",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
             "required" : true
           }
         },
@@ -201,11 +205,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "complete" : {
             "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       },

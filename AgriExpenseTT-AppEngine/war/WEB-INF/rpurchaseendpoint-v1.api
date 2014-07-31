@@ -84,6 +84,27 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "rpurchaseendpoint.getAllPurchases" : {
+      "path" : "rpurchasecollection/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getAllPurchases",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "rpurchaseendpoint.removeRPurchase" : {
       "path" : "rpurchase/{id}",
       "httpMethod" : "DELETE",
@@ -106,7 +127,7 @@
       }
     },
     "rpurchaseendpoint.getRPurchase" : {
-      "path" : "rpurchase/{id}",
+      "path" : "rpurchase/{namespace}/{keyrep}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -115,7 +136,11 @@
       "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase",
       "request" : {
         "parameters" : {
-          "id" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          },
+          "keyrep" : {
             "type" : "string",
             "required" : true
           }
@@ -185,11 +210,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "complete" : {
             "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       },
@@ -205,6 +230,18 @@
           },
           "nextPageToken" : {
             "type" : "string"
+          }
+        }
+      },
+      "RPurchaseCollection" : {
+        "id" : "RPurchaseCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "RPurchase"
+            }
           }
         }
       }
@@ -229,6 +266,11 @@
         },
         "response" : {
           "$ref" : "RPurchase"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.getAllPurchases" : {
+        "response" : {
+          "$ref" : "RPurchaseCollection"
         }
       },
       "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase" : {

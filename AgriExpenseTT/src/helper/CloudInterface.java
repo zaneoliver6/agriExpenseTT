@@ -3,6 +3,7 @@ package helper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import com.example.agriexpensett.rpurchaseendpoint.Rpurchaseendpoint;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import com.example.agriexpensett.translogendpoint.Translogendpoint;
 import com.example.agriexpensett.translogendpoint.model.TransLog;
+import com.example.agriexpensett.translogendpoint.model.TransLogCollection;
 import com.example.agriexpensett.upaccendpoint.Upaccendpoint;
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -515,7 +517,9 @@ public class CloudInterface {
 		}
 		
 	}
-	public void insertUpAccC(UpAcc acc){
+	public void insertUpAccC(String namespace){
+		UpAcc acc=new UpAcc();
+		acc.setAcc(namespace);
 		String code="select "+DbHelper.UPDATE_ACCOUNT_UPDATED+" from "+DbHelper.TABLE_UPDATE_ACCOUNT
 				+" where "+DbHelper.UPDATE_ACCOUNT_ID+"=1";
 		Cursor cursor=db.rawQuery(code, null);
@@ -524,14 +528,11 @@ public class CloudInterface {
 			cursor=db.rawQuery(code, null);
 		}
 		cursor.moveToFirst();
-		if(cursor.getCount()<1)
-			System.out.println("not being inserted");
 		long time=cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED));
 		acc.setLastUpdated(time);
 		new insertUpAcc().execute(acc);
 	}
 	public class insertUpAcc extends AsyncTask<UpAcc,Void,Void>{
-
 		@Override
 		protected Void doInBackground(UpAcc... params) {
 			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
@@ -575,6 +576,29 @@ public class CloudInterface {
 		}
 		
 	}
+	public UpAcc getUpAcc(String namespace){
+		Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+		         null);         
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		Upaccendpoint endpoint = builder.build();
+		UpAcc acc=null;
+		try {
+			acc=endpoint.getUpAcc((long) 1,namespace).execute();
+		}catch (IOException e) {e.printStackTrace();}
+		return acc;
+	}
+	public void flushToCloud(){
+		insertCycleC();
+		insertPurchase();
+		insertCycleUseC();
+		updateCycleC();
+		updatePurchaseC();
+		deletePurchase();
+		deleteCycle();
+	}
+	
+	
 	/*
 	public void updateLocal(){
 		new UpdateLocal().execute();

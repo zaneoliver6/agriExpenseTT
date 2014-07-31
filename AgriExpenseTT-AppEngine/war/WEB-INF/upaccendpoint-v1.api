@@ -74,7 +74,7 @@
       }
     },
     "upaccendpoint.getUpAcc" : {
-      "path" : "upacc/{id}",
+      "path" : "upacc/{id}/{acc}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -85,6 +85,10 @@
         "parameters" : {
           "id" : {
             "type" : "int64",
+            "required" : true
+          },
+          "acc" : {
+            "type" : "string",
             "required" : true
           }
         },
@@ -160,6 +164,9 @@
           },
           "acc" : {
             "type" : "string"
+          },
+          "signedIn" : {
+            "type" : "integer"
           }
         }
       },
@@ -183,11 +190,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "namespace" : {
-            "type" : "string"
-          },
           "complete" : {
             "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       }

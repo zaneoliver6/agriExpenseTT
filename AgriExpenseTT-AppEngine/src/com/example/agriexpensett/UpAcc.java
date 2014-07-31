@@ -16,7 +16,7 @@ public class UpAcc {
 	private String keyrep;
 	private long lastUpdated;
 	private String acc;
-	
+	private int signedIn;
 	
 	public UpAcc() {
 		super();
@@ -52,6 +52,12 @@ public class UpAcc {
 	}
 	public void setAcc(String acc) {
 		this.acc = acc;
+	}
+	public int getSignedIn() {
+		return signedIn;
+	}
+	public void setSignedIn(int signedIn) {
+		this.signedIn = signedIn;
 	}
 	
 }

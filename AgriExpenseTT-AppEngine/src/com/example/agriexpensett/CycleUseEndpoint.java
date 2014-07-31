@@ -10,10 +10,14 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -73,7 +77,33 @@ public class CycleUseEndpoint {
       .setNextPageToken(cursorString)
       .build();
   }
-
+  @ApiMethod(name="getAllCycleUse")
+  public List<CycleUse> getAllCycleUse(@Named("namespace") String namespace){
+	    NamespaceManager.set(namespace);
+	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("CycleUse");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    List<CycleUse> cL=new ArrayList<CycleUse>();
+	    while(i.hasNext()){
+	    	Entity e=i.next();
+	    	//System.out.println(e.toString());
+	    	CycleUse c=new CycleUse();
+	    	  
+	    	c.setId(Integer.parseInt(""+e.getProperty("id")));
+	    	c.setCycleid(Integer.parseInt(""+e.getProperty("cycleid")));
+	    	c.setPurchaseId(Integer.parseInt(""+e.getProperty("purchaseId")));
+	    	c.setAmount((Double)e.getProperty("amount"));
+	    	c.setCost((Double)e.getProperty("cost"));
+	    	c.setResource((String)e.getProperty("resource"));
+	    	
+	    	cL.add(c);
+	    }
+		return cL;
+  }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
    *
@@ -81,11 +111,17 @@ public class CycleUseEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name = "getCycleUse")
-  public CycleUse getCycleUse(@Named("id") String id) {
-   // EntityManager mgr = getEntityManager();
-    CycleUse cycleuse  = new CycleUse();
-    DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
-	  Key k=KeyFactory.stringToKey(id);
+  public CycleUse getCycleUse(@Named("namespace") String namespace, @Named("keyrep") String keyrep) {
+	  NamespaceManager.set(namespace);
+	  EntityManager mgr = getEntityManager();
+	  CycleUse cycleuse  = null;
+	  Key k=KeyFactory.stringToKey(keyrep);
+	  try {
+		  cycleuse=mgr.find(CycleUse.class, k);
+	  } catch (Exception e) {e.printStackTrace();}
+	  return cycleuse;
+	  //DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
+	/*
 	  Entity et = null;
 	  try {
 		et=datastore.get(k);
@@ -105,7 +141,6 @@ public class CycleUseEndpoint {
     } finally {
       mgr.close();
     }*/
-    return cycleuse;
   }
 
   /**

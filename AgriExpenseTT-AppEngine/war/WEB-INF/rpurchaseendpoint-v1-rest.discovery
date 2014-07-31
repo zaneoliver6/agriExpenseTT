@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/hMKZd851gjerth3vnx35zv4L3Ho\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/Xke6D1iN8eLH7TPY_QM05s23GyQ\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",
@@ -157,22 +157,61 @@
      "type": "string"
     }
    }
+  },
+  "RPurchaseCollection": {
+   "id": "RPurchaseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "RPurchase"
+     }
+    }
+   }
   }
  },
  "methods": {
-  "getRPurchase": {
-   "id": "rpurchaseendpoint.getRPurchase",
-   "path": "rpurchase/{id}",
+  "getAllPurchases": {
+   "id": "rpurchaseendpoint.getAllPurchases",
+   "path": "rpurchasecollection/{namespace}",
    "httpMethod": "GET",
    "parameters": {
-    "id": {
+    "namespace": {
      "type": "string",
      "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
-    "id"
+    "namespace"
+   ],
+   "response": {
+    "$ref": "RPurchaseCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "getRPurchase": {
+   "id": "rpurchaseendpoint.getRPurchase",
+   "path": "rpurchase/{namespace}/{keyrep}",
+   "httpMethod": "GET",
+   "parameters": {
+    "keyrep": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "namespace",
+    "keyrep"
    ],
    "response": {
     "$ref": "RPurchase"

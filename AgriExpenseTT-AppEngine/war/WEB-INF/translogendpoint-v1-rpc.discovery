@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/ZpvupGcdXQbgvenOqXLhsDKbvL0\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/67aX1YLzZPl3xbuOj9hsGsQNiTs\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
@@ -221,6 +221,10 @@
   "translogendpoint.logs": {
    "id": "translogendpoint.logs",
    "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true
+    },
     "time": {
      "type": "string",
      "required": true,
@@ -228,7 +232,8 @@
     }
    },
    "parameterOrder": [
-    "time"
+    "time",
+    "namespace"
    ],
    "returns": {
     "$ref": "TransLogCollection"

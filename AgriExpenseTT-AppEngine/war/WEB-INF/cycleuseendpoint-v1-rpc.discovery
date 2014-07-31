@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/ORW-dlSaLp_lbXWW37haP_pWqxM\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/_nbrOBPiXHw9xU1AHnUyWOYxGPw\"",
  "discoveryVersion": "v1",
  "id": "cycleuseendpoint:v1",
  "name": "cycleuseendpoint",
@@ -125,6 +125,18 @@
     }
    }
   },
+  "CycleUseCollection": {
+   "id": "CycleUseCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "CycleUse"
+     }
+    }
+   }
+  },
   "Key": {
    "id": "Key",
    "type": "object",
@@ -155,17 +167,41 @@
   }
  },
  "methods": {
-  "cycleuseendpoint.getCycleUse": {
-   "id": "cycleuseendpoint.getCycleUse",
+  "cycleuseendpoint.getAllCycleUse": {
+   "id": "cycleuseendpoint.getAllCycleUse",
    "allowGet": true,
    "parameters": {
-    "id": {
+    "namespace": {
      "type": "string",
      "required": true
     }
    },
    "parameterOrder": [
-    "id"
+    "namespace"
+   ],
+   "returns": {
+    "$ref": "CycleUseCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "cycleuseendpoint.getCycleUse": {
+   "id": "cycleuseendpoint.getCycleUse",
+   "allowGet": true,
+   "parameters": {
+    "keyrep": {
+     "type": "string",
+     "required": true
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace",
+    "keyrep"
    ],
    "returns": {
     "$ref": "CycleUse"

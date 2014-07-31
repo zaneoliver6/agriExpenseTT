@@ -10,10 +10,17 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -74,6 +81,34 @@ public class CycleEndpoint {
       .build();
   }
 
+  @ApiMethod(name="getAllCycles")
+  public List<Cycle> getAllCycles(@Named("namespace") String namespace){
+	    NamespaceManager.set(namespace);
+	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("Cycle");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    List<Cycle> cL=new ArrayList<Cycle>();
+	    while(i.hasNext()){
+	    	Entity e=i.next();
+	    	//System.out.println(e.toString());
+	    	Cycle c=new Cycle();
+	    	  
+	    	c.setId(Integer.parseInt(""+e.getProperty("id")));
+	    	c.setCropId(Integer.parseInt(""+e.getProperty("cropId")));
+	    	c.setLandQty((Double)e.getProperty("landQty"));
+	    	c.setLandType((String)e.getProperty("landType"));
+	    	c.setTotalSpent((Double)e.getProperty("totalSpent"));
+	    	c.setHarvestAmt((Double)e.getProperty("harvestAmt"));
+	    	c.setHarvestType((String)e.getProperty("harvestType"));
+	    	c.setCostPer((Double)e.getProperty("costPer"));
+	    	cL.add(c);
+	    }
+		return cL;
+  }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
    *
@@ -81,10 +116,18 @@ public class CycleEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name = "getCycle")
-  public Cycle getCycle(@Named("id") String id) {
-    //EntityManager mgr = getEntityManager();
-	  DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
-	  Key k=KeyFactory.stringToKey(id);
+  public Cycle getCycle(@Named("namespace") String namespace,@Named("keyrep") String keyrep) {
+	  NamespaceManager.set(namespace);
+	  EntityManager mgr=getEntityManager();
+	  Key k=KeyFactory.stringToKey(keyrep);
+	  Cycle c = null;
+	  try{
+	  	c=mgr.find(Cycle.class, k);
+	  }catch (Exception e){e.printStackTrace();}
+	  return c;
+	  //DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
+	  
+	 /*
 	  Entity et = null;
 	  try {
 		et=datastore.get(k);
@@ -98,14 +141,9 @@ public class CycleEndpoint {
 	  cycle.setCropId((Integer) et.getProperty("cropId"));
 	  cycle.setLandQty((Double) et.getProperty("landQty"));
 	  cycle.setLandType((String) et.getProperty("landType"));
-	  /*
-	  Cycle cycle  = null;
-    try {
-      cycle = mgr.find(Cycle.class, id);
-    } finally {
-      mgr.close();
-    }*/
-    return cycle;
+	  cycle.setTotalSpent((Double)et.getProperty("totalSpent"));
+	 */
+    //return cycle;
   }
 
   /**

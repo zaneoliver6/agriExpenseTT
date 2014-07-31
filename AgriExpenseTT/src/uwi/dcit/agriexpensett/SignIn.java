@@ -7,19 +7,23 @@ import java.util.regex.Pattern;
 import helper.CloudInterface;
 import helper.DbHelper;
 import helper.DbQuery;
+import helper.Sync;
 
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Toast;
@@ -28,24 +32,34 @@ public class SignIn {
 	Context context;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	public SignIn(Context context){
-		this.context=context;
+	Activity activity;
+	public SignIn(Activity activity,Context ctx){
+		this.context=ctx;
 		dbh=new DbHelper(context);
 		db=dbh.getReadableDatabase();
+		this.activity=activity;
 	}
-	public SignIn(SQLiteDatabase db,DbHelper dbh,Context context){
-		this.context=context;
+	public SignIn(SQLiteDatabase db,DbHelper dbh,Activity activity,Context ctx){
+		this.context=ctx;
 		this.db=db;
 		this.dbh=dbh;
+		this.activity=activity;
 	}
 	public void signIn(){
 		UpAcc acc=isExisting();
 		if(acc==null){
 			accSetUp();
 		}else{
-			try {
-				Toast.makeText(context, acc.toPrettyString(),Toast.LENGTH_SHORT).show();
-			} catch (IOException e) {	e.printStackTrace();}
+			ContentValues cv=new ContentValues();
+			if(acc.getSignedIn()==1){
+				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);
+				((MainMenu)activity).toggleSignIn();
+			}else if(acc.getSignedIn()==0){
+				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
+				((MainMenu)activity).toggleSignIn();
+				initialSignIn(acc.getAcc());
+			}
+			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null);
 		}
 	}
 	public void accSetUp(){
@@ -68,15 +82,24 @@ public class SignIn {
 	    builder.setItems(items, new DialogInterface.OnClickListener() {
 	        @Override
 			public void onClick(DialogInterface dialog, int item) {
-	           // Toast.makeText(context, items[item], Toast.LENGTH_SHORT).show();
-	            String acc=convertString((items[item].toString()));
-	        	//Toast.makeText(context,acc,Toast.LENGTH_LONG).show();
-	            DbQuery.insertUpAcc(db, acc);
+	            String namespace=convertString((items[item].toString()));
 	            Toast.makeText(context, "signed in", Toast.LENGTH_SHORT).show();
+	            initialSignIn(namespace);
 	        }
 	    }).show();
 	}
-	
+	private void initialSignIn(final String namespaceAcc){
+		
+		class setup extends AsyncTask<Void, Void, Void>{
+			@Override
+			protected Void doInBackground(Void... params) {
+				Sync sync=new Sync(db, dbh, context);
+				sync.start(namespaceAcc);
+				return null;
+			}
+		}
+		new setup().execute();
+	}
 	private void noAccs(){
 		AlertDialog.Builder builder=new AlertDialog.Builder(context);
 		builder.setTitle("No accounts available");
@@ -91,7 +114,7 @@ public class SignIn {
 	}
 	
 	private void populateAcc(ArrayList<String> accs){
-		Account[] accounts = AccountManager.get(context).getAccountsByType("com.google");
+		Account[] accounts = AccountManager.get(context).getAccounts();
 		for(Account a:accounts){
 		  accs.add(a.name);
 		  System.out.println(a.name);
@@ -113,7 +136,7 @@ public class SignIn {
 			return true;
 		return false;
 	}
-	private UpAcc isExisting(){
+	public UpAcc isExisting(){
 		String code="select * from "+DbHelper.TABLE_UPDATE_ACCOUNT;
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
@@ -123,7 +146,7 @@ public class SignIn {
 		UpAcc acc=new UpAcc();
 		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
 		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
-		
+		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
 		return acc;
 	}
 }	

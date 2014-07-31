@@ -16,11 +16,13 @@ import android.widget.Button;
 
 public class MainMenu extends ActionBarActivity {
 	FlyOutContainer root;
+	SignIn s;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.root=(FlyOutContainer) this.getLayoutInflater().inflate(R.layout.activity_main_menu, null);
 		this.setContentView(root);
+		s=new SignIn(MainMenu.this,MainMenu.this);
 		//setContentView(R.layout.activity_main_menu);
 
 		setupButtons();
@@ -33,6 +35,10 @@ public class MainMenu extends ActionBarActivity {
 		Button btn_CycleDet=(Button)findViewById(R.id.ResDetail);
 		Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);
 		Button btn_HireLabour=(Button)findViewById(R.id.HireLabour);
+		UpAcc acc=s.isExisting();
+		if(acc!=null && acc.getSignedIn()==1){
+			btn_SignIn.setText("Sign Out");
+		}
 		click c=new click();
 		btn_newCycle.setOnClickListener(c);
 		btn_purchase.setOnClickListener(c);
@@ -60,7 +66,6 @@ public class MainMenu extends ActionBarActivity {
 			}else if(v.getId()==R.id.ResDetail){
 				nextActivity=new Intent(MainMenu.this,ViewNavigation.class);
 			}else if(v.getId()==R.id.btn_SignIn){
-				SignIn s=new SignIn(MainMenu.this);
 				s.signIn();
 				//testing shit
 				return;
@@ -99,6 +104,14 @@ public class MainMenu extends ActionBarActivity {
 	}
 	public void toggleMenu(View v){
 		this.root.toggleMenu();
+	}
+	public void toggleSignIn(){
+		Button btnSignIn=(Button)findViewById(R.id.btn_SignIn);
+		if(btnSignIn.getText().toString().equals("Sign In")){
+			btnSignIn.setText("Sign Out");
+		}else{
+			btnSignIn.setText("Sign In");
+		}
 	}
 	/**
 	 * A placeholder fragment containing a simple view.

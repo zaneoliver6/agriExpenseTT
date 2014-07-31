@@ -10,10 +10,14 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -73,7 +77,36 @@ public class RPurchaseEndpoint {
       .setNextPageToken(cursorString)
       .build();
   }
-
+  @ApiMethod(name="getAllPurchases")
+  public List<RPurchase> getAllPurchases(@Named("namespace") String namespace){
+	  	NamespaceManager.set(namespace);
+	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("RPurchase");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    List<RPurchase> pL=new ArrayList<RPurchase>();
+	    System.out.println("record Holder:------------------");
+	    while(i.hasNext()){
+	    	System.out.println("record------------------");
+	    	Entity e=i.next();
+	    	System.out.println(e.toString());
+	    	RPurchase p=new RPurchase();
+	    	  
+	    	p.setpId(Integer.parseInt(""+e.getProperty("pId")));
+	    	p.setType((String)e.getProperty("type"));
+	    	p.setResourceId(Integer.parseInt(""+e.getProperty("resourceId")));
+	    	p.setQuantifier((String)e.getProperty("quantifier"));
+	    	p.setQty((Double)e.getProperty("qty"));
+	    	p.setCost((Double)e.getProperty("cost"));
+	    	p.setQtyRemaining((Double)e.getProperty("qtyRemaining"));
+	    	
+	    	pL.add(p);
+	    }
+		return pL;
+  }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
    *
@@ -81,8 +114,18 @@ public class RPurchaseEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name = "getRPurchase")
-  public RPurchase getRPurchase(@Named("id") String id) {
-	  DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
+  public RPurchase getRPurchase(@Named("namespace") String namespace,@Named("keyrep") String keyrep) {
+	  NamespaceManager.set(namespace);
+	  Key k=KeyFactory.stringToKey(keyrep);
+	  EntityManager mgr = getEntityManager();
+	    RPurchase rpurchase  = null;
+	    try {
+	      rpurchase = mgr.find(RPurchase.class,k);
+	    } finally {
+	      mgr.close();
+	    }
+	    return rpurchase;
+	  /*DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
 	  Key k=KeyFactory.stringToKey(id);
 	  Entity et = null;
 	  try {
@@ -103,15 +146,7 @@ public class RPurchaseEndpoint {
 	 p.setQtyRemaining((Double) et.getProperty("qtyRemaining"));
 	 p.setType((String) et.getProperty("type"));
 	  return p;
-	  /*
-    EntityManager mgr = getEntityManager();
-    RPurchase rpurchase  = null;
-    try {
-      rpurchase = mgr.find(RPurchase.class, id);
-    } finally {
-      mgr.close();
-    }
-    return rpurchase;*/
+	  */
   }
 
   /**

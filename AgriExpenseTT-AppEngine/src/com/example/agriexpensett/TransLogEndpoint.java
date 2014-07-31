@@ -87,15 +87,15 @@ public class TransLogEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name="Logs")
-  public List<TransLog> Logs(@Named("time") Long tme){
+  public List<TransLog> Logs(@Named("time") Long time, @Named("namespace") String namespace){
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	   
 	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("TransLog");
 	      Filter timeFilter =
 	    		  new FilterPredicate("transTime",
-	    		                      FilterOperator.GREATER_THAN,
-	    		                      33);
-	    //  q.setFilter(timeFilter);
+	    		                      FilterOperator.GREATER_THAN_OR_EQUAL,
+	    		                      time);
+	      q.setFilter(timeFilter);
 	      PreparedQuery pq=datastore.prepare(q);
 	      System.out.println("---------I LOVE LIFE 88------------");
 	     List<Entity> results = pq

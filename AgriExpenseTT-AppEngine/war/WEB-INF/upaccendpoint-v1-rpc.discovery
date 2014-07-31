@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/YsAldVyq4__Yn9E-9gSeyDBXho4\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/1jhwIBDFvtwOHIRP0cF_wgCcOW0\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -131,6 +131,10 @@
     "lastUpdated": {
      "type": "string",
      "format": "int64"
+    },
+    "signedIn": {
+     "type": "integer",
+     "format": "int32"
     }
    }
   }
@@ -140,6 +144,10 @@
    "id": "upaccendpoint.getUpAcc",
    "allowGet": true,
    "parameters": {
+    "acc": {
+     "type": "string",
+     "required": true
+    },
     "id": {
      "type": "string",
      "required": true,
@@ -147,7 +155,8 @@
     }
    },
    "parameterOrder": [
-    "id"
+    "id",
+    "acc"
    ],
    "returns": {
     "$ref": "UpAcc"

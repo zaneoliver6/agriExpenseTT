@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/ZpvupGcdXQbgvenOqXLhsDKbvL0\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/67aX1YLzZPl3xbuOj9hsGsQNiTs\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
@@ -225,9 +225,14 @@
   },
   "logs": {
    "id": "translogendpoint.logs",
-   "path": "Logs/{time}",
+   "path": "Logs/{time}/{namespace}",
    "httpMethod": "POST",
    "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
     "time": {
      "type": "string",
      "required": true,
@@ -236,7 +241,8 @@
     }
    },
    "parameterOrder": [
-    "time"
+    "time",
+    "namespace"
    ],
    "response": {
     "$ref": "TransLogCollection"

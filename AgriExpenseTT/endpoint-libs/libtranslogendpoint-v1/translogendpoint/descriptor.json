@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/translogendpoint/v1/20140722155159/java/1.16.0-rc/example.com-translogendpoint-v1-20140722155159-java-1.16.0-rc-sources.jar", 
-      "path": "example.com-translogendpoint-v1-20140722155159-java-1.16.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/translogendpoint/v1/20140730062228/java/1.16.0-rc/example.com-translogendpoint-v1-20140730062228-java-1.16.0-rc-sources.jar", 
+      "path": "example.com-translogendpoint-v1-20140730062228-java-1.16.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-07-22 15:51"
+      "timestamp": "2014-07-30 06:22"
     }, 
     {
-      "path": "example.com-translogendpoint-v1-20140722155159-java-1.16.0-rc.jar.properties", 
+      "path": "example.com-translogendpoint-v1-20140730062228-java-1.16.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -702,5 +702,5 @@
   "packagePath": "agriexpensett", 
   "language_version": "1.16.0-rc", 
   "id": "translogendpoint:v1", 
-  "revision": 20140722155159
+  "revision": 20140730062228
 }

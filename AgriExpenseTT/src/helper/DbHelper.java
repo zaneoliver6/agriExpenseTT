@@ -70,8 +70,9 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String UPDATE_ACCOUNT_UPDATED="lastUpdated";
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";
 	public static final String UPDATE_ACCOUNT_ID="id";
+	public static final String UPDATE_ACCOUNT_SIGNEDIN="signedIn";
 	
-	public static final int VERSION=79;
+	public static final int VERSION=111;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	
@@ -111,6 +112,7 @@ public class DbHelper extends SQLiteOpenHelper{
 			+DbHelper.UPDATE_ACCOUNT_ID+" integer primary key autoincrement,"
 			+DbHelper.UPDATE_ACCOUNT_ACC+" text,"
 			+DbHelper.UPDATE_ACCOUNT_UPDATED+" integer,"
+			+DbHelper.UPDATE_ACCOUNT_SIGNEDIN+" integer,"
 			+DbHelper.UPDATE_ACCOUNT_CLOUD_KEY+" text);";
 		db.execSQL(code);
 	}

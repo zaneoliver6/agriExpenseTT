@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/YsAldVyq4__Yn9E-9gSeyDBXho4\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/1jhwIBDFvtwOHIRP0cF_wgCcOW0\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -133,6 +133,10 @@
     "lastUpdated": {
      "type": "string",
      "format": "int64"
+    },
+    "signedIn": {
+     "type": "integer",
+     "format": "int32"
     }
    }
   }
@@ -140,9 +144,14 @@
  "methods": {
   "getUpAcc": {
    "id": "upaccendpoint.getUpAcc",
-   "path": "upacc/{id}",
+   "path": "upacc/{id}/{acc}",
    "httpMethod": "GET",
    "parameters": {
+    "acc": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
     "id": {
      "type": "string",
      "required": true,
@@ -151,7 +160,8 @@
     }
    },
    "parameterOrder": [
-    "id"
+    "id",
+    "acc"
    ],
    "response": {
     "$ref": "UpAcc"
