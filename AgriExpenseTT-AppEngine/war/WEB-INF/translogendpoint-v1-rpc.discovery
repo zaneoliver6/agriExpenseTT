@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/4YXqE-6zdZ94m1uJ3YsxllI9-o8\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/pVyPUcpyAESE9N45tEuHB1FlgTg\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
- "rpcUrl": "https://onyx-park-618.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://thematic-ruler-633.appspot.com/_ah/api/",
+ "rpcUrl": "https://thematic-ruler-633.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {

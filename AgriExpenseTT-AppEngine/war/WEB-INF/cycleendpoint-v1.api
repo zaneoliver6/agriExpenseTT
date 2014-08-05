@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://onyx-park-618.appspot.com/_ah/api",
+  "root" : "https://thematic-ruler-633.appspot.com/_ah/api",
   "name" : "cycleendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://onyx-park-618.appspot.com/_ah/spi",
+    "bns" : "https://thematic-ruler-633.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,20 +27,53 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
-    "cycleendpoint.removeCycle" : {
-      "path" : "cycle/{keyrep}/{namespace}",
-      "httpMethod" : "DELETE",
+    "cycleendpoint.updateCycle" : {
+      "path" : "cycle",
+      "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.removeCycle",
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.updateCycle",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "cycleendpoint.getAllCycles" : {
+      "path" : "cyclecollection/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.getAllCycles",
       "request" : {
         "parameters" : {
-          "keyrep" : {
+          "namespace" : {
             "type" : "string",
             "required" : true
-          },
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "cycleendpoint.deleteAll" : {
+      "path" : "all/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.deleteAll",
+      "request" : {
+        "parameters" : {
           "namespace" : {
             "type" : "string",
             "required" : true
@@ -50,6 +83,55 @@
       },
       "response" : {
         "body" : "empty"
+      }
+    },
+    "cycleendpoint.insertCycle" : {
+      "path" : "cycle",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.insertCycle",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "cycleendpoint.getMatchingCycles" : {
+      "path" : "collectionresponse_cycle/{cropName}/{landQty}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.getMatchingCyles",
+      "request" : {
+        "parameters" : {
+          "cropName" : {
+            "type" : "string",
+            "required" : true
+          },
+          "landQty" : {
+            "type" : "double",
+            "required" : true
+          },
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "cycleendpoint.listCycle" : {
@@ -102,16 +184,20 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "cycleendpoint.deleteAll" : {
-      "path" : "all/{namespace}",
-      "httpMethod" : "GET",
+    "cycleendpoint.removeCycle" : {
+      "path" : "cycle/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.deleteAll",
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.removeCycle",
       "request" : {
         "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
           "namespace" : {
             "type" : "string",
             "required" : true
@@ -121,79 +207,11 @@
       },
       "response" : {
         "body" : "empty"
-      }
-    },
-    "cycleendpoint.getAllCycles" : {
-      "path" : "cyclecollection/{namespace}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.getAllCycles",
-      "request" : {
-        "parameters" : {
-          "namespace" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "cycleendpoint.insertCycle" : {
-      "path" : "cycle",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.insertCycle",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "cycleendpoint.updateCycle" : {
-      "path" : "cycle",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.updateCycle",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
       }
     }
   },
   "descriptor" : {
     "schemas" : {
-      "CollectionResponse_Cycle" : {
-        "id" : "CollectionResponse_Cycle",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Cycle"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
       "Cycle" : {
         "id" : "Cycle",
         "type" : "object",
@@ -227,6 +245,9 @@
           },
           "costPer" : {
             "type" : "number"
+          },
+          "cropName" : {
+            "type" : "string"
           },
           "account" : {
             "type" : "string"
@@ -272,10 +293,51 @@
             }
           }
         }
+      },
+      "CollectionResponse_Cycle" : {
+        "id" : "CollectionResponse_Cycle",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Cycle"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "com.example.agriexpensett.CycleEndpoint.removeCycle" : {
+      "com.example.agriexpensett.CycleEndpoint.updateCycle" : {
+        "request" : {
+          "$ref" : "Cycle"
+        },
+        "response" : {
+          "$ref" : "Cycle"
+        }
+      },
+      "com.example.agriexpensett.CycleEndpoint.getAllCycles" : {
+        "response" : {
+          "$ref" : "CycleCollection"
+        }
+      },
+      "com.example.agriexpensett.CycleEndpoint.deleteAll" : {
+      },
+      "com.example.agriexpensett.CycleEndpoint.insertCycle" : {
+        "request" : {
+          "$ref" : "Cycle"
+        },
+        "response" : {
+          "$ref" : "Cycle"
+        }
+      },
+      "com.example.agriexpensett.CycleEndpoint.getMatchingCyles" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Cycle"
+        }
       },
       "com.example.agriexpensett.CycleEndpoint.listCycle" : {
         "response" : {
@@ -287,28 +349,7 @@
           "$ref" : "Cycle"
         }
       },
-      "com.example.agriexpensett.CycleEndpoint.deleteAll" : {
-      },
-      "com.example.agriexpensett.CycleEndpoint.getAllCycles" : {
-        "response" : {
-          "$ref" : "CycleCollection"
-        }
-      },
-      "com.example.agriexpensett.CycleEndpoint.insertCycle" : {
-        "request" : {
-          "$ref" : "Cycle"
-        },
-        "response" : {
-          "$ref" : "Cycle"
-        }
-      },
-      "com.example.agriexpensett.CycleEndpoint.updateCycle" : {
-        "request" : {
-          "$ref" : "Cycle"
-        },
-        "response" : {
-          "$ref" : "Cycle"
-        }
+      "com.example.agriexpensett.CycleEndpoint.removeCycle" : {
       }
     }
   }
