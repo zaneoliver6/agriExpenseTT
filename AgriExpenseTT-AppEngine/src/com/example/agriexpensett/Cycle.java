@@ -24,6 +24,7 @@ public class Cycle {
 	private double harvestAmt;
 	private String harvestType;
 	private double costPer;
+	private String cropName;
 	
 	public double getHarvestAmt() {
 		return harvestAmt;
@@ -58,12 +59,12 @@ public class Cycle {
 	public Cycle() {
 		super();
 	}
-	public Cycle(int cropId, String landType, double landQty) {
+	public Cycle(int cropId, String landType, double landQty, String cropName) {
 		super();
 		this.cropId = cropId;
 		this.landType = landType;
 		this.landQty = landQty;
-		
+		this.cropName = cropName;
 	}
 	
 	public int getId() {
@@ -103,9 +104,17 @@ public class Cycle {
 	public void setAccount(String account) {
 		Account = account;
 	}
+	public String getCropName() {
+		return cropName;
+	}
+
+	public void setCropName(String cropName) {
+		this.cropName = cropName;
+	}
+
 	@Override
 	public String toString() {
-		String n="cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+"";
+		String n="cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+" cropName"+cropName+"";
 		return n;
 	}
 }

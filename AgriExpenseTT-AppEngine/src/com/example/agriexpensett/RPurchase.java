@@ -20,6 +20,7 @@ public class RPurchase {
 	private double cost;
 	private double qtyRemaining;
 	private String type;
+	private String elementName;
 	
 	
 	public String getKeyrep() {
@@ -103,6 +104,12 @@ public class RPurchase {
 	public String toString() {
 		String n="purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 		return n;
+	}
+	public String getElementName() {
+		return elementName;
+	}
+	public void setElementName(String elementName) {
+		this.elementName = elementName;
 	}
 	
 	
