@@ -28,7 +28,7 @@
   "packagePath" : "agriexpensett",
   "methods" : {
     "cycleendpoint.removeCycle" : {
-      "path" : "cycle/{id}",
+      "path" : "cycle/{keyrep}/{namespace}",
       "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -37,7 +37,11 @@
       "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.removeCycle",
       "request" : {
         "parameters" : {
-          "id" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
             "type" : "string",
             "required" : true
           }
@@ -96,6 +100,27 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "cycleendpoint.deleteAll" : {
+      "path" : "all/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleEndpoint.deleteAll",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
       }
     },
     "cycleendpoint.getAllCycles" : {
@@ -261,6 +286,8 @@
         "response" : {
           "$ref" : "Cycle"
         }
+      },
+      "com.example.agriexpensett.CycleEndpoint.deleteAll" : {
       },
       "com.example.agriexpensett.CycleEndpoint.getAllCycles" : {
         "response" : {

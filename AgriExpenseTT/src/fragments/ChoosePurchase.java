@@ -1,15 +1,12 @@
 package fragments;
 
 
-import fragments.FragmentViewCycles.CycleListAdapter;
 import helper.DHelper;
 import helper.DataManager;
 import helper.DbHelper;
 import helper.DbQuery;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import uwi.dcit.AgriExpenseTT.EditPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import dataObjects.localCycle;

@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/67aX1YLzZPl3xbuOj9hsGsQNiTs\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/4YXqE-6zdZ94m1uJ3YsxllI9-o8\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
@@ -164,6 +164,45 @@
   }
  },
  "methods": {
+  "deleteAll": {
+   "id": "translogendpoint.deleteAll",
+   "path": "all/{namespace}",
+   "httpMethod": "GET",
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "getAllTranslog": {
+   "id": "translogendpoint.getAllTranslog",
+   "path": "translogcollection/{namespace}",
+   "httpMethod": "GET",
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "response": {
+    "$ref": "TransLogCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "getTransLog": {
    "id": "translogendpoint.getTransLog",
    "path": "translog/{id}",
@@ -253,18 +292,23 @@
   },
   "removeTransLog": {
    "id": "translogendpoint.removeTransLog",
-   "path": "translog/{id}",
+   "path": "translog/{keyrep}/{namespace}",
    "httpMethod": "DELETE",
    "parameters": {
-    "id": {
+    "keyrep": {
      "type": "string",
      "required": true,
-     "format": "int64",
+     "location": "path"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

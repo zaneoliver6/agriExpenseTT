@@ -2,10 +2,7 @@ package helper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
@@ -27,14 +24,14 @@ public class DataManager {
 		dbh= new DbHelper(context);
 		db=dbh.getReadableDatabase();
 		this.context=context;
-		tL=new TransactionLog(dbh,db);
+		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);
 	}
 	public DataManager(Context context,SQLiteDatabase db,DbHelper dbh){
 		this.dbh= dbh;
 		this.db=db;
 		this.context=context;
-		tL=new TransactionLog(dbh,db);
+		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);
 	}
 
@@ -58,7 +55,8 @@ public class DataManager {
 		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
 		if(acc!=null){
 			//insert into redo log table
-			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "ins");
+			int i=DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, id, "ins");
+			System.out.println("transLog:"+i);
 			//try to insert into cloud
 			if(acc.getSignedIn()==1){
 				System.out.println("trying to insert into cloud");
@@ -68,25 +66,7 @@ public class DataManager {
 		}
 	}
 	
-	//pass in the cycleId
-	public void deleteCycle( int id){
-		//delete from database
-		DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE,id);
-		if(acc!=null){
-			//insert into transaction table
-			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, id,"del");
-			//try delete from cloud
-			if(acc.getSignedIn()==1){
-				System.out.println("trying to insert into cloud");
-				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-				c.deleteCycle();
-			}
-		}
-			//if successful
-				//delete from transaction table
-				//and update cloud's last updated time
-		//update database last updated time
-	}
+	
 	
 	//------------------------------------------READY TO USE (FROM FRONT)
 	public void deleteCycleUse(localCycleUse l){
@@ -123,7 +103,8 @@ public class DataManager {
 		}
 		//CYCLEUSE
 		//Delete CycleUse
-		db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
+		//db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
+		DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CYCLE_RESOURCES, l.getId());
 		tL.insertTransLog(DbHelper.TABLE_CYCLE_RESOURCES, l.getId(), TransactionLog.TL_DEL);
 		if(acc!=null){
 			//redo log (cloud)
@@ -152,6 +133,10 @@ public class DataManager {
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId(), TransactionLog.TL_DEL);
+			if(acc.getSignedIn()==1){
+				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+				c.deletePurchase();
+			}
 		}
 	}
 	
@@ -171,10 +156,15 @@ public class DataManager {
 		}
 		//delete cycle
 		db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
+		DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE,c.getId());
 		tL.insertTransLog(DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_DEL);
 		if(acc!=null){
 			//insert into redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_DEL);
+			if(acc.getSignedIn()==1){
+				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+				cloud.deleteCycle();
+			}
 		}
 	}
 	//---------------------- READY TO USE [WITHOUT INCLUSION OF RESOURCES TABLE]
@@ -220,48 +210,11 @@ public class DataManager {
 		}
 	}
 	
-	/*
-	public void update(){
-		//check time-updated in cloud
-		long locaupdated;
-		//check time-updated in local
-		long cloudupdated;
-		//if both are the same 
-			//then do nothing
-		
-		//if cloud is more recent
-			updateLocal();
-		
-		//if local is more recent
-			
-	}*/
-	/*
-	private void updateLocal(){
-		//since data is being pulled from a network we are using an async task
-		//since the async task is being run on a diff thread asynchronously
-			//we must do the work there because we wont know when it returns
-		CloudInterface c= new CloudInterface(context);
-		//get all recrods from cloud (FIRST)
-			//-- get lists of all object kinds in database
-			//c.updateLocal();
-		tL.updateLocal(0);
-		
-		System.out.println("meh");
-		//delete all records from local db   
-			//-- drop tables then recreate
-		//write lists to local database
-			//-- iterator and insert
-		//set local db last updated to cloud's last updated
-	}*/
-	private void updateCloud(){ 
-			//-- put all inserts in the redo log
-			//-- call the insert method for each kind
-		//set cloud last updated to local db's last updated
-	}
+	
 	public void updatePurchase(RPurchase p,ContentValues cv){
 		db.update(DbHelper.TABLE_RESOURCE_PURCHASES, cv, DbHelper.RESOURCE_PURCHASE_ID+"="+p.getPId(),null);
 		//update the cloud
-		TransactionLog tl=new TransactionLog(dbh, db);
+		TransactionLog tl=new TransactionLog(dbh, db,context);
 		tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, p.getPId(), TransactionLog.TL_UPDATE);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES,p.getPId(), TransactionLog.TL_UPDATE);
@@ -275,7 +228,7 @@ public class DataManager {
 	public void updateCycle(localCycle c,ContentValues cv){
 		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
 		//update the cloud
-		TransactionLog tl=new TransactionLog(dbh, db);
+		TransactionLog tl=new TransactionLog(dbh, db,context);
 		tl.insertTransLog(DbHelper.TABLE_CROPCYLE, c.getId(),TransactionLog.TL_UPDATE);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_CROPCYLE, c.getId(), TransactionLog.TL_UPDATE);
@@ -288,26 +241,7 @@ public class DataManager {
 	}
 	
 	//------------------------------------------------------------------fixed deletes
-	public void delPurchase(int pId){
-		String code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "
-				+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+"="+pId;
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
-			return;
-		
-		while(cursor.moveToNext()){
-			int cId=cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID));
-			
-			try{
-				db.delete(DbHelper.TABLE_CYCLE_RESOURCES, DbHelper.CYCLE_RESOURCE_CYCLEID+"="+cId, null);
-				db.delete(DbHelper.TABLE_CROPCYLE, DbHelper.CROPCYCLE_ID+"="+cId, null);
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			System.out.println("del");
-		}
-		db.delete(DbHelper.TABLE_RESOURCE_PURCHASES, DbHelper.RESOURCE_PURCHASE_ID+"="+pId, null);
-	}
+	
 	
 	public void delResource(int resId){
 		String code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
@@ -319,7 +253,7 @@ public class DataManager {
 			return;
 		while(cursor.moveToNext()){
 			int pId=cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID));
-			delPurchase(pId);
+			deletePurchase(DbQuery.getARPurchase(db, dbh, pId));
 		}
 	}
 	public void insertResource(String name,String type) {

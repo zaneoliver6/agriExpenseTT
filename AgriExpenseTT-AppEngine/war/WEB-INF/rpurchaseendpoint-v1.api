@@ -27,6 +27,52 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
+    "rpurchaseendpoint.deletePurchase" : {
+      "path" : "purchase/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase",
+      "request" : {
+        "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "rpurchaseendpoint.deleteAll" : {
+      "path" : "all/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.deleteAll",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
     "rpurchaseendpoint.updateRPurchase" : {
       "path" : "rpurchase",
       "httpMethod" : "PUT",
@@ -106,7 +152,7 @@
       }
     },
     "rpurchaseendpoint.removeRPurchase" : {
-      "path" : "rpurchase/{id}",
+      "path" : "rpurchase/{keyrep}/{namespace}",
       "httpMethod" : "DELETE",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -115,7 +161,11 @@
       "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase",
       "request" : {
         "parameters" : {
-          "id" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
             "type" : "string",
             "required" : true
           }
@@ -247,6 +297,10 @@
       }
     },
     "methods" : {
+      "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase" : {
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.deleteAll" : {
+      },
       "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase" : {
         "request" : {
           "$ref" : "RPurchase"

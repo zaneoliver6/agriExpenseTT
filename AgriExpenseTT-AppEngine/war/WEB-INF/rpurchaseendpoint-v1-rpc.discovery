@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/Xke6D1iN8eLH7TPY_QM05s23GyQ\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kKeIXrB0XgmmHbMojK9mz-uZGyA\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",
@@ -170,6 +170,42 @@
   }
  },
  "methods": {
+  "rpurchaseendpoint.deleteAll": {
+   "id": "rpurchaseendpoint.deleteAll",
+   "allowGet": true,
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "rpurchaseendpoint.deletePurchase": {
+   "id": "rpurchaseendpoint.deletePurchase",
+   "parameters": {
+    "keyrep": {
+     "type": "string",
+     "required": true
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "keyrep",
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "rpurchaseendpoint.getAllPurchases": {
    "id": "rpurchaseendpoint.getAllPurchases",
    "allowGet": true,
@@ -252,13 +288,18 @@
   "rpurchaseendpoint.removeRPurchase": {
    "id": "rpurchaseendpoint.removeRPurchase",
    "parameters": {
-    "id": {
+    "keyrep": {
+     "type": "string",
+     "required": true
+    },
+    "namespace": {
      "type": "string",
      "required": true
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

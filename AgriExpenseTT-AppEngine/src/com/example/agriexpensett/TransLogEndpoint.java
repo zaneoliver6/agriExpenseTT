@@ -4,6 +4,7 @@ import com.example.agriexpensett.EMF;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
@@ -80,6 +81,51 @@ public class TransLogEndpoint {
       .build();
   }
 
+  @ApiMethod(name="getAllTranslog")
+  public List<TransLog> getAllTranslog(@Named("namespace") String namespace){
+	    NamespaceManager.set(namespace);
+	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  	com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("TransLog");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    List<TransLog> tL=new ArrayList<TransLog>();
+	    while(i.hasNext()){
+	    	Entity e=i.next();
+	    	//System.out.println(e.toString());
+	    	TransLog t=new TransLog();
+	    	  
+	    	t.setId(Integer.parseInt(""+e.getProperty("id")));
+	    	t.setKeyrep((String) e.getProperty("keyrep"));
+	    	t.setTableKind((String) e.getProperty("tableKind"));
+	    	t.setRowId(Integer.parseInt(""+e.getProperty("rowId")));
+	    	t.setOperation((String) e.getProperty("operation"));
+	    	t.setTransTime((Long) e.getProperty("transTime"));
+	    	tL.add(t);
+	    }
+		return tL;
+  }
+  @ApiMethod(name="deleteAll",httpMethod = HttpMethod.GET)
+  public void deleteAll(@Named("namespace")String namespace){
+	  NamespaceManager.set(namespace);
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  	com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("TransLog");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    
+	    EntityManager mgr=getEntityManager();
+	    TransLog t;
+	    while(i.hasNext()){
+	    	long id=(Long) i.next().getProperty("id");
+	    	t=mgr.find(TransLog.class, id);
+	    	removeTransLog(KeyFactory.keyToString(t.getKey()),namespace);
+	    }
+  }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
    *
@@ -88,8 +134,8 @@ public class TransLogEndpoint {
    */
   @ApiMethod(name="Logs")
   public List<TransLog> Logs(@Named("time") Long time, @Named("namespace") String namespace){
-	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	   
+	    NamespaceManager.set(namespace);
+	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("TransLog");
 	      Filter timeFilter =
 	    		  new FilterPredicate("transTime",
@@ -104,22 +150,13 @@ public class TransLogEndpoint {
 	      List<TransLog> tl=new ArrayList<TransLog>();
 	      while(i.hasNext()){
 	    	  Entity e=i.next();
-	    	  System.out.println(" :-"+e.toString());
-	    	  System.out.println(":)");
 	    	  TransLog tr=new TransLog();
-	    	  
-	    	  Long id=(Long)e.getProperty("id");
-	    	  String s=""+id+"";
-	    	  int num=Integer.getInteger(s);
-	    	  tr.setId(num);
-	    	  
+	    	  tr.setId(Integer.parseInt(""+e.getProperty("id")));
 	    	  tr.setKeyrep((String) e.getProperty("keyrep"));
 	    	  tr.setOperation((String) e.getProperty("operation"));
-	    	  tr.setTableKind((String) e.getProperty("tableKing"));
-	    	  
-	    	  id=(Long)e.getProperty("rowId");
-	    	  s=id+"";
-	    	  tr.setRowId(Integer.getInteger(s));
+	    	  tr.setTableKind((String) e.getProperty("tableKind"));
+	    	  tr.setRowId(Integer.parseInt(""+e.getProperty("rowId")));
+	    	  tr.setTransTime((Long) e.getProperty("transTime"));
 	    	  tl.add(tr);
 	      }
 		return tl;
@@ -149,14 +186,17 @@ public class TransLogEndpoint {
    */
   @ApiMethod(name = "insertTransLog")
   public TransLog insertTransLog(TransLog translog) {
+	System.out.println("----");
 	NamespaceManager.set(translog.getAccount());
     EntityManager mgr = getEntityManager();
     Key k=KeyFactory.createKey("TransLog", translog.getId());
     translog.setKey(k);
+    System.out.println("okieee");
     try {
       if(containsTransLog(translog)) {
         throw new EntityExistsException("Object already exists");
       }
+      System.out.println("persist");
       mgr.persist(translog);
     } finally {
       mgr.close();
@@ -192,25 +232,31 @@ public class TransLogEndpoint {
    *
    * @param id the primary key of the entity to be deleted.
    */
-  @ApiMethod(name = "removeTransLog")
-  public void removeTransLog(@Named("id") Long id) {
-    EntityManager mgr = getEntityManager();
+  @ApiMethod(name = "removeTransLog",httpMethod = HttpMethod.DELETE)
+  public void removeTransLog(@Named("keyrep") String keyrep,@Named("namespace") String namespace) {
+    NamespaceManager.set(namespace);
+    DatastoreService d=DatastoreServiceFactory.getDatastoreService();
+	Key k=KeyFactory.stringToKey(keyrep);
     try {
-      TransLog translog = mgr.find(TransLog.class, id);
-      mgr.remove(translog);
-    } finally {
-      mgr.close();
+    	d.delete(k);
+    }catch (Exception e){
+    	e.printStackTrace();
     }
   }
 
   private boolean containsTransLog(TransLog translog) {
+	NamespaceManager.set(translog.getAccount());
     EntityManager mgr = getEntityManager();
     boolean contains = true;
     try {
       TransLog item = mgr.find(TransLog.class, translog.getKey());
       if(item == null) {
         contains = false;
+      }else{
+    	  System.out.println(item.toString());
       }
+    }catch (Exception e){
+    	contains = false;
     } finally {
       mgr.close();
     }

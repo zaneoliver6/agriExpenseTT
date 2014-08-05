@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/67aX1YLzZPl3xbuOj9hsGsQNiTs\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/4YXqE-6zdZ94m1uJ3YsxllI9-o8\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",
@@ -162,6 +162,41 @@
   }
  },
  "methods": {
+  "translogendpoint.deleteAll": {
+   "id": "translogendpoint.deleteAll",
+   "allowGet": true,
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "translogendpoint.getAllTranslog": {
+   "id": "translogendpoint.getAllTranslog",
+   "allowGet": true,
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "returns": {
+    "$ref": "TransLogCollection"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "translogendpoint.getTransLog": {
    "id": "translogendpoint.getTransLog",
    "allowGet": true,
@@ -245,14 +280,18 @@
   "translogendpoint.removeTransLog": {
    "id": "translogendpoint.removeTransLog",
    "parameters": {
-    "id": {
+    "keyrep": {
      "type": "string",
-     "required": true,
-     "format": "int64"
+     "required": true
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

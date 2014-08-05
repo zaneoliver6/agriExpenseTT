@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/Xke6D1iN8eLH7TPY_QM05s23GyQ\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kKeIXrB0XgmmHbMojK9mz-uZGyA\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",
@@ -172,6 +172,48 @@
   }
  },
  "methods": {
+  "deleteAll": {
+   "id": "rpurchaseendpoint.deleteAll",
+   "path": "all/{namespace}",
+   "httpMethod": "GET",
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "deletePurchase": {
+   "id": "rpurchaseendpoint.deletePurchase",
+   "path": "purchase/{keyrep}/{namespace}",
+   "httpMethod": "DELETE",
+   "parameters": {
+    "keyrep": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "keyrep",
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "getAllPurchases": {
    "id": "rpurchaseendpoint.getAllPurchases",
    "path": "rpurchasecollection/{namespace}",
@@ -259,17 +301,23 @@
   },
   "removeRPurchase": {
    "id": "rpurchaseendpoint.removeRPurchase",
-   "path": "rpurchase/{id}",
+   "path": "rpurchase/{keyrep}/{namespace}",
    "httpMethod": "DELETE",
    "parameters": {
-    "id": {
+    "keyrep": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "namespace": {
      "type": "string",
      "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

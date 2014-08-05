@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.example.agrinetexpensestt.translogendpoint.model.CollectionResponseTransLog"/>
-<fullyQualifiedTypeName name="com.example.agrinetexpensestt.translogendpoint.Translogendpoint"/>
-<fullyQualifiedTypeName name="com.example.agrinetexpensestt.translogendpoint.model.TransLog"/>
-<fullyQualifiedTypeName name="com.example.agrinetexpensestt.cycleendpoint.Cycleendpoint"/>
 <fullyQualifiedTypeName name="com.example.agrinetexpensestt.cycleuseendpoint.Cycleuseendpoint"/>
 <fullyQualifiedTypeName name="com.example.agrinetexpensestt.rpurchaseendpoint.Rpurchaseendpoint"/>
 <fullyQualifiedTypeName name="com.example.agrinetexpensestt.rpurchaseendpoint.model.RPurchase"/>
@@ -31,8 +27,6 @@
 <fullyQualifiedTypeName name="uwi.dcit.AgriExpenseTT.CycleUseageRedesign"/>
 <fullyQualifiedTypeName name="helper.DataManager"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.rpurchaseendpoint.model.RPurchase"/>
-<fullyQualifiedTypeName name="helper.TransactionLog"/>
-<fullyQualifiedTypeName name="com.google.appengine.api.datastore.KeyFactory"/>
 <fullyQualifiedTypeName name="com.google.appengine.api.datastore.Key"/>
 <fullyQualifiedTypeName name="helper.CloudInterface"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
@@ -47,8 +41,6 @@
 <fullyQualifiedTypeName name="android.app.AlertDialog.Builder"/>
 <fullyQualifiedTypeName name="android.content.DialogInterface.OnClickListener"/>
 <fullyQualifiedTypeName name="helper.DbQuery"/>
-<fullyQualifiedTypeName name="android.content.ContentValues"/>
-<fullyQualifiedTypeName name="com.example.agriexpensett.upaccendpoint.model.UpAcc"/>
 <fullyQualifiedTypeName name="android.database.sqlite.SQLiteDatabase"/>
 <fullyQualifiedTypeName name="android.content.Context"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.cycleendpoint.model.Cycle"/>
@@ -56,8 +48,16 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.app.Activity"/>
 <fullyQualifiedTypeName name="helper.Sync"/>
-<fullyQualifiedTypeName name="android.os.AsyncTask"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="android.database.Cursor"/>
 <fullyQualifiedTypeName name="com.example.agriexpensett.cycleendpoint.Cycleendpoint.InsertCycle"/>
+<fullyQualifiedTypeName name="android.os.Handler"/>
+<fullyQualifiedTypeName name="android.os.Message"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.datastore.DatastoreServiceFactory"/>
+<fullyQualifiedTypeName name="com.google.api.server.spi.config.ApiMethod.HttpMethod"/>
+<fullyQualifiedTypeName name="helper.TransactionLog"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.datastore.KeyFactory"/>
+<fullyQualifiedTypeName name="com.example.agriexpensett.upaccendpoint.model.UpAcc"/>
+<fullyQualifiedTypeName name="android.os.AsyncTask"/>
+<fullyQualifiedTypeName name="android.content.ContentValues"/>
 </qualifiedTypeNameHistroy>

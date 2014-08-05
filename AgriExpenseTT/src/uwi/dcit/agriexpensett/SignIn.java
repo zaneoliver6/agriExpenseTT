@@ -72,8 +72,7 @@ public class SignIn {
 			return;
 		}
 			
-		final CharSequence[] items= new CharSequence[accs.size()];
-		int i=0;
+		final CharSequence[] items= new CharSequence[accs.size()]; int i=0;
 		for(String k:accs)
 			items[i]=accs.get(i++);
 		
@@ -88,17 +87,29 @@ public class SignIn {
 	        }
 	    }).show();
 	}
-	private void initialSignIn(final String namespaceAcc){
+	private void initialSignIn(final String namespace){
 		
-		class setup extends AsyncTask<Void, Void, Void>{
-			@Override
-			protected Void doInBackground(Void... params) {
-				Sync sync=new Sync(db, dbh, context);
-				sync.start(namespaceAcc);
-				return null;
+		class setup extends AsyncTask<Void, Void, UpAcc>{
+			String namespace;
+			public setup(String namespace){
+				this.namespace=namespace;
 			}
+			@Override
+			protected UpAcc doInBackground(Void... params) {
+				CloudInterface cloudIF = new CloudInterface(context, db, dbh);
+				UpAcc cloudAcc=cloudIF.getUpAcc(namespace);
+				return cloudAcc;
+			}
+
+			@Override
+			protected void onPostExecute(UpAcc cloudAcc) {
+				Sync sync=new Sync(db, dbh, context);
+				sync.start(namespace, cloudAcc);
+				super.onPostExecute(cloudAcc);
+			}
+			
 		}
-		new setup().execute();
+		new setup(namespace).execute();
 	}
 	private void noAccs(){
 		AlertDialog.Builder builder=new AlertDialog.Builder(context);
@@ -137,16 +148,10 @@ public class SignIn {
 		return false;
 	}
 	public UpAcc isExisting(){
-		String code="select * from "+DbHelper.TABLE_UPDATE_ACCOUNT;
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
+		UpAcc acc=DbQuery.getUpAcc(db);
+		if(acc.getAcc()==null || acc.getAcc().equals(""))
 			return null;
 		System.out.println("account exists !!!!!!!!");
-		cursor.moveToFirst();
-		UpAcc acc=new UpAcc();
-		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
-		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
-		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
 		return acc;
 	}
 }	

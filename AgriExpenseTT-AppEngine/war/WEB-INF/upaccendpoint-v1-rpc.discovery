@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/1jhwIBDFvtwOHIRP0cF_wgCcOW0\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/dzJmwfhB-QkC0Pwy5QvqVLPG04s\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -227,9 +227,6 @@
    "parameterOrder": [
     "resource"
    ],
-   "returns": {
-    "$ref": "UpAcc"
-   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]

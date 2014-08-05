@@ -1,5 +1,7 @@
 package helper;
 
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -72,7 +74,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String UPDATE_ACCOUNT_ID="id";
 	public static final String UPDATE_ACCOUNT_SIGNEDIN="signedIn";
 	
-	public static final int VERSION=111;
+	public static final int VERSION=151;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	
@@ -84,7 +86,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
 		createDb(db);
 		//ExpenseDelTrigger(db);
-		TransactionLog tL=new TransactionLog(this,db);
+		TransactionLog tL=new TransactionLog(this,db,ctx);
 		populate(db,tL);
 	}
 	@Override
@@ -138,9 +140,7 @@ public class DbHelper extends SQLiteOpenHelper{
 			+"foreign key("+DbHelper.CROPCYCLE_CROPID+") references "+DbHelper.TABLE_RESOURCES+"("+DbHelper.RESOURCES_ID+"));";
 		db.execSQL(code);
 	} 
-	private void createLabour(SQLiteDatabase db) {
-		
-	}
+	
 	private void createResources(SQLiteDatabase db) {
 		String code="create table "+DbHelper.TABLE_RESOURCES+"("
 			+DbHelper.RESOURCES_ID+" integer primary key autoincrement,"
@@ -148,7 +148,7 @@ public class DbHelper extends SQLiteOpenHelper{
 			+DbHelper.RESOURCES_TYPE+" text);";
 		db.execSQL(code);
 	}
-	private void createTransactionLog(SQLiteDatabase db){
+	public void createTransactionLog(SQLiteDatabase db){
 		String code="create table "+DbHelper.TABLE_TRANSACTION_LOG+"("
 			+DbHelper.TRANSACTION_LOG_LOGID+" integer primary key autoincrement,"
 			+DbHelper.TRANSACTION_LOG_TABLE+" text,"
@@ -207,6 +207,12 @@ public class DbHelper extends SQLiteOpenHelper{
 	}
 	
 	private void populate(SQLiteDatabase db,TransactionLog tL) {
+		//create user Account
+		UpAcc acc=new UpAcc();
+		acc.setSignedIn(0);
+		acc.setLastUpdated(System.currentTimeMillis() / 1000L);
+		DbQuery.insertUpAcc(db, acc);
+		
 		//planting material - reference cardi - Caribbean Agricultural Research and Development Institute
 		
 		//general

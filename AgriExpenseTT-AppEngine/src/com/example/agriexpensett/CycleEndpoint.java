@@ -4,6 +4,7 @@ import com.example.agriexpensett.EMF;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
@@ -14,9 +15,6 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query.Filter;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 import java.util.ArrayList;
@@ -85,7 +83,7 @@ public class CycleEndpoint {
   public List<Cycle> getAllCycles(@Named("namespace") String namespace){
 	    NamespaceManager.set(namespace);
 	  	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-	    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("Cycle");
+	  	com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("Cycle");
 	     
 	    PreparedQuery pq=datastore.prepare(q);
 	    List<Entity> results = pq
@@ -105,9 +103,27 @@ public class CycleEndpoint {
 	    	c.setHarvestAmt((Double)e.getProperty("harvestAmt"));
 	    	c.setHarvestType((String)e.getProperty("harvestType"));
 	    	c.setCostPer((Double)e.getProperty("costPer"));
+	    	c.setKeyrep((String)e.getProperty("keyrep"));
 	    	cL.add(c);
 	    }
 		return cL;
+  }
+
+  @ApiMethod(name="deleteAll",httpMethod = HttpMethod.GET)
+  public void deleteAll(@Named("namespace")String namespace){
+	  NamespaceManager.set(namespace);
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  	com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("Cycle");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    
+	    while(i.hasNext()){
+	    	String keyrep=(String)i.next().getProperty("keyrep");
+	    	removeCycle(keyrep, namespace);
+	    }
   }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
@@ -172,6 +188,7 @@ public class CycleEndpoint {
     } finally {
       mgr.close();
     }
+    cycle.setKeyrep(KeyFactory.keyToString(k));
     cycle.setAccount(KeyFactory.keyToString(k));//using account to store the string rep of the key
     return cycle;
 	
@@ -208,29 +225,20 @@ public class CycleEndpoint {
    *
    * @param id the primary key of the entity to be deleted.
    */
-  @ApiMethod(name = "removeCycle")
-  public void removeCycle(@Named("id") String id) {
-	 
-	Key k=KeyFactory.stringToKey(id);
-	DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
-	try{
-		datastore.delete(k);
-	}catch(Exception e){
-		return;
+  @ApiMethod(name = "removeCycle",httpMethod = HttpMethod.DELETE)
+  public void removeCycle(@Named("keyrep") String keyrep,@Named("namespace") String namespace) {
+	NamespaceManager.set(namespace);
+	DatastoreService d=DatastoreServiceFactory.getDatastoreService();
+	Key k=KeyFactory.stringToKey(keyrep);
+	try {
+		d.delete(k);
+	} catch (Exception e) {	
+		e.printStackTrace();
 	}
-	  
-	  /*
-    EntityManager mgr = getEntityManager();
-    //int i=Integer.getInteger(id);
-    try {
-      Cycle cycle = mgr.find(Cycle.class, id);
-      mgr.remove(cycle);
-    } finally {
-      mgr.close();
-    }*/
   }
-
+  
   private boolean containsCycle(Cycle cycle) {
+	NamespaceManager.set(cycle.getAccount());
     EntityManager mgr = getEntityManager();
     boolean contains = true;
     try {

@@ -1,7 +1,11 @@
 package helper;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
@@ -11,50 +15,151 @@ public class Sync {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Context context;
-	CloudInterface cloudIF;
 	TransactionLog tL;
+	public enum Option{
+		updateCloudOpt,updateLocalOpt,overwriteCloudOpt,overwriteLocalOpt,createCloudNewOpt
+	}
 	public Sync(SQLiteDatabase db, DbHelper dbh,Context context){
 		this.db=db;
 		this.dbh=dbh;
 		this.context=context;
-		cloudIF=new CloudInterface(context, db, dbh);
-		tL=new TransactionLog(dbh, db);
+		
+		tL=new TransactionLog(dbh, db,context);
 	}
-	public void start(String namespace){
+	public void start(String namespace,UpAcc cloudAcc){
 		System.out.println("gonna sync now");
 		localAcc=DbQuery.getUpAcc(db);
-		cloudAcc=cloudIF.getUpAcc(namespace);
+		
 		//both exist
-		if(localAcc!=null&&cloudAcc!=null){
+		if(cloudAcc!=null){System.out.println("Both exist");
 			long localUpdate=localAcc.getLastUpdated();
 			long cloudUpdate=cloudAcc.getLastUpdated();
-			if(localUpdate<cloudUpdate){//cloud is more updated (higher time integer = more recent)
-				//get all translogs from cloud greater than or equal to local update
-				//then try to do them
-				tL.logsUpdateLocal(namespace,localUpdate);
-				System.out.println("updating local");
-			}else if(cloudUpdate<=localUpdate){//local is more updated
-				//get all transaction records from local
-				//then try to do them
-				System.out.println("updating cloud");
-				tL.updateCloud(localUpdate);
+			if(localUpdate>=cloudUpdate){//local more recent than cloud
+				//the local does not have an account which means it has never been synced 
+				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){System.out.println("confirm sync");
+					/*there is no local account, the user must decide 
+					 * if he's gonna use the datastore or if he's going to overwrite it*/
+					confirmSync(localUpdate,cloudUpdate,namespace);
+					
+				//the local has an account which means it has already at some point synced
+				}else{
+					/*since it was synced at some point and the local is more updated
+					 * just get the logs and update the cloud
+					 */
+					//TODO
+					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateCloudOpt);
+					
+				}
+				
+				
+			}else if(cloudUpdate>localUpdate){//Cloud is more updated
+				//the local does not have an account which means it has never been synced 
+				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){System.out.println("confirm sync");
+					/*there is no local account, the user must decide 
+					 * if he's gonna use the datastore or if he's going to overwrite it*/
+					confirmSync(localUpdate,cloudUpdate,namespace);
+					
+				//the local has an account which means it has already at some point synced
+				}else{
+					/*since it was synced at some point and the cloud is more updated
+					 * just get the logs and update the local
+					 */
+					//TODO
+					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateLocalOpt);
+				}
+				
 			}
+			ContentValues cv=new ContentValues();
+			cv.put(DbHelper.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
 		//only local exist
-		}else if(localAcc!=null){
+		}else{ 
 			System.out.println("cloud doesnt exist so pushing all to cloud");
-			tL.createCloud(namespace);
-			cloudIF.insertUpAccC(namespace);
+			//TODO
+			new SyncExec(tL, namespace, 0, 0).execute(Option.createCloudNewOpt);
 		//only cloud exist
-		}else if(cloudAcc!=null){
-			System.out.println("local doesnt exist so pulling all from cloud");
-			tL.pullAllFromCloud(namespace);
-			DbQuery.insertUpAcc(db, namespace);
-			
-		}else{//both are null
-			System.out.println("neither exist so creating new local and pushing all to cloud");
-			tL.createCloud(namespace);
-			DbQuery.insertUpAcc(db, namespace);
-			cloudIF.insertUpAccC(namespace);
+		}
+		
+	}
+	public class SyncExec extends AsyncTask<Option,Void,Void>{
+		TransactionLog tL;
+		String namespace;
+		long cloudUpdate,localUpdate;
+		public SyncExec(TransactionLog tL,String namespace,long cloudUpdate,long localUpdate){
+			this.tL=tL;
+			this.namespace=namespace;
+			this.cloudUpdate=cloudUpdate;
+			this.localUpdate=localUpdate;
+		}
+		@Override
+		protected Void doInBackground(Option... params) {
+			Option option=params[0];// TODO Auto-generated method stub
+			ContentValues cv=new ContentValues();
+			switch(option){
+				case updateCloudOpt:
+					tL.updateCloud(cloudUpdate);
+					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					break;
+					
+				case updateLocalOpt:
+					tL.logsUpdateLocal(namespace,localUpdate);
+					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					break;
+					
+				case overwriteCloudOpt:
+					tL.removeNamespace(namespace);
+					tL.createCloud(namespace);
+					break;
+					
+				case overwriteLocalOpt:
+					tL.pullAllFromCloud(namespace);
+					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					break;
+				case createCloudNewOpt:
+					CloudInterface cloudIF=new CloudInterface(context, db, dbh);
+					cloudIF.insertUpAccC(namespace,0);
+					tL.createCloud(namespace);
+					break;
+			}
+			return null;
+		}
+		
+	}
+	private void confirmSync(long lastLocalUpdated,long lastCloudUpdated,String namespace){
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage("Data found online ? Do you want to overwrite local or overwrite cloud");
+        builder1.setCancelable(true);
+        Confirm c=new Confirm(lastLocalUpdated,lastCloudUpdated,namespace);
+        builder1.setPositiveButton("Overwrite local",c);
+        builder1.setNegativeButton("Overwrite cloud",c);
+        AlertDialog alert1 = builder1.create();
+        alert1.show();
+	}
+	private class Confirm implements DialogInterface.OnClickListener{
+		long lastLocalUpdated,lastCloudUpdated;
+		String namespace;
+		public Confirm (long localUpdate,long cloudUpdate,String namespace){
+			this.lastCloudUpdated=cloudUpdate;
+			this.lastLocalUpdated=localUpdate;
+			this.namespace=namespace;
+		}
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if(which==DialogInterface.BUTTON_POSITIVE){//overwrite local
+				//TODO
+				new SyncExec(tL, namespace, lastCloudUpdated, lastLocalUpdated).execute(Option.overwriteLocalOpt);
+				dialog.cancel();
+				//DeleteExpenseList.this.finish();
+			}else if(which==DialogInterface.BUTTON_NEGATIVE){//overwrite cloud
+				System.out.println("updating cloud");
+				new SyncExec(tL, namespace, lastCloudUpdated, lastLocalUpdated).execute(Option.overwriteCloudOpt);
+				//TODO
+				dialog.cancel();
+			}
 		}
 	}
+	 
 }
+

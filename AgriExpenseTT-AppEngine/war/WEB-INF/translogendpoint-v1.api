@@ -43,25 +43,25 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "translogendpoint.removeTransLog" : {
-      "path" : "translog/{id}",
-      "httpMethod" : "DELETE",
+    "translogendpoint.getAllTranslog" : {
+      "path" : "translogcollection/{namespace}",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.removeTransLog",
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getAllTranslog",
       "request" : {
         "parameters" : {
-          "id" : {
-            "type" : "int64",
+          "namespace" : {
+            "type" : "string",
             "required" : true
           }
         },
         "body" : "empty"
       },
       "response" : {
-        "body" : "empty"
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "translogendpoint.insertTransLog" : {
@@ -78,6 +78,31 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "translogendpoint.removeTransLog" : {
+      "path" : "translog/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.removeTransLog",
+      "request" : {
+        "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
       }
     },
     "translogendpoint.logs" : {
@@ -103,6 +128,27 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "translogendpoint.deleteAll" : {
+      "path" : "all/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.deleteAll",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
       }
     },
     "translogendpoint.listTransLog" : {
@@ -250,7 +296,10 @@
           "$ref" : "TransLog"
         }
       },
-      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
+      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
+        "response" : {
+          "$ref" : "TransLogCollection"
+        }
       },
       "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
         "request" : {
@@ -260,10 +309,14 @@
           "$ref" : "TransLog"
         }
       },
+      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
+      },
       "com.example.agriexpensett.TransLogEndpoint.Logs" : {
         "response" : {
           "$ref" : "TransLogCollection"
         }
+      },
+      "com.example.agriexpensett.TransLogEndpoint.deleteAll" : {
       },
       "com.example.agriexpensett.TransLogEndpoint.listTransLog" : {
         "response" : {

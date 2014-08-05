@@ -115,7 +115,7 @@
       }
     },
     "upaccendpoint.updateUpAcc" : {
-      "path" : "upacc",
+      "path" : "void",
       "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -127,7 +127,7 @@
         "bodyName" : "resource"
       },
       "response" : {
-        "body" : "autoTemplate(backendResponse)"
+        "body" : "empty"
       }
     }
   },
@@ -222,9 +222,6 @@
       },
       "com.example.agriexpensett.UpAccEndpoint.updateUpAcc" : {
         "request" : {
-          "$ref" : "UpAcc"
-        },
-        "response" : {
           "$ref" : "UpAcc"
         }
       }

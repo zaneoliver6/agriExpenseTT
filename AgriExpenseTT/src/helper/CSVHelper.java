@@ -2,16 +2,11 @@ package helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,31 +14,26 @@ import org.apache.poi.hssf.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
 
 import uwi.dcit.AgriExpenseTT.R;
 import android.app.Activity;
 import android.app.Notification;
-import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
 import dataObjects.localCycleUse;
 import dataObjects.localResourcePurchase;
 
+@SuppressWarnings("deprecation")
 public class CSVHelper {
 	SQLiteDatabase db;
 	DbHelper dbh;

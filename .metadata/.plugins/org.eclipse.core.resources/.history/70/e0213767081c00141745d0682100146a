@@ -1,0 +1,99 @@
+package helper;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
+
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+
+import fragments.ChoosePurchase.Confirm;
+import fragments.ChoosePurchase.MyListAdapter;
+
+public class Sync {
+	private UpAcc localAcc;
+	private UpAcc cloudAcc;
+	SQLiteDatabase db;
+	DbHelper dbh;
+	Context context;
+	CloudInterface cloudIF;
+	TransactionLog tL;
+	public Sync(SQLiteDatabase db, DbHelper dbh,Context context){
+		this.db=db;
+		this.dbh=dbh;
+		this.context=context;
+		cloudIF=new CloudInterface(context, db, dbh);
+		tL=new TransactionLog(dbh, db,context);
+	}
+	public void start(String namespace){
+		System.out.println("gonna sync now");
+		localAcc=DbQuery.getUpAcc(db);
+		cloudAcc=cloudIF.getUpAcc(namespace);
+		//both exist
+		if(cloudAcc!=null){
+			long localUpdate=localAcc.getLastUpdated();
+			long cloudUpdate=cloudAcc.getLastUpdated();
+			if(localUpdate<cloudUpdate){//cloud is more updated (higher time integer = more recent)
+				//get all translogs from cloud greater than or equal to local update
+				//then try to do them
+				tL.logsUpdateLocal(namespace,localUpdate);
+				System.out.println("updating local");
+			}else if(cloudUpdate<=localUpdate){//local is more updated
+				//-----------------------------------Prompt
+				//TODO
+				confirmSync();
+				//get all transaction records from local
+				//then try to do them
+			}
+		//only local exist
+		}else if(localAcc.getAcc()==null||localAcc.getAcc().equals("")){
+			System.out.println("cloud doesnt exist so pushing all to cloud");
+			tL.createCloud(namespace);
+			cloudIF.insertUpAccC(namespace);
+		//only cloud exist
+		}else if(cloudAcc!=null){
+			//will never be reached either
+			System.out.println("local doesnt exist so pulling all from cloud");
+			DbQuery.insertUpAcc(db,cloudAcc);
+			tL.pullAllFromCloud(namespace);		
+		}else{//both are null
+			//will never be reached atm!!!
+			System.out.println("neither exist so creating new local and pushing all to cloud");
+			tL.createCloud(namespace);
+			cloudIF.insertUpAccC(namespace);
+		}
+	}
+	private void confirmSync(long lastLocalUpdated,long lastCloudUpdated){
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+        builder1.setMessage("Data found online ? Do you want to overwrite local or overwrite cloud");
+        builder1.setCancelable(true);
+        Confirm c=new Confirm(lastLocalUpdated,lastCloudUpdated);
+        builder1.setPositiveButton("Overwrite local",c);
+        builder1.setNegativeButton("Overwrite cloud",c);
+        AlertDialog alert1 = builder1.create();
+        alert1.show();
+	}
+	 private class Confirm implements DialogInterface.OnClickListener{
+		 long lastLocalUpdated,lastCloudUpdated;
+		 String namespace;
+			public Confirm (long localUpdate,long cloudUpdate,String namespace){
+				this.lastCloudUpdated=cloudUpdate;
+				this.lastLocalUpdated=localUpdate;
+				this.namespace=namespace;
+			}
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(which==DialogInterface.BUTTON_POSITIVE){//overwrite local
+					tL.logsUpdateLocal(namespace, lastLocalUpdated);
+					dialog.cancel();
+					//DeleteExpenseList.this.finish();
+				}else if(which==DialogInterface.BUTTON_NEGATIVE){//overwrite cloud
+					System.out.println("updating cloud");
+					tL.updateCloud(lastLocalUpdated);
+					dialog.cancel();
+				}
+			}
+		}
+}
+

@@ -41,6 +41,7 @@ public class DbQuery {
 		 tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, rowId, TransactionLog.TL_INS);//records the insert of a purchase
 		return rowId;
 	}
+	
 	//based on the material being used inserts USE of a particular material for a particular CYCLE
 	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
 		ContentValues cv= new ContentValues();
@@ -264,13 +265,13 @@ public class DbQuery {
 	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id){
 		db.delete(table, "id="+id, null);
 	}
-	public static void insertUpAcc(SQLiteDatabase db,String acc){
-		long time = 0;
-		time=System.currentTimeMillis()/1000L;
+	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
+		
 		ContentValues cv=new ContentValues();
-		cv.put(DbHelper.UPDATE_ACCOUNT_ACC,acc);
-		cv.put(DbHelper.UPDATE_ACCOUNT_UPDATED, time);
-		cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN,1);
+		cv.put(DbHelper.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
+		cv.put(DbHelper.UPDATE_ACCOUNT_ACC,acc.getAcc());
+		cv.put(DbHelper.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
+		cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
 		db.insert(DbHelper.TABLE_UPDATE_ACCOUNT, null, cv);
 	}
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
@@ -344,6 +345,7 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return null;
 		cursor.moveToFirst();
+		t.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_LOGID)));
 		t.setOperation(cursor.getString(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_OPERATION)));
 		t.setTableKind(cursor.getString(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_TABLE)));
 		t.setTransTime(cursor.getLong(cursor.getColumnIndex(DbHelper.TRANSACTION_LOG_TRANSTIME)));
@@ -365,9 +367,18 @@ public class DbQuery {
 			return null;
 		cursor.moveToFirst();
 		UpAcc acc=new UpAcc();
+		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_CLOUD_KEY)));
 		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
 		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
 		return acc;
+	}
+	public static void updateAccount(SQLiteDatabase db,long time){
+		UpAcc acc=DbQuery.getUpAcc(db);
+		if(acc.getLastUpdated()<=time){
+			ContentValues cv=new ContentValues();
+			cv.put(DbHelper.UPDATE_ACCOUNT_UPDATED, time);
+			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+		}
 	}
 }

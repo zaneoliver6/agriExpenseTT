@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/c3fYI-Ni7GDFOLZ3eWzX8pyrPbQ\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/3dxdF0ZtxdbR1uJrZ15zrAvemr4\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -176,6 +176,24 @@
   }
  },
  "methods": {
+  "deleteAll": {
+   "id": "cycleendpoint.deleteAll",
+   "path": "all/{namespace}",
+   "httpMethod": "GET",
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "getAllCycles": {
    "id": "cycleendpoint.getAllCycles",
    "path": "cyclecollection/{namespace}",
@@ -263,17 +281,23 @@
   },
   "removeCycle": {
    "id": "cycleendpoint.removeCycle",
-   "path": "cycle/{id}",
+   "path": "cycle/{keyrep}/{namespace}",
    "httpMethod": "DELETE",
    "parameters": {
-    "id": {
+    "keyrep": {
+     "type": "string",
+     "required": true,
+     "location": "path"
+    },
+    "namespace": {
      "type": "string",
      "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

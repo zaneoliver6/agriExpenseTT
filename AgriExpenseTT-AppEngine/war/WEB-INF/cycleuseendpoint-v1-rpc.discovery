@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/_nbrOBPiXHw9xU1AHnUyWOYxGPw\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/9EtM23ciiAUGOOw-ps7gJk2ke2M\"",
  "discoveryVersion": "v1",
  "id": "cycleuseendpoint:v1",
  "name": "cycleuseendpoint",
@@ -167,6 +167,22 @@
   }
  },
  "methods": {
+  "cycleuseendpoint.deleteAll": {
+   "id": "cycleuseendpoint.deleteAll",
+   "allowGet": true,
+   "parameters": {
+    "namespace": {
+     "type": "string",
+     "required": true
+    }
+   },
+   "parameterOrder": [
+    "namespace"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
   "cycleuseendpoint.getAllCycleUse": {
    "id": "cycleuseendpoint.getAllCycleUse",
    "allowGet": true,
@@ -249,13 +265,18 @@
   "cycleuseendpoint.removeCycleUse": {
    "id": "cycleuseendpoint.removeCycleUse",
    "parameters": {
-    "id": {
+    "keyrep": {
+     "type": "string",
+     "required": true
+    },
+    "namespace": {
      "type": "string",
      "required": true
     }
    },
    "parameterOrder": [
-    "id"
+    "keyrep",
+    "namespace"
    ],
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

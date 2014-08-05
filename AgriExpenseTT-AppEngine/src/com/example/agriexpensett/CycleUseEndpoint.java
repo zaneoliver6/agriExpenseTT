@@ -4,6 +4,7 @@ import com.example.agriexpensett.EMF;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.NamespaceManager;
 import com.google.appengine.api.datastore.Cursor;
@@ -99,10 +100,27 @@ public class CycleUseEndpoint {
 	    	c.setAmount((Double)e.getProperty("amount"));
 	    	c.setCost((Double)e.getProperty("cost"));
 	    	c.setResource((String)e.getProperty("resource"));
-	    	
+	    	c.setKeyrep((String) e.getProperty("keyrep"));
 	    	cL.add(c);
 	    }
 		return cL;
+  }
+  
+  @ApiMethod(name="deleteAll",httpMethod = HttpMethod.GET)
+  public void deleteAll(@Named("namespace")String namespace){
+	  NamespaceManager.set(namespace);
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	  	com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query("CycleUse");
+	     
+	    PreparedQuery pq=datastore.prepare(q);
+	    List<Entity> results = pq
+                  .asList(FetchOptions.Builder.withDefaults());
+	    Iterator<Entity> i=results.iterator();
+	    
+	    while(i.hasNext()){
+	    	String keyrep=(String)i.next().getProperty("keyrep");
+	    	removeCycleUse(keyrep, namespace);
+	    }
   }
   /**
    * This method gets the entity having primary key id. It uses HTTP GET method.
@@ -167,6 +185,7 @@ public class CycleUseEndpoint {
     } finally {
       mgr.close();
     }
+    cycleuse.setKeyrep(KeyFactory.keyToString(k));
     cycleuse.setAccount(KeyFactory.keyToString(k));//using account to store the string rep of the key
     return cycleuse;
   }
@@ -199,25 +218,20 @@ public class CycleUseEndpoint {
    *
    * @param id the primary key of the entity to be deleted.
    */
-  @ApiMethod(name = "removeCycleUse")
-  public void removeCycleUse(@Named("id") String id) {
-	  Key k=KeyFactory.stringToKey(id);
-	  DatastoreService datastore=DatastoreServiceFactory.getDatastoreService();
-		try{
-			datastore.delete(k);
-		}catch(Exception e){
-			return;
-		}
-   /* EntityManager mgr = getEntityManager();
-    try {
-      CycleUse cycleuse = mgr.find(CycleUse.class, id);
-      mgr.remove(cycleuse);
-    } finally {
-      mgr.close();
-    }*/
+  @ApiMethod(name = "removeCycleUse",httpMethod = HttpMethod.DELETE)
+  public void removeCycleUse(@Named("keyrep") String keyrep,@Named("namespace") String namespace) {
+	NamespaceManager.set(namespace);
+	DatastoreService d=DatastoreServiceFactory.getDatastoreService();
+	Key k=KeyFactory.stringToKey(keyrep);
+	try {
+		d.delete(k);
+	} catch (Exception e) {	
+		e.printStackTrace();
+	}
   }
 
   private boolean containsCycleUse(CycleUse cycleuse) {
+	NamespaceManager.set(cycleuse.getAccount());
     EntityManager mgr = getEntityManager();
     boolean contains = true;
     try {

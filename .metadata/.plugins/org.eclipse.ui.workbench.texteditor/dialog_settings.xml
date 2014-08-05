@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="getRes" key="selection"/>
+		<item value="insertUp" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="getres"/>
-			<item value="purhase"/>
-			<item value="getcycle"/>
-			<item value="getcycleuse"/>
-			<item value="insertcycle"/>
+			<item value="insertup"/>
 			<item value="insert"/>
-			<item value="updatecloud"/>
-			<item value="geta"/>
+			<item value="update"/>
+			<item value="pullall"/>
+			<item value="createcloud"/>
+			<item value="ver"/>
+			<item value="createcl"/>
+			<item value="createl"/>
 		</list>
 		<list key="replacehistory">
 			<item value="TransactionLog.TL_INS"/>
