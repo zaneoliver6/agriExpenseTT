@@ -59,6 +59,27 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "upaccendpoint.removeUpAcc" : {
+      "path" : "upacc/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.removeUpAcc",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
     "upaccendpoint.getUpAcc" : {
       "path" : "upacc/{id}/{acc}",
       "httpMethod" : "GET",
@@ -82,27 +103,6 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "upaccendpoint.removeUpAcc" : {
-      "path" : "upacc/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.removeUpAcc",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
       }
     },
     "upaccendpoint.listUpAcc" : {
@@ -213,12 +213,12 @@
           "$ref" : "UpAcc"
         }
       },
+      "com.example.agriexpensett.UpAccEndpoint.removeUpAcc" : {
+      },
       "com.example.agriexpensett.UpAccEndpoint.getUpAcc" : {
         "response" : {
           "$ref" : "UpAcc"
         }
-      },
-      "com.example.agriexpensett.UpAccEndpoint.removeUpAcc" : {
       },
       "com.example.agriexpensett.UpAccEndpoint.listUpAcc" : {
         "response" : {
