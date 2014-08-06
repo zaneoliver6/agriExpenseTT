@@ -643,11 +643,12 @@ int menu new_cycle_redesigned 0x7f0c0011
 int menu new_purchase_redesign 0x7f0c0012
 int menu purchase 0x7f0c0013
 int menu sales_cost 0x7f0c0014
-int menu use_purchase 0x7f0c0015
-int menu use_resource 0x7f0c0016
-int menu view_cycle_usege 0x7f0c0017
-int menu view_cycles 0x7f0c0018
-int menu view_navigation 0x7f0c0019
+int menu select_location 0x7f0c0015
+int menu use_purchase 0x7f0c0016
+int menu use_resource 0x7f0c0017
+int menu view_cycle_usege 0x7f0c0018
+int menu view_cycles 0x7f0c0019
+int menu view_navigation 0x7f0c001a
 int string abc_action_bar_home_description 0x7f0a0001
 int string abc_action_bar_up_description 0x7f0a0002
 int string abc_action_menu_overflow_description 0x7f0a0003
