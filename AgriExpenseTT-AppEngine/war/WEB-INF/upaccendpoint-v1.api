@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://thematic-ruler-633.appspot.com/_ah/api",
+  "root" : "https://onyx-park-618.appspot.com/_ah/api",
   "name" : "upaccendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://thematic-ruler-633.appspot.com/_ah/spi",
+    "bns" : "https://onyx-park-618.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,38 +27,6 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
-    "upaccendpoint.updateUpAcc" : {
-      "path" : "void",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.updateUpAcc",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
-    "upaccendpoint.insertUpAcc" : {
-      "path" : "upacc",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.insertUpAcc",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "upaccendpoint.removeUpAcc" : {
       "path" : "upacc/{id}",
       "httpMethod" : "DELETE",
@@ -128,6 +96,38 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "upaccendpoint.insertUpAcc" : {
+      "path" : "upacc",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.insertUpAcc",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "upaccendpoint.updateUpAcc" : {
+      "path" : "void",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.UpAccEndpoint.updateUpAcc",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "empty"
       }
     }
   },
@@ -200,19 +200,6 @@
       }
     },
     "methods" : {
-      "com.example.agriexpensett.UpAccEndpoint.updateUpAcc" : {
-        "request" : {
-          "$ref" : "UpAcc"
-        }
-      },
-      "com.example.agriexpensett.UpAccEndpoint.insertUpAcc" : {
-        "request" : {
-          "$ref" : "UpAcc"
-        },
-        "response" : {
-          "$ref" : "UpAcc"
-        }
-      },
       "com.example.agriexpensett.UpAccEndpoint.removeUpAcc" : {
       },
       "com.example.agriexpensett.UpAccEndpoint.getUpAcc" : {
@@ -223,6 +210,19 @@
       "com.example.agriexpensett.UpAccEndpoint.listUpAcc" : {
         "response" : {
           "$ref" : "CollectionResponse_UpAcc"
+        }
+      },
+      "com.example.agriexpensett.UpAccEndpoint.insertUpAcc" : {
+        "request" : {
+          "$ref" : "UpAcc"
+        },
+        "response" : {
+          "$ref" : "UpAcc"
+        }
+      },
+      "com.example.agriexpensett.UpAccEndpoint.updateUpAcc" : {
+        "request" : {
+          "$ref" : "UpAcc"
         }
       }
     }
