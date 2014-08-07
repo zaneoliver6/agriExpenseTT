@@ -36,6 +36,7 @@ public class DbQuery {
 		cv.put(DbHelper.RESOURCE_PURCHASE_QTY, qty);
 		cv.put(DbHelper.RESOURCE_PURCHASE_COST, cost);
 		cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING, qty);
+		cv.put(DbHelper.RESOURCE_PURCHASE_RESOURCE, DbQuery.findResourceName(db, dbh, resourceId));
 		db.insert(DbHelper.TABLE_RESOURCE_PURCHASES, null, cv);
 		int rowId=getLast(db, dbh, DbHelper.TABLE_RESOURCE_PURCHASES);
 		 tl.insertTransLog(DbHelper.TABLE_RESOURCE_PURCHASES, rowId, TransactionLog.TL_INS);//records the insert of a purchase
@@ -68,6 +69,7 @@ public class DbQuery {
 		cv.put(DbHelper.CROPCYCLE_COSTPER, 0.0);
 		cv.put(DbHelper.CROPCYCLE_HARVEST_AMT, 0.0);
 		cv.put(DbHelper.CROPCYCLE_HARVEST_TYPE,"Lb");
+		cv.put(DbHelper.CROPCYCLE_RESOURCE, DbQuery.findResourceName(db, dbh, cropId));
 		db.insert(DbHelper.TABLE_CROPCYLE, null,cv);
 		int rowId=getLast(db, dbh, DbHelper.TABLE_CROPCYLE);
 		tl.insertTransLog(DbHelper.TABLE_CROPCYLE,rowId,TransactionLog.TL_INS );
@@ -109,9 +111,11 @@ public class DbQuery {
 			n.setLandQty(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_AMOUNT)));
 			n.setTime(cursor.getLong(cursor.getColumnIndex(DbHelper.CROPCYCLE_DATE)));
 			n.setTotalSpent(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_TOTALSPENT)));
+			
 			n.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_AMT)));
 			n.setHarvestType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_TYPE)));
 			n.setCostPer(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_COSTPER)));
+			n.setCropName(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_RESOURCE)));
 			list.add(n);
 		}
 	}
@@ -319,7 +323,11 @@ public class DbQuery {
 		c.setHarvestType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_TYPE)));
 		c.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_HARVEST_AMT)));
 		c.setCostPer(cursor.getDouble(cursor.getColumnIndex(DbHelper.CROPCYCLE_COSTPER)));
+<<<<<<< HEAD
 		c.setCropName(DbQuery.findResourceName(db, dbh, c.getCropId()));
+=======
+		c.setCropName(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_RESOURCE)));
+>>>>>>> Version1
 		return c;
 	}
 	
@@ -373,6 +381,8 @@ public class DbQuery {
 		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
 		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
+		acc.setCounty(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_COUNTY)));
+		acc.setAddress(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ADDRESS)));
 		return acc;
 	}
 	public static void updateAccount(SQLiteDatabase db,long time){

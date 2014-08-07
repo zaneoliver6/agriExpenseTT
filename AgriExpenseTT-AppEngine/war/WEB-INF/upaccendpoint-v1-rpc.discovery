@@ -1,6 +1,10 @@
 {
  "kind": "discovery#rpcDescription",
+<<<<<<< HEAD
  "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/0JUEvJEP10z9mB0wKWhKY_omzoc\"",
+=======
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kY1oTUqQjnZn3UK96DItNd1MO2M\"",
+>>>>>>> Version1
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -122,6 +126,12 @@
     "acc": {
      "type": "string"
     },
+    "address": {
+     "type": "string"
+    },
+    "county": {
+     "type": "string"
+    },
     "key": {
      "$ref": "Key"
     },
@@ -144,19 +154,19 @@
    "id": "upaccendpoint.getUpAcc",
    "allowGet": true,
    "parameters": {
-    "acc": {
-     "type": "string",
-     "required": true
-    },
     "id": {
      "type": "string",
      "required": true,
      "format": "int64"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
     "id",
-    "acc"
+    "namespace"
    ],
    "returns": {
     "$ref": "UpAcc"

@@ -6,8 +6,6 @@ import helper.DbQuery;
 import java.util.ArrayList;
 
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import fragments.ChoosePurchase;
@@ -18,16 +16,11 @@ import android.app.ActionBar.Tab;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 public class ViewNavigation extends ActionBarActivity {
 	ArrayList<localCycle> li;
@@ -78,7 +71,6 @@ public class ViewNavigation extends ActionBarActivity {
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			ListFragment nextFrag1=null;
 			Fragment n2=null;
 			Bundle data=new Bundle();
 			if(currFragment==null){

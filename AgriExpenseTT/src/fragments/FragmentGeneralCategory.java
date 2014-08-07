@@ -36,8 +36,9 @@ public class FragmentGeneralCategory extends Fragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	
-	double catTotal=0,pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
+	double pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
 	View view;
+	
 	localCycle currCycle;
 	
 	@Override

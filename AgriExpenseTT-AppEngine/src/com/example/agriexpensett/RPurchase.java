@@ -20,9 +20,18 @@ public class RPurchase {
 	private double cost;
 	private double qtyRemaining;
 	private String type;
+<<<<<<< HEAD
 	private String elementName;
+=======
+	private String resource;
+>>>>>>> Version1
 	
-	
+	public String getResource() {
+		return resource;
+	}
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
 	public String getKeyrep() {
 		return keyrep;
 	}

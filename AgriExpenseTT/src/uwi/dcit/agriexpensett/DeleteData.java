@@ -9,14 +9,12 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.ViewNavigation.TabListener;
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.app.ActionBar.Tab;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -73,7 +71,6 @@ public class DeleteData extends ActionBarActivity {
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			ListFragment nextFrag1=null;
 			Fragment n2=null;
 			Bundle data=new Bundle();
 			if(currFragment==null){

@@ -129,9 +129,9 @@ public class ChoosePurchase extends ListFragment {
 			   
 			   //when called by ViewNavigation we dont want the next icon
 			   if(type==null)
-				   icon.setImageResource(R.drawable.icon_money2);
+				   icon.setImageResource(R.drawable.money_doller1);
 			   else
-				   icon.setImageResource(R.drawable.icon_next);
+				   icon.setImageResource(R.drawable.money_doller1);
 			   return row;
 		  }
 	 }
