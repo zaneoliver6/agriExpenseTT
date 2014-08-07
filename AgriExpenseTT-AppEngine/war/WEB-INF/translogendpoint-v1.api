@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://onyx-park-618.appspot.com/_ah/api",
+  "root" : "https://thematic-ruler-633.appspot.com/_ah/api",
   "name" : "translogendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://onyx-park-618.appspot.com/_ah/spi",
+    "bns" : "https://thematic-ruler-633.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -41,6 +41,31 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "translogendpoint.removeTransLog" : {
+      "path" : "translog/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.removeTransLog",
+      "request" : {
+        "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
       }
     },
     "translogendpoint.insertTransLog" : {
@@ -78,31 +103,6 @@
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "translogendpoint.removeTransLog" : {
-      "path" : "translog/{keyrep}/{namespace}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.removeTransLog",
-      "request" : {
-        "parameters" : {
-          "keyrep" : {
-            "type" : "string",
-            "required" : true
-          },
-          "namespace" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
       }
     },
     "translogendpoint.logs" : {
@@ -296,6 +296,8 @@
           "$ref" : "TransLog"
         }
       },
+      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
+      },
       "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
         "request" : {
           "$ref" : "TransLog"
@@ -308,8 +310,6 @@
         "response" : {
           "$ref" : "TransLogCollection"
         }
-      },
-      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
       },
       "com.example.agriexpensett.TransLogEndpoint.Logs" : {
         "response" : {

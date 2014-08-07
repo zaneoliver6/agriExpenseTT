@@ -1,11 +1,11 @@
 package com.example.agriexpensett;
 
-import com.google.appengine.api.datastore.Key;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.google.appengine.api.datastore.Key;
 @Entity
 public class RPurchase {
 	@Id
@@ -20,14 +20,9 @@ public class RPurchase {
 	private double cost;
 	private double qtyRemaining;
 	private String type;
-	private String resource;
+	private String elementName;
 	
-	public String getResource() {
-		return resource;
-	}
-	public void setResource(String resource) {
-		this.resource = resource;
-	}
+	
 	public String getKeyrep() {
 		return keyrep;
 	}
@@ -109,6 +104,12 @@ public class RPurchase {
 	public String toString() {
 		String n="purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 		return n;
+	}
+	public String getElementName() {
+		return elementName;
+	}
+	public void setElementName(String elementName) {
+		this.elementName = elementName;
 	}
 	
 	

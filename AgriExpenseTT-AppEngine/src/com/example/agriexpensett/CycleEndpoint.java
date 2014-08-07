@@ -1,22 +1,5 @@
 package com.example.agriexpensett;
 
-import com.example.agriexpensett.EMF;
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.config.ApiMethod.HttpMethod;
-import com.google.api.server.spi.response.CollectionResponse;
-import com.google.appengine.api.NamespaceManager;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.FetchOptions;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.datanucleus.query.JPACursorHelper;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,9 +7,26 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
+
+import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
+import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.response.CollectionResponse;
+import com.google.appengine.api.NamespaceManager;
+import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entities;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.datanucleus.query.JPACursorHelper;
 
 
 @Api(name = "cycleendpoint", namespace = @ApiNamespace(ownerDomain = "example.com", ownerName = "example.com", packagePath="agriexpensett"))
@@ -79,6 +79,74 @@ public class CycleEndpoint {
       .build();
   }
 
+  @SuppressWarnings({"unchecked", "unused"})
+  @ApiMethod(name="getMatchingCycles")
+  public CollectionResponse <Cycle> getMatchingCyles(
+    @Named("cropName")String cropName,
+      @Named("start")Double start,
+      @Named("end") Double end,
+      @Nullable @Named("cursor") String cursorString,
+      @Nullable @Named("limit") Integer limit) {
+  
+    //  NamespaceManager.set("_spydakat");
+    
+      EntityManager mgr = null;
+      Cursor cursor = null;
+      List<Cycle> execute = null;
+      
+      /*For namespace list fetching */
+      DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(Entities.NAMESPACE_METADATA_KIND);
+    
+    List<String> results = new ArrayList<String>();
+    for(Entity e : ds.prepare(q).asIterable()){
+       if (e.getKey().getId() != 0) {
+            System.out.println("<default>");
+          } else {
+           // System.out.println(e.getKey().getName());
+            results.add(Entities.getNamespaceFromNamespaceKey(e.getKey()));
+          }
+    }
+    
+      // Set each namespace then return all results under that given namespace
+    for(Iterator<String> i = results.iterator(); i.hasNext(); ) {
+        NamespaceManager.set(i.next());
+        
+        try{
+          mgr = getEntityManager();
+          Query query = mgr.createQuery("select from Cycle as Cycle where cropName=:x and landQty>=:y and landQty<=:z");
+          query.setParameter("x",cropName.toUpperCase());
+          query.setParameter("y",start);
+          query.setParameter("z",end);
+                
+          if (cursorString != null && cursorString != "") {
+            cursor = Cursor.fromWebSafeString(cursorString);
+            query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
+          }
+
+          if (limit != null) {
+            query.setFirstResult(0);
+              query.setMaxResults(limit);
+          }
+
+          execute = (List<Cycle>) query.getResultList();
+            cursor = JPACursorHelper.getCursor(execute);
+            
+            if (cursor != null) cursorString = cursor.toWebSafeString();
+            // Tight loop for fetching all entities from datastore and accomodate
+            // for lazy fetch.
+            for (Cycle obj : execute);
+            } finally {
+              mgr.close();
+            }
+      }
+    
+      return CollectionResponse.<Cycle>builder()
+        .setItems(execute)
+        .setNextPageToken(cursorString)
+        .build();
+  }
+  
   @ApiMethod(name="getAllCycles")
   public List<Cycle> getAllCycles(@Named("namespace") String namespace){
 	    NamespaceManager.set(namespace);

@@ -189,6 +189,7 @@ public class DbQuery {
 		purchase.setCost(cursor.getDouble(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_COST)));
 		purchase.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_REMAINING)));
 		purchase.setType(cursor.getString(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_TYPE)));
+		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
 		return purchase;
 	}
 	public static void getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<localCycleUse> list,String type){
