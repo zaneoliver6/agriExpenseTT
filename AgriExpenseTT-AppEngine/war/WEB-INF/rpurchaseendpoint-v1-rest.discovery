@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kKeIXrB0XgmmHbMojK9mz-uZGyA\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/yDOpK8_8Zy_xihJF0e8sUSXd6wI\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",
@@ -147,6 +147,9 @@
      "format": "double"
     },
     "quantifier": {
+     "type": "string"
+    },
+    "resource": {
      "type": "string"
     },
     "resourceId": {

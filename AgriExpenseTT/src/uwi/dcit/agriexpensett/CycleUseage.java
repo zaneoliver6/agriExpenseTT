@@ -11,6 +11,9 @@ import java.util.Iterator;
 
 
 
+
+
+
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
@@ -187,13 +190,8 @@ public class CycleUseage extends ActionBarActivity {
 		tv_soilAmendment_det2=(TextView)findViewById(R.id.tv_cycle_mSoilAmendment_det2);
 		
 		ImageView imageView=(ImageView)findViewById(R.id.icon_purchaseType_main);
-		if(plantMaterialName.equals("tomatoe")){
-			imageView.setImageResource(R.drawable.icon_tomatoe2);
-		}else if(plantMaterialName.equals("cassava")){
-			imageView.setImageResource(R.drawable.icon_cassava2);
-		}else if(plantMaterialName.equals("sweet pepper")){
-			imageView.setImageResource(R.drawable.icon_sweetpepper1);
-		}
+		imageView.setImageResource(R.drawable.money_doller1);
+		//TODO
 		//getting aggregate and complex data 
 		ArrayList<localCycleUse> useList=new ArrayList<localCycleUse>();
 		//--------------------------------------------------------PLANT MATERIAL
@@ -519,13 +517,16 @@ public class CycleUseage extends ActionBarActivity {
 		DbQuery.getCycleUse(db, dbh, cycleid, cUseList, type);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void populateList(View v) {
 		ArrayAdapter<localCycle> cycleAdptr=new cycleAdapter();
 		ListView list=(ListView)v.findViewById(R.id.simpleListText);
 		list.setAdapter(cycleAdptr);
 	}
+	@SuppressWarnings("rawtypes")
 	public class cycleAdapter extends ArrayAdapter{
 	
+		@SuppressWarnings("unchecked")
 		public cycleAdapter() {
 			super(CycleUseage.this,R.layout.cycle_list_item,cUseList);
 			// TODO Auto-generated constructor stub

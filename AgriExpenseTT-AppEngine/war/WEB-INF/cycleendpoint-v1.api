@@ -228,6 +228,9 @@
           "costPer" : {
             "type" : "number"
           },
+          "cropName" : {
+            "type" : "string"
+          },
           "account" : {
             "type" : "string"
           }

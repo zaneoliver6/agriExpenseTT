@@ -187,7 +187,7 @@ public class CSVHelper {
 		Notification.Builder noti = new Notification.Builder(activity);
 		noti.setContentTitle("Excel generated");
 		noti.setContentText("Your excel file "+name+" has been generated");
-		noti.setSmallIcon(R.drawable.icon_next);
+		noti.setSmallIcon(R.drawable.money_bag_down);
 		noti.setAutoCancel(true);
 		noti.setOnlyAlertOnce(true);
 		noti.setTicker("Agrinet excel file");

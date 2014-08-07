@@ -24,7 +24,15 @@ public class Cycle {
 	private double harvestAmt;
 	private String harvestType;
 	private double costPer;
+	private String cropName;
 	
+	
+	public String getCropName() {
+		return cropName;
+	}
+	public void setCropName(String cropName) {
+		this.cropName = cropName;
+	}
 	public double getHarvestAmt() {
 		return harvestAmt;
 	}

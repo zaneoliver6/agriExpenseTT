@@ -37,7 +37,7 @@ public class CloudEndpointUtils {
    * The root URL of where your DevAppServer is running (if you're running the
    * DevAppServer locally).
    */
- // protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8888/";
+  //protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8888/";
   protected static final String LOCAL_APP_ENGINE_SERVER_URL = "https://onyx-park-618.appspot.com/";
 
   /*

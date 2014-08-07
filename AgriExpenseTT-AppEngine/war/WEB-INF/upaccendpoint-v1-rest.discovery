@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/dzJmwfhB-QkC0Pwy5QvqVLPG04s\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kY1oTUqQjnZn3UK96DItNd1MO2M\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -124,6 +124,12 @@
     "acc": {
      "type": "string"
     },
+    "address": {
+     "type": "string"
+    },
+    "county": {
+     "type": "string"
+    },
     "key": {
      "$ref": "Key"
     },
@@ -144,24 +150,24 @@
  "methods": {
   "getUpAcc": {
    "id": "upaccendpoint.getUpAcc",
-   "path": "upacc/{id}/{acc}",
+   "path": "upacc/{id}/{namespace}",
    "httpMethod": "GET",
    "parameters": {
-    "acc": {
-     "type": "string",
-     "required": true,
-     "location": "path"
-    },
     "id": {
      "type": "string",
      "required": true,
      "format": "int64",
      "location": "path"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true,
+     "location": "path"
     }
    },
    "parameterOrder": [
     "id",
-    "acc"
+    "namespace"
    ],
    "response": {
     "$ref": "UpAcc"

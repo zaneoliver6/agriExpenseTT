@@ -237,6 +237,9 @@
           },
           "type" : {
             "type" : "string"
+          },
+          "resource" : {
+            "type" : "string"
           }
         }
       },
