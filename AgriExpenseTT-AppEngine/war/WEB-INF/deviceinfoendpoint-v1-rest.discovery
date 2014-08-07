@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/MqBr8NUKPoLOe-fATNOEUCdAjdA\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/qJHTUbKNuCOZBhl2Q4qwUSvYD08\"",
  "discoveryVersion": "v1",
  "id": "deviceinfoendpoint:v1",
  "name": "deviceinfoendpoint",
@@ -14,9 +14,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://thematic-ruler-633.appspot.com/_ah/api/deviceinfoendpoint/v1/",
+ "baseUrl": "https://onyx-park-618.appspot.com/_ah/api/deviceinfoendpoint/v1/",
  "basePath": "/_ah/api/deviceinfoendpoint/v1/",
- "rootUrl": "https://thematic-ruler-633.appspot.com/_ah/api/",
+ "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
  "servicePath": "deviceinfoendpoint/v1/",
  "batchPath": "batch",
  "parameters": {

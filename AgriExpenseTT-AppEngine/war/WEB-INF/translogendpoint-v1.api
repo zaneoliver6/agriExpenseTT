@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://thematic-ruler-633.appspot.com/_ah/api",
+  "root" : "https://onyx-park-618.appspot.com/_ah/api",
   "name" : "translogendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://thematic-ruler-633.appspot.com/_ah/spi",
+    "bns" : "https://onyx-park-618.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -38,6 +38,27 @@
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "translogendpoint.getAllTranslog" : {
+      "path" : "translogcollection/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getAllTranslog",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -79,27 +100,6 @@
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "translogendpoint.getAllTranslog" : {
-      "path" : "translogcollection/{namespace}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getAllTranslog",
-      "request" : {
-        "parameters" : {
-          "namespace" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -296,6 +296,11 @@
           "$ref" : "TransLog"
         }
       },
+      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
+        "response" : {
+          "$ref" : "TransLogCollection"
+        }
+      },
       "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
       },
       "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
@@ -304,11 +309,6 @@
         },
         "response" : {
           "$ref" : "TransLog"
-        }
-      },
-      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
-        "response" : {
-          "$ref" : "TransLogCollection"
         }
       },
       "com.example.agriexpensett.TransLogEndpoint.Logs" : {

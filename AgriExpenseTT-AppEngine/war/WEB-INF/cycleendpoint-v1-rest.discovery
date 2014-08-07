@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/xt0WLI_zr96-wRvuXB-DZCYoGYg\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/vPWGtS1zQUnHsJLj6BTCXXEcJrI\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -14,9 +14,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://thematic-ruler-633.appspot.com/_ah/api/cycleendpoint/v1/",
+ "baseUrl": "https://onyx-park-618.appspot.com/_ah/api/cycleendpoint/v1/",
  "basePath": "/_ah/api/cycleendpoint/v1/",
- "rootUrl": "https://thematic-ruler-633.appspot.com/_ah/api/",
+ "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
  "servicePath": "cycleendpoint/v1/",
  "batchPath": "batch",
  "parameters": {
