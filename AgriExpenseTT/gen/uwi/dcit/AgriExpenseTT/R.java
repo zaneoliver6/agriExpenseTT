@@ -1516,12 +1516,11 @@ containing a value of this type.
         public static final int new_purchase_redesign=0x7f0c0012;
         public static final int purchase=0x7f0c0013;
         public static final int sales_cost=0x7f0c0014;
-        public static final int select_location=0x7f0c0015;
-        public static final int use_purchase=0x7f0c0016;
-        public static final int use_resource=0x7f0c0017;
-        public static final int view_cycle_usege=0x7f0c0018;
-        public static final int view_cycles=0x7f0c0019;
-        public static final int view_navigation=0x7f0c001a;
+        public static final int use_purchase=0x7f0c0015;
+        public static final int use_resource=0x7f0c0016;
+        public static final int view_cycle_usege=0x7f0c0017;
+        public static final int view_cycles=0x7f0c0018;
+        public static final int view_navigation=0x7f0c0019;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
