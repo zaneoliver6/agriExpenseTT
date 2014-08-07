@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/NSKfyXJSld2py0sJ5ludle6ssVY\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/XSOZN84YeB6Mb-elkuq2qsqRrro\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://thematic-ruler-633.appspot.com/_ah/api/",
- "rpcUrl": "https://thematic-ruler-633.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
+ "rpcUrl": "https://onyx-park-618.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -231,38 +231,6 @@
    ],
    "returns": {
     "$ref": "Cycle"
-   },
-   "scopes": [
-    "https://www.googleapis.com/auth/userinfo.email"
-   ]
-  },
-  "cycleendpoint.getMatchingCycles": {
-   "id": "cycleendpoint.getMatchingCycles",
-   "allowGet": true,
-   "parameters": {
-    "cropName": {
-     "type": "string",
-     "required": true
-    },
-    "cursor": {
-     "type": "string"
-    },
-    "landQty": {
-     "type": "number",
-     "required": true,
-     "format": "double"
-    },
-    "limit": {
-     "type": "integer",
-     "format": "int32"
-    }
-   },
-   "parameterOrder": [
-    "cropName",
-    "landQty"
-   ],
-   "returns": {
-    "$ref": "CollectionResponse_Cycle"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

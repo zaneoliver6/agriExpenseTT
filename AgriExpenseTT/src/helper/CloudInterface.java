@@ -367,9 +367,15 @@ public class CloudInterface {
 		@Override
 		protected void onPostExecute(Object result) {
 			// TODO Auto-generated method stub
-			super.onPostExecute(result);
+			/*db.close();
+			db=dbh.getWritableDatabase();
 			db.execSQL("drop table if exists "+DbHelper.TABLE_REDO_LOG);
 			dbh.createRedoLog(db);
+			db.close();
+			db=dbh.getReadableDatabase();*/
+			super.onPostExecute(result);
+			
+			//TODO
 		}
 		
 		
@@ -614,7 +620,9 @@ public class CloudInterface {
 		UpAcc acc=null;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();
-		}catch (IOException e) {e.printStackTrace();}
+		}catch (IOException e) {e.printStackTrace();
+			return null;
+		}
 		return acc;
 	}
 	public void flushToCloud(){

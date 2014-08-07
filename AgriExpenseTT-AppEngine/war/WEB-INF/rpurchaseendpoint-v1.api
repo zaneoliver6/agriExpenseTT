@@ -238,7 +238,7 @@
           "type" : {
             "type" : "string"
           },
-          "elementName" : {
+          "resource" : {
             "type" : "string"
           }
         }

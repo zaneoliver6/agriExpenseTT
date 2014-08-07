@@ -20,9 +20,14 @@ public class RPurchase {
 	private double cost;
 	private double qtyRemaining;
 	private String type;
-	private String elementName;
+	private String resource;
 	
-	
+	public String getResource() {
+		return resource;
+	}
+	public void setResource(String resource) {
+		this.resource = resource;
+	}
 	public String getKeyrep() {
 		return keyrep;
 	}
@@ -104,12 +109,6 @@ public class RPurchase {
 	public String toString() {
 		String n="purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 		return n;
-	}
-	public String getElementName() {
-		return elementName;
-	}
-	public void setElementName(String elementName) {
-		this.elementName = elementName;
 	}
 	
 	

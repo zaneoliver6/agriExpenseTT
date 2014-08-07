@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/0JUEvJEP10z9mB0wKWhKY_omzoc\"",
+ "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/kY1oTUqQjnZn3UK96DItNd1MO2M\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://thematic-ruler-633.appspot.com/_ah/api/",
- "rpcUrl": "https://thematic-ruler-633.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
+ "rpcUrl": "https://onyx-park-618.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -122,6 +122,12 @@
     "acc": {
      "type": "string"
     },
+    "address": {
+     "type": "string"
+    },
+    "county": {
+     "type": "string"
+    },
     "key": {
      "$ref": "Key"
     },
@@ -144,19 +150,19 @@
    "id": "upaccendpoint.getUpAcc",
    "allowGet": true,
    "parameters": {
-    "acc": {
-     "type": "string",
-     "required": true
-    },
     "id": {
      "type": "string",
      "required": true,
      "format": "int64"
+    },
+    "namespace": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
     "id",
-    "acc"
+    "namespace"
    ],
    "returns": {
     "$ref": "UpAcc"

@@ -141,6 +141,7 @@ public class fragmentNewCycleLast extends Fragment{
 			Button btn_getDate=(Button)datePick.findViewById(R.id.btn_newCycle_datepick);
 			class popupClick implements OnClickListener{
 				
+				@SuppressWarnings("deprecation")
 				@Override
 				public void onClick(View v) {
 					if(v.getId()==R.id.btn_newCycle_datepick){
