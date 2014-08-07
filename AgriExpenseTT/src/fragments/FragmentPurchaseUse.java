@@ -12,6 +12,7 @@ import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.UseResource;
 
+import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import dataObjects.localCycle;
@@ -133,6 +134,7 @@ public class FragmentPurchaseUse extends Fragment {
 				Toast.makeText(getActivity().getBaseContext(), "Enter Amount", Toast.LENGTH_SHORT).show();
 				return;
 			}else{
+				DecimalFormat df = new DecimalFormat("#.00");    
 				useAmount=Double.parseDouble(et_amt.getText().toString());
 				if(useAmount>amtRem){
 					Toast.makeText(getActivity().getBaseContext(), "Not enough "+quantifier+" remaining", Toast.LENGTH_SHORT).show();

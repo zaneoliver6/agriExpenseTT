@@ -1,10 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
-<<<<<<< HEAD
  "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/NSKfyXJSld2py0sJ5ludle6ssVY\"",
-=======
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/XSOZN84YeB6Mb-elkuq2qsqRrro\"",
->>>>>>> Version1
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",

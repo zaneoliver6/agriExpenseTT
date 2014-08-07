@@ -59,8 +59,7 @@ public class FragmentViewResources extends ListFragment{
             builder1.setMessage("Are you sure you want to delete");
             builder1.setCancelable(true);
             System.out.println(position);
-            @SuppressWarnings("unchecked")
-			Confirm c=new Confirm(position,(ArrayAdapter<String>) l.getAdapter());
+            Confirm c=new Confirm(position,(ArrayAdapter<String>) l.getAdapter());
             builder1.setPositiveButton("Yes",c);
             builder1.setNegativeButton("Nope",c);
             AlertDialog alert1 = builder1.create();

@@ -253,11 +253,7 @@
           "type" : {
             "type" : "string"
           },
-<<<<<<< HEAD
           "elementName" : {
-=======
-          "resource" : {
->>>>>>> Version1
             "type" : "string"
           }
         }

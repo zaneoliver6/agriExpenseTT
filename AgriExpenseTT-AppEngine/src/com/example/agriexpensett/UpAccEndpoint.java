@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -77,13 +78,12 @@ public class UpAccEndpoint {
    * @return The entity with primary key id.
    */
   @ApiMethod(name = "getUpAcc")
-  public UpAcc getUpAcc(@Named("id") Long id, @Named("namespace") String namespace) {
-	NamespaceManager.set(namespace);
+  public UpAcc getUpAcc(@Named("id") Long id, @Named("acc") String acc) {
+	NamespaceManager.set(acc);
     EntityManager mgr = getEntityManager();
     UpAcc upacc  = null;
     try {
       upacc = mgr.find(UpAcc.class, id);
-      System.out.println("CLOUD-ACCOUNT:"+upacc.toString());
     }catch(Exception e){
     	upacc=null;
     } finally {

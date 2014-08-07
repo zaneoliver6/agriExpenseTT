@@ -81,7 +81,7 @@
       }
     },
     "upaccendpoint.getUpAcc" : {
-      "path" : "upacc/{id}/{namespace}",
+      "path" : "upacc/{id}/{acc}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -94,7 +94,7 @@
             "type" : "int64",
             "required" : true
           },
-          "namespace" : {
+          "acc" : {
             "type" : "string",
             "required" : true
           }
@@ -152,12 +152,6 @@
           },
           "signedIn" : {
             "type" : "integer"
-          },
-          "county" : {
-            "type" : "string"
-          },
-          "address" : {
-            "type" : "string"
           }
         }
       },

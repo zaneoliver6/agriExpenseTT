@@ -52,7 +52,6 @@ public class EditCycle extends ActionBarActivity {
 		initialize();
 	}
 
-	@SuppressWarnings("deprecation")
 	private void initialize() {
 		//setup buttons
 		btn_crop=(Button)findViewById(R.id.btn_editCycle_crop);

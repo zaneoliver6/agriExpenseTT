@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import uwi.dcit.AgriExpenseTT.CycleUseage;
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.R;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -75,8 +75,7 @@ public class FragmentViewCycles extends ListFragment{
 			 myContext = context;
 		  }
 		
-		  @SuppressWarnings("deprecation")
-		@SuppressLint("ViewHolder") @Override
+		  @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			   //return super.getView(position, convertView, parent);
 			   
@@ -92,8 +91,15 @@ public class FragmentViewCycles extends ListFragment{
 				String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
 				Crop.setText(txt);
 				ImageView imageView=(ImageView)row.findViewById(R.id.icon_purchaseType);
-				imageView.setImageResource(R.drawable.crop_under_rain_solid);
-				//TODO
+				if(txt.equals("tomatoe")){
+					imageView.setImageResource(R.drawable.icon_tomatoe3);
+				}else if(txt.equals("cassava")){
+					imageView.setImageResource(R.drawable.icon_cassava1);
+				}else if(txt.equals("sweet pepper")){
+					imageView.setImageResource(R.drawable.icon_sweetpepper2);
+				}
+				
+				
 				TextView Land=(TextView)row.findViewById(R.id.tv_cycleList_Land);
 				double qty=currCycle.getLandQty();
 				txt=currCycle.getLandType();
@@ -117,6 +123,7 @@ public class FragmentViewCycles extends ListFragment{
 				Date d=calender.getTime();
 				DateR.setText(d.toLocaleString());
 				
+				int i=0;
 			   return row;
 		  }
 		  

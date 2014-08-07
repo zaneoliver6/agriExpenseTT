@@ -13,13 +13,7 @@ public class localCycle implements Parcelable{
 	private double harvestAmt;
 	private String harvestType;
 	private double costPer;
-	private String cropName;
-	public String getCropName() {
-		return cropName;
-	}
-	public void setCropName(String cropName) {
-		this.cropName = cropName;
-	}
+	
 	public String getHarvestType() {
 		return harvestType;
 	}

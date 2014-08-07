@@ -6,11 +6,16 @@ import helper.DbQuery;
 
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign.TouchL;
+
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
 import dataObjects.localCycle;
 import dataObjects.localResourcePurchase;
 import fragments.ChoosePurchase;
 import fragments.FragmentEmpty;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -21,12 +26,16 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+import android.os.Build;
 
 public class UseResource extends ActionBarActivity {
 	Double total;
@@ -134,6 +143,7 @@ public class UseResource extends ActionBarActivity {
 	private class IntentLauncher extends Thread{
 		@Override
 		public void run(){
+			Bundle b=new Bundle();
 			Intent i =new Intent(UseResource.this,CycleUseageRedesign.class);
 	        i.putExtra("cycleMain", c);
 			startActivity(i);

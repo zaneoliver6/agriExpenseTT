@@ -1,7 +1,6 @@
 {
   "files": [
     {
-<<<<<<< HEAD
       "downloadUrl": "/downloads/rpurchaseendpoint/v1/20140805201331/java/1.18.0-rc/example.com-rpurchaseendpoint-v1-20140805201331-java-1.18.0-rc-sources.jar", 
       "path": "example.com-rpurchaseendpoint-v1-20140805201331-java-1.18.0-rc-sources.jar", 
       "type": "source", 
@@ -9,15 +8,6 @@
     }, 
     {
       "path": "example.com-rpurchaseendpoint-v1-20140805201331-java-1.18.0-rc.jar.properties", 
-=======
-      "downloadUrl": "/downloads/rpurchaseendpoint/v1/20140807053230/java/1.16.0-rc/example.com-rpurchaseendpoint-v1-20140807053230-java-1.16.0-rc-sources.jar", 
-      "path": "example.com-rpurchaseendpoint-v1-20140807053230-java-1.16.0-rc-sources.jar", 
-      "type": "source", 
-      "timestamp": "2014-08-07 05:32"
-    }, 
-    {
-      "path": "example.com-rpurchaseendpoint-v1-20140807053230-java-1.16.0-rc.jar.properties", 
->>>>>>> Version1
       "type": "android.properties"
     }
   ], 
@@ -685,9 +675,5 @@
   "packagePath": "agriexpensett", 
   "language_version": "1.18.0-rc", 
   "id": "rpurchaseendpoint:v1", 
-<<<<<<< HEAD
   "revision": 20140805201331
-=======
-  "revision": 20140807053230
->>>>>>> Version1
 }

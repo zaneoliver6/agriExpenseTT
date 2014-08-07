@@ -1,6 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import helper.CloudInterface;
 import helper.DbHelper;
@@ -11,13 +13,19 @@ import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.Toast;
 
 public class SignIn {
@@ -38,21 +46,46 @@ public class SignIn {
 		this.activity=activity;
 	}
 	public void signIn(){
-		UpAcc acc=isExisting();//returns the account obj or null, for existing or not, (have we ever signed in ?)
+		UpAcc acc=isExisting();
 		if(acc==null){
-			accSetUp();//account doesnt exist so we've to setup a new one (means we never signed in)
+			accSetUp();
 		}else{
-			ContentValues cv=new ContentValues();//account exists already so we can sign in OR out
-			
-			if(acc.getSignedIn()==1){//we're already signed in so lets sign out 
-				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);//updates the database that we signed out
+			ContentValues cv=new ContentValues();
+			if(acc.getSignedIn()==1){
+				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);
 				((MainMenu)activity).toggleSignIn();
-				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null);
-			}else if(acc.getSignedIn()==0){//if we're signed out 
-				initialSignIn(acc.getAcc());//we gotta sign in
+			}else if(acc.getSignedIn()==0){
+				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
+				((MainMenu)activity).toggleSignIn();
+				initialSignIn(acc.getAcc());
 			}
-			
+			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null);
 		}
+	}
+	public void accSetUp(){
+		System.out.println("sign in mc");
+		ArrayList<String> accs=new ArrayList<String>();
+		populateAcc(accs);
+		if(accs.isEmpty()){
+			Toast.makeText(context, "no accounts", Toast.LENGTH_SHORT).show();
+			noAccs();
+			return;
+		}
+			
+		final CharSequence[] items= new CharSequence[accs.size()]; int i=0;
+		for(String k:accs)
+			items[i]=accs.get(i++);
+		
+	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	    builder.setTitle("Select Account");
+	    builder.setItems(items, new DialogInterface.OnClickListener() {
+	        @Override
+			public void onClick(DialogInterface dialog, int item) {
+	            String namespace=convertString((items[item].toString()));
+	            Toast.makeText(context, "signed in", Toast.LENGTH_SHORT).show();
+	            initialSignIn(namespace);
+	        }
+	    }).show();
 	}
 	private void initialSignIn(final String namespace){
 		
@@ -64,58 +97,20 @@ public class SignIn {
 			@Override
 			protected UpAcc doInBackground(Void... params) {
 				CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-				UpAcc cloudAcc=cloudIF.getUpAcc(namespace);//getting a the cloud upAcc if there's any >.<
-				return cloudAcc;//this is passed to onPostExecute
+				UpAcc cloudAcc=cloudIF.getUpAcc(namespace);
+				return cloudAcc;
 			}
 
 			@Override
 			protected void onPostExecute(UpAcc cloudAcc) {
-				Sync sync=new Sync(db, dbh, context,getSignin());
+				Sync sync=new Sync(db, dbh, context);
 				sync.start(namespace, cloudAcc);
 				super.onPostExecute(cloudAcc);
 			}
 			
 		}
-
 		new setup(namespace).execute();
 	}
-	
-	public void accSetUp(){
-		ArrayList<String> accs=new ArrayList<String>();
-		populateAcc(accs);
-		if(accs.isEmpty()){
-			Toast.makeText(context, "no accounts", Toast.LENGTH_SHORT).show();
-			noAccs();
-			return;
-		}
-			
-		final CharSequence[] items= new CharSequence[accs.size()]; int i=0;
-		for(@SuppressWarnings("unused") String k:accs)
-			items[i]=accs.get(i++);
-		
-	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	    builder.setTitle("Select Account");
-	    builder.setItems(items, new DialogInterface.OnClickListener() {
-	        @Override
-			public void onClick(DialogInterface dialog, int item) {
-	            String namespace=convertString((items[item].toString()));
-	            initialSignIn(namespace);
-	        }
-	    }).show();
-	}
-	
-	public void signInReturn(boolean success,String message){
-		if(success){
-			((MainMenu)activity).toggleSignIn();
-			Toast.makeText(activity.getBaseContext(), "Signed in", Toast.LENGTH_SHORT).show();
-		}else{
-			if(message==null||message.equals(""))
-				Toast.makeText(activity, "Cannot Sign In Try again", Toast.LENGTH_SHORT).show();
-			else 
-				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-		}
-	}
-	//--------------------------------------------------Helper stuff
 	private void noAccs(){
 		AlertDialog.Builder builder=new AlertDialog.Builder(context);
 		builder.setTitle("No accounts available");
@@ -158,8 +153,5 @@ public class SignIn {
 			return null;
 		System.out.println("account exists !!!!!!!!");
 		return acc;
-	}
-	public SignIn getSignin(){
-		return this;
 	}
 }	

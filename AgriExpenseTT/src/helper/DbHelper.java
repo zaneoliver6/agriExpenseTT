@@ -18,8 +18,6 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String CROPCYCLE_HARVEST_TYPE="hType";
 	public static final String CROPCYCLE_HARVEST_AMT="hAmt";
 	public static final String CROPCYCLE_COSTPER="costPer";
-	public static final String CROPCYCLE_COUNTY="county";
-	public static final String CROPCYCLE_RESOURCE="cropName";
 	//resource 
 	public static final String TABLE_RESOURCES="resources";
 	public static final String RESOURCES_ID="id";
@@ -35,7 +33,6 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String RESOURCE_PURCHASE_COST="cost";
 	public static final String RESOURCE_PURCHASE_REMAINING="remaining";
 	public static final String RESOURCE_PURCHASE_DATE="date";
-	public static final String RESOURCE_PURCHASE_RESOURCE="resource";
 	//Cycle resource use
 	public static final String TABLE_CYCLE_RESOURCES="cycleResources";
 	public static final String CYCLE_RESOURCE_ID="id";
@@ -71,15 +68,13 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String TRANSACTION_LOG_TRANSTIME="transtime";
 	
 	public static final String TABLE_UPDATE_ACCOUNT="updateacc";
-	public static final String UPDATE_ACCOUNT_COUNTY="county";
-	public static final String UPDATE_ACCOUNT_ADDRESS="address";
 	public static final String UPDATE_ACCOUNT_ACC="acc";
 	public static final String UPDATE_ACCOUNT_UPDATED="lastUpdated";
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";
 	public static final String UPDATE_ACCOUNT_ID="id";
 	public static final String UPDATE_ACCOUNT_SIGNEDIN="signedIn";
 	
-	public static final int VERSION=170;
+	public static final int VERSION=151;
 	public static final String DATABASE_NAME="agriDb";
 	public Context ctx;
 	
@@ -112,25 +107,12 @@ public class DbHelper extends SQLiteOpenHelper{
 		createUpdateAccount(db);
 		createTransactionLog(db);
 	}
-	public void dropTables(SQLiteDatabase db) {
-		db.execSQL("drop table if exists "+DbHelper.TABLE_CROPCYLE);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_CYCLE_RESOURCES);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_RESOURCE_PURCHASES);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_RESOURCES);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_REDO_LOG);
-		System.out.println("dropped redo");
-		db.execSQL("drop table if exists "+DbHelper.TABLE_CLOUD_KEY);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_TRANSACTION_LOG);
-		db.execSQL("drop table if exists "+DbHelper.TABLE_UPDATE_ACCOUNT);
-	}
 	
 
 	private void createUpdateAccount(SQLiteDatabase db){
 		String code="create table "+DbHelper.TABLE_UPDATE_ACCOUNT+"("
 			+DbHelper.UPDATE_ACCOUNT_ID+" integer primary key autoincrement,"
 			+DbHelper.UPDATE_ACCOUNT_ACC+" text,"
-			+DbHelper.UPDATE_ACCOUNT_COUNTY+" text,"
-			+DbHelper.UPDATE_ACCOUNT_ADDRESS+" text,"
 			+DbHelper.UPDATE_ACCOUNT_UPDATED+" integer,"
 			+DbHelper.UPDATE_ACCOUNT_SIGNEDIN+" integer,"
 			+DbHelper.UPDATE_ACCOUNT_CLOUD_KEY+" text);";
@@ -155,8 +137,6 @@ public class DbHelper extends SQLiteOpenHelper{
 			+DbHelper.CROPCYCLE_HARVEST_AMT+" real,"
 			+DbHelper.CROPCYCLE_HARVEST_TYPE+" text,"
 			+DbHelper.CROPCYCLE_COSTPER+" real,"
-			+DbHelper.CROPCYCLE_RESOURCE+" text,"
-			+DbHelper.CROPCYCLE_COUNTY+" text,"
 			+"foreign key("+DbHelper.CROPCYCLE_CROPID+") references "+DbHelper.TABLE_RESOURCES+"("+DbHelper.RESOURCES_ID+"));";
 		db.execSQL(code);
 	} 
@@ -187,7 +167,6 @@ public class DbHelper extends SQLiteOpenHelper{
 				+DbHelper.RESOURCE_PURCHASE_REMAINING+" integer,"
 				+DbHelper.RESOURCE_PURCHASE_COST+" real,"
 				+DbHelper.RESOURCE_PURCHASE_DATE+" timestamp,"
-				+DbHelper.RESOURCE_PURCHASE_RESOURCE+" text,"
 				+"foreign key("+DbHelper.RESOURCE_PURCHASE_RESID+") references "+DbHelper.TABLE_RESOURCES+"("+DbHelper.RESOURCES_ID+"));";
 		db.execSQL(code);
 	}
@@ -212,9 +191,20 @@ public class DbHelper extends SQLiteOpenHelper{
 			+DbHelper.REDO_LOG_ROW_ID+" integer,"
 			+DbHelper.REDO_LOG_OPERATION+" text);";
 		db.execSQL(code);
-		System.out.println("created redo");
 	}
 	
+	public void dropTables(SQLiteDatabase db) {
+		db.execSQL("drop table if exists "+DbHelper.TABLE_CROPCYLE);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_CYCLE_RESOURCES);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_RESOURCE_PURCHASES);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_RESOURCES);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_LABOUR);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_REDO_LOG);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_CLOUD_KEY);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_LABOUR);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_TRANSACTION_LOG);
+		db.execSQL("drop table if exists "+DbHelper.TABLE_UPDATE_ACCOUNT);
+	}
 	
 	private void populate(SQLiteDatabase db,TransactionLog tL) {
 		//create user Account

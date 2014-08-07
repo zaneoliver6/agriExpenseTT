@@ -3,23 +3,16 @@ package uwi.dcit.AgriExpenseTT;
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 import helper.CSVHelper;
-import helper.DbHelper;
-import helper.DbQuery;
+import helper.CloudInterface;
 import helper.FlyOutContainer;
 import android.support.v7.app.ActionBarActivity;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainMenu extends ActionBarActivity {
 	FlyOutContainer root;
@@ -73,7 +66,7 @@ public class MainMenu extends ActionBarActivity {
 			}else if(v.getId()==R.id.ResDetail){
 				nextActivity=new Intent(MainMenu.this,ViewNavigation.class);
 			}else if(v.getId()==R.id.btn_SignIn){
-				signInStart();
+				s.signIn();
 				//testing shit
 				return;
 			}else if(v.getId()==R.id.HireLabour){
@@ -112,43 +105,6 @@ public class MainMenu extends ActionBarActivity {
 	public void toggleMenu(View v){
 		this.root.toggleMenu();
 	}
-	public void onActivityResult(int requestCode,int resultCode,Intent data){
-		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==RESULT_CANCELED){
-			return;
-		}
-		if(requestCode==1){
-			String county=data.getExtras().getString("county");
-			ContentValues cv=new ContentValues();
-			cv.put(DbHelper.UPDATE_ACCOUNT_COUNTY, county);
-			DbHelper dbh=new DbHelper(MainMenu.this);
-			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
-			System.out.println("result String"+county);
-			s.signIn();//TODO
-		}
-	}
-	
-	public void signInStart(){
-		DbHelper dbh=new DbHelper(MainMenu.this);
-		SQLiteDatabase db=dbh.getReadableDatabase();
-		UpAcc acc=DbQuery.getUpAcc(db);
-		db.close();
-		if(!isNetworkAvailable()){
-			Toast.makeText(MainMenu.this, "No internet connection", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		if(acc.getSignedIn()==0){//not signed in
-			if(acc.getCounty()==null||acc.getCounty().equals("")){//location was never set
-				Intent i=new Intent(MainMenu.this,SelectLocation.class);
-				startActivityForResult(i, 1);
-			}else{
-				s.signIn();
-			}
-		}else{
-			s.signIn();
-		}
-	}
 	public void toggleSignIn(){
 		Button btnSignIn=(Button)findViewById(R.id.btn_SignIn);
 		if(btnSignIn.getText().toString().equals("Sign In")){
@@ -160,12 +116,6 @@ public class MainMenu extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	private boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-	}
 	
 
 }

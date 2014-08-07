@@ -27,20 +27,13 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
-<<<<<<< HEAD
     "deviceinfoendpoint.getDeviceInfo" : {
       "path" : "deviceinfo/{id}",
       "httpMethod" : "GET",
-=======
-    "deviceinfoendpoint.insertDeviceInfo" : {
-      "path" : "deviceinfo",
-      "httpMethod" : "POST",
->>>>>>> Version1
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-<<<<<<< HEAD
       "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo",
       "request" : {
         "parameters" : {
@@ -50,12 +43,6 @@
           }
         },
         "body" : "empty"
-=======
-      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.insertDeviceInfo",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
->>>>>>> Version1
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -86,35 +73,17 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-<<<<<<< HEAD
     "deviceinfoendpoint.insertDeviceInfo" : {
       "path" : "deviceinfo",
       "httpMethod" : "POST",
-=======
-    "deviceinfoendpoint.getDeviceInfo" : {
-      "path" : "deviceinfo/{id}",
-      "httpMethod" : "GET",
->>>>>>> Version1
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-<<<<<<< HEAD
       "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.insertDeviceInfo",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
-=======
-      "rosyMethod" : "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
->>>>>>> Version1
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -193,7 +162,6 @@
       }
     },
     "methods" : {
-<<<<<<< HEAD
       "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo" : {
         "response" : {
           "$ref" : "DeviceInfo"
@@ -204,8 +172,6 @@
           "$ref" : "CollectionResponse_DeviceInfo"
         }
       },
-=======
->>>>>>> Version1
       "com.example.agriexpensett.DeviceInfoEndpoint.insertDeviceInfo" : {
         "request" : {
           "$ref" : "DeviceInfo"
@@ -214,19 +180,6 @@
           "$ref" : "DeviceInfo"
         }
       },
-<<<<<<< HEAD
-=======
-      "com.example.agriexpensett.DeviceInfoEndpoint.listDeviceInfo" : {
-        "response" : {
-          "$ref" : "CollectionResponse_DeviceInfo"
-        }
-      },
-      "com.example.agriexpensett.DeviceInfoEndpoint.getDeviceInfo" : {
-        "response" : {
-          "$ref" : "DeviceInfo"
-        }
-      },
->>>>>>> Version1
       "com.example.agriexpensett.DeviceInfoEndpoint.removeDeviceInfo" : {
       },
       "com.example.agriexpensett.DeviceInfoEndpoint.updateDeviceInfo" : {
