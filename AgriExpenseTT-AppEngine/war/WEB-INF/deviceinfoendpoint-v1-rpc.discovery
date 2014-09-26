@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/qJHTUbKNuCOZBhl2Q4qwUSvYD08\"",
+ "etag": "\"koCc_mmAOJe4d9CoedmJUnZeEcg/3PZQgAv94ngQA9JLpjEIjfuMYQQ\"",
  "discoveryVersion": "v1",
  "id": "deviceinfoendpoint:v1",
  "name": "deviceinfoendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
- "rpcUrl": "https://onyx-park-618.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://centering-dock-715.appspot.com/_ah/api/",
+ "rpcUrl": "https://centering-dock-715.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {

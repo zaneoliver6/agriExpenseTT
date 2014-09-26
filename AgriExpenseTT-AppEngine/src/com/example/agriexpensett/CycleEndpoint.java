@@ -79,73 +79,63 @@ public class CycleEndpoint {
       .build();
   }
 
-  @SuppressWarnings({"unchecked", "unused"})
-  @ApiMethod(name="getMatchingCycles")
-  public CollectionResponse <Cycle> getMatchingCyles(
-    @Named("cropName")String cropName,
-      @Named("start")Double start,
-      @Named("end") Double end,
-      @Nullable @Named("cursor") String cursorString,
-      @Nullable @Named("limit") Integer limit) {
-  
-    //  NamespaceManager.set("_spydakat");
-    
-      EntityManager mgr = null;
-      Cursor cursor = null;
-      List<Cycle> execute = null;
-      
-      /*For namespace list fetching */
-      DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-    com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(Entities.NAMESPACE_METADATA_KIND);
-    
-    List<String> results = new ArrayList<String>();
-    for(Entity e : ds.prepare(q).asIterable()){
-       if (e.getKey().getId() != 0) {
-            System.out.println("<default>");
-          } else {
-           // System.out.println(e.getKey().getName());
-            results.add(Entities.getNamespaceFromNamespaceKey(e.getKey()));
-          }
-    }
-    
-      // Set each namespace then return all results under that given namespace
-    for(Iterator<String> i = results.iterator(); i.hasNext(); ) {
-        NamespaceManager.set(i.next());
-        
-        try{
-          mgr = getEntityManager();
-          Query query = mgr.createQuery("select from Cycle as Cycle where cropName=:x and landQty>=:y and landQty<=:z");
-          query.setParameter("x",cropName.toUpperCase());
-          query.setParameter("y",start);
-          query.setParameter("z",end);
-                
-          if (cursorString != null && cursorString != "") {
-            cursor = Cursor.fromWebSafeString(cursorString);
-            query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
-          }
+  @SuppressWarnings("unchecked")
+	@ApiMethod(name = "getMatchingCycles")
+	public List<Cycle> getMatchingCyles(@Named("cropName") String cropName,
+			@Named("selectedArea") String selectedArea,
+			@Named("start_date") String start_date,
+			@Named("end_date") String end_date) {
 
-          if (limit != null) {
-            query.setFirstResult(0);
-              query.setMaxResults(limit);
-          }
+		EntityManager mgr = null;
+		List<Cycle> execute = null;
+		Query query = null;
 
-          execute = (List<Cycle>) query.getResultList();
-            cursor = JPACursorHelper.getCursor(execute);
-            
-            if (cursor != null) cursorString = cursor.toWebSafeString();
-            // Tight loop for fetching all entities from datastore and accomodate
-            // for lazy fetch.
-            for (Cycle obj : execute);
-            } finally {
-              mgr.close();
-            }
-      }
-    
-      return CollectionResponse.<Cycle>builder()
-        .setItems(execute)
-        .setNextPageToken(cursorString)
-        .build();
-  }
+		/* For namespace list fetching */
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
+				Entities.NAMESPACE_METADATA_KIND);
+
+		List<String> results = new ArrayList<String>();
+		for (Entity e : ds.prepare(q).asIterable()) {
+			if (e.getKey().getId() != 0) {
+				System.out.println("<default>");
+			} else {
+				// System.out.println(e.getKey().getName());
+				results.add(Entities.getNamespaceFromNamespaceKey(e.getKey()));
+			}
+		}
+
+		if (selectedArea.equals("Nationwide")) {
+			mgr = getEntityManager();
+			query = mgr
+					.createQuery("SELECT FROM Cycle AS Cycle WHERE cropName = :p1 AND startDate >= :p2 AND startDate <= :p3 ORDER BY startDate ASC");
+			query.setParameter("p1", cropName.toUpperCase());
+			query.setParameter("p2", Long.parseLong(start_date));
+			query.setParameter("p3", Long.parseLong(end_date));
+		} else {
+			mgr = getEntityManager();
+			query = mgr
+					.createQuery("SELECT FROM Cycle AS Cycle WHERE cropName = :p1 AND county = :p2 AND startDate >= :p3 AND startDate <= :p4 ORDER BY startDate ASC");
+			query.setParameter("p1", cropName.toUpperCase());
+			query.setParameter("p2", selectedArea.toUpperCase());
+			query.setParameter("p3", Long.parseLong(start_date));
+			query.setParameter("p4", Long.parseLong(end_date));
+		}
+
+		// Set each namespace then return all results under that given namespace
+
+		List<Cycle> cycleList = new ArrayList<Cycle>();
+
+		for (String i : results) {
+
+			NamespaceManager.set(i);
+			execute = (List<Cycle>) query.getResultList();
+			for (Cycle obj : execute) {
+				cycleList.add(obj);
+			}
+		}
+		return cycleList;
+	}
   
   @ApiMethod(name="getAllCycles")
   public List<Cycle> getAllCycles(@Named("namespace") String namespace){

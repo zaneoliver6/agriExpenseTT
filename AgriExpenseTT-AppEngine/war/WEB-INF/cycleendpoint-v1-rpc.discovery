@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/vPWGtS1zQUnHsJLj6BTCXXEcJrI\"",
+ "etag": "\"koCc_mmAOJe4d9CoedmJUnZeEcg/5tioBephU53HkJoagAA1As_4zhY\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -14,8 +14,8 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rpc",
- "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
- "rpcUrl": "https://onyx-park-618.appspot.com/_ah/api/rpc",
+ "rootUrl": "https://centering-dock-715.appspot.com/_ah/api/",
+ "rpcUrl": "https://centering-dock-715.appspot.com/_ah/api/rpc",
  "rpcPath": "/_ah/api/rpc",
  "parameters": {
   "alt": {
@@ -98,6 +98,9 @@
      "type": "number",
      "format": "double"
     },
+    "county": {
+     "type": "string"
+    },
     "cropId": {
      "type": "integer",
      "format": "int32"
@@ -128,6 +131,10 @@
     },
     "landType": {
      "type": "string"
+    },
+    "startDate": {
+     "type": "string",
+     "format": "int64"
     },
     "totalSpent": {
      "type": "number",
@@ -244,31 +251,27 @@
      "type": "string",
      "required": true
     },
-    "cursor": {
-     "type": "string"
+    "end_date": {
+     "type": "string",
+     "required": true
     },
-    "end": {
-     "type": "number",
-     "required": true,
-     "format": "double"
+    "selectedArea": {
+     "type": "string",
+     "required": true
     },
-    "limit": {
-     "type": "integer",
-     "format": "int32"
-    },
-    "start": {
-     "type": "number",
-     "required": true,
-     "format": "double"
+    "start_date": {
+     "type": "string",
+     "required": true
     }
    },
    "parameterOrder": [
     "cropName",
-    "start",
-    "end"
+    "selectedArea",
+    "start_date",
+    "end_date"
    ],
    "returns": {
-    "$ref": "CollectionResponse_Cycle"
+    "$ref": "CycleCollection"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

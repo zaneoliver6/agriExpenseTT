@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"MKGA2miAJpVGF7yQTQhsoDXpye8/vPWGtS1zQUnHsJLj6BTCXXEcJrI\"",
+ "etag": "\"koCc_mmAOJe4d9CoedmJUnZeEcg/5tioBephU53HkJoagAA1As_4zhY\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -14,9 +14,9 @@
   "x32": "http://www.google.com/images/icons/product/search-32.gif"
  },
  "protocol": "rest",
- "baseUrl": "https://onyx-park-618.appspot.com/_ah/api/cycleendpoint/v1/",
+ "baseUrl": "https://centering-dock-715.appspot.com/_ah/api/cycleendpoint/v1/",
  "basePath": "/_ah/api/cycleendpoint/v1/",
- "rootUrl": "https://onyx-park-618.appspot.com/_ah/api/",
+ "rootUrl": "https://centering-dock-715.appspot.com/_ah/api/",
  "servicePath": "cycleendpoint/v1/",
  "batchPath": "batch",
  "parameters": {
@@ -100,6 +100,9 @@
      "type": "number",
      "format": "double"
     },
+    "county": {
+     "type": "string"
+    },
     "cropId": {
      "type": "integer",
      "format": "int32"
@@ -130,6 +133,10 @@
     },
     "landType": {
      "type": "string"
+    },
+    "startDate": {
+     "type": "string",
+     "format": "int64"
     },
     "totalSpent": {
      "type": "number",
@@ -247,7 +254,7 @@
   },
   "getMatchingCycles": {
    "id": "cycleendpoint.getMatchingCycles",
-   "path": "collectionresponse_cycle/{cropName}/{start}/{end}",
+   "path": "cyclecollection/{cropName}/{selectedArea}/{start_date}/{end_date}",
    "httpMethod": "GET",
    "parameters": {
     "cropName": {
@@ -255,35 +262,30 @@
      "required": true,
      "location": "path"
     },
-    "cursor": {
+    "end_date": {
      "type": "string",
-     "location": "query"
-    },
-    "end": {
-     "type": "number",
      "required": true,
-     "format": "double",
      "location": "path"
     },
-    "limit": {
-     "type": "integer",
-     "format": "int32",
-     "location": "query"
-    },
-    "start": {
-     "type": "number",
+    "selectedArea": {
+     "type": "string",
      "required": true,
-     "format": "double",
+     "location": "path"
+    },
+    "start_date": {
+     "type": "string",
+     "required": true,
      "location": "path"
     }
    },
    "parameterOrder": [
     "cropName",
-    "start",
-    "end"
+    "selectedArea",
+    "start_date",
+    "end_date"
    ],
    "response": {
-    "$ref": "CollectionResponse_Cycle"
+    "$ref": "CycleCollection"
    },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"

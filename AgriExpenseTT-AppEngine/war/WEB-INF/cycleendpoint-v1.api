@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://onyx-park-618.appspot.com/_ah/api",
+  "root" : "https://centering-dock-715.appspot.com/_ah/api",
   "name" : "cycleendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://onyx-park-618.appspot.com/_ah/spi",
+    "bns" : "https://centering-dock-715.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -161,7 +161,7 @@
       }
     },
     "cycleendpoint.getMatchingCycles" : {
-      "path" : "collectionresponse_cycle/{cropName}/{start}/{end}",
+      "path" : "cyclecollection/{cropName}/{selectedArea}/{start_date}/{end_date}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -174,21 +174,17 @@
             "type" : "string",
             "required" : true
           },
-          "start" : {
-            "type" : "double",
-            "required" : true
-          },
-          "end" : {
-            "type" : "double",
-            "required" : true
-          },
-          "cursor" : {
+          "selectedArea" : {
             "type" : "string",
-            "required" : false
+            "required" : true
           },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
+          "start_date" : {
+            "type" : "string",
+            "required" : true
+          },
+          "end_date" : {
+            "type" : "string",
+            "required" : true
           }
         },
         "body" : "empty"
@@ -268,6 +264,13 @@
           "cropName" : {
             "type" : "string"
           },
+          "startDate" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "county" : {
+            "type" : "string"
+          },
           "account" : {
             "type" : "string"
           }
@@ -293,11 +296,11 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },
@@ -344,7 +347,7 @@
       },
       "com.example.agriexpensett.CycleEndpoint.getMatchingCyles" : {
         "response" : {
-          "$ref" : "CollectionResponse_Cycle"
+          "$ref" : "CycleCollection"
         }
       },
       "com.example.agriexpensett.CycleEndpoint.updateCycle" : {

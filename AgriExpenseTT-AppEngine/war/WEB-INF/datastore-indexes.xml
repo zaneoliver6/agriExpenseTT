@@ -1,13 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<datastore-indexes  autoGenerate="true">
+<?xml version="1.0" encoding="UTF-8" ?>
+<datastore-indexes autoGenerate="true">
     <datastore-index kind="Cycle" ancestor="false">
-        <property name="cropName" direction="asc"/>
-        <property name="landQty" direction ="desc"/>
+        <property name="county" direction="asc" />
+        <property name="cropName" direction="asc" />
+        <property name="landQty" direction="asc" />
+        <property name="startDate" direction="asc" />
     </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="cropName" direction="asc" />
+        <property name="landQty" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="county" direction="asc" />
+        <property name="cropName" direction="asc" />
+        <property name="costPer" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="cropName" direction="asc" />
+        <property name="costPer" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="cropName" direction="asc" />
+        <property name="county" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="cropName" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="county" direction="asc" />
+        <property name="cropName" direction="asc" />
+        <property name="totalSpent" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="cropName" direction="asc" />
+        <property name="totalSpent" direction="asc" />
+        <property name="startDate" direction="asc" />
+    </datastore-index>
+    
+    <datastore-index kind="Cycle" ancestor="false">
+        <property name="Account" direction="asc" />
+        <property name="county" direction="asc" />
+    </datastore-index>
+
     <datastore-index kind="RPurchase" ancestor="false">
-        <property name="elementName" direction="asc"/>
-        <property name="type" direction ="desc"/>
-        <property name="qty" direction ="desc"/>
-        <property name="cost" direction ="desc"/>
+        <property name="elementName" direction="asc" />
+        <property name="type" direction="desc" />
+        <property name="qty" direction="desc" />
+        <property name="cost" direction="desc" />
     </datastore-index>
-</datastore-indexes> 
+</datastore-indexes>
