@@ -1,0 +1,362 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://centering-dock-715.appspot.com/_ah/api",
+  "name" : "rpurchaseendpoint",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://centering-dock-715.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "ownerDomain" : "example.com",
+  "ownerName" : "example.com",
+  "packagePath" : "agriexpensett",
+  "methods" : {
+    "rpurchaseendpoint.fetchAllPurchases" : {
+      "path" : "fetchAllPurchases",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.deletePurchase" : {
+      "path" : "purchase/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase",
+      "request" : {
+        "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "rpurchaseendpoint.deleteAll" : {
+      "path" : "all/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.deleteAll",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "rpurchaseendpoint.updateRPurchase" : {
+      "path" : "rpurchase",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.listRPurchase" : {
+      "path" : "rpurchase",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.listRPurchase",
+      "request" : {
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.insertRPurchase" : {
+      "path" : "rpurchase",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.getAllPurchases" : {
+      "path" : "rpurchasecollection/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getAllPurchases",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "rpurchaseendpoint.removeRPurchase" : {
+      "path" : "rpurchase/{keyrep}/{namespace}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase",
+      "request" : {
+        "parameters" : {
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          },
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
+    },
+    "rpurchaseendpoint.getRPurchase" : {
+      "path" : "rpurchase/{namespace}/{keyrep}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          },
+          "keyrep" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "RPurchase" : {
+        "id" : "RPurchase",
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "$ref" : "Key"
+          },
+          "account" : {
+            "type" : "string"
+          },
+          "keyrep" : {
+            "type" : "string"
+          },
+          "pId" : {
+            "type" : "integer"
+          },
+          "resourceId" : {
+            "type" : "integer"
+          },
+          "quantifier" : {
+            "type" : "string"
+          },
+          "qty" : {
+            "type" : "number"
+          },
+          "cost" : {
+            "type" : "number"
+          },
+          "qtyRemaining" : {
+            "type" : "number"
+          },
+          "type" : {
+            "type" : "string"
+          },
+          "elementName" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "namespace" : {
+            "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          }
+        }
+      },
+      "RPurchaseCollection" : {
+        "id" : "RPurchaseCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "RPurchase"
+            }
+          }
+        }
+      },
+      "CollectionResponse_RPurchase" : {
+        "id" : "CollectionResponse_RPurchase",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "RPurchase"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases" : {
+        "response" : {
+          "$ref" : "RPurchaseCollection"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase" : {
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.deleteAll" : {
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase" : {
+        "request" : {
+          "$ref" : "RPurchase"
+        },
+        "response" : {
+          "$ref" : "RPurchase"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.listRPurchase" : {
+        "response" : {
+          "$ref" : "CollectionResponse_RPurchase"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase" : {
+        "request" : {
+          "$ref" : "RPurchase"
+        },
+        "response" : {
+          "$ref" : "RPurchase"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.getAllPurchases" : {
+        "response" : {
+          "$ref" : "RPurchaseCollection"
+        }
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase" : {
+      },
+      "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase" : {
+        "response" : {
+          "$ref" : "RPurchase"
+        }
+      }
+    }
+  }
+}
