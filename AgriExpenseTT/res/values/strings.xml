@@ -30,5 +30,23 @@
     <string name="title_activity_sales_cost">SalesCost</string>
     <string name="title_activity_harvest_details">HarvestDetails</string>
     <string name="title_activity_select_location">SelectLocation</string>
+    <string name="title_activity_about">About</string>
+    
+    <string name="btn_new_purchase">Purchase</string>
+    <string name="btn_new_cycle">Create A New Cycle</string>
+    <string name="btn_new_labour">Hire Labour</string>
+    <string name="btn_man_resource">Manage Resources</string>
+    <string name="btn_man_data">Manage Data</string>
+    <string name="btn_gen_report">Generate Report</string>
+    <string name="btn_man_signin">Sign In</string>
+    <string name="btn_man_about">About</string>
+
+
+    <string name="image_description_uwi">University of the West Indies Logo</string>
+    <string name="image_description_namdevco">NAMDEVCO Logo</string>
+    <string name="image_description_agrinett_logo">AgrineTT Logo</string>
+    
+    <string name="about_description_uwi">AgriNeTT focuses on integrating ICT to improve the operations within the Agricultural sector of Trinidad and Tobago. The project is a collaborative effort of the Department of Computing and Information Technology at The University of the West Indies, The Faculty of Food and Agriculture at UWI, and various farmers’ representative organizations.</string>
+    <string name="about_description_namdevco">The National Agricultural Marketing and Development Corporation (NAMDEVCO) of Trinidad and Tobago is a major partner in the development and execution of the AgriNeTT project and has continued to provide tremendous support for the development of the AgriExprenseTT mobile application.</string>
 
 </resources>

@@ -123,6 +123,11 @@
             android:label="@string/title_activity_select_location"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <activity
+            android:name=".AboutScreen"
+            android:label="@string/title_activity_about" >
+        </activity>
+        
     </application>
 
 </manifest>

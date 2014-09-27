@@ -1,12 +1,9 @@
 package uwi.dcit.AgriExpenseTT;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
-
 import helper.CSVHelper;
 import helper.DbHelper;
 import helper.DbQuery;
 import helper.FlyOutContainer;
-import android.support.v7.app.ActionBarActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +11,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class MainMenu extends ActionBarActivity {
 	FlyOutContainer root;
@@ -42,28 +42,33 @@ public class MainMenu extends ActionBarActivity {
 		Button btn_CycleDet=(Button)findViewById(R.id.ResDetail);
 		Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);
 		Button btn_HireLabour=(Button)findViewById(R.id.HireLabour);
+		Button btn_About = (Button)findViewById(R.id.btn_About);
+		Button btn_manageD=(Button)findViewById(R.id.manageData);
+		Button btn_gen=(Button)findViewById(R.id.generateFile);
+		
 		UpAcc acc=s.isExisting();
 		if(acc!=null && acc.getSignedIn()==1){
 			btn_SignIn.setText("Sign Out");
 		}
-		click c=new click();
-		btn_newCycle.setOnClickListener(c);
-		btn_purchase.setOnClickListener(c);
 		
+		MyClickListener c = new MyClickListener();
+		
+		btn_newCycle.setOnClickListener(c);
+		btn_purchase.setOnClickListener(c);		
 		btn_CycleDet.setOnClickListener(c);
 		btn_SignIn.setOnClickListener(c);
-		btn_HireLabour.setOnClickListener(c);
-		
-		Button btn_manageD=(Button)findViewById(R.id.manageData);
-		btn_manageD.setOnClickListener(c);
-		Button btn_gen=(Button)findViewById(R.id.generateFile);
+		btn_HireLabour.setOnClickListener(c);		
+		btn_About.setOnClickListener(c);
+		btn_manageD.setOnClickListener(c);		
 		btn_gen.setOnClickListener(c);
 	}
-	public class click implements OnClickListener{
+	
+	public class MyClickListener implements OnClickListener{
 
 		@Override
 		public void onClick(View v) {
 			Intent nextActivity = null;
+			
 			if(v.getId()==R.id.newCycle){
 				System.out.println("Select new Cycle");
 				nextActivity=new Intent(MainMenu.this,NewCycleRedesigned.class);
@@ -84,7 +89,10 @@ public class MainMenu extends ActionBarActivity {
 				CSVHelper cvh=new CSVHelper(MainMenu.this);
 				cvh.stuff(MainMenu.this);
 				return;
+			}else if (v.getId() == R.id.btn_About){
+				nextActivity = new Intent(MainMenu.this, AboutScreen.class );
 			}
+			
 			startActivity(nextActivity);
 		}
 		

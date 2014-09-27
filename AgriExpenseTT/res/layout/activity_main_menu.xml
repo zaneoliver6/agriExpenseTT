@@ -24,6 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/image_description_agrinett_logo"
             android:maxWidth="180dp"
             android:src="@drawable/logo_agrinet" />
         	
@@ -33,72 +34,81 @@
         		android:layout_height="match_parent" >    
 	           <LinearLayout
 		        	android:layout_width="match_parent"
-		       	 	android:layout_height="match_parent"
+		       	 	android:layout_height="wrap_content"
 		        	android:orientation="vertical">  
 		   
 		         <Button
 		            android:id="@+id/NewPurchase"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="40dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Purchase" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_new_purchase" />
 		
 		        <Button
 		            android:id="@+id/newCycle"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:clickable="true"
-		            android:text="Create new Cycle" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_new_cycle" />
 		
 		        <Button
 		            android:id="@+id/HireLabour"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Hire Labour" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_new_labour" />
 		
 		        <Button
 		            android:id="@+id/ResDetail"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Manage Resources" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_man_resource" />
 		
 		        <Button
 		            android:id="@+id/manageData"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Manage data" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_man_data" />
 		        
 		         <Button
 		            android:id="@+id/generateFile"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Generate report" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_gen_report" />
 		         
 				<Button
 		            android:id="@+id/btn_SignIn"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
 		            android:background="@drawable/btn_custom"
-		            android:text="Sign In" />
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_man_signin" />
+				
+				
+				<Button
+		            android:id="@+id/btn_About"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"		            
+		            android:layout_gravity="center_horizontal"
+		            android:background="@drawable/btn_custom"
+		            android:layout_marginTop="@dimen/home_btn_magrin"		            
+		            android:text="@string/btn_man_about" />
 		      
 			</LinearLayout>
 		 </ScrollView>

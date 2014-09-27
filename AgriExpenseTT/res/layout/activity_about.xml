@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables" >
+
+            <ImageView
+                android:id="@+id/uwi_logo"
+                android:layout_width="@dimen/about_image_width"
+                android:layout_height="@dimen/about_image_height"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/image_description_uwi"
+                android:src="@drawable/uwi_logo" />
+
+            <TextView
+                android:id="@+id/uwi_about_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:paddingEnd="@dimen/about_text_pad_end"
+                android:paddingLeft="@dimen/about_text_pad_start"
+                android:paddingRight="@dimen/about_text_pad_end"
+                android:paddingStart="@dimen/about_text_pad_start"
+                android:text="@string/about_description_uwi" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables" >
+
+            <ImageView
+                android:id="@+id/namdevco_logo"
+                android:layout_width="@dimen/about_image_width"
+                android:layout_height="@dimen/about_image_height"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/image_description_namdevco"
+                android:src="@drawable/namdevco" />
+
+            <TextView
+                android:id="@+id/namdevco_about_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:paddingEnd="@dimen/about_text_pad_end"
+                android:paddingLeft="@dimen/about_text_pad_start"
+                android:paddingRight="@dimen/about_text_pad_end"
+                android:paddingStart="@dimen/about_text_pad_start"
+                android:text="@string/about_description_namdevco" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
