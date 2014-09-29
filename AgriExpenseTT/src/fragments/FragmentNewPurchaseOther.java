@@ -1,6 +1,6 @@
 package fragments;
 
-import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -72,7 +72,7 @@ public class FragmentNewPurchaseOther extends Fragment{
 				//pass the type as quantifier
 				b.putString("quantifier",quantifier);
 				//to final Purchase fragment
-				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+getArguments().getString("category")
+				((NewPurchase)getActivity()).replaceSub("Details: "+getArguments().getString("category")
 						+", "+resource+", "+quantifier);
 				Fragment newFragment =new Fragment_newpurchaseLast();
 				newFragment.setArguments(b);

@@ -3,7 +3,7 @@
     android:id="@+id/container_newcycle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.NewCycleRedesigned"
+    tools:context="uwi.dcit.AgriExpenseTT.NewCycle"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout

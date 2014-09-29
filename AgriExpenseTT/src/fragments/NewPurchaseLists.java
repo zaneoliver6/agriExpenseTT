@@ -7,7 +7,7 @@ import helper.DbQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import uwi.dcit.AgriExpenseTT.NewPurchaseRedesign;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -117,7 +117,7 @@ public class NewPurchaseLists extends ListFragment {
 			Bundle b=new Bundle();
 			if(type.equals("category")){
 				//pass type as resource
-				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+list.get(position));
+				((NewPurchase)getActivity()).replaceSub("Details: "+list.get(position));
 				if(list.get(position).equals(DHelper.cat_other)){
 					ArrayList<String> test=new ArrayList<String>();
 					DbQuery.getResources(db, dbh, DHelper.cat_other, test);
@@ -143,7 +143,7 @@ public class NewPurchaseLists extends ListFragment {
 				b.putString("resource",list.get(position));
 				//pass the type as quantifier
 				b.putString("type","quantifier");
-				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "
+				((NewPurchase)getActivity()).replaceSub("Details: "
 				+getArguments().getString("category")+", "+list.get(position));
 				
 				newFragment =new NewPurchaseLists();
@@ -156,7 +156,7 @@ public class NewPurchaseLists extends ListFragment {
 				//pass the type as quantifier
 				b.putString("quantifier",list.get(position));
 				//to final Purchase fragment
-				((NewPurchaseRedesign)getActivity()).replaceSub("Details: "+getArguments().getString("category")
+				((NewPurchase)getActivity()).replaceSub("Details: "+getArguments().getString("category")
 						+", "+getArguments().getString("resource")+", "+list.get(position));
 				
 				newFragment =new Fragment_newpurchaseLast();

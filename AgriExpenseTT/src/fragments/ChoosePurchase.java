@@ -48,7 +48,7 @@ public class ChoosePurchase extends ListFragment {
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getReadableDatabase();
 		dm=new DataManager(getActivity(), db, dbh);
-		try{//when called by ViewNavigation we dont need any particular cycle
+		try{//when called by ManageResources we dont need any particular cycle
 			curr = getArguments().getParcelable("cycle");
 		}catch(Exception e){
 		}
@@ -56,7 +56,7 @@ public class ChoosePurchase extends ListFragment {
 			cycleId=curr.getId();
 		}
 		
-		try {//for when called by ViewNavigation the type will be null so we can see all types of purhases
+		try {//for when called by ManageResources the type will be null so we can see all types of purhases
 			type=getArguments().getString("det");
 		} catch (Exception e) {
 		}
@@ -127,7 +127,7 @@ public class ChoosePurchase extends ListFragment {
 			   det2.setText("Cost:$"+curr.getCost());
 			   
 			   
-			   //when called by ViewNavigation we dont want the next icon
+			   //when called by ManageResources we dont want the next icon
 			   if(type==null)
 				   icon.setImageResource(R.drawable.money_doller1);
 			   else

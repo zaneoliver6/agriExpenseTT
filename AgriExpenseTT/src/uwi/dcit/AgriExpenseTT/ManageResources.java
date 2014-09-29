@@ -22,7 +22,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ViewNavigation extends ActionBarActivity {
+public class ManageResources extends ActionBarActivity {
 	ArrayList<localCycle> li;
 	ArrayList<localResourcePurchase> pli;
 	DbHelper dbh;
@@ -33,7 +33,7 @@ public class ViewNavigation extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
 		//for empty lists
-		dbh=new DbHelper(ViewNavigation.this);
+		dbh=new DbHelper(ManageResources.this);
 		db=dbh.getReadableDatabase();
 		li=new ArrayList<localCycle>();
 		DbQuery.getCycles(db, dbh, li);

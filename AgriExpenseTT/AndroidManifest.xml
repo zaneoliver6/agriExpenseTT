@@ -18,20 +18,61 @@
         android:icon="@drawable/logo_agrinet"
         android:label="AgriExpenseTT"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".NewCycle"
-            android:label="@string/title_activity_new_cycle" >
-        </activity>
+        
         <activity
             android:name=".MainMenu"
             android:label="AgriExpenseTT"
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".NewPurchase"
+            android:label="@string/title_activity_new_purchase_redesign"
+            android:windowSoftInputMode="stateHidden" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".NewCycle"
+            android:label="@string/title_activity_new_cycle" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+               	android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".HireLabour"
+            android:label="@string/title_activity_hire_labour"
+            android:windowSoftInputMode="stateHidden" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".ManageResources"
+            android:label="@string/title_activity_manage_resources" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".ManageData"
+            android:label="@string/title_activity_manage_data" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".AboutScreen"
+            android:label="@string/title_activity_about" >
+            <meta-data 
+                android:name="android.support.PARENT_ACTIVITY" 
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        
         <activity
             android:name=".CycleUseage"
             android:label="@string/title_activity_cycle_useage" >
@@ -51,27 +92,8 @@
             android:label="@string/title_activity_use_purchase_frag" >
         </activity>
         <activity
-            android:name=".NewCycleRedesigned"
-            android:label="Use resources"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
-        <activity
-            android:name=".NewPurchaseRedesign"
-            android:label="@string/title_activity_new_purchase_redesign"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
-        <activity
-            android:name=".ViewNavigation"
-            android:label="View" >
-        </activity>
-        <activity
             android:name=".CycleUseageRedesign"
             android:label="Use resources" >
-        </activity>
-        <activity
-            android:name=".HireLabour"
-            android:label="Hire Labour"
-            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".DeleteData"
@@ -91,10 +113,6 @@
         <activity
             android:name=".EditData"
             android:label="Edit data" >
-        </activity>
-        <activity
-            android:name=".ManageData"
-            android:label="Manage data" >
         </activity>
         <activity
             android:name=".EditChooseLists"
@@ -123,11 +141,6 @@
             android:label="@string/title_activity_select_location"
             android:windowSoftInputMode="stateHidden" >
         </activity>
-        <activity
-            android:name=".AboutScreen"
-            android:label="@string/title_activity_about" >
-        </activity>
-        
     </application>
 
 </manifest>

@@ -1,5 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
+import fragments.NewCycleLists;
+import helper.DHelper;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,29 +17,32 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import fragments.NewPurchaseLists;
 
-public class NewPurchaseRedesign extends ActionBarActivity {
+public class NewCycle extends ActionBarActivity {
 	TextView sub_head;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		tv_main.setText("Purchasing new materials");
 		setupUI();
 		setupInitialFrag();
 	}
+	public void replaceSub(String text){
+		sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
+		sub_head.setText(text);
+	}
 	private void setupInitialFrag() {
 		Bundle pass=new Bundle();
-		pass.putString("type","category");
+		pass.putString("type",DHelper.cat_plantingMaterial);
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
-		ListFragment listfrag=new NewPurchaseLists();
+		ListFragment listfrag=new NewCycleLists();
 		listfrag.setArguments(pass);
 		ft.add(R.id.NewCycleListContainer,listfrag);
+		//ft.addToBackStack(null);
 		ft.commit();
 	}
+	
 	
 	public static void hideSoftKeyboard(Activity activity) {
 	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -52,7 +57,7 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			if(v.getId()!=R.id.et_listReuse_search)
-				hideSoftKeyboard(NewPurchaseRedesign.this);
+				hideSoftKeyboard(NewCycle.this);
 			return false;
 		}
 	   
@@ -68,15 +73,11 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 	        super.onBackPressed();  
 	    }
 	}
-	public void replaceSub(String text){
-		sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
-		sub_head.setText(text);
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.new_purchase_redesign, menu);
+		getMenuInflater().inflate(R.menu.new_cycle_redesigned, menu);
 		return true;
 	}
 
@@ -91,7 +92,5 @@ public class NewPurchaseRedesign extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	
 
 }

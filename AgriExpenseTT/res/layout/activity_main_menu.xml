@@ -28,90 +28,100 @@
             android:maxWidth="180dp"
             android:src="@drawable/logo_agrinet" />
         	
-        	<ScrollView
-        		android:id="@+id/scrollView1"
-        		android:layout_width="match_parent"
-        		android:layout_height="match_parent" >    
-	           <LinearLayout
-		        	android:layout_width="match_parent"
-		       	 	android:layout_height="wrap_content"
-		        	android:orientation="vertical">  
-		   
+    	<ScrollView
+    		android:id="@+id/scrollView1"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent" >    
+           	
+           	<LinearLayout
+	        	android:layout_width="match_parent"
+	       	 	android:layout_height="wrap_content"
+	        	android:orientation="vertical">  
+	   
 		         <Button
 		            android:id="@+id/NewPurchase"
 		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
+		            android:layout_height="@dimen/home_btn_height"
 		            android:layout_gravity="center_horizontal"
 		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_new_purchase" />
-		
-		        <Button
-		            android:id="@+id/newCycle"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_new_cycle" />
-		
-		        <Button
-		            android:id="@+id/HireLabour"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_new_labour" />
-		
-		        <Button
-		            android:id="@+id/ResDetail"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_man_resource" />
-		
-		        <Button
-		            android:id="@+id/manageData"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_man_data" />
-		        
-		         <Button
-		            android:id="@+id/generateFile"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_gen_report" />
-		         
+		            android:layout_marginTop="@dimen/home_btn_magrin"
+		            android:text="@string/btn_new_purchase"
+		            android:onClick="openNewPurchaseFragment" />
+	
 				<Button
-		            android:id="@+id/btn_SignIn"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_man_signin" />
-				
-				
+				    android:id="@+id/newCycle"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"		
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"	
+				    android:text="@string/btn_new_cycle" 
+				    android:onClick="openNewCycleFragment"/>
+
 				<Button
-		            android:id="@+id/btn_About"
-		            android:layout_width="@dimen/home_btn_width"
-		            android:layout_height="@dimen/home_btn_height"		            
-		            android:layout_gravity="center_horizontal"
-		            android:background="@drawable/btn_custom"
-		            android:layout_marginTop="@dimen/home_btn_magrin"		            
-		            android:text="@string/btn_man_about" />
-		      
+				    android:id="@+id/HireLabour"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:text="@string/btn_new_labour"
+				    android:onClick="openManageLabourFragment" />
+
+				<Button
+				    android:id="@+id/ResDetail"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:text="@string/btn_man_resource" 
+				    android:onClick="openManageResourceFragment"/>
+
+				<Button
+				    android:id="@+id/manageData"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"		
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"	
+				    android:text="@string/btn_man_data"
+				    android:onClick="openManageDataFragment" />
+
+				 <Button
+				    android:id="@+id/generateFile"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:text="@string/btn_gen_report"
+				    android:onClick="openManageExports" />
+				 
+				<Button
+				    android:id="@+id/btn_SignIn"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:text="@string/btn_man_signin"
+				    android:onClick="signInStart" />
+
+
+				<Button
+				    android:id="@+id/btn_About"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:layout_gravity="center_horizontal"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:text="@string/btn_man_about"
+				    android:onClick="openAboutFragment" />
+	      
 			</LinearLayout>
-		 </ScrollView>
+		</ScrollView>
+    
     </LinearLayout>
 
     
