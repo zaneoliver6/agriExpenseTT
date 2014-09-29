@@ -1,16 +1,15 @@
 package uwi.dcit.AgriExpenseTT;
 
-import fragments.ChoosePurchase;
-import fragments.FragmentEmpty;
-import fragments.FragmentViewCycles;
-import fragments.FragmentViewResources;
-import helper.DbHelper;
-import helper.DbQuery;
-
 import java.util.ArrayList;
 
-import dataObjects.localCycle;
-import dataObjects.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
 import android.app.Fragment;

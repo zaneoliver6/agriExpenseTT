@@ -1,7 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
-import fragments.NewCycleLists;
-import helper.DHelper;
+import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;

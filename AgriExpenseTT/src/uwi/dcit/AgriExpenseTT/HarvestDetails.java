@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
-import helper.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.models.localCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import dataObjects.localCycle;
 
 public class HarvestDetails extends ActionBarActivity {
 	private final int REQ_MEASURE=1;

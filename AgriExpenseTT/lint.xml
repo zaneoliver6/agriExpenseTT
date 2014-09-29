@@ -2,6 +2,6 @@
 <lint>
     <issue id="NewApi" severity="ignore" />
     <issue id="UseValueOf">
-        <ignore path="src/helper/DbQuery.java" />
+        <ignore path="src/uwi.dcit.AgriExpenseTT.helpers/DbQuery.java" />
     </issue>
 </lint>

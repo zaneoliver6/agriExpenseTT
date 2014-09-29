@@ -1,9 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import helper.DHelper;
-import helper.DbHelper;
-import helper.DbQuery;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -13,6 +9,14 @@ import java.util.Iterator;
 
 
 
+
+
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.localCycleUse;
 
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
@@ -38,8 +42,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import dataObjects.localCycle;
-import dataObjects.localCycleUse;
 
 public class CycleUseage extends ActionBarActivity {
 	private TextView tv_plantMaterial_main;

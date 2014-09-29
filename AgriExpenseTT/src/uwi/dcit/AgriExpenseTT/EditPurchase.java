@@ -1,11 +1,13 @@
 package uwi.dcit.AgriExpenseTT;
 
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
-import helper.DHelper;
-import helper.DataManager;
-import helper.DbHelper;
-import helper.DbQuery;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +20,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import dataObjects.localResourcePurchase;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;

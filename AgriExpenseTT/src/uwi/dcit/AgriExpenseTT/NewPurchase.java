@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT;
 
+import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import fragments.NewPurchaseLists;
 
 public class NewPurchase extends ActionBarActivity {
 	TextView sub_head;

@@ -83,7 +83,7 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="fragments.ChoosePurchase"
+            android:name="uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase"
             android:label="@string/title_activity_choose_purchase"
             android:windowSoftInputMode="stateHidden" >
         </activity>

@@ -2,10 +2,10 @@ package uwi.dcit.AgriExpenseTT;
 
 import java.util.ArrayList;
 
-import helper.CloudInterface;
-import helper.DbHelper;
-import helper.DbQuery;
-import helper.Sync;
+import uwi.dcit.AgriExpenseTT.helpers.CloudInterface;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.Sync;
 
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 

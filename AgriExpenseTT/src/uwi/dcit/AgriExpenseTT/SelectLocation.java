@@ -1,6 +1,6 @@
 package uwi.dcit.AgriExpenseTT;
 
-import fragments.FragmentSelectLocation;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
 import android.support.v7.app.ActionBarActivity;
 import android.app.Fragment;
 import android.app.FragmentManager;

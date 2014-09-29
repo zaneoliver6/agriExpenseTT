@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import dataObjects.localCycleUse;
-import dataObjects.localResourcePurchase;
-import helper.DbHelper;
-import helper.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.localCycleUse;
+import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

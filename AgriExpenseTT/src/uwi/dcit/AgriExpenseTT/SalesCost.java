@@ -1,7 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
-import helper.DbHelper;
-import helper.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.localCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import dataObjects.localCycle;
 
 public class SalesCost extends ActionBarActivity {
 	
