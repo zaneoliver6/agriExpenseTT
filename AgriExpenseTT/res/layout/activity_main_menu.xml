@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/image_description_agrinett_logo"
+            android:contentDescription="@string/about_image_description_agrinett_logo"
             android:maxWidth="180dp"
             android:src="@drawable/logo_agrinet" />
         	
