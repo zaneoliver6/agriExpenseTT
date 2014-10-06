@@ -19,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class EditChooseLists extends ActionBarActivity {
 	ArrayList<String> list;
@@ -51,7 +50,6 @@ public class EditChooseLists extends ActionBarActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Toast.makeText(EditChooseLists.this, list.get(position), Toast.LENGTH_SHORT).show();
 			Intent i=new Intent();
 			i.putExtra("desc",content);
 			i.putExtra("content", list.get(position));

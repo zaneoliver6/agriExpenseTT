@@ -84,7 +84,7 @@ public class SignIn {
 		ArrayList<String> accs=new ArrayList<String>();
 		populateAcc(accs);
 		if(accs.isEmpty()){
-			Toast.makeText(context, "no accounts", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "No accounts available for sign-in. Create a google Account first and try again.", Toast.LENGTH_LONG).show();
 			noAccs();
 			return;
 		}
@@ -107,10 +107,10 @@ public class SignIn {
 	public void signInReturn(boolean success,String message){
 		if(success){
 			((MainMenu)activity).toggleSignIn();
-			Toast.makeText(activity.getBaseContext(), "Signed in", Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity.getBaseContext(), "Sign-in Successfully Completed", Toast.LENGTH_SHORT).show();
 		}else{
 			if(message==null||message.equals(""))
-				Toast.makeText(activity, "Cannot Sign In Try again", Toast.LENGTH_SHORT).show();
+				Toast.makeText(activity, "The sign-in process was not successful. Please try again", Toast.LENGTH_SHORT).show();
 			else 
 				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 		}

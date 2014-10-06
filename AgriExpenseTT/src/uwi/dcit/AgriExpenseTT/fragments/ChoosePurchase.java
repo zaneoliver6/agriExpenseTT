@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 
 import java.util.ArrayList;
-
 import uwi.dcit.AgriExpenseTT.EditPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -11,6 +10,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.localCycle;
 import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -92,7 +92,8 @@ public class ChoosePurchase extends ListFragment {
 		   myContext = context;
 		  }
 		
-		  @Override
+		  @SuppressLint("ViewHolder")
+		@Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			   //return super.getView(position, convertView, parent);
 			   
@@ -153,7 +154,6 @@ public class ChoosePurchase extends ListFragment {
 	            AlertDialog alert1 = builder1.create();
 	            alert1.show();
 			}else if(type!=null){//when called by Use Purchases
-			 	Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
 				
 				Fragment newFragment =new FragmentPurchaseUse();
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -179,8 +179,6 @@ public class ChoosePurchase extends ListFragment {
 			pList=new ArrayList<localResourcePurchase>();
 			DbQuery.getPurchases(db, dbh, pList, null, null,true);
 			myListAdapter.notifyDataSetChanged();
-			//call notify dataset changed
-			Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();
 		}
 	 
 	 private class Confirm implements DialogInterface.OnClickListener{
@@ -196,7 +194,7 @@ public class ChoosePurchase extends ListFragment {
 					dm.deletePurchase(pList.get(position).toRPurchase());
 					pList.remove(position);
 					l.notifyDataSetChanged();
-					Toast.makeText(getActivity(),"Purchase and related cycles deleted", Toast.LENGTH_SHORT).show();			
+					Toast.makeText(getActivity(),"Purchase and its related cycles successfully deleted", Toast.LENGTH_SHORT).show();			
 					dialog.cancel();
 					//DeleteExpenseList.this.finish();
 				}else if(which==DialogInterface.BUTTON_NEGATIVE){

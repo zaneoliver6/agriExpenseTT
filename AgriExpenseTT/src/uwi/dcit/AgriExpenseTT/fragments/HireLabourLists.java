@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class HireLabourLists extends ListFragment {
 	String type;
@@ -72,7 +71,6 @@ public class HireLabourLists extends ListFragment {
 	
 	 @Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
 			Fragment newFragment=null;
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			Bundle b=new Bundle();

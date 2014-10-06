@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentSelectLocation extends ListFragment {
 	String type;
@@ -68,7 +67,6 @@ public class FragmentSelectLocation extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
 		Intent i=new Intent();
 		i.putExtra("county", list.get(position));
 		getActivity().setResult(1,i);//used to set the results for the parent activity ( the one that launched this one)

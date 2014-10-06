@@ -2,9 +2,9 @@ package uwi.dcit.AgriExpenseTT.helpers;
 
 import java.io.IOException;
 
+import uwi.dcit.AgriExpenseTT.MainMenu;
 import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.api.client.googleapis.json.GoogleJsonError;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -139,8 +139,7 @@ public class CloudEndpointUtils {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG)
-						.show();
+				Log.e(MainMenu.APP_NAME, errorMessage);
 			}
 		});
 	}

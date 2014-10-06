@@ -145,7 +145,7 @@ public class MainMenu extends ActionBarActivity {
 		UpAcc acc=DbQuery.getUpAcc(db);
 		db.close();
 		if(!isNetworkAvailable()){
-			Toast.makeText(MainMenu.this, "No internet connection", Toast.LENGTH_SHORT).show();
+			Toast.makeText(MainMenu.this, "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if(acc.getSignedIn()==0){//not signed in

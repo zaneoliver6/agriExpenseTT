@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.UseResource;
@@ -11,9 +10,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.localCycle;
-
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentValues;
@@ -35,6 +32,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 public class FragmentPurchaseUse extends Fragment {
 	View view;
@@ -129,7 +127,7 @@ public class FragmentPurchaseUse extends Fragment {
 			}
 			
 			if(et_amt.getText().toString().equals(null)||et_amt.getText().toString().equals("")){
-				Toast.makeText(getActivity().getBaseContext(), "Enter Amount", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
 				return;
 			}else{
 				useAmount=Double.parseDouble(et_amt.getText().toString());
@@ -140,14 +138,14 @@ public class FragmentPurchaseUse extends Fragment {
 				calcost=(useAmount/amtPur)*p.getCost();
 				calcost=Math.round(calcost*100.0)/100.0;
 				if(v.getId()==R.id.btn_UsePurchase_cal){
-					Toast.makeText(getActivity(), ""+calcost, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Total Cost: "+calcost, Toast.LENGTH_SHORT).show();
 					label();//resets labels to match data
 				}else if(v.getId()==R.id.btn_usePurchase_done){
 					DataManager dm=new DataManager(getActivity().getBaseContext());
 					dm.insertCycleUse(c.getId(), p.getPId(), useAmount, p.getType(),quantifier,calcost);
 					
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
-					Toast.makeText(getActivity(), rem+" ", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), rem+" Remaining", Toast.LENGTH_SHORT).show();
 					//updating purchase
 					p.setQtyRemaining(rem);
 					ContentValues cv=new ContentValues();
@@ -200,6 +198,7 @@ public class FragmentPurchaseUse extends Fragment {
 		}
 	}
 	private PopupWindow curr=null;
+	@SuppressLint("InflateParams")
 	private void showPopup(final Activity context,int flag,ArrayList<String> items){
 		int pWidth=600;
 		int pHeight=550;
@@ -236,7 +235,6 @@ public class FragmentPurchaseUse extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> a,View viewClicked,int position,long id){
 				TextView tv=(TextView)viewClicked;
-				Toast.makeText(getActivity().getBaseContext(),tv.getText().toString()+" clicked ", Toast.LENGTH_SHORT).show();
 				double converter=convertFromTo(btn_typeUse.getText().toString(),tv.getText().toString());
 				amtRem=Math.round(amtRem*converter*100.0)/100.0;
 				amtPur=Math.round(amtPur*converter*100.0)/100.0;

@@ -162,8 +162,6 @@ public class FragmentViewCycles extends ListFragment{
 		cList=new ArrayList<localCycle>();
 		DbQuery.getCycles(db, dbh, cList);
 		cycAdapt.notifyDataSetChanged();
-		//call notify dataset changed
-		Toast.makeText(getActivity(), "yay", Toast.LENGTH_SHORT).show();
 	}
 
 	private class Confirm implements DialogInterface.OnClickListener{
@@ -181,7 +179,7 @@ public class FragmentViewCycles extends ListFragment{
 				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
 				cList.remove(position);
 				l.notifyDataSetChanged();
-				Toast.makeText(getActivity(),"Cycle deleted", Toast.LENGTH_SHORT).show();			
+				Toast.makeText(getActivity(),"Cycle successfully deleted", Toast.LENGTH_SHORT).show();			
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){

@@ -3,24 +3,12 @@ package uwi.dcit.AgriExpenseTT;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-
-
-
-
-
-
-
-
-
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.localCycle;
 import uwi.dcit.AgriExpenseTT.models.localCycleUse;
-
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +30,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.agriexpensett.cycleendpoint.model.Cycle;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
+@SuppressLint("InflateParams")
 public class CycleUseage extends ActionBarActivity {
 	private TextView tv_plantMaterial_main;
 	private TextView tv_plantMaterial_det1;
@@ -531,7 +522,6 @@ public class CycleUseage extends ActionBarActivity {
 		@SuppressWarnings("unchecked")
 		public cycleAdapter() {
 			super(CycleUseage.this,R.layout.cycle_list_item,cUseList);
-			// TODO Auto-generated constructor stub
 		}
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -583,7 +573,8 @@ public class CycleUseage extends ActionBarActivity {
 			return itemView;
 		}
 	}
-	private void registerClick() {
+	
+	protected void registerClick() {
 		ListView list=(ListView)findViewById(R.id.listView_cycles);
 		AdapterView.OnItemClickListener itemListener = new AdapterView.OnItemClickListener(){
 	

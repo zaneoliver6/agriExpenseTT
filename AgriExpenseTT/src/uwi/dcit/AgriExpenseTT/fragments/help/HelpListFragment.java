@@ -30,7 +30,6 @@ public class HelpListFragment extends ListFragment{
         
         this.getListView().setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-//				Toast.makeText(getActivity(), position + " "+ HelpTopics.Topics[position], Toast.LENGTH_SHORT).show();
 				
 				Fragment frag = null;
 				

@@ -23,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class FragmentOtherResourceList  extends ListFragment{
 	SQLiteDatabase db;
@@ -89,7 +88,6 @@ public class FragmentOtherResourceList  extends ListFragment{
 
 	@Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
 			Fragment f=new FragmentNewPurchaseOther();
 			Bundle b=new Bundle();
 			b.putString("category", DHelper.cat_other);

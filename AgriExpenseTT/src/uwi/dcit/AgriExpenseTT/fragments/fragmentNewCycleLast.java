@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -10,6 +9,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.localCycle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -114,6 +114,7 @@ public class fragmentNewCycleLast extends Fragment{
 	//------------------------------------------------------------------DATE PICKER POPUP
 		PopupWindow curr;
 		
+		@SuppressLint("InflateParams")
 		public void showPopupDate(final Activity c){
 				int pWidth=800;
 				int pHeight=750;
@@ -153,7 +154,6 @@ public class fragmentNewCycleLast extends Fragment{
 						unixdate=calender.getTimeInMillis();
 						Date d=calender.getTime();
 						tv_dte.setText(d.toLocaleString());
-						Toast.makeText(getActivity().getBaseContext(), d.toLocaleString(), Toast.LENGTH_SHORT).show();
 					}
 					curr.dismiss();
 				}
