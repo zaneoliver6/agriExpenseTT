@@ -13,17 +13,34 @@ public class HelpNewCropCycleFragment extends Fragment{
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view =  inflater.inflate(R.layout.fragment_help_article_view, container, false);
+		View view =  inflater.inflate(R.layout.fragment_help_article_view_layout4, container, false);
 		
 		TextView txtHeading = (TextView)view.findViewById(R.id.article_heading);
-		txtHeading.setText("Introduction");
+		txtHeading.setText("New Crop Cycle");
 		
 		ImageView img = (ImageView)view.findViewById(R.id.article_image);
-		img.setImageDrawable(getResources().getDrawable(R.drawable.help_homescreen));
+		img.setImageDrawable(getResources().getDrawable(R.drawable.help_new_cropcycle_crop));
 		
+		TextView txtContent = (TextView)view.findViewById(R.id.article_text); 
+		txtContent.setText(getResources().getString(R.string.help_cropcycle_new_1));
 		
-		TextView txtContent = (TextView)view.findViewById(R.id.article_text);
-		txtContent.setText(getResources().getString(R.string.help_intro));
+		ImageView imgView2 =(ImageView)view.findViewById(R.id.article_image_2);
+		imgView2.setImageDrawable(getResources().getDrawable(R.drawable.help_new_cropcycle_land));
+		
+		TextView txt2 = (TextView)view.findViewById(R.id.article_text_2);
+		txt2.setText(getResources().getString(R.string.help_cropcycle_new_2));
+		
+		ImageView imgView3 =(ImageView)view.findViewById(R.id.article_image_3);
+		imgView3.setImageDrawable(getResources().getDrawable(R.drawable.help_new_cropcycle_date));
+		
+		TextView txt3 = (TextView)view.findViewById(R.id.article_text_3);
+		txt3.setText(getResources().getString(R.string.help_cropcycle_new_3));
+		
+		ImageView imgView4 =(ImageView)view.findViewById(R.id.article_image_4);
+		imgView4.setImageDrawable(getResources().getDrawable(R.drawable.help_new_cropcycle_details));
+		
+		TextView txt4 = (TextView)view.findViewById(R.id.article_text_4);
+		txt4.setText(getResources().getString(R.string.help_cropcycle_new_4));
 		return view;
 	}
 }

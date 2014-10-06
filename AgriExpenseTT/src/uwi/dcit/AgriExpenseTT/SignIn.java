@@ -45,6 +45,7 @@ public class SignIn {
 			ContentValues cv=new ContentValues();//account exists already so we can sign in OR out
 			
 			if(acc.getSignedIn()==1){//we're already signed in so lets sign out 
+				//TODO confirm before signing out
 				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);//updates the database that we signed out
 				((MainMenu)activity).toggleSignIn();
 				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null);
