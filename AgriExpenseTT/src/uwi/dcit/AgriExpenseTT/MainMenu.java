@@ -26,6 +26,8 @@ public class MainMenu extends ActionBarActivity {
 	protected FlyOutContainer root;
 	protected SignIn signInObject;
 	
+	public final static String APP_NAME = "AgriExpenseTT";
+	
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -84,7 +86,7 @@ public class MainMenu extends ActionBarActivity {
 	}
 
 	public void openHelpFragment(View view){
-		
+		startActivity(new Intent(MainMenu.this, HelpScreen.class));
 	}
 	
 	/*

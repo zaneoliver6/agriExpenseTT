@@ -11,20 +11,21 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_agrinet"
         android:label="AgriExpenseTT"
+        android:logo="@drawable/large_a_logo"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name=".MainMenu"
             android:label="AgriExpenseTT"
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,47 +33,46 @@
             android:name=".NewPurchase"
             android:label="@string/title_activity_new_purchase_redesign"
             android:windowSoftInputMode="stateHidden" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".NewCycle"
             android:label="@string/title_activity_new_cycle" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
-               	android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".HireLabour"
             android:label="@string/title_activity_hire_labour"
             android:windowSoftInputMode="stateHidden" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".ManageResources"
             android:label="@string/title_activity_manage_resources" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".ManageData"
             android:label="@string/title_activity_manage_data" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".AboutScreen"
             android:label="@string/title_activity_about" >
-            <meta-data 
-                android:name="android.support.PARENT_ACTIVITY" 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
-        
         <activity
             android:name=".CycleUseage"
             android:label="@string/title_activity_cycle_useage" >
@@ -83,7 +83,7 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name="uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase"
+            android:name=".fragments.ChoosePurchase"
             android:label="@string/title_activity_choose_purchase"
             android:windowSoftInputMode="stateHidden" >
         </activity>
@@ -140,6 +140,14 @@
             android:name=".SelectLocation"
             android:label="@string/title_activity_select_location"
             android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".HelpScreen"
+            android:label="@string/title_activity_help_screen"
+            android:parentActivityName=".MainMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
     </application>
 
