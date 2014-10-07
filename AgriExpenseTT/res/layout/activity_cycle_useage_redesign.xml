@@ -25,7 +25,8 @@
                 android:maxHeight="250dp"
                 android:maxWidth="370dp"
                 android:contentDescription="@string/general_image_placeholder_text"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
+                
                 android:src="@drawable/img_default1" />
 
         </FrameLayout>

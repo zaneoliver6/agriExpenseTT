@@ -17,45 +17,64 @@ import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class ManageResources extends ActionBarActivity {
-	ArrayList<localCycle> li;
-	ArrayList<localResourcePurchase> pli;
-	DbHelper dbh;
-	SQLiteDatabase db;
+	
+	private ArrayList<localCycle> li;
+	private ArrayList<localResourcePurchase> pli;
+	private DbHelper dbh;
+	private SQLiteDatabase db;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
+		
+		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
+		
 		//for empty lists
-		dbh=new DbHelper(ManageResources.this);
-		db=dbh.getReadableDatabase();
-		li=new ArrayList<localCycle>();
+		dbh	= new DbHelper(ManageResources.this);
+		db	= dbh.getReadableDatabase();
+		
+		if (db == null)Log.d(MainMenu.APP_NAME, "Database is null");
+		else Log.d(MainMenu.APP_NAME, "Database is not null");
+		
+		//Retrieve Cycles
+		li = new ArrayList<localCycle>();
 		DbQuery.getCycles(db, dbh, li);
-		pli=new ArrayList<localResourcePurchase>();
+		
+		Log.d(MainMenu.APP_NAME, "Found Cycles: "+li.size());
+		
+		//Retrieve Purchases
+		pli = new ArrayList<localResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
+		Log.d(MainMenu.APP_NAME, "Found Purchases: " + pli.size());
+		
+		// Initialize and Set the name of the tabs
 		TabListener tL=new TabListener();
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
 		ActionBar.Tab t1 = getActionBar().newTab();
-		t1.setText("Purchases");
-    	t1.setTabListener(tL);
+		t1.setText("Purchases").setTabListener(tL);
+		
     	ActionBar.Tab t2 = getActionBar().newTab();
-    	t2.setText("Resources");
-    	t2.setTabListener(tL);
+    	t2.setText("Resources").setTabListener(tL);
+
     	ActionBar.Tab t3 = getActionBar().newTab();
-    	t3.setText("Cycles");
-    	t3.setTabListener(tL);
+    	t3.setText("Cycles").setTabListener(tL);
     	
+    	//Add the tabs in order of [cycle, purchases, resources]
     	getActionBar().addTab(t3);
     	getActionBar().addTab(t1);
     	getActionBar().addTab(t2);
     	
+    	Log.d(MainMenu.APP_NAME, "Completed the OnCreate Method");
 	}
+	
 	
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
@@ -63,49 +82,48 @@ public class ManageResources extends ActionBarActivity {
 		
 		@Override
 		public void onTabReselected(Tab arg0, FragmentTransaction ft) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
-			Fragment n2=null;
-			Bundle data=new Bundle();
-			if(currFragment==null){
-				
-				
+			Fragment fragment	= null;
+			Bundle arguments	= new Bundle();
+			
+			if(currFragment == null){
 				if(li.isEmpty()){
-					n2=new FragmentEmpty();
-					data.putString("type", "cycle");
-					n2.setArguments(data);
-					ft.add(R.id.navContent, n2);
+					fragment = new FragmentEmpty();
+					arguments.putString("type", "cycle");
+					fragment.setArguments(arguments);
+					ft.add(R.id.navContent, fragment);
 				}else{
-					n2=new FragmentViewCycles();
-					ft.add(R.id.navContent, n2);
+					fragment=new FragmentViewCycles();
+					ft.add(R.id.navContent, fragment);
 				}
-				currFragment=n2;
+				currFragment=fragment;
 				return;
 			}
+			
 			if(tab.getText().toString().equals("Purchases")){
 				if(pli.isEmpty()){
-					n2=new FragmentEmpty();
-					data.putString("type", "purchase");
+					fragment=new FragmentEmpty();
+					arguments.putString("type", "purchase");
 				}else{
-					n2=new ChoosePurchase();
+					fragment=new ChoosePurchase();
 				}
 			}else if(tab.getText().toString().equals("Cycles")){
 				if(li.isEmpty()){
-					n2=new FragmentEmpty();
-					data.putString("type", "cycle");
+					fragment=new FragmentEmpty();
+					arguments.putString("type", "cycle");
 				}else{
-					n2=new FragmentViewCycles();
+					fragment=new FragmentViewCycles();
 				}
 			}else if(tab.getText().toString().equals("Resources")){
-				n2=new FragmentViewResources();
+				fragment=new FragmentViewResources();
 			}
-			currFragment=n2;
-			n2.setArguments(data);
-			ft.replace(R.id.navContent, n2);
+			currFragment=fragment;
+			fragment.setArguments(arguments);
+			ft.replace(R.id.navContent, fragment);
 		}
 
 		@Override

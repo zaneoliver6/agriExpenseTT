@@ -7,6 +7,7 @@ import java.util.Date;
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.MainMenu;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -15,14 +16,13 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.localCycle;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,30 +37,35 @@ public class FragmentViewCycles extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	final int req_edit=1;
+	final String className = MainMenu.APP_NAME +".FragmentViewCucles";
 	
-	ArrayList<localCycle> cList=new ArrayList<localCycle>();
+	ArrayList<localCycle> cycleList =new ArrayList<localCycle>();
 	CycleListAdapter cycAdapt;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		dbh	= new DbHelper(this.getActivity().getBaseContext());
+		db	= dbh.getReadableDatabase();
+		
 		try{//when called from hiring labour
-			type=getArguments().getString("type");
-		}catch (Exception e){}
+			type = getArguments().getString("type");
+			Log.i(this.className, type+" passed as a parameter");
+		}catch (Exception e){ Log.w(className, "No Type Passed"); }
+		
 		populateList();
-		cycAdapt=new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cList);
+		
+//		cycleList	= new ArrayList<localCycle>();
+		cycAdapt 	= new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
 	}
 	
 	private void populateList() {
-		DbQuery.getCycles(db, dbh, cList);
+		DbQuery.getCycles(db, dbh, cycleList);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		//returns the inflated layout which contains the listview
 		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
@@ -75,18 +80,19 @@ public class FragmentViewCycles extends ListFragment{
 		  }
 		
 		  @SuppressWarnings("deprecation")
-		@SuppressLint("ViewHolder") @Override
+		  @SuppressLint("ViewHolder") 
+		  @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			   //return super.getView(position, convertView, parent);
 			   
 			   LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			   
 			   //Get Layout of An Item and Store it in a view
-			   View row=inflater.inflate(R.layout.cycle_list_item, parent, false);
+			   View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
 			   //get the elements of that view and set them accordingly
-			   TextView Crop=(TextView)row.findViewById(R.id.tv_cycleList_crop);
+			   TextView Crop = (TextView)row.findViewById(R.id.tv_cycleList_crop);
 				
-			   localCycle currCycle=cList.get(position);
+			   localCycle currCycle=cycleList.get(position);
 			   int cid=currCycle.getCropId();
 				String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
 				Crop.setText(txt);
@@ -123,44 +129,74 @@ public class FragmentViewCycles extends ListFragment{
 	 }
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		if(type==null){
-			Intent nextActivity=new Intent(getActivity(),CycleUseageRedesign.class);
-			nextActivity.putExtra("cycleMain",cList.get(position));
-			startActivity(nextActivity);
-		}else if(type.equals(DHelper.cat_labour)){
-			FragmentManager fm=getFragmentManager();
-			FragmentTransaction ft=fm.beginTransaction();
-			ListFragment lf=new HireLabourLists();
-			Bundle data=new Bundle();
-			data.putString("type", "quantifier");
-			data.putString("name", getArguments().getString("name"));
-			((HireLabour)getActivity()).replaceSub("Details:"+getArguments().getString("name")
-					+", cycle#"+cList.get(position).getId());
-			data.putParcelable("cycle", cList.get(position));
-			lf.setArguments(data);
-			ft.replace(R.id.NewCycleListContainer, lf);
-			ft.commit();
-		}else if(type.equals("delete")){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-            builder1.setMessage("Are you sure you want to delete");
-            builder1.setCancelable(true);
-            Confirm c=new Confirm(position,(CycleListAdapter) l.getAdapter());
-            builder1.setPositiveButton("Yes",c);
-            builder1.setNegativeButton("Nope",c);
-            AlertDialog alert1 = builder1.create();
-            alert1.show();
+		if(type == null){
+			launchCycleUsage(position);
+		}else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
+			assignCycleToLabour(position);			
+		}else if(type.equals("delete")){ //When called by delete data
+			deletCycleOption(l, position);
 		}else if(type.equals("edit")){//when called by edit data
-	 		Intent i=new Intent(getActivity(),EditCycle.class);
-	 		i.putExtra("cycle", cList.get(position));
-	 		startActivityForResult(i,req_edit);
+			editCycleCoption(position);
 		}
 	}
+	
+	public void launchCycleUsage(int position){
+		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
+		activity.putExtra("cycleMain",cycleList.get(position));
+		startActivity(activity);
+	}
+	
+	public void editCycleCoption(int position){
+		Intent i=new Intent(getActivity(),EditCycle.class);
+ 		i.putExtra("cycle", cycleList.get(position));
+ 		startActivityForResult(i,req_edit);
+	}
+	
+	public void deletCycleOption(ListView l, int position){
+		Confirm c=new Confirm(position,(CycleListAdapter) l.getAdapter());
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+		
+        alertBuilder.setMessage("Are you sure you want to delete?")
+        			.setCancelable(true)        
+        			.setPositiveButton("Yes",c)
+        			.setNegativeButton("Nope",c)
+        			.create() 
+        			.show();
+	}
+	/**
+	 * 
+	 * @param position
+	 */
+	public void assignCycleToLabour(int position){
+		ListFragment fragment	= new HireLabourLists();
+		
+		Bundle arguments		= new Bundle();
+		arguments.putString("type", "quantifier");
+		arguments.putString("name", getArguments().getString("name"));
+		arguments.putParcelable("cycle", cycleList.get(position));
+		
+		StringBuilder stb = new StringBuilder();
+		stb.append("Details: ")
+			.append(getArguments().getString("name"))
+			.append(", cycle#")
+			.append(cycleList.get(position).getId());
+		
+		((HireLabour)getActivity()).replaceSub(stb.toString());
+		
+		
+		fragment.setArguments(arguments);
+		getFragmentManager()
+			.beginTransaction()
+				.replace(R.id.NewCycleListContainer, fragment)
+				.commit();
+	}
+	
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
-		cList=new ArrayList<localCycle>();
-		DbQuery.getCycles(db, dbh, cList);
+		cycleList=new ArrayList<localCycle>();
+		DbQuery.getCycles(db, dbh, cycleList);
 		cycAdapt.notifyDataSetChanged();
 	}
 
@@ -175,9 +211,9 @@ public class FragmentViewCycles extends ListFragment{
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==DialogInterface.BUTTON_POSITIVE){
 				DataManager dm=new DataManager(getActivity(), db, dbh);
-				dm.deleteCycle(cList.get(position));
+				dm.deleteCycle(cycleList.get(position));
 				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
-				cList.remove(position);
+				cycleList.remove(position);
 				l.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Cycle successfully deleted", Toast.LENGTH_SHORT).show();			
 				dialog.cancel();

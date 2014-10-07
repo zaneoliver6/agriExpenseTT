@@ -88,9 +88,12 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-            android:name=".UsePurchaseFrag"
-            android:label="@string/title_activity_use_purchase_frag" >
-        </activity>
+			android:name=".UsePurchaseFrag"
+			android:label="@string/title_activity_use_purchase_frag" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+		</activity>
         <activity
             android:name=".CycleUseageRedesign"
             android:label="Use resources" >

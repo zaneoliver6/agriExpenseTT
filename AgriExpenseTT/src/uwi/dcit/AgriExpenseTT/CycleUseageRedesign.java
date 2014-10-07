@@ -23,47 +23,52 @@ public class CycleUseageRedesign extends ActionBarActivity {
 	}
 
 	private void setup(int id) {
-		Fragment catGeneral=new FragmentGeneralCategory();
-		Fragment catPlantMaterial=new FragmentCycleUseCategory();
-		Fragment catFertilizer=new FragmentCycleUseCategory();
-		Fragment catSoilAmendment=new FragmentCycleUseCategory();
-		Fragment catChemical=new FragmentCycleUseCategory();
-		Fragment catLabour = new FragmentCycleUseCategory();
-		Fragment catOther = new FragmentCycleUseCategory();
+		Fragment catGeneral			= new FragmentGeneralCategory();
+		Fragment catPlantMaterial	= new FragmentCycleUseCategory();
+		Fragment catFertilizer		= new FragmentCycleUseCategory();
+		Fragment catSoilAmendment	= new FragmentCycleUseCategory();
+		Fragment catChemical		= new FragmentCycleUseCategory();
+		Fragment catLabour 			= new FragmentCycleUseCategory();
+		Fragment catOther 			= new FragmentCycleUseCategory();
 		
 		
 		Bundle data = getIntent().getExtras();
 		localCycle curr = (localCycle) data.getParcelable("cycleMain");
 		
-		Bundle data0=new Bundle();
-		data0.putString("category","general");
-		data0.putParcelable("cycle",curr);
-		catGeneral.setArguments(data0);
-		Bundle data1=new Bundle();
-		data1.putString("category", DHelper.cat_plantingMaterial);
-		data1.putParcelable("cycle", curr);
-		catPlantMaterial.setArguments(data1);
-		Bundle data2=new Bundle();
-		data2.putParcelable("cycle", curr);
-		data2.putString("category", DHelper.cat_fertilizer);
-		catFertilizer.setArguments(data2);
-		Bundle data3=new Bundle();
-		data3.putParcelable("cycle", curr);
-		data3.putString("category", DHelper.cat_soilAmendment);
-		catSoilAmendment.setArguments(data3);
-		Bundle data4=new Bundle();
-		data4.putParcelable("cycle", curr);
-		data4.putString("category", DHelper.cat_chemical);
-		catChemical.setArguments(data4);
-		Bundle data5=new Bundle();
-		data5.putParcelable("cycle", curr);
-		data5.putString("category", DHelper.cat_labour);
-		catLabour.setArguments(data5);
+		Bundle generalArguments = new Bundle();
+		generalArguments.putString("category","general");
+		generalArguments.putParcelable("cycle",curr);
+		catGeneral.setArguments(generalArguments);
 		
-		Bundle data6=new Bundle();
-		data6.putParcelable("cycle", curr);
-		data6.putString("category", DHelper.cat_other);
-		catOther.setArguments(data6);
+		Bundle plantingArguments = new Bundle();
+		plantingArguments.putString("category", DHelper.cat_plantingMaterial);
+		plantingArguments.putParcelable("cycle", curr);
+		catPlantMaterial.setArguments(plantingArguments);
+		
+		Bundle fertilizerArguments = new Bundle();
+		fertilizerArguments.putParcelable("cycle", curr);
+		fertilizerArguments.putString("category", DHelper.cat_fertilizer);
+		catFertilizer.setArguments(fertilizerArguments);
+		
+		Bundle amendmentsArguments = new Bundle();
+		amendmentsArguments.putParcelable("cycle", curr);
+		amendmentsArguments.putString("category", DHelper.cat_soilAmendment);
+		catSoilAmendment.setArguments(amendmentsArguments);
+		
+		Bundle chemicalArguments = new Bundle();
+		chemicalArguments.putParcelable("cycle", curr);
+		chemicalArguments.putString("category", DHelper.cat_chemical);
+		catChemical.setArguments(chemicalArguments);
+		
+		Bundle labourArguments = new Bundle();
+		labourArguments.putParcelable("cycle", curr);
+		labourArguments.putString("category", DHelper.cat_labour);
+		catLabour.setArguments(labourArguments);
+		
+		Bundle otherArguments = new Bundle();
+		otherArguments.putParcelable("cycle", curr);
+		otherArguments.putString("category", DHelper.cat_other);
+		catOther.setArguments(otherArguments);
 		
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
@@ -79,7 +84,6 @@ public class CycleUseageRedesign extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.cycle_useage_redesign, menu);
 		return true;

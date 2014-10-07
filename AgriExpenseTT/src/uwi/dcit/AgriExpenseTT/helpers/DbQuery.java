@@ -293,7 +293,7 @@ public class DbQuery {
 			+DbHelper.CLOUD_KEY_ROWID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1){
-			System.out.println("no key found");
+//			System.out.println("no key found");
 			return null;
 		}
 		cursor.moveToFirst();
@@ -336,14 +336,14 @@ public class DbQuery {
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;
-		System.out.println("length:"+cursor.getCount());
+//		System.out.println("length:"+cursor.getCount());
 		while(cursor.moveToNext()){
 			int n=cursor.getInt(cursor.getColumnIndex(DbHelper.REDO_LOG_ROW_ID));
-			rowIds.add(new Integer(n));
+			rowIds.add(Integer.valueOf(n));
 			n=cursor.getInt(cursor.getColumnIndex(DbHelper.REDO_LOG_LOGID));
-			logIds.add(new Integer(n));
+			logIds.add(Integer.valueOf(n));
 		}
-		System.out.println("array length:"+logIds.size());
+//		System.out.println("array length:"+logIds.size());
 	}
 	public static TransLog getLog(SQLiteDatabase db, DbHelper dbh, int rowId) {
 		TransLog t=new TransLog();
