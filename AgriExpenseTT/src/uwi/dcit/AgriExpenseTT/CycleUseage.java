@@ -184,7 +184,7 @@ public class CycleUseage extends ActionBarActivity {
 		
 		ImageView imageView=(ImageView)findViewById(R.id.icon_purchaseType_main);
 		imageView.setImageResource(R.drawable.money_doller1);
-		//TODO
+
 		//getting aggregate and complex data 
 		ArrayList<localCycleUse> useList=new ArrayList<localCycleUse>();
 		//--------------------------------------------------------PLANT MATERIAL

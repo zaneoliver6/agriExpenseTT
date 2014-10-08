@@ -64,7 +64,6 @@ public class DeleteData extends ActionBarActivity {
 		
 		@Override
 		public void onTabReselected(Tab arg0, FragmentTransaction ft) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -115,7 +114,6 @@ public class DeleteData extends ActionBarActivity {
 
 		@Override
 		public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-			// TODO Auto-generated method stub
 			
 		}
 		

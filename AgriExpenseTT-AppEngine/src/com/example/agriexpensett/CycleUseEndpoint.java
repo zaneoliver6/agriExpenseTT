@@ -143,7 +143,6 @@ public class CycleUseEndpoint {
 	  try {
 		et=datastore.get(k);
 	} catch (com.google.appengine.api.datastore.EntityNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	  if(et==null)
@@ -170,7 +169,6 @@ public class CycleUseEndpoint {
    */
   @ApiMethod(name = "insertCycleUse")
   public CycleUse insertCycleUse(CycleUse cycleuse) {
-	//TODO
 	NamespaceManager.set(cycleuse.getAccount());
 	Key k=KeyFactory.createKey("CycleUse", cycleuse.getId());
 	cycleuse.setKey(k);

@@ -160,7 +160,6 @@ public class fragmentNewCycleLast extends Fragment{
 			}
 			popupClick pc=new popupClick();
 			btn_getDate.setOnClickListener(pc);
-			// TODO Auto-generated method stub	
 		}
 
 }

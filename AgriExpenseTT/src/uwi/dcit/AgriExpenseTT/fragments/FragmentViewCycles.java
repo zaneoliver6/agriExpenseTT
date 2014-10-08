@@ -100,7 +100,6 @@ public class FragmentViewCycles extends ListFragment{
 				Crop.setText(txt);
 				ImageView imageView=(ImageView)row.findViewById(R.id.icon_purchaseType);
 				imageView.setImageResource(R.drawable.crop_under_rain_solid);
-				//TODO
 				TextView Land=(TextView)row.findViewById(R.id.tv_cycleList_Land);
 				double qty=currCycle.getLandQty();
 				txt=currCycle.getLandType();

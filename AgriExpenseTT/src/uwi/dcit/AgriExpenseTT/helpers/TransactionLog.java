@@ -227,7 +227,7 @@ public class TransactionLog {
 		builder = CloudEndpointUtils.updateBuilder(builder);
 		Translogendpoint endpointTranslog = builderTranslog.build();
 		
-		String code="select * from "+DbHelper.TABLE_CROPCYLE;// where something (constraints unknown yet TODO
+		String code="select * from "+DbHelper.TABLE_CROPCYLE;//TODO where something (constraints unknown yet 
 		Cursor cursor=db.rawQuery(code, null);
 		while(cursor.moveToNext()){
 			Cycle c=new Cycle();
@@ -505,7 +505,7 @@ public class TransactionLog {
 		try {
 			endpoint.deleteAll(namespace).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -517,7 +517,7 @@ public class TransactionLog {
 			
 			endpointUse.deleteAll(namespace).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -529,7 +529,7 @@ public class TransactionLog {
 		try {
 			endpointPurchase.deleteAll(namespace).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -541,7 +541,7 @@ public class TransactionLog {
 		try {
 			endpointTranslog.deleteAll(namespace).execute();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

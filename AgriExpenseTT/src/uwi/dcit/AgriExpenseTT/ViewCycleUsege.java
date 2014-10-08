@@ -68,7 +68,6 @@ public class ViewCycleUsege extends ActionBarActivity {
 
 		public CycUseAdpt(Context context, int resource,List<localCycleUse> objects) {
 			super(context, resource,  objects);
-			// TODO Auto-generated constructor stub
 		}
 		 @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {

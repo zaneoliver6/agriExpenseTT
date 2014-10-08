@@ -163,7 +163,7 @@ public class SalesCost extends ActionBarActivity {
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 
@@ -180,13 +180,13 @@ public class SalesCost extends ActionBarActivity {
 					salesDet2.setText("Total profit:$"+(sellp-costPer)*amtHarvest);
 				}
 			}
-			// TODO Auto-generated method stub
+			
 			
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		 

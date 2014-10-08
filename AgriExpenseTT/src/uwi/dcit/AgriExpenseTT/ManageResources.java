@@ -128,7 +128,7 @@ public class ManageResources extends ActionBarActivity {
 
 		@Override
 		public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		

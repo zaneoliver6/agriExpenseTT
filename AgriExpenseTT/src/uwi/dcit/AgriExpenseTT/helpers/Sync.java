@@ -48,7 +48,7 @@ public class Sync {
 					/*since it was synced at some point and the local is more updated
 					 * just get the logs and update the cloud
 					 */
-					//TODO
+					
 					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateCloudOpt);
 					
 				}
@@ -66,7 +66,7 @@ public class Sync {
 					/*since it was synced at some point and the cloud is more updated
 					 * just get the logs and update the local
 					 */
-					//TODO
+					
 					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateLocalOpt);
 				}
 				
@@ -76,7 +76,7 @@ public class Sync {
 		//only local exist
 		}else{ 
 			System.out.println("cloud doesnt exist so pushing all to cloud");
-			//TODO
+			
 			new SyncExec(tL, namespace, 0, 0).execute(Option.createCloudNewOpt);
 		//only cloud exist
 		}
@@ -94,7 +94,7 @@ public class Sync {
 		}
 		@SuppressLint("UseValueOf") @Override
 		protected Boolean doInBackground(Option... params) {
-			Option option=params[0];// TODO Auto-generated method stub
+			Option option=params[0];
 			ContentValues cv=new ContentValues();
 			Boolean success = new Boolean(true);
 			switch(option){
@@ -157,14 +157,14 @@ public class Sync {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==DialogInterface.BUTTON_POSITIVE){//overwrite local
-				//TODO
+				
 				new SyncExec(tL, namespace, lastCloudUpdated, lastLocalUpdated).execute(Option.overwriteLocalOpt);
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){//overwrite cloud
 				System.out.println("updating cloud");
 				new SyncExec(tL, namespace, lastCloudUpdated, lastLocalUpdated).execute(Option.overwriteCloudOpt);
-				//TODO
+				
 				dialog.cancel();
 			}
 		}

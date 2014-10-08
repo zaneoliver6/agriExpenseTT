@@ -79,23 +79,21 @@ public class FragmentSelectLocation extends ListFragment {
 			 this.adpt=adpt;
 		 }
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-			// TODO Auto-generated method stub
+		public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+			
 			
 		}
 
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
+		public void onTextChanged(CharSequence s, int start, int before,int count) {
 			adpt.getFilter().filter(s);
-			// TODO Auto-generated method stub
+			
 			
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		 

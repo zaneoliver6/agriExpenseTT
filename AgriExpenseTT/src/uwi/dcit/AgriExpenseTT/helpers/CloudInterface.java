@@ -357,7 +357,6 @@ public class CloudInterface {
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, DbHelper.TABLE_TRANSACTION_LOG, Tid, TransactionLog.TL_INS);
 					insertLog();
-					//TODO
 				}
 
 			}
@@ -366,7 +365,6 @@ public class CloudInterface {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			// TODO Auto-generated method stub
 			/*db.close();
 			db=dbh.getWritableDatabase();
 			db.execSQL("drop table if exists "+DbHelper.TABLE_REDO_LOG);
@@ -374,8 +372,6 @@ public class CloudInterface {
 			db.close();
 			db=dbh.getReadableDatabase();*/
 			super.onPostExecute(result);
-			
-			//TODO
 		}
 		
 		
@@ -579,7 +575,6 @@ public class CloudInterface {
 				acc=endpoint.insertUpAcc(acc).execute();
 				DbQuery.insertUpAcc(db, acc);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -604,7 +599,6 @@ public class CloudInterface {
 			try {
 				endpoint.updateUpAcc(acc).execute();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

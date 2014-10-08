@@ -137,7 +137,7 @@ public class MainMenu extends ActionBarActivity {
 			SQLiteDatabase db=dbh.getReadableDatabase();
 			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
 			System.out.println("result String"+county);
-			signInObject.signIn();//TODO
+			signInObject.signIn();
 		}
 	}
 	

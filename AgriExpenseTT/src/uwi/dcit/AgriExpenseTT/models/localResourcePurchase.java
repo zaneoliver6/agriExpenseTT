@@ -16,7 +16,6 @@ public class localResourcePurchase implements Parcelable{
 	
 	public localResourcePurchase() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public localResourcePurchase(int pId, int resourceId, String quantifier,
 			double qty, double cost, double qtyRemaining,String type) {
@@ -91,13 +90,13 @@ public class localResourcePurchase implements Parcelable{
 	
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
+		
 		dest.writeInt(pId);
 		dest.writeInt(resourceId);
 		dest.writeString(type);

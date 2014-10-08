@@ -99,7 +99,7 @@ public class localCycle implements Parcelable{
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
+		
 		dest.writeInt(id);
 		dest.writeInt(cropId);
 		dest.writeString(landType);
@@ -125,7 +125,7 @@ public class localCycle implements Parcelable{
 	};
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 	public double getHarvestAmt() {

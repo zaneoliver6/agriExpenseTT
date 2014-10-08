@@ -35,19 +35,26 @@ import android.widget.Toast;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 public class FragmentPurchaseUse extends Fragment {
-	View view;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	localCycle c=null;
+	private View view;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private localCycle c = null;
+	private RPurchase p;
 	
-	RPurchase p;
-	double useAmount=0;//the amount you are going to use
+	private double useAmount=0;//the amount you are going to use
+	private double calcost=0.0,TypeSpent=0.0;
+	private double amtRem,amtPur;
+	private String quantifier;
 	
-	double calcost=0.0,TypeSpent=0.0;
+	private TextView d_buttom1;
+	private TextView d_buttom2;
+	private TextView d_buttom3;
+	private TextView d_top;
+	private EditText et_amt;
 	
-	double amtRem,amtPur;
-	String quantifier;
-	//TODO 
+	private Button btn_typeUse;
+//	private String typeUse;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,14 +67,7 @@ public class FragmentPurchaseUse extends Fragment {
 		setDetails(pId,cycleId);
 		return view;
 	}
-	TextView d_buttom1;
-	TextView d_buttom2;
-	TextView d_buttom3;
-	TextView d_top;
-	EditText et_amt;
 	
-	Button btn_typeUse;
-	String typeUse;
 	private void setDetails(int pId,int cycleId) {
 		p=DbQuery.getARPurchase(db, dbh,pId);
 		c=getArguments().getParcelable("cycleMain");
