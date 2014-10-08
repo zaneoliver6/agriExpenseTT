@@ -51,7 +51,9 @@ public class FragmentViewCycles extends ListFragment{
 		try{//when called from hiring labour
 			type = getArguments().getString("type");
 			Log.i(this.className, type+" passed as a parameter");
-		}catch (Exception e){ Log.w(className, "No Type Passed"); }
+		}catch (Exception e){ 
+			Log.w(className, "No Type Passed"); 
+		}
 		
 		populateList();
 		
@@ -142,6 +144,7 @@ public class FragmentViewCycles extends ListFragment{
 	
 	public void launchCycleUsage(int position){
 		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
+		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
 		activity.putExtra("cycleMain",cycleList.get(position));
 		startActivity(activity);
 	}

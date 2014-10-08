@@ -18,7 +18,7 @@ public class CycleUseageRedesign extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cycle_useage_redesign);
-		int id=1;
+		int id = 1;
 		setup(id);
 	}
 

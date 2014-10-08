@@ -14,6 +14,7 @@ public class localCycle implements Parcelable{
 	private String harvestType;
 	private double costPer;
 	private String cropName;
+	
 	public String getCropName() {
 		return cropName;
 	}
@@ -110,7 +111,7 @@ public class localCycle implements Parcelable{
 		dest.writeDouble(costPer);
 	}
 	
-	public static Parcelable.Creator<localCycle> CREATOR = new Parcelable.Creator<localCycle>() {
+	public static final Parcelable.Creator<localCycle> CREATOR = new Parcelable.Creator<localCycle>() {
 
 		@Override
 		public localCycle createFromParcel(Parcel source) {
