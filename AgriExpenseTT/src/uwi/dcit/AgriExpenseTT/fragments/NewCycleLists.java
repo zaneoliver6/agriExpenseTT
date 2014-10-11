@@ -9,7 +9,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class NewCycleLists extends ListFragment {
 	String type;
@@ -40,7 +38,7 @@ public class NewCycleLists extends ListFragment {
 		db=dbh.getReadableDatabase();
 		type=getArguments().getString("type");
 		populateList();
-		Collections.sort(list);
+		
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
 	}
@@ -54,6 +52,7 @@ public class NewCycleLists extends ListFragment {
 			list.add("Hectre");
 			list.add("Bed");
 		}
+		Collections.sort(list);
 	}
 
 	@Override
@@ -79,38 +78,45 @@ public class NewCycleLists extends ListFragment {
 	}
 		
 	
+	public void updateSub(String message){
+		if (this.getActivity() instanceof NewCycle){
+			((NewCycle)getActivity()).replaceSub(message);
+		}
+	}
 		 
 	
 	 @Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Toast.makeText(getActivity(), getListView().getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
-			Fragment newFragment=null;
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			Bundle b=new Bundle();
-			
-			
+			Fragment nextFragment = null;			
+			Bundle arguments = new Bundle();
+		
 			if(type.equals(DHelper.cat_plantingMaterial)){
-				b.putString("type","land");//passes the type of the data we want in the new listfragment
-				b.putString(DHelper.cat_plantingMaterial, list.get(position));//passes the crop chosen to the land listfragment
-				((NewCycle)getActivity()).replaceSub("Details: "+list.get(position));
-				newFragment =new NewCycleLists();
+				arguments.putString("type","land");										//passes the type of the data we want in the new list fragment
+				arguments.putString(DHelper.cat_plantingMaterial, list.get(position));	//passes the crop chosen to the land list fragment
+				updateSub("Details: "+list.get(position));								//Change the details section of the fragment 
+				nextFragment = new NewCycleLists();										//Launch a new instance of the class to deal with the land type selection
 			}else if(type.equals("land")){
-				b.putString(DHelper.cat_plantingMaterial, getArguments().getString(DHelper.cat_plantingMaterial));
-				//System.out.println("planting material: "+getArguments().getString(DHelper.cat_plantingMaterial));
-				//System.out.println(list.get(position));
-				b.putString("land", list.get(position));
-				((NewCycle)getActivity()).replaceSub("Details: "+getArguments().getString(DHelper.cat_plantingMaterial)
-						+" "+list.get(position));
-				newFragment =new fragmentNewCycleLast();
+																						//Pass the crop specified in previous activity on to the next action
+				arguments.putString(DHelper.cat_plantingMaterial, getArguments().getString(DHelper.cat_plantingMaterial));
+				arguments.putString("land", list.get(position));						//Pass on the land type selected to the next activity
+				
+				StringBuilder stb = new StringBuilder();								//Using String builder to get details rather than concatenation
+				stb.append("Details: ")
+					.append(getArguments().getString(DHelper.cat_plantingMaterial))
+					.append(list.get(position));
+				updateSub(stb.toString());												//Change the details section to reflect user choice
+				
+				nextFragment = new FragmentNewCycleLast();
 			}
-			newFragment.setArguments(b);
-			transaction.replace(R.id.NewCycleListContainer, newFragment);
 			
-			//add the transaction to the back stack
-			transaction.addToBackStack(type);
+			nextFragment.setArguments(arguments);										//Add Arguments to the next fragment to be loaded
 			
-			// Commit the transaction
-			transaction.commit();
+			getFragmentManager()
+				.beginTransaction()
+				.replace(R.id.NewCycleListContainer, nextFragment)						//Load the New Fragment
+				.addToBackStack(type)													//add the transaction to the back stack
+				.commit();
+			
 	 }
 	 public class TWatch implements TextWatcher{
 		 ArrayAdapter<String> adpt;
@@ -119,18 +125,13 @@ public class NewCycleLists extends ListFragment {
 			 this.adpt=adpt;
 		 }
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-			
+		public void beforeTextChanged(CharSequence s, int start, int count,int after) {
 			
 		}
 
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
+		public void onTextChanged(CharSequence s, int start, int before,int count) {
 			adpt.getFilter().filter(s);
-			
-			
 		}
 
 		@Override

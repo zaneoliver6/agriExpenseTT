@@ -7,8 +7,8 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -20,8 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class EditData extends ActionBarActivity {
-	ArrayList<localCycle> li;
-	ArrayList<localResourcePurchase> pli;
+	ArrayList<LocalCycle> li;
+	ArrayList<LocalResourcePurchase> pli;
 	public final int req_cycle=1;
 	final int req_purchase=2;
 	DbHelper dbh;
@@ -34,9 +34,9 @@ public class EditData extends ActionBarActivity {
 		//for empty lists
 		dbh=new DbHelper(EditData.this);
 		db=dbh.getReadableDatabase();
-		li=new ArrayList<localCycle>();
+		li=new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, li);
-		pli=new ArrayList<localResourcePurchase>();
+		pli=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		TabListener tL=new TabListener();

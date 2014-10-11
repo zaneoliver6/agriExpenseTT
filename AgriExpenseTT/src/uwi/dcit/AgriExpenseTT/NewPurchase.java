@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -28,26 +27,31 @@ public class NewPurchase extends ActionBarActivity {
 		setupUI();
 		setupInitialFrag();
 	}
+	
 	private void setupInitialFrag() {
-		Bundle pass=new Bundle();
-		pass.putString("type","category");
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ListFragment listfrag=new NewPurchaseLists();
-		listfrag.setArguments(pass);
-		ft.add(R.id.NewCycleListContainer,listfrag);
-		ft.commit();
+		Bundle arguments = new Bundle();
+		arguments.putString("type","category");
+		
+		ListFragment listfrag = new NewPurchaseLists();
+		listfrag.setArguments(arguments);
+		
+		getFragmentManager()
+			.beginTransaction()
+			.add(R.id.NewCycleListContainer,listfrag)
+			.commit();
 	}
 	
 	public static void hideSoftKeyboard(Activity activity) {
 	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
 	}
+	
 	public void setupUI() {
 		View v=findViewById(R.id.container_newcycle);
 		TouchL l=new TouchL();
 		v.setOnTouchListener(l);
 	}
+	
 	public class TouchL implements OnTouchListener{
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {

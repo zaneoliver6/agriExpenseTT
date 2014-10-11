@@ -4,7 +4,6 @@ import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -12,9 +11,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -24,7 +20,6 @@ public class NewCycle extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		setupUI();
 		setupInitialFrag();
 	}
 	public void replaceSub(String text){
@@ -32,15 +27,16 @@ public class NewCycle extends ActionBarActivity {
 		sub_head.setText(text);
 	}
 	private void setupInitialFrag() {
-		Bundle pass=new Bundle();
-		pass.putString("type",DHelper.cat_plantingMaterial);
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
+		Bundle arguments = new Bundle();
+		arguments.putString("type",DHelper.cat_plantingMaterial);
+		
 		ListFragment listfrag=new NewCycleLists();
-		listfrag.setArguments(pass);
-		ft.add(R.id.NewCycleListContainer,listfrag);
-		//ft.addToBackStack(null);
-		ft.commit();
+		listfrag.setArguments(arguments);
+		
+		getFragmentManager()
+			.beginTransaction()
+			.add(R.id.NewCycleListContainer,listfrag)
+			.commit();
 	}
 	
 	
@@ -48,20 +44,7 @@ public class NewCycle extends ActionBarActivity {
 	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
 	}
-	public void setupUI() {
-		View v=findViewById(R.id.container_newcycle);
-		TouchL l=new TouchL();
-		v.setOnTouchListener(l);
-	}
-	public class TouchL implements OnTouchListener{
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			if(v.getId()!=R.id.et_listReuse_search)
-				hideSoftKeyboard(NewCycle.this);
-			return false;
-		}
-	   
-   }
+
 	@Override
 	public void onBackPressed(){
 	    FragmentManager fm = getFragmentManager();

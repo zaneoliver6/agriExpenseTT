@@ -5,7 +5,7 @@ import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class localResourcePurchase implements Parcelable{
+public class LocalResourcePurchase implements Parcelable{
 	private int pId;
 	private int resourceId;
 	private String quantifier;
@@ -14,10 +14,10 @@ public class localResourcePurchase implements Parcelable{
 	private double qtyRemaining;
 	private String type;
 	
-	public localResourcePurchase() {
+	public LocalResourcePurchase() {
 		super();
 	}
-	public localResourcePurchase(int pId, int resourceId, String quantifier,
+	public LocalResourcePurchase(int pId, int resourceId, String quantifier,
 			double qty, double cost, double qtyRemaining,String type) {
 		super();
 		this.pId = pId;
@@ -105,7 +105,7 @@ public class localResourcePurchase implements Parcelable{
 		dest.writeDouble(qty);
 		dest.writeDouble(qtyRemaining);
 	}
-	public localResourcePurchase(Parcel dest){
+	public LocalResourcePurchase(Parcel dest){
 		pId=dest.readInt();
 		resourceId=dest.readInt();
 		type=dest.readString();
@@ -114,16 +114,16 @@ public class localResourcePurchase implements Parcelable{
 		qty=dest.readDouble();
 		qtyRemaining=dest.readDouble();
 	}
-	public static Parcelable.Creator<localResourcePurchase> CREATOR = new Parcelable.Creator<localResourcePurchase>() {
+	public static Parcelable.Creator<LocalResourcePurchase> CREATOR = new Parcelable.Creator<LocalResourcePurchase>() {
 
 		@Override
-		public localResourcePurchase createFromParcel(Parcel source) {
-			return new localResourcePurchase(source);
+		public LocalResourcePurchase createFromParcel(Parcel source) {
+			return new LocalResourcePurchase(source);
 		}
 
 		@Override
-		public localResourcePurchase[] newArray(int size) {
-			return new localResourcePurchase[size];
+		public LocalResourcePurchase[] newArray(int size) {
+			return new LocalResourcePurchase[size];
 		}
 	};
 	

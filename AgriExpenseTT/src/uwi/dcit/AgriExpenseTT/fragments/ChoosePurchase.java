@@ -2,18 +2,21 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import uwi.dcit.AgriExpenseTT.EditPurchase;
+import uwi.dcit.AgriExpenseTT.MainMenu;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,56 +24,77 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class ChoosePurchase extends ListFragment {
 	MyListAdapter myListAdapter;
-	ArrayList<localResourcePurchase> pList;
+	ArrayList<LocalResourcePurchase> pList;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	DataManager dm;
-	String type=null;
+	String type = null;
 	int cycleId;
-	localCycle curr=null;
+	LocalCycle curr = null;
 	
-	final int req_edit=1;
+	final int req_edit = 1;
+	
+	@Override
+	public void onActivityCreated(Bundle savedState){
+		super.onActivityCreated(savedState);
+		this.registerForContextMenu(getListView());
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
-		dm=new DataManager(getActivity(), db, dbh);
+		
+		dbh	= new DbHelper(this.getActivity().getBaseContext());
+		db	= dbh.getReadableDatabase();
+		dm	= new DataManager(getActivity(), db, dbh);
+		
 		try{//when called by ManageResources we dont need any particular cycle
 			curr = getArguments().getParcelable("cycle");
-		}catch(Exception e){
-		}
-		if(curr!=null){
-			cycleId=curr.getId();
-		}
+		}catch(Exception e){ }
 		
+		if(curr != null)cycleId = curr.getId();
+
 		try {//for when called by ManageResources the type will be null so we can see all types of purhases
 			type=getArguments().getString("det");
-		} catch (Exception e) {
-		}
-		System.out.println("type: "+type);
+			Log.i(MainMenu.APP_NAME, "type: "+type);
+		} catch (Exception e) { }
 		
-		pList=new ArrayList<localResourcePurchase>();
-		if(type!=null&&(type.equals("delete")||type.equals("edit")))
+		populateList();
+		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
+		setListAdapter(myListAdapter);
+	}
+	
+	private void populateList() {
+		pList	= new ArrayList<LocalResourcePurchase>();
+		
+		if(type != null&&(type.equals("delete")||type.equals("edit")))
 			DbQuery.getPurchases(db, dbh, pList, null, null,true);
 		else
 			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
-		
-		
-		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
-		setListAdapter(myListAdapter);
+	
+		Collections.sort(pList, new Comparator<LocalResourcePurchase>(){
+			@Override
+			public int compare(LocalResourcePurchase item1, LocalResourcePurchase item2) {
+				return item1.getType().compareTo(item2.getType());
+			}			
+		});
 	}
 		
 	@Override
@@ -80,14 +104,116 @@ public class ChoosePurchase extends ListFragment {
 		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
 		
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+		super.onCreateContextMenu(menu, v, menuInfo);
+		
+		MenuInflater inflater = this.getActivity().getMenuInflater();
+		inflater.inflate(R.menu.resource_purchase_context_menu, menu);
+	}
 	
+	public boolean onContextItemSelected(MenuItem item){
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+		
+		switch(item.getItemId()){
+//			case R.id.resource_view:
+//				Log.i(MainMenu.APP_NAME, "View The details for resource: "+pList.get(info.position).getQuantifier());
+//				launchPurchaseView(info.position);
+//				break;
+			case R.id.resource_edit: 								//Edit Purchase
+				Log.i(MainMenu.APP_NAME, "Edit The details for resource: "+pList.get(info.position).getQuantifier());
+				editPurchaseOption(info.position);
+				break;
+			case R.id.resource_delete:
+				Log.i(MainMenu.APP_NAME, "Delete The details for resource: "+pList.get(info.position).getQuantifier());
+				deletePurchaseOption(this.getListView(), info.position);
+				break;
+			default:
+				return super.onContextItemSelected(item);
+		}
+		return false;
+	}
+	 
+	 @Override
+	 public void onListItemClick(ListView l, View v, int position, long id) {
+	 	
+		 if((type != null) && (type.equals("edit"))){				//when called by edit data
+	 		launchPurchaseView(position);
+	 	}else if(type != null && type.equals("delete")){			//when called by delete data
+	 		deletePurchaseOption( l,  position);
+		}else if(type!=null){										//when called by Use Purchases
+			editPurchaseOption(position);
+		}
+	 }
+	 
+	 public void editPurchaseOption(int position){
+		 Intent i=new Intent(getActivity(),EditPurchase.class);
+		 i.putExtra("purchase",pList.get(position));
+		 startActivityForResult(i, req_edit);
+	 }
+	 
+	 public void launchPurchaseView(int position){
+		 Fragment newFragment =new FragmentPurchaseUse();
+		 Bundle arguments = new Bundle();
 		 
-	 public class MyListAdapter extends ArrayAdapter<localResourcePurchase> {
-	  
+		 if(curr != null)arguments.putParcelable("cycleMain", curr);
+		 arguments.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
+		 arguments.putString("cycleId",""+cycleId);					// passes the id of the cycle
+		 newFragment.setArguments(arguments);
+		 
+		 getFragmentManager()
+		 	.beginTransaction()
+		 	.replace(R.id.useExpenseFrag, newFragment)			// Replace whatever is in the fragment_container view with this fragment,
+		 	.addToBackStack(null)								// and add the transaction to the back stack
+		 	.commit();
+	 }
+	 
+	 public void deletePurchaseOption(ListView l, int position){
+		 AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+	        builder1.setMessage("Are you sure you want to delete");
+	        builder1.setCancelable(true);
+	        Confirm c=new Confirm(position,(MyListAdapter) l.getAdapter());
+	        builder1.setPositiveButton("Yes",c);
+	        builder1.setNegativeButton("Nope",c);
+	        AlertDialog alert1 = builder1.create();
+	        alert1.show();
+	 }
+	 
+	 @Override
+	 public void onActivityResult(int requestCode,int resultCode,Intent data){
+		 super.onActivityResult(requestCode, resultCode, data);
+		 //refill list
+		 pList=new ArrayList<LocalResourcePurchase>();
+		 DbQuery.getPurchases(db, dbh, pList, null, null,true);
+		 myListAdapter.notifyDataSetChanged();
+	 }
+	 
+	 private class Confirm implements DialogInterface.OnClickListener{
+		int position;
+		MyListAdapter l;
+		public Confirm(int position,MyListAdapter l){
+			this.position=position;
+			this.l=l;
+		}
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			if(which==DialogInterface.BUTTON_POSITIVE){
+				dm.deletePurchase(pList.get(position).toRPurchase());
+				pList.remove(position);
+				l.notifyDataSetChanged();
+				Toast.makeText(getActivity(),"Purchase and its related cycles successfully deleted", Toast.LENGTH_SHORT).show();			
+				dialog.cancel();
+			}else if(which==DialogInterface.BUTTON_NEGATIVE){
+				dialog.cancel();
+			}
+		}
+	 }
+	 
+	 public class MyListAdapter extends ArrayAdapter<LocalResourcePurchase> {
+		  
 		 Context myContext;
 		
 		  public MyListAdapter(Context context, int textViewResourceId,
-		    ArrayList<localResourcePurchase> objects) {
+		    ArrayList<LocalResourcePurchase> objects) {
 			  super(context, textViewResourceId, objects);
 		   myContext = context;
 		  }
@@ -98,7 +224,7 @@ public class ChoosePurchase extends ListFragment {
 			   //return super.getView(position, convertView, parent);
 			   
 			   LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			   localResourcePurchase curr=pList.get(position);
+			   LocalResourcePurchase curr=pList.get(position);
 			   //Get Layout of An Item and Store it in a view
 			   View row=inflater.inflate(R.layout.purchased_item, parent, false);
 			   //setting the colours
@@ -136,71 +262,5 @@ public class ChoosePurchase extends ListFragment {
 			   return row;
 		  }
 	 }
-	 
-	 @Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-		 	if((type!=null)&&(type.equals("edit"))){//when called by edit data
-		 		System.out.println("type+"+type);
-		 		Intent i=new Intent(getActivity(),EditPurchase.class);
-		 		i.putExtra("purchase",pList.get(position));
-		 		startActivityForResult(i, req_edit);
-		 	}else if(type!=null&&type.equals("delete")){//when called by delete data
-				AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-	            builder1.setMessage("Are you sure you want to delete");
-	            builder1.setCancelable(true);
-	            Confirm c=new Confirm(position,(MyListAdapter) l.getAdapter());
-	            builder1.setPositiveButton("Yes",c);
-	            builder1.setNegativeButton("Nope",c);
-	            AlertDialog alert1 = builder1.create();
-	            alert1.show();
-			}else if(type!=null){//when called by Use Purchases
-				
-				Fragment newFragment =new FragmentPurchaseUse();
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				Bundle b=new Bundle();
-				if(curr!=null)
-					b.putParcelable("cycleMain", curr);
-				b.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
-				b.putString("cycleId",""+cycleId);// passes the id of the cycle
-				newFragment.setArguments(b);
-				// Replace whatever is in the fragment_container view with this fragment,
-				// and add the transaction to the back stack
-				transaction.replace(R.id.useExpenseFrag, newFragment);
-				transaction.addToBackStack(null);
-				//db.close();
-				// Commit the transaction
-				transaction.commit();
-			}
-		}
-	 @Override
-		public void onActivityResult(int requestCode,int resultCode,Intent data){
-			super.onActivityResult(requestCode, resultCode, data);
-			//refill list
-			pList=new ArrayList<localResourcePurchase>();
-			DbQuery.getPurchases(db, dbh, pList, null, null,true);
-			myListAdapter.notifyDataSetChanged();
-		}
-	 
-	 private class Confirm implements DialogInterface.OnClickListener{
-			int position;
-			MyListAdapter l;
-			public Confirm(int position,MyListAdapter l){
-				this.position=position;
-				this.l=l;
-			}
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if(which==DialogInterface.BUTTON_POSITIVE){
-					dm.deletePurchase(pList.get(position).toRPurchase());
-					pList.remove(position);
-					l.notifyDataSetChanged();
-					Toast.makeText(getActivity(),"Purchase and its related cycles successfully deleted", Toast.LENGTH_SHORT).show();			
-					dialog.cancel();
-					//DeleteExpenseList.this.finish();
-				}else if(which==DialogInterface.BUTTON_NEGATIVE){
-					dialog.cancel();
-				}
-			}
-		}
 
 }

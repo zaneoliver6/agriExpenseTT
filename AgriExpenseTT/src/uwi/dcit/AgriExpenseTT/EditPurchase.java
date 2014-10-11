@@ -4,7 +4,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
@@ -40,7 +40,7 @@ public class EditPurchase extends ActionBarActivity {
 	double cost;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	localResourcePurchase p;
+	LocalResourcePurchase p;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

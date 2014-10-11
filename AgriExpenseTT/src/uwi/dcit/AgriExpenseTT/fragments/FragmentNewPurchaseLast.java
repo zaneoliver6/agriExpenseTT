@@ -5,7 +5,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
@@ -21,18 +21,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Fragment_newpurchaseLast extends Fragment{
-	View view;
-	EditText et_qty;
-	EditText et_cost;
-	TextView error;
-	String category;
-	String resource;
-	String quantifier;
-	localCycle currC=null;
-	int resId;
-	SQLiteDatabase db;
-	DbHelper dbh;
+public class FragmentNewPurchaseLast extends Fragment{
+	private View view;
+	private EditText et_qty;
+	private EditText et_cost;
+	private TextView error;
+	private String category;
+	private String resource;
+	private String quantifier;
+	private LocalCycle currC=null;
+	private int resId;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

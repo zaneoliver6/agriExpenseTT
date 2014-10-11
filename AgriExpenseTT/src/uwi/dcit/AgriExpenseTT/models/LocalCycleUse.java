@@ -1,6 +1,6 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-public class localCycleUse {
+public class LocalCycleUse {
 	private int id;
 	private int cycleid;
 	private int purchaseId;
@@ -8,10 +8,10 @@ public class localCycleUse {
 	private String resource;
 	private double useCost;
 	private String quantifier;
-	public localCycleUse() {
+	public LocalCycleUse() {
 		super();
 	}
-	public localCycleUse(int cycleid, int purchaseId, double amount,String resource) {
+	public LocalCycleUse(int cycleid, int purchaseId, double amount,String resource) {
 		super();
 		this.cycleid = cycleid;
 		this.purchaseId = purchaseId;

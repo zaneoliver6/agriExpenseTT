@@ -7,7 +7,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -25,7 +25,7 @@ public class HireLabourLists extends ListFragment {
 	 ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	localCycle currC;
+	LocalCycle currC;
 	TextView et_main;
 	View view;
 	@Override
@@ -93,7 +93,7 @@ public class HireLabourLists extends ListFragment {
 				b.putString("resource",getArguments().getString("name"));
 				((HireLabour)getActivity()).replaceSub("Details:"+getArguments().getString("name")
 						+", "+list.get(position));
-				newFragment=new Fragment_newpurchaseLast();
+				newFragment=new FragmentNewPurchaseLast();
 			}
 			newFragment.setArguments(b);
 			// Replace whatever is in the fragment_container view with this fragment,

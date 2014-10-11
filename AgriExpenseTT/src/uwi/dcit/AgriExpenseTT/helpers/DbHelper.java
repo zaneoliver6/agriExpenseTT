@@ -102,7 +102,6 @@ public class DbHelper extends SQLiteOpenHelper{
 		
 	}
 	private void createDb(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
 		createCropCycle(db);
 		createResources(db);
 		createResourcePurchases(db);

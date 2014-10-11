@@ -74,7 +74,7 @@ public class FragmentNewPurchaseOther extends Fragment{
 				//to final Purchase fragment
 				((NewPurchase)getActivity()).replaceSub("Details: "+getArguments().getString("category")
 						+", "+resource+", "+quantifier);
-				Fragment newFragment =new Fragment_newpurchaseLast();
+				Fragment newFragment =new FragmentNewPurchaseLast();
 				newFragment.setArguments(b);
 				FragmentManager fm=getFragmentManager();
 				FragmentTransaction transaction=fm.beginTransaction();

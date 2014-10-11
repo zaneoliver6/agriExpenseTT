@@ -5,8 +5,10 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -40,7 +42,7 @@ public class MainMenu extends ActionBarActivity {
 		setupButtons();
 		
 		//Place Up Button Support
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	/*
@@ -79,8 +81,18 @@ public class MainMenu extends ActionBarActivity {
 	
 	public void openManageExports(View view){
 		//TODO Implement on a separate window
-		CSVHelper cvh=new CSVHelper(MainMenu.this);
-		cvh.stuff(MainMenu.this);
+		
+		new AlertDialog.Builder(this)
+			.setMessage("This Action Will create an excel document of all Records. Do you wish to continue?")
+			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					CSVHelper cvh=new CSVHelper(MainMenu.this);
+	            	cvh.stuff(MainMenu.this);
+	            }
+	         })
+	         .setNegativeButton("No", null)
+	         .show();
+		
 	}
 	
 	public void openAboutFragment(View view){
@@ -142,6 +154,8 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	public void signInStart(View view){
+		//TODO Open A new Activity
+		
 		DbHelper dbh=new DbHelper(MainMenu.this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		UpAcc acc=DbQuery.getUpAcc(db);

@@ -2,9 +2,9 @@ package uwi.dcit.AgriExpenseTT.helpers;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
@@ -99,13 +99,13 @@ public class DbQuery {
 		cursor.moveToFirst();
 		return cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCES_ID));
 	}
-	public static void getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<localCycle> list){
+	public static void getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalCycle> list){
 		String code="select * from "+DbHelper.TABLE_CROPCYLE+";";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
-			localCycle n=new localCycle();
+			LocalCycle n=new LocalCycle();
 			n.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.CROPCYCLE_ID)));
 			n.setCropId(cursor.getInt(cursor.getColumnIndex(DbHelper.CROPCYCLE_CROPID)));
 			n.setLandType(cursor.getString(cursor.getColumnIndex(DbHelper.CROPCYCLE_LAND_TYPE)));
@@ -131,7 +131,7 @@ public class DbQuery {
 		return null;
 	}
 	
-	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,String type,String quantifier,boolean allowFinished){
+	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,String type,String quantifier,boolean allowFinished){
 		String code;
 		if(type==null)
 			code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+";";
@@ -144,7 +144,7 @@ public class DbQuery {
 		if(cursor.getCount()<1 || cursor==null)
 			return;
 		while(cursor.moveToNext()){
-			localResourcePurchase m=new localResourcePurchase();
+			LocalResourcePurchase m=new LocalResourcePurchase();
 			m.setpId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID)));
 			m.setResourceId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_RESID)));
 			m.setType(cursor.getString(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_TYPE)));
@@ -155,7 +155,7 @@ public class DbQuery {
 			list.add(m);
 		}
 	}
-	public static void getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<localResourcePurchase>list,int resId){
+	public static void getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,int resId){
 		String code;
 		code="select * from "+DbHelper.TABLE_RESOURCE_PURCHASES+" where "
 		+DbHelper.RESOURCE_PURCHASE_RESID+"="+resId+";";
@@ -163,7 +163,7 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
-			localResourcePurchase m=new localResourcePurchase();
+			LocalResourcePurchase m=new LocalResourcePurchase();
 			m.setpId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_ID)));
 			m.setResourceId(cursor.getInt(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_RESID)));
 			m.setType(cursor.getString(cursor.getColumnIndex(DbHelper.RESOURCE_PURCHASE_TYPE)));
@@ -193,7 +193,7 @@ public class DbQuery {
 		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
 		return purchase;
 	}
-	public static void getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<localCycleUse> list,String type){
+	public static void getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<LocalCycleUse> list,String type){
 		String code;
 		if(type==null)
 			code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "+DbHelper.CYCLE_RESOURCE_CYCLEID+"="+cycleid+";";
@@ -203,7 +203,7 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
-			localCycleUse l=new localCycleUse();
+			LocalCycleUse l=new LocalCycleUse();
 			l.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_ID)));
 			l.setAmount(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QTY)));
 			l.setCycleid(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID)));
@@ -214,7 +214,7 @@ public class DbQuery {
 			list.add(l);
 		}
 	}
-	public static void getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<localCycleUse> list,String type){
+	public static void getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<LocalCycleUse> list,String type){
 		String code;
 		if(type==null)
 			code="select * from "+DbHelper.TABLE_CYCLE_RESOURCES+" where "+DbHelper.CYCLE_RESOURCE_PURCHASE_ID+"="+purchaseId+";";
@@ -224,7 +224,7 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
-			localCycleUse l=new localCycleUse();
+			LocalCycleUse l=new LocalCycleUse();
 			l.setId(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_ID)));
 			l.setAmount(cursor.getDouble(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QTY)));
 			l.setCycleid(cursor.getInt(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_CYCLEID)));

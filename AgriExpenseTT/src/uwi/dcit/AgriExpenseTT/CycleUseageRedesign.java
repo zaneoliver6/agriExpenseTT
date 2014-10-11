@@ -3,7 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -33,7 +33,7 @@ public class CycleUseageRedesign extends ActionBarActivity {
 		
 		
 		Bundle data = getIntent().getExtras();
-		localCycle curr = (localCycle) data.getParcelable("cycleMain");
+		LocalCycle curr = (LocalCycle) data.getParcelable("cycleMain");
 		
 		Bundle generalArguments = new Bundle();
 		generalArguments.putString("category","general");

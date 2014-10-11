@@ -6,8 +6,8 @@ import java.util.Iterator;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -54,7 +54,7 @@ public class CycleUseage extends ActionBarActivity {
 	Double totalCrop,totalChemical,totalFertilizer,totalSoilAmendment;
 	private DbHelper dbh;
 	private SQLiteDatabase db;
-	ArrayList<localCycleUse> cUseList;
+	ArrayList<LocalCycleUse> cUseList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,7 +106,7 @@ public class CycleUseage extends ActionBarActivity {
 				showPopupList(CycleUseage.this);
 			}else if(v.getId()==R.id.btn_Cycle_plantMaterial2){
 				Cycle c=DbQuery.getCycle(db, dbh, cycleId);
-				localCycle cyc=new localCycle();
+				LocalCycle cyc=new LocalCycle();
 				cyc.setCropId(c.getCropId());
 				cyc.setId(c.getId());
 				Bundle b=new Bundle();
@@ -118,7 +118,7 @@ public class CycleUseage extends ActionBarActivity {
 				startActivity(n);
 			}else if(v.getId()==R.id.btn_Cycle_chemical2){
 				Cycle c=DbQuery.getCycle(db, dbh, cycleId);
-				localCycle cyc=new localCycle();
+				LocalCycle cyc=new LocalCycle();
 				cyc.setCropId(c.getCropId());
 				cyc.setId(c.getId());
 				Bundle b=new Bundle();
@@ -130,7 +130,7 @@ public class CycleUseage extends ActionBarActivity {
 				startActivity(n);
 			}else if(v.getId()==R.id.btn_Cycle_fertilizer2){
 				Cycle c=DbQuery.getCycle(db, dbh, cycleId);
-				localCycle cyc=new localCycle();
+				LocalCycle cyc=new LocalCycle();
 				cyc.setCropId(c.getCropId());
 				cyc.setId(c.getId());
 				Bundle b=new Bundle();
@@ -142,7 +142,7 @@ public class CycleUseage extends ActionBarActivity {
 				startActivity(n);
 			}else if(v.getId()==R.id.btn_Cycle_SoilAmendment2){
 				Cycle c=DbQuery.getCycle(db, dbh, cycleId);
-				localCycle cyc=new localCycle();
+				LocalCycle cyc=new LocalCycle();
 				cyc.setCropId(c.getCropId());
 				cyc.setId(c.getId());
 				Bundle b=new Bundle();
@@ -159,7 +159,7 @@ public class CycleUseage extends ActionBarActivity {
 	private void setup() {
 		//getting parecled data and converting the data
 		Bundle data = getIntent().getExtras();
-		localCycle curr = (localCycle) data.getParcelable("cycleMain");
+		LocalCycle curr = (LocalCycle) data.getParcelable("cycleMain");
 		clicks(curr.getId());
 		String plantMaterialName=DbQuery.findResourceName(db, dbh, curr.getCropId());
 		Calendar calendar=Calendar.getInstance();//creates an instance of a local calendar
@@ -186,7 +186,7 @@ public class CycleUseage extends ActionBarActivity {
 		imageView.setImageResource(R.drawable.money_doller1);
 
 		//getting aggregate and complex data 
-		ArrayList<localCycleUse> useList=new ArrayList<localCycleUse>();
+		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
 		//--------------------------------------------------------PLANT MATERIAL
 		DbQuery.getCycleUse(db, dbh, curr.getId(), useList, DHelper.cat_plantingMaterial);//fills the list with plantMaterial usage for THIS cycle
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
@@ -198,9 +198,9 @@ public class CycleUseage extends ActionBarActivity {
 		}else{
 			cNames=new ArrayList<String>();
 			cTotals=new double[useList.size()];
-			Iterator<localCycleUse> itr=useList.iterator();
+			Iterator<LocalCycleUse> itr=useList.iterator();
 			while(itr.hasNext()){
-				localCycleUse lcu=itr.next();
+				LocalCycleUse lcu=itr.next();
 				plantMaterialTotal+=lcu.getUseCost();//stores the total amount of money spent on plantMaterials
 				
 				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
@@ -225,7 +225,7 @@ public class CycleUseage extends ActionBarActivity {
 			}
 		}
 		//----------------------------------------------------FERTILIZER
-		useList=new ArrayList<localCycleUse>();
+		useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, curr.getId(), useList, DHelper.cat_fertilizer);//fills the list with plantMaterial usage for THIS cycle
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		Double fertilizerTotal=0.0;
@@ -236,9 +236,9 @@ public class CycleUseage extends ActionBarActivity {
 		}else{
 			fNames=new ArrayList<String>();
 			fTotals=new double[useList.size()];
-			Iterator<localCycleUse> itr=useList.iterator();
+			Iterator<LocalCycleUse> itr=useList.iterator();
 			while(itr.hasNext()){
-				localCycleUse lcu=itr.next();
+				LocalCycleUse lcu=itr.next();
 				fertilizerTotal+=lcu.getUseCost();//stores the total amount of money spent on fertilizers
 				
 				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
@@ -264,7 +264,7 @@ public class CycleUseage extends ActionBarActivity {
 		}
 		
 		//------------------------------------------------CHEMICAL
-		useList=new ArrayList<localCycleUse>();
+		useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, curr.getId(), useList, DHelper.cat_chemical);//fills the list with plantMaterial usage for THIS cycle
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		Double chemicalTotal=0.0;
@@ -275,9 +275,9 @@ public class CycleUseage extends ActionBarActivity {
 		}else{
 			chNames=new ArrayList<String>();
 			chTotals=new double[useList.size()];
-			Iterator<localCycleUse> itr=useList.iterator();
+			Iterator<LocalCycleUse> itr=useList.iterator();
 			while(itr.hasNext()){
-				localCycleUse lcu=itr.next();
+				LocalCycleUse lcu=itr.next();
 				chemicalTotal+=lcu.getUseCost();//stores the total amount of money spent on fertilizers
 				
 				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
@@ -302,7 +302,7 @@ public class CycleUseage extends ActionBarActivity {
 			}
 		}
 		//----------------------------SOIL AMENDMENT
-		useList=new ArrayList<localCycleUse>();
+		useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, curr.getId(), useList, DHelper.cat_soilAmendment);//fills the list with soil amendment usage for THIS cycle
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		Double soilAmendmentTotal=0.0;
@@ -313,9 +313,9 @@ public class CycleUseage extends ActionBarActivity {
 		}else{
 			saNames=new ArrayList<String>();
 			saTotals=new double[useList.size()];
-			Iterator<localCycleUse> itr=useList.iterator();
+			Iterator<LocalCycleUse> itr=useList.iterator();
 			while(itr.hasNext()){
-				localCycleUse lcu=itr.next();
+				LocalCycleUse lcu=itr.next();
 				soilAmendmentTotal+=lcu.getUseCost();//stores the total amount of money spent on fertilizers
 				
 				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
@@ -506,13 +506,13 @@ public class CycleUseage extends ActionBarActivity {
 	}
 	
 	private void populateArrayList(int cycleid,String type) {
-		cUseList=new ArrayList<localCycleUse>();
+		cUseList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, cycleid, cUseList, type);
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void populateList(View v) {
-		ArrayAdapter<localCycle> cycleAdptr=new cycleAdapter();
+		ArrayAdapter<LocalCycle> cycleAdptr=new cycleAdapter();
 		ListView list=(ListView)v.findViewById(R.id.simpleListText);
 		list.setAdapter(cycleAdptr);
 	}
@@ -530,7 +530,7 @@ public class CycleUseage extends ActionBarActivity {
 				itemView=getLayoutInflater().inflate(R.layout.cycle_list_item,parent,false);
 			}
 			//find the expense to work with
-			localCycleUse currUse=cUseList.get(position);
+			LocalCycleUse currUse=cUseList.get(position);
 			
 			//fill the layout's views with the relevant information
 			

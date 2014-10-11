@@ -3,7 +3,7 @@ package uwi.dcit.AgriExpenseTT.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class localCycle implements Parcelable{
+public class LocalCycle implements Parcelable{
 	private int id;
 	private int cropId;
 	private String landType;
@@ -45,10 +45,10 @@ public class localCycle implements Parcelable{
 	public void setTime(long time) {
 		this.time = time;
 	}
-	public localCycle() {
+	public LocalCycle() {
 		super();
 	}
-	public localCycle(int cropId, String landType, double landQty,long dte) {
+	public LocalCycle(int cropId, String landType, double landQty,long dte) {
 		super();
 		this.cropId = cropId;
 		this.landType = landType;
@@ -86,7 +86,7 @@ public class localCycle implements Parcelable{
 		String n="cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+"";
 		return n;
 	}
-	public localCycle(Parcel dest){
+	public LocalCycle(Parcel dest){
 		id=dest.readInt();
 		cropId=dest.readInt();
 		landType=dest.readString();
@@ -111,16 +111,16 @@ public class localCycle implements Parcelable{
 		dest.writeDouble(costPer);
 	}
 	
-	public static final Parcelable.Creator<localCycle> CREATOR = new Parcelable.Creator<localCycle>() {
+	public static final Parcelable.Creator<LocalCycle> CREATOR = new Parcelable.Creator<LocalCycle>() {
 
 		@Override
-		public localCycle createFromParcel(Parcel source) {
-			return new localCycle(source);
+		public LocalCycle createFromParcel(Parcel source) {
+			return new LocalCycle(source);
 		}
 
 		@Override
-		public localCycle[] newArray(int size) {
-			return new localCycle[size];
+		public LocalCycle[] newArray(int size) {
+			return new LocalCycle[size];
 		}
 	};
 	@Override

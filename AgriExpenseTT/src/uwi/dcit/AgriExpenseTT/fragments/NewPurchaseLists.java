@@ -28,10 +28,8 @@ public class NewPurchaseLists extends ListFragment {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	int cycleId;
-	TextView et_main;
-	TextView et_search;
-	View view;
 	ArrayAdapter<String> listAdapt;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +43,8 @@ public class NewPurchaseLists extends ListFragment {
 	}
 		
 	private void populateList() {
-		list=new ArrayList<String>();
+		list = new ArrayList<String>();
+		
 		if(type.equals("category")){
 			list.add(DHelper.cat_plantingMaterial);
 			list.add(DHelper.cat_chemical);
@@ -60,6 +59,9 @@ public class NewPurchaseLists extends ListFragment {
 				list.add(DHelper.qtf_plantingMaterial_seed);
 				list.add(DHelper.qtf_plantingMaterial_seedling);
 				list.add(DHelper.qtf_plantingMaterial_stick);
+				list.add(DHelper.qtf_plantingMaterial_tubes);
+				list.add(DHelper.qtf_plantingMaterial_heads);
+				list.add(DHelper.qtf_plantingMaterial_slip);
 			}else if(cat.equals(DHelper.cat_chemical)){
 				list.add(DHelper.qtf_chemical_ml);
 				list.add(DHelper.qtf_chemical_L);
@@ -83,9 +85,9 @@ public class NewPurchaseLists extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
 		//returns the inflated layout which contains the listview
-		view= inflater.inflate(R.layout.list_reuse, container, false);
-		et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+		View view= inflater.inflate(R.layout.list_reuse, container, false);
+		TextView et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
+		TextView et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 		if(getArguments().getString("type").equals("category")||getArguments().getString("type").equals("quantifier")){
 			et_search.setVisibility(View.GONE);
 		}else{
@@ -156,7 +158,7 @@ public class NewPurchaseLists extends ListFragment {
 				((NewPurchase)getActivity()).replaceSub("Details: "+getArguments().getString("category")
 						+", "+getArguments().getString("resource")+", "+list.get(position));
 				
-				newFragment =new Fragment_newpurchaseLast();
+				newFragment =new FragmentNewPurchaseLast();
 			}
 			newFragment.setArguments(b);
 			// Replace whatever is in the fragment_container view with this fragment,

@@ -8,8 +8,8 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -22,8 +22,8 @@ import android.view.MenuItem;
 
 public class DeleteData extends ActionBarActivity {
 
-	ArrayList<localCycle> li;
-	ArrayList<localResourcePurchase> pli;
+	ArrayList<LocalCycle> li;
+	ArrayList<LocalResourcePurchase> pli;
 	DbHelper dbh;
 	SQLiteDatabase db;
 	@Override
@@ -34,9 +34,9 @@ public class DeleteData extends ActionBarActivity {
 		//for empty lists
 		dbh=new DbHelper(DeleteData.this);
 		db=dbh.getReadableDatabase();
-		li=new ArrayList<localCycle>();
+		li=new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, li);
-		pli=new ArrayList<localResourcePurchase>();
+		pli=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		TabListener tL=new TabListener();

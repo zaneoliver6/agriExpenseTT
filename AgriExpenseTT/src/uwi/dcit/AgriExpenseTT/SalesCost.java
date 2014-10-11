@@ -2,7 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,7 +33,7 @@ public class SalesCost extends ActionBarActivity {
 	
 	double amtHarvest;
 	double costPer;
-	localCycle currCycle;
+	LocalCycle currCycle;
 	EditText et_sell;
 	double sellp;
 	String crop;

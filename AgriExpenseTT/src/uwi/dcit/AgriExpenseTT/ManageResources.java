@@ -8,8 +8,8 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -23,8 +23,8 @@ import android.view.MenuItem;
 
 public class ManageResources extends ActionBarActivity {
 	
-	private ArrayList<localCycle> li;
-	private ArrayList<localResourcePurchase> pli;
+	private ArrayList<LocalCycle> li;
+	private ArrayList<LocalResourcePurchase> pli;
 	private DbHelper dbh;
 	private SQLiteDatabase db;
 	
@@ -43,13 +43,13 @@ public class ManageResources extends ActionBarActivity {
 		else Log.d(MainMenu.APP_NAME, "Database is not null");
 		
 		//Retrieve Cycles
-		li = new ArrayList<localCycle>();
+		li = new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, li);
 		
 		Log.d(MainMenu.APP_NAME, "Found Cycles: "+li.size());
 		
 		//Retrieve Purchases
-		pli = new ArrayList<localResourcePurchase>();
+		pli = new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		Log.d(MainMenu.APP_NAME, "Found Purchases: " + pli.size());
@@ -95,12 +95,11 @@ public class ManageResources extends ActionBarActivity {
 					fragment = new FragmentEmpty();
 					arguments.putString("type", "cycle");
 					fragment.setArguments(arguments);
-					ft.add(R.id.navContent, fragment);
 				}else{
 					fragment=new FragmentViewCycles();
-					ft.add(R.id.navContent, fragment);
 				}
-				currFragment=fragment;
+				ft.replace(R.id.navContent, fragment);
+				currFragment = fragment;
 				return;
 			}
 			

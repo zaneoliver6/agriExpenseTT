@@ -9,8 +9,8 @@ import uwi.dcit.AgriExpenseTT.SalesCost;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -37,7 +37,7 @@ public class FragmentGeneralCategory extends Fragment{
 	double pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
 	View view;
 	
-	localCycle currCycle;
+	LocalCycle currCycle;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,33 +100,33 @@ public class FragmentGeneralCategory extends Fragment{
 	}
 	private void calcTotals(){
 		currCycle=getArguments().getParcelable("cycle");
-		ArrayList<localCycleUse> list=new ArrayList<localCycleUse>();
+		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_plantingMaterial);
 		pm=getTotal(list);
 		
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_fertilizer);
 		fer=getTotal(list);
 		
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_soilAmendment);
 		soilam=getTotal(list);
 		
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_chemical);
 		chem=getTotal(list);
 		
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_labour);
 		labr=getTotal(list);
 
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_other);
 		other=getTotal(list);
 	}
 
-	private double getTotal(ArrayList<localCycleUse> list) {
-		Iterator<localCycleUse> i=list.iterator();
+	private double getTotal(ArrayList<LocalCycleUse> list) {
+		Iterator<LocalCycleUse> i=list.iterator();
 		double total=0;
 		while(i.hasNext()){
 			total+=i.next().getUseCost();

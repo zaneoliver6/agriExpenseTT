@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uwi.dcit.AgriExpenseTT"
-    android:versionCode="7"
-    android:versionName="5.2" >
+    android:versionCode="8"
+    android:versionName="5.3" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -39,7 +39,8 @@
         </activity>
         <activity
             android:name=".NewCycle"
-            android:label="@string/title_activity_new_cycle" >
+            android:label="@string/title_activity_new_cycle" 
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
@@ -89,14 +90,16 @@
         </activity>
         <activity
 			android:name=".UsePurchaseFrag"
-			android:label="@string/title_activity_use_purchase_frag" >
+			android:label="@string/title_activity_use_purchase_frag"
+			android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
 		</activity>
         <activity
             android:name=".CycleUseageRedesign"
-            android:label="Use resources" >
+            android:label="Use resources"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".DeleteData"
@@ -129,15 +132,18 @@
         </activity>
         <activity
             android:name=".ViewCycleUsege"
-            android:label="@string/title_activity_view_cycle_usege" >
+            android:label="@string/title_activity_view_cycle_usege"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".SalesCost"
-            android:label="@string/title_activity_sales_cost" >
+            android:label="@string/title_activity_sales_cost"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".HarvestDetails"
-            android:label="@string/title_activity_harvest_details" >
+            android:label="@string/title_activity_harvest_details" 
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".SelectLocation"

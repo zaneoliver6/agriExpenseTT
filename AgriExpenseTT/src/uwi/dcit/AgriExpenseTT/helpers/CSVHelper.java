@@ -16,9 +16,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -56,12 +56,12 @@ public class CSVHelper {
 		
 	}
 	private void writeExcel(File path){
-		ArrayList<localCycle> cList=new ArrayList<localCycle>();
+		ArrayList<LocalCycle> cList=new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, cList);
 		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
 		HSSFSheet useSheet = agriWrkbk.createSheet("Use Sheet");
 		int rowNum=0;
-		for(localCycle lc:cList){
+		for(LocalCycle lc:cList){
 			HSSFRow row = useSheet.createRow(rowNum++);
 			HSSFCell a0 = row.createCell(0);
 			a0.setCellValue("Cycle#"+lc.getCropId()+": "+DbQuery.findResourceName(db, dbh, lc.getCropId()));
@@ -124,8 +124,8 @@ public class CSVHelper {
 	}
 
 	private int writeCategory(String type, int cycId,HSSFSheet useSheet, int rowNum, HSSFCellStyle style){
-		ArrayList<localCycleUse> useList = new ArrayList<localCycleUse>();
-		ArrayList<localResourcePurchase> purList = new ArrayList<localResourcePurchase>();
+		ArrayList<LocalCycleUse> useList = new ArrayList<LocalCycleUse>();
+		ArrayList<LocalResourcePurchase> purList = new ArrayList<LocalResourcePurchase>();
 		populate(useList,purList,type,cycId);
 		if(useList.isEmpty())
 			return rowNum;
@@ -138,7 +138,7 @@ public class CSVHelper {
 		cl.setCellStyle(style);
 		//HSSFFont fnt=new HSSFFont((short) 2);
 	
-		for( localCycleUse lcu:useList){
+		for( LocalCycleUse lcu:useList){
 			 rowNum++;int c=0;
 			 HSSFRow row=useSheet.createRow(rowNum);
 			 RPurchase p=DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
@@ -168,8 +168,8 @@ public class CSVHelper {
 		return ++rowNum;
 	}
 
-	private void populate(ArrayList<localCycleUse> useList,
-			ArrayList<localResourcePurchase> purList, String type, int cycId) {
+	private void populate(ArrayList<LocalCycleUse> useList,
+			ArrayList<LocalResourcePurchase> purList, String type, int cycId) {
 		DbQuery.getPurchases(db, dbh, purList, type, null,true);
 		DbQuery.getCycleUse(db, dbh, cycId, useList, type);
 	}

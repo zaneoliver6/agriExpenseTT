@@ -9,7 +9,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
@@ -38,7 +38,7 @@ public class FragmentPurchaseUse extends Fragment {
 	private View view;
 	private SQLiteDatabase db;
 	private DbHelper dbh;
-	private localCycle c = null;
+	private LocalCycle c = null;
 	private RPurchase p;
 	
 	private double useAmount=0;//the amount you are going to use

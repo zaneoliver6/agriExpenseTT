@@ -3,9 +3,9 @@ package uwi.dcit.AgriExpenseTT.helpers;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 import com.example.agriexpensett.cycleendpoint.model.Cycle;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
@@ -71,7 +71,7 @@ public class DataManager {
 	
 	
 	//------------------------------------------READY TO USE (FROM FRONT)
-	public void deleteCycleUse(localCycleUse l){
+	public void deleteCycleUse(LocalCycleUse l){
 		//update the Purchase that was used (local) add back the amount that was used
 		//update cloud, record it in the redo Log purchase Id and the table
 		//update the Cycle's total spent (local) subtract the usage cost from the cycle's total spent
@@ -122,11 +122,11 @@ public class DataManager {
 		//put the delete in the redo log
 		
 		//getting all the cycleUse
-		ArrayList<localCycleUse> list=new ArrayList<localCycleUse>();
+		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
-		Iterator<localCycleUse> itr=list.iterator();
+		Iterator<LocalCycleUse> itr=list.iterator();
 		while(itr.hasNext()){
-			localCycleUse l=itr.next();
+			LocalCycleUse l=itr.next();
 			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
 		}
 		//delete purchase 
@@ -143,17 +143,17 @@ public class DataManager {
 	}
 	
 	//-----------------------------------READY TO USE (FROM FRONT)
-	public void deleteCycle(localCycle c){
+	public void deleteCycle(LocalCycle c){
 		//get all cycleUse wih cid
 		//delete each one using delete cycleUse as to restore to purchase the amounts used by the cycleUse
 		//delete the cycle Locally
 		//insert into redo log (cloud)
 
-		ArrayList<localCycleUse> list=new ArrayList<localCycleUse>();
+		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
-		Iterator<localCycleUse> itr=list.iterator();
+		Iterator<LocalCycleUse> itr=list.iterator();
 		while(itr.hasNext()){
-			localCycleUse l=itr.next();
+			LocalCycleUse l=itr.next();
 			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
 		}
 		//delete cycle
@@ -178,18 +178,18 @@ public class DataManager {
 		//delete resource and record in transaction log
 		//-----Not Sure If we're having resources in the cloud
 
-		ArrayList<localResourcePurchase> pList=new ArrayList<localResourcePurchase>();
+		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getResourcePurchases(db, dbh, pList, rId);
-		Iterator<localResourcePurchase>pI=pList.iterator();
+		Iterator<LocalResourcePurchase>pI=pList.iterator();
 		while(pI.hasNext()){
 			this.deletePurchase(pI.next().toRPurchase());
 		}
 		
-		ArrayList<localCycle> cList=new ArrayList<localCycle>();
+		ArrayList<LocalCycle> cList=new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, cList);
-		Iterator<localCycle> cI=cList.iterator();
+		Iterator<LocalCycle> cI=cList.iterator();
 		while(cI.hasNext()){
-			localCycle c=cI.next();
+			LocalCycle c=cI.next();
 			if(c.getCropId()==rId)
 				this.deleteCycle(c);
 		}
@@ -227,7 +227,7 @@ public class DataManager {
 			}
 		}
 	}
-	public void updateCycle(localCycle c,ContentValues cv){
+	public void updateCycle(LocalCycle c,ContentValues cv){
 		db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+c.getId(), null);
 		//update the cloud
 		TransactionLog tl=new TransactionLog(dbh, db,context);

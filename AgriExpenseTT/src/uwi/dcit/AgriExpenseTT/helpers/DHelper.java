@@ -11,6 +11,9 @@ public class DHelper {
 	public static final String qtf_plantingMaterial_seed="Seed";
 	public static final String qtf_plantingMaterial_seedling="Seedling";
 	public static final String qtf_plantingMaterial_stick="Stick";
+	public static final String qtf_plantingMaterial_tubes="Tubes";
+	public static final String qtf_plantingMaterial_heads="Heades";
+	public static final String qtf_plantingMaterial_slip="Slips";
 	
 	public static final String qtf_chemical_ml="ml";
 	public static final String qtf_chemical_L="L";

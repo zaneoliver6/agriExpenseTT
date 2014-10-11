@@ -12,8 +12,8 @@ import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,7 +35,7 @@ public class FragmentCycleUseCategory extends Fragment{
 	Button btn_useMore;
 	View view;
 	String category;
-	localCycle currCycle;
+	LocalCycle currCycle;
 	Double catTotal=0.0;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,7 +103,7 @@ public class FragmentCycleUseCategory extends Fragment{
 		DbHelper dbh=new DbHelper(getActivity().getBaseContext());
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		//getting aggregate and complex data 
-		ArrayList<localCycleUse> useList=new ArrayList<localCycleUse>();
+		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> Names=null;
@@ -111,9 +111,9 @@ public class FragmentCycleUseCategory extends Fragment{
 		if(!(useList.isEmpty())){
 			Names=new ArrayList<String>();
 			Totals=new double[useList.size()];
-			Iterator<localCycleUse> itr=useList.iterator();
+			Iterator<LocalCycleUse> itr=useList.iterator();
 			while(itr.hasNext()){
-				localCycleUse lcu=itr.next();
+				LocalCycleUse lcu=itr.next();
 				catTotal+=lcu.getUseCost();//stores the total amount of money spent on plantMaterials
 						
 				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
@@ -159,7 +159,6 @@ public class FragmentCycleUseCategory extends Fragment{
 	}
 	
 	private void setupClick() {
-		// TODO Auto-generated method stub
 		Click click=new Click();
 		btn_useage.setOnClickListener(click);
 		btn_useMore.setOnClickListener(click);

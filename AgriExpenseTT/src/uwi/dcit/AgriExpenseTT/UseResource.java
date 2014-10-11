@@ -7,82 +7,60 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.localCycle;
-import uwi.dcit.AgriExpenseTT.models.localResourcePurchase;
-import android.support.v7.app.ActionBarActivity;
-import android.app.Activity;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.inputmethod.InputMethodManager;
 
 public class UseResource extends ActionBarActivity {
-	Double total;
-	localCycle c;
+	private Double total;
+	private LocalCycle mainCycle;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Bundle data=this.getIntent().getExtras();
-		Bundle b=data.getParcelable("cyc");
-		c=b.getParcelable("cyc");
-		String s=getIntent().getStringExtra("type");
-		System.out.println("type before:"+s);
-		String tS=getIntent().getStringExtra("total");
-		total=Double.parseDouble(tS);
+		Bundle data = this.getIntent().getExtras();
+		Bundle b 	= data.getParcelable("cyc");
+		mainCycle	= b.getParcelable("cyc");
+		
+		String stype= getIntent().getStringExtra("type");		
+		String tStr	= getIntent().getStringExtra("total");
+		total		= Double.parseDouble(tStr);
+		
 		setContentView(R.layout.activity_use_resource);
-		setupUI();
-		start(c,s);
+		start(mainCycle,stype);
 			
 	}
-	public static void hideSoftKeyboard(Activity activity) {
-	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-	}
-	public void setupUI() {
-		View v=findViewById(R.id.container_useResource);
-		TouchL l=new TouchL();
-		v.setOnTouchListener(l);
-	}
-	public class TouchL implements OnTouchListener{
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			if(v.getId()==R.id.container_useResource||v.getId()==R.id.container_useResource_frag)
-				hideSoftKeyboard(UseResource.this);
-			return false;
-		}
-	   
-   }
 	
-	private void start(localCycle c, String s) {
+	private void start(LocalCycle cycle, String type) {
 		DbHelper dbh=new DbHelper(this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
-		ArrayList<localResourcePurchase> pList=new ArrayList<localResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, s, null,false);
+		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
+		DbQuery.getPurchases(db, dbh, pList, type, null,false);
 		db.close();
 		if(pList.isEmpty()){
-			//View view=getLayoutInflater().inflate(R.layout.fragment_empty_purchaselist, R.id.useExpenseFrag);
-			FragmentManager fm=getFragmentManager();
-			FragmentTransaction ft=fm.beginTransaction();
-			Fragment f=new FragmentEmpty();
-			Bundle b=new Bundle();
-			b.putString("type","purchase");
-			b.putString("category", s);
-			f.setArguments(b);
-			ft.add(R.id.useExpenseFrag, f);
-			ft.commit();
+			Fragment fragment	= new FragmentEmpty();
+			Bundle parameter 	= new Bundle();
+			parameter.putString("type","purchase");
+			parameter.putString("category", type);
+			fragment.setArguments(parameter);
+			
+			getFragmentManager()
+				.beginTransaction()
+				.add(R.id.useExpenseFrag, fragment)
+				.commit();
 		}else{
-			initialFrag(c,s);
+			initialFrag(cycle,type);
 		}
 	}
 
@@ -90,7 +68,7 @@ public class UseResource extends ActionBarActivity {
 		return total;
 	}
 	
-	private void initialFrag(localCycle c,String s) {
+	private void initialFrag(LocalCycle c,String s) {
 		Bundle pass=new Bundle();
 		pass.putParcelable("cycle",c);
 		pass.putString("det",s);
@@ -134,7 +112,7 @@ public class UseResource extends ActionBarActivity {
 		@Override
 		public void run(){
 			Intent i =new Intent(UseResource.this,CycleUseageRedesign.class);
-	        i.putExtra("cycleMain", c);
+	        i.putExtra("cycleMain", mainCycle);
 			startActivity(i);
 			finish();
 		}
