@@ -8,8 +8,8 @@
 	<dimen name="about_image_width">70dp</dimen>
 	<dimen name="about_image_height">210dp</dimen>
 
-	<dimen name="home_btn_width">180dp</dimen>
-	<dimen name="home_btn_height">40dp</dimen>	
+	<dimen name="home_btn_width">185dp</dimen>
+	<dimen name="home_btn_height">60dp</dimen>	
 	<dimen name="home_btn_magrin">20dp</dimen>
 
 </resources>

@@ -1,14 +1,11 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.helpers.CSVHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -80,19 +77,7 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	public void openManageExports(View view){
-		//TODO Implement on a separate window
-		
-		new AlertDialog.Builder(this)
-			.setMessage("This Action Will create an excel document of all Records. Do you wish to continue?")
-			.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					CSVHelper cvh=new CSVHelper(MainMenu.this);
-	            	cvh.stuff(MainMenu.this);
-	            }
-	         })
-	         .setNegativeButton("No", null)
-	         .show();
-		
+		startActivity(new Intent(MainMenu.this, ManageReport.class));		
 	}
 	
 	public void openAboutFragment(View view){

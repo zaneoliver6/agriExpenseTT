@@ -16,12 +16,12 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo_agrinet"
-        android:label="AgriExpenseTT"
+        android:label="AgriExpense"
         android:logo="@drawable/large_a_logo"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainMenu"
-            android:label="AgriExpenseTT"
+            android:label="AgriExpense"
             android:windowSoftInputMode="stateHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:name=".NewCycle"
-            android:label="@string/title_activity_new_cycle" 
+            android:label="@string/title_activity_new_cycle"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -89,13 +89,13 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
-			android:name=".UsePurchaseFrag"
-			android:label="@string/title_activity_use_purchase_frag"
-			android:windowSoftInputMode="stateHidden" >
+            android:name=".UsePurchaseFrag"
+            android:label="@string/title_activity_use_purchase_frag"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
-		</activity>
+        </activity>
         <activity
             android:name=".CycleUseageRedesign"
             android:label="Use resources"
@@ -142,8 +142,8 @@
         </activity>
         <activity
             android:name=".HarvestDetails"
-            android:label="@string/title_activity_harvest_details" 
-            android:windowSoftInputMode="stateHidden">
+            android:label="@string/title_activity_harvest_details"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".SelectLocation"
@@ -157,6 +157,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
+        <activity
+            android:name=".ManageReport"
+            android:label="@string/title_activity_report_manager"
+            android:parentActivityName=".ManageData" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uwi.dcit.AgriExpenseTT.ManageData" />
         </activity>
     </application>
 

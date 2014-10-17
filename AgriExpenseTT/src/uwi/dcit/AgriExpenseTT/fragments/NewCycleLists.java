@@ -56,8 +56,7 @@ public class NewCycleLists extends ListFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		//returns the inflated layout which contains the listview
 		view= inflater.inflate(R.layout.list_reuse, container, false);
 

@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/cycleuseendpoint/v1/20141007203145/java/1.18.0-rc/example.com-cycleuseendpoint-v1-20141007203145-java-1.18.0-rc-sources.jar", 
-      "path": "example.com-cycleuseendpoint-v1-20141007203145-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/cycleuseendpoint/v1/20141017052528/java/1.18.0-rc/example.com-cycleuseendpoint-v1-20141017052528-java-1.18.0-rc-sources.jar", 
+      "path": "example.com-cycleuseendpoint-v1-20141017052528-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-10-07 20:31"
+      "timestamp": "2014-10-17 05:25"
     }, 
     {
-      "path": "example.com-cycleuseendpoint-v1-20141007203145-java-1.18.0-rc.jar.properties", 
+      "path": "example.com-cycleuseendpoint-v1-20141017052528-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "agriexpensett", 
   "language_version": "1.18.0-rc", 
   "id": "cycleuseendpoint:v1", 
-  "revision": 20141007203145
+  "revision": 20141017052528
 }

@@ -22,10 +22,12 @@ public class NewCycle extends ActionBarActivity {
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitialFrag();
 	}
+	
 	public void replaceSub(String text){
 		sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
 		sub_head.setText(text);
 	}
+	
 	private void setupInitialFrag() {
 		Bundle arguments = new Bundle();
 		arguments.putString("type",DHelper.cat_plantingMaterial);
@@ -38,7 +40,6 @@ public class NewCycle extends ActionBarActivity {
 			.add(R.id.NewCycleListContainer,listfrag)
 			.commit();
 	}
-	
 	
 	public static void hideSoftKeyboard(Activity activity) {
 	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);

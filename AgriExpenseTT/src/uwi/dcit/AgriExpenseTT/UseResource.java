@@ -39,7 +39,6 @@ public class UseResource extends ActionBarActivity {
 		
 		setContentView(R.layout.activity_use_resource);
 		start(mainCycle,stype);
-			
 	}
 	
 	private void start(LocalCycle cycle, String type) {

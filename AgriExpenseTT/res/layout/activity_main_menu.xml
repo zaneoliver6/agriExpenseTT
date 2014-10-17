@@ -42,9 +42,13 @@
 		            android:id="@+id/NewPurchase"
 		            android:layout_width="@dimen/home_btn_width"
 		            android:layout_height="@dimen/home_btn_height"
-		            android:layout_gravity="center_horizontal"
 		            android:background="@drawable/btn_custom"
+		            android:drawableLeft="@drawable/mainmenu_shopping_cart"
+		            android:drawableStart="@drawable/mainmenu_shopping_cart"
+		            android:drawablePadding="10dp"
 		            android:layout_marginTop="@dimen/home_btn_magrin"
+		            android:layout_gravity="center_horizontal"
+		            android:gravity="start|center_vertical"
 		            android:text="@string/btn_new_purchase"
 		            android:onClick="openNewPurchaseFragment" />
 	
@@ -52,9 +56,13 @@
 				    android:id="@+id/newCycle"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"		
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
-				    android:layout_marginTop="@dimen/home_btn_magrin"	
+				    android:drawableLeft="@drawable/mainmenu_cycle_triangle"
+				    android:drawableStart="@drawable/mainmenu_cycle_triangle"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:layout_gravity="center_horizontal"
+		            android:gravity="start|center_vertical"	
 				    android:text="@string/btn_new_cycle" 
 				    android:onClick="openNewCycleFragment"/>
 
@@ -62,9 +70,13 @@
 				    android:id="@+id/HireLabour"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_shovel_single"
+				    android:drawableStart="@drawable/mainmenu_shovel_single"
+				    android:drawablePadding="10dp"
 				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
 				    android:text="@string/btn_new_labour"
 				    android:onClick="openManageLabourFragment" />
 
@@ -72,39 +84,55 @@
 				    android:id="@+id/ResDetail"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
 				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_resources"
+				    android:drawableStart="@drawable/mainmenu_resources"
+				    android:drawablePadding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
 				    android:text="@string/btn_man_resource" 
 				    android:onClick="openManageResourceFragment"/>
 
 				<Button
-				    android:id="@+id/manageData"
-				    android:layout_width="@dimen/home_btn_width"
-				    android:layout_height="@dimen/home_btn_height"		
-				    android:layout_gravity="center_horizontal"
-				    android:background="@drawable/btn_custom"
-				    android:layout_marginTop="@dimen/home_btn_magrin"	
-				    android:text="@string/btn_man_data"
-				    android:onClick="openManageDataFragment" />
-
-				 <Button
 				    android:id="@+id/generateFile"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_reports"
+				    android:drawableStart="@drawable/mainmenu_reports"
+				    android:drawablePadding="10dp"
 				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
 				    android:text="@string/btn_gen_report"
 				    android:onClick="openManageExports" />
+				
+				<Button
+				    android:id="@+id/manageData"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"		
+				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_data_settings"
+				    android:drawableStart="@drawable/mainmenu_data_settings"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"	
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_man_data"
+				    android:onClick="openManageDataFragment" />
 				 
 				<Button
 				    android:id="@+id/btn_SignIn"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
 				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_signin"
+				    android:drawableStart="@drawable/mainmenu_signin"
+				    android:drawablePadding="4dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
 				    android:text="@string/btn_man_signin"
 				    android:onClick="signInStart" />
 
@@ -113,9 +141,13 @@
 				    android:id="@+id/btn_About"
 				    android:layout_width="@dimen/home_btn_width"
 				    android:layout_height="@dimen/home_btn_height"
-				    android:layout_gravity="center_horizontal"
 				    android:background="@drawable/btn_custom"
 				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_about"
+				    android:drawableStart="@drawable/mainmenu_about"
+				    android:drawablePadding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
 				    android:text="@string/btn_man_about"
 				    android:onClick="openAboutFragment" />
 	      

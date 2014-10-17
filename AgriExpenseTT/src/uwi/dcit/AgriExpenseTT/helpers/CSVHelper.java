@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -40,28 +41,59 @@ public class CSVHelper {
 	
 	
 	public CSVHelper(Activity act){
-		dbh=new DbHelper(act.getBaseContext());
-		db=dbh.getReadableDatabase();
-		activity=act;
+		dbh = new DbHelper(act.getBaseContext());
+		db = dbh.getReadableDatabase();
+		activity = act;
 	}
-	public void stuff(Context context){
-		File path = new File(Environment.getExternalStorageDirectory()+"/Agrinet");
+	
+	public void createReport(){
+		
+		//Create a default name for the report file based on current date
+		String defaultName = "AgriExpenseReport";
+		Calendar c = Calendar.getInstance();
+		StringBuilder stb = new StringBuilder();
+		stb.append(defaultName)
+			.append("-")
+			.append(c.get(Calendar.DAY_OF_MONTH))
+			.append("-")
+			.append(c.get(Calendar.MONTH))
+			.append("-")
+			.append(c.get(Calendar.YEAR))
+			.append(".xls");
+		
+		createReport(defaultName);
+	}
+	
+	public void createReport(String filename){
+		File path = new File(Environment.getExternalStorageDirectory()+"/AgrineTT");
 		if (!path.exists()) {
 			path.mkdirs();
-			Log.i("Foler", " Folder does not exist");
-		}else{	
+			Log.i("CSVHelper", " Folder does not exist, Creating folder at "+path.toString());
 		}
-		Log.i("file path", path.getPath());
-		writeExcel(path);
+		writeExcel(path, filename);
 		
 	}
-	private void writeExcel(File path){
-		ArrayList<LocalCycle> cList=new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, cList);
+	
+	private void writeExcel(File path, String filename){
+		Calendar c = Calendar.getInstance();
+		
+		this.writeExcel(path, filename, 0);
+	}
+	
+	private void writeExcel(File path, String filename, int endDate){
+		this.writeExcel(path, filename, endDate, 0);
+	}
+	
+	private void writeExcel(File path, String filename, int endDate, int beginDate){
+		
+		ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
+		DbQuery.getCycles(db, dbh, cycleList);
+		
 		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
-		HSSFSheet useSheet = agriWrkbk.createSheet("Use Sheet");
+		HSSFSheet useSheet = agriWrkbk.createSheet("Crop Cycle");
+		
 		int rowNum=0;
-		for(LocalCycle lc:cList){
+		for(LocalCycle lc:cycleList){
 			HSSFRow row = useSheet.createRow(rowNum++);
 			HSSFCell a0 = row.createCell(0);
 			a0.setCellValue("Cycle#"+lc.getCropId()+": "+DbQuery.findResourceName(db, dbh, lc.getCropId()));
