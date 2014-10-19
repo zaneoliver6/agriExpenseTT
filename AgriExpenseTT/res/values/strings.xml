@@ -107,4 +107,6 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="help_manage_data_5">If you delete a resource that is the crop of a crop cycle, the cycle is deleted, likewise if you have purchased the resource that you are deleting the purchase will be deleted as well.</string>
     <string name="title_activity_report_manager">ReportManager</string>
 
+    <string name="menu_action_view_report">View Report</string>
+    <string name="menu_action_delete_report">Delete Report</string>
 </resources>

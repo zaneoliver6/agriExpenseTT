@@ -89,6 +89,7 @@ public class FragmentViewCycles extends ListFragment{
 		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
 	
+	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
 		super.onCreateContextMenu(menu, v, menuInfo);
 		

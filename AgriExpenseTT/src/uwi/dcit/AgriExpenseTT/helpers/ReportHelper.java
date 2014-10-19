@@ -34,22 +34,31 @@ import android.util.Log;
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 @SuppressWarnings("deprecation")
-public class CSVHelper {
+public class ReportHelper {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Activity activity;
 	
+	public static final String folderLocation = "AgriExpense";
+	public static final String defaultName 	="AgriExpenseReport";
 	
-	public CSVHelper(Activity act){
+	public ReportHelper(Activity act){
 		dbh = new DbHelper(act.getBaseContext());
 		db = dbh.getReadableDatabase();
 		activity = act;
 	}
 	
-	public void createReport(){
-		
+	public static void createReportDirectory(){
+		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
+		if (!path.exists()) 
+			path.mkdirs();
+	}
+	
+	/**
+	 * Create a report using a combination of the default filename and the current time
+	 */
+	public void createReport(){		
 		//Create a default name for the report file based on current date
-		String defaultName = "AgriExpenseReport";
 		Calendar c = Calendar.getInstance();
 		StringBuilder stb = new StringBuilder();
 		stb.append(defaultName)
@@ -61,51 +70,53 @@ public class CSVHelper {
 			.append(c.get(Calendar.YEAR))
 			.append(".xls");
 		
-		createReport(defaultName);
+		createReport(stb.toString());
 	}
 	
+	/**
+	 * Create a report with the supplied filename up to the current time frame
+	 * @param filename
+	 */
 	public void createReport(String filename){
-		File path = new File(Environment.getExternalStorageDirectory()+"/AgrineTT");
+		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
 		if (!path.exists()) {
 			path.mkdirs();
 			Log.i("CSVHelper", " Folder does not exist, Creating folder at "+path.toString());
 		}
 		writeExcel(path, filename);
-		
 	}
 	
 	private void writeExcel(File path, String filename){
 		Calendar c = Calendar.getInstance();
-		
-		this.writeExcel(path, filename, 0);
+		this.writeExcel(path, filename,c.getTimeInMillis());
 	}
 	
-	private void writeExcel(File path, String filename, int endDate){
-		this.writeExcel(path, filename, endDate, 0);
+	private void writeExcel(File path, String filename, long l){
+		this.writeExcel(path, filename, l, 0);
 	}
 	
-	private void writeExcel(File path, String filename, int endDate, int beginDate){
+	private void writeExcel(File path, String filename, long endDate, long beginDate){
 		
 		ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, cycleList);
+		DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
+		
 		
 		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
 		HSSFSheet useSheet = agriWrkbk.createSheet("Crop Cycle");
 		
 		int rowNum=0;
-		for(LocalCycle lc:cycleList){
+		for(LocalCycle cycle : cycleList){
 			HSSFRow row = useSheet.createRow(rowNum++);
 			HSSFCell a0 = row.createCell(0);
-			a0.setCellValue("Cycle#"+lc.getCropId()+": "+DbQuery.findResourceName(db, dbh, lc.getCropId()));
+			a0.setCellValue("Cycle#"+cycle.getCropId()+": "+DbQuery.findResourceName(db, dbh, cycle.getCropId()));
 			HSSFCell a1 = row.createCell(1);
-			a1.setCellValue(lc.getTotalSpent());
-			rowNum=writeCategories(path,agriWrkbk,useSheet,lc.getId(),rowNum);
-			rowNum+=3;
+			a1.setCellValue(cycle.getTotalSpent());
+			rowNum = writeCategories(filename, path,agriWrkbk,useSheet,cycle.getId(),rowNum);
+			rowNum += 3;
 		}
 	}
 
-	private int writeCategories(File path, HSSFWorkbook agriWrkbk,
-			HSSFSheet useSheet, int cycId, int rowNum) {
+	private int writeCategories(String filename, File path, HSSFWorkbook agriWrkbk, HSSFSheet useSheet, int cycId, int rowNum) {
 		HSSFCellStyle styleGen = agriWrkbk.createCellStyle();
 
 	    int c=0;
@@ -147,9 +158,9 @@ public class CSVHelper {
 		//useSheet.autoSizeColumn(1,false);
 		Log.i(null, "almost");  
 		try {
-			FileOutputStream out=new FileOutputStream(path+"/test.xls");
+			FileOutputStream out=new FileOutputStream(path+"/"+filename);
 			agriWrkbk.write(out);
-			notify("meh.xls",path);
+			notify(filename,path);
 		} catch (IOException e1) {e1.printStackTrace();}
 	    return rowNum;
 
@@ -210,18 +221,19 @@ public class CSVHelper {
 		//controls what activity is called when notification is clicked
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
-		File file = new File(path+File.separator+"test.xls");
+		
+		File file = new File(path +File.separator + name);
 		intent.setDataAndType(Uri.fromFile(file),"application/vnd.ms-excel");
 		PendingIntent pIntent = PendingIntent.getActivity(activity.getBaseContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		//notification details
 		Notification.Builder noti = new Notification.Builder(activity);
 		noti.setContentTitle("Excel generated");
-		noti.setContentText("Your excel file "+name+" has been generated");
+		noti.setContentText("Your Report "+ name +" has been generated"); //TODO Create Notification String Value
 		noti.setSmallIcon(R.drawable.money_bag_down);
 		noti.setAutoCancel(true);
 		noti.setOnlyAlertOnce(true);
-		noti.setTicker("Agrinet excel file");
+		noti.setTicker("AgriExpense excel file");//TODO Create Notification String Value
 		noti.setContentIntent(pIntent);
 		NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(0, noti.build()); 

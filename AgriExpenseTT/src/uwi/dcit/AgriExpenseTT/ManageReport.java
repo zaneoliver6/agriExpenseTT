@@ -1,7 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentReportList;
-import uwi.dcit.AgriExpenseTT.helpers.CSVHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -54,7 +54,7 @@ public class ManageReport extends ActionBarActivity {
 	
 	public void createNewReport(View view){
 		//TODO open time dialog to set time frame
-		CSVHelper cvh=new CSVHelper(this);
+		ReportHelper cvh = new ReportHelper(this);
     	cvh.createReport();
 		
 	}
