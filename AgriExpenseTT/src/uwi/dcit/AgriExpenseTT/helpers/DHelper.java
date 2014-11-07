@@ -37,4 +37,8 @@ public class DHelper {
 	public static final String colour_labour="#80D7DF01";
 	public static final String colour_other="#80E60000";
 
+	
+	//Location fragment codes
+	public static final String location_country = "country";
+	public static final String location_county = "county";
 }

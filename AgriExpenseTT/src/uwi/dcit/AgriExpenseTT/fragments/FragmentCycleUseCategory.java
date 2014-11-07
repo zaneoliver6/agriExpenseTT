@@ -65,9 +65,7 @@ public class FragmentCycleUseCategory extends Fragment{
 		if(category.equals(DHelper.cat_labour)){
 			btn_useage.setText(category+" usage");
 			btn_useMore.setText("Add Labour");
-		//	line.set("#ffffff");
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
-			//line.getBackground().setColorFilter(Color.parseColor("#00ff00"), PorterDuff.Mode.ADD);
 			btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
 		}else if(category.equals(DHelper.cat_other)){
 			btn_useage.setText("useage of"+category);

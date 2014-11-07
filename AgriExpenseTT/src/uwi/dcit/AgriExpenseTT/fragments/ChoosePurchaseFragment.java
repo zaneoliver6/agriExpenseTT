@@ -39,7 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class ChoosePurchase extends ListFragment {
+public class ChoosePurchaseFragment extends ListFragment {
 	MyListAdapter myListAdapter;
 	ArrayList<LocalResourcePurchase> pList;
 	SQLiteDatabase db;
@@ -84,7 +84,7 @@ public class ChoosePurchase extends ListFragment {
 	private void populateList() {
 		pList	= new ArrayList<LocalResourcePurchase>();
 		
-		if(type != null&&(type.equals("delete")||type.equals("edit")))
+		if(type != null && (type.equals("delete") || type.equals("edit")))
 			DbQuery.getPurchases(db, dbh, pList, null, null,true);
 		else
 			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
@@ -111,19 +111,17 @@ public class ChoosePurchase extends ListFragment {
 		inflater.inflate(R.menu.resource_purchase_context_menu, menu);
 	}
 	
+	/**
+	 * Context menu refers to the menu that will be brought up on long press
+	 */
 	public boolean onContextItemSelected(MenuItem item){
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		
 		switch(item.getItemId()){
-//			case R.id.resource_view:
-//				Log.i(MainMenu.APP_NAME, "View The details for resource: "+pList.get(info.position).getQuantifier());
-//				launchPurchaseView(info.position);
-//				break;
 			case R.id.resource_edit: 								//Edit Purchase
 				Log.i(MainMenu.APP_NAME, "Edit The details for resource: "+pList.get(info.position).getQuantifier());
 				editPurchaseOption(info.position);
 				break;
-			case R.id.resource_delete:
+			case R.id.resource_delete:								//Delete Purchase
 				Log.i(MainMenu.APP_NAME, "Delete The details for resource: "+pList.get(info.position).getQuantifier());
 				deletePurchaseOption(this.getListView(), info.position);
 				break;
@@ -135,13 +133,12 @@ public class ChoosePurchase extends ListFragment {
 	 
 	 @Override
 	 public void onListItemClick(ListView l, View v, int position, long id) {
-	 	
 		 if((type != null) && (type.equals("edit"))){				//when called by edit data
-	 		launchPurchaseView(position);
+			 editPurchaseOption(position);
 	 	}else if(type != null && type.equals("delete")){			//when called by delete data
 	 		deletePurchaseOption( l,  position);
-		}else if(type!=null){										//when called by Use Purchases
-			editPurchaseOption(position);
+		}else if(type != null){										//when called by Use Purchases
+			launchPurchaseView(position);
 		}
 	 }
 	 
@@ -152,12 +149,12 @@ public class ChoosePurchase extends ListFragment {
 	 }
 	 
 	 public void launchPurchaseView(int position){
-		 Fragment newFragment =new FragmentPurchaseUse();
 		 Bundle arguments = new Bundle();
-		 
 		 if(curr != null)arguments.putParcelable("cycleMain", curr);
 		 arguments.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
 		 arguments.putString("cycleId",""+cycleId);					// passes the id of the cycle
+		 
+		 Fragment newFragment =new FragmentPurchaseUse();
 		 newFragment.setArguments(arguments);
 		 
 		 getFragmentManager()

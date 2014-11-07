@@ -31,20 +31,23 @@ public class NewCycleLists extends ListFragment {
 	TextView et_search;
 	ArrayAdapter<String> listAdapt;
 	View view;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
-		type=getArguments().getString("type");
-		populateList();
+		dbh = new DbHelper(this.getActivity().getBaseContext());
+		db = dbh.getReadableDatabase();
 		
-		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
+		type=getArguments().getString("type");
+		
+		populateList();		
+		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);		
 		setListAdapter(listAdapt);
 	}
 		
 	private void populateList() {
-		list=new ArrayList<String>();
+		list = new ArrayList<String>();
+		
 		if(type.equals(DHelper.cat_plantingMaterial)){
 			DbQuery.getResources(db, dbh,DHelper.cat_plantingMaterial, list);
 		}else if(type.equals("land")){

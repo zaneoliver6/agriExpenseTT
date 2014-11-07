@@ -2,7 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase;
+import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -88,7 +88,7 @@ public class EditData extends ActionBarActivity {
 					n2=new FragmentEmpty();
 					data.putString("type", "purchase");
 				}else{
-					n2=new ChoosePurchase();
+					n2=new ChoosePurchaseFragment();
 					data.putString("det","edit");
 				}
 			}else if(tab.getText().toString().equals("Cycles")){

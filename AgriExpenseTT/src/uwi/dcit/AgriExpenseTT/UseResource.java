@@ -2,7 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase;
+import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -11,7 +11,6 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -71,16 +70,16 @@ public class UseResource extends ActionBarActivity {
 		Bundle pass=new Bundle();
 		pass.putParcelable("cycle",c);
 		pass.putString("det",s);
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ListFragment listfrag=new ChoosePurchase();
+		
+		ListFragment listfrag	= new ChoosePurchaseFragment();		
 		listfrag.setArguments(pass);
-		ft.add(R.id.useExpenseFrag,listfrag);
-		ft.commit();
+		
+		getFragmentManager()
+			.beginTransaction()
+			.add(R.id.useExpenseFrag,listfrag)
+			.commit();
 		
 		View line=findViewById(R.id.line_header_useRes);
-		//line.setBackgroundColor(Color.parseColor("#80000000"));
-		//line.getBackground().setAlpha(50);
 		String category=getIntent().getStringExtra("type");
 		if(category.equals(DHelper.cat_plantingMaterial)){
 			line.setBackgroundResource(R.color.colourPM);

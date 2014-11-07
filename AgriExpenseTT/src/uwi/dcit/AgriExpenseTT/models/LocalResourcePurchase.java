@@ -114,7 +114,7 @@ public class LocalResourcePurchase implements Parcelable{
 		qty=dest.readDouble();
 		qtyRemaining=dest.readDouble();
 	}
-	public static Parcelable.Creator<LocalResourcePurchase> CREATOR = new Parcelable.Creator<LocalResourcePurchase>() {
+	public final static Parcelable.Creator<LocalResourcePurchase> CREATOR = new Parcelable.Creator<LocalResourcePurchase>() {
 
 		@Override
 		public LocalResourcePurchase createFromParcel(Parcel source) {

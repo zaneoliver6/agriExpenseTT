@@ -2,7 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchase;
+import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
@@ -108,7 +108,7 @@ public class ManageResources extends ActionBarActivity {
 					fragment=new FragmentEmpty();
 					arguments.putString("type", "purchase");
 				}else{
-					fragment=new ChoosePurchase();
+					fragment=new ChoosePurchaseFragment();
 				}
 			}else if(tab.getText().toString().equals("Cycles")){
 				if(li.isEmpty()){
