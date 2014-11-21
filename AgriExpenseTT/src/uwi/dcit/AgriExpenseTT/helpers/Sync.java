@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import uwi.dcit.AgriExpenseTT.SignIn;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -8,12 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class Sync {
 	private UpAcc localAcc;
 	private UpAcc cloudAcc;
-	protected SignIn signin;
+	protected SignInManager signin;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Context context;
@@ -21,7 +21,7 @@ public class Sync {
 	public enum Option{
 		updateCloudOpt,updateLocalOpt,overwriteCloudOpt,overwriteLocalOpt,createCloudNewOpt
 	}
-	public Sync(SQLiteDatabase db, DbHelper dbh,Context context,SignIn signin){
+	public Sync(SQLiteDatabase db, DbHelper dbh,Context context,SignInManager signin){
 		this.db=db;
 		this.dbh=dbh;
 		this.context=context;

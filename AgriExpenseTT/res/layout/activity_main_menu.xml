@@ -140,8 +140,8 @@
 				    android:padding="10dp"
 				    android:layout_gravity="center_horizontal"
 				    android:gravity="start|center_vertical"
-				    android:text="@string/btn_man_signin"
-				    android:onClick="signInStart" />
+				    android:text="@string/btn_man_backup"
+				    android:onClick="openBackupDataFragment" />
 
 
 				<Button

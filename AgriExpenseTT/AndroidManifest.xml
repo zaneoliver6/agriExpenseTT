@@ -166,6 +166,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.ManageData" />
         </activity>
+        <activity
+            android:name=".BackupDataScreen"
+            android:label="@string/title_activity_backup_data"
+            android:parentActivityName=".MainMenu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+        </activity>
     </application>
 
 </manifest>

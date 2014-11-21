@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer;
+import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +25,7 @@ import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 public class MainMenu extends ActionBarActivity {
 	
 	protected FlyOutContainer root;
-	protected SignIn signInObject;
+	protected SignInManager signInObject;
 	
 	public final static String APP_NAME = "AgriExpenseTT";
 	
@@ -35,12 +36,11 @@ public class MainMenu extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		this.root=(FlyOutContainer) this.getLayoutInflater().inflate(R.layout.activity_main_menu, null);
 		this.setContentView(root);
-		signInObject = new SignIn(MainMenu.this,MainMenu.this);
+		signInObject = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
-		
-		//Place Up Button Support
-//		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
+	
+	
 	
 	/*
 	 * Dealing with Button Configurations
@@ -86,6 +86,10 @@ public class MainMenu extends ActionBarActivity {
 
 	public void openHelpFragment(View view){
 		startActivity(new Intent(MainMenu.this, HelpScreen.class));
+	}
+	
+	public void openBackupDataFragment(View view){
+		startActivity(new Intent(MainMenu.this, BackupDataScreen.class));
 	}
 	
 	/*

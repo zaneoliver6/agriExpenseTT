@@ -51,6 +51,7 @@
     <string name="btn_gen_report">Reports</string>
     <string name="btn_man_signin">Sign In</string>
     <string name="btn_man_about">About</string>
+    <string name="btn_man_backup">Backup Data</string>
     <string name="txt_new_purchase_quantity">Quantity</string>
     <string name="txt_new_purchase_cost">Cost</string>
     <string name="hint_new_purchase_quantity">Enter Quantity of Resource that was purchased</string>
@@ -64,18 +65,14 @@
     <string name="txt_new_cycle_default_date">--no date--</string>
     <string name="btn_new_cycle_date">Start Date</string>
     <string name="btn_new_cycle_save">Done</string>
-
     <string name="txt_reports_title">Reports</string>
     <string name="txt_reports_subtitle">Listing of all the reports created by the system</string>
     <string name="btn_reports_new">New Report</string>
-
     <string name="txt_general_details">Details:</string>
-
     <string name="txt_location_country_main">Select Country</string>
     <string name="txt_location_country_sub"></string>
     <string name="txt_location_county_main">Select County</string>
     <string name="txt_location_county_sub">This is where most/all of your crops are currently located Basically where is your farm closest to</string>
-
     <string name="about_image_description_uwi">University of the West Indies Logo</string>
     <string name="about_image_description_namdevco">NAMDEVCO Logo</string>
     <string name="about_image_description_agrinett_logo">AgrineTT Logo</string>
@@ -111,7 +108,8 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="help_manage_data_4">Note when deleting a cycle it replenishes the purchases It used from the same applies with a purchase, when deleting a purchase it undoes all the uses any cycles made from it, therefore if you delete a cycle it is as if it never used the purchase, and if you delete a purchase it is as if the cycle never used from it.</string>
     <string name="help_manage_data_5">If you delete a resource that is the crop of a crop cycle, the cycle is deleted, likewise if you have purchased the resource that you are deleting the purchase will be deleted as well.</string>
     <string name="title_activity_report_manager">ReportManager</string>
-
     <string name="menu_action_view_report">View Report</string>
     <string name="menu_action_delete_report">Delete Report</string>
+    <string name="title_activity_backup_data">BackupData</string>
+
 </resources>
