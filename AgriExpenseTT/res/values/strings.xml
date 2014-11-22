@@ -107,9 +107,15 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="help_manage_data_3">Delete Data: Select Delete Data in fig 2.6, at which point you are presented with a 3(three) tab views, (cycles, purchases, resources) fig 3.0. All you have to do is select what you would like to delete and confirm by clicking yes when the dialogue box appears</string>
     <string name="help_manage_data_4">Note when deleting a cycle it replenishes the purchases It used from the same applies with a purchase, when deleting a purchase it undoes all the uses any cycles made from it, therefore if you delete a cycle it is as if it never used the purchase, and if you delete a purchase it is as if the cycle never used from it.</string>
     <string name="help_manage_data_5">If you delete a resource that is the crop of a crop cycle, the cycle is deleted, likewise if you have purchased the resource that you are deleting the purchase will be deleted as well.</string>
-    <string name="title_activity_report_manager">ReportManager</string>
+    <string name="title_activity_report_manager">Report Manager</string>
     <string name="menu_action_view_report">View Report</string>
     <string name="menu_action_delete_report">Delete Report</string>
-    <string name="title_activity_backup_data">BackupData</string>
+    <string name="title_activity_backup_data">Backup Data</string>
 
+    <string name="manage_data_edit_btn">Edit Data</string>
+    <string name="manage_data_add_btn">Add Data</string>
+    <string name="manage_data_delete_btn">Delete</string>
+
+    <string name="backup_header_main">Overview</string>
+    <string name="backup_header_description">The follow list contains information that relates to what is stored by the system and provides options that will allow you to backup and sync your information online to increase the reliablity of the system</string>
 </resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="backup_menu">
+        <item>Account</item>
+        <item>Location</item>
+        <item>Sync</item>
+        <item>Auto backup</item>
+    </string-array>
+    <string-array name="backup_menu_description">
+        <item>Account displays information about the account used to backup information</item>
+        <item>Location shows the primary location where you are located/farming</item>
+        <item>Sync shows information about the state of the system in relation to the online backup</item>
+        <item>Auto backup will provide the user with the ability to set backup manually</item>
+    </string-array>
+    
+    <string-array name="manage_data_menu">
+        <item>Add Data</item>
+        <item>Delete Data</item>
+        <item>Edit Data</item>
+    </string-array>
+</resources>

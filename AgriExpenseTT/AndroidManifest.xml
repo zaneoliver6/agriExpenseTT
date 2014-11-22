@@ -167,7 +167,7 @@
                 android:value="uwi.dcit.AgriExpenseTT.ManageData" />
         </activity>
         <activity
-            android:name=".BackupDataScreen"
+            android:name=".Backup"
             android:label="@string/title_activity_backup_data"
             android:parentActivityName=".MainMenu" >
             <meta-data

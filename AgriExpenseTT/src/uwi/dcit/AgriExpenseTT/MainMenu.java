@@ -89,7 +89,7 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	public void openBackupDataFragment(View view){
-		startActivity(new Intent(MainMenu.this, BackupDataScreen.class));
+		startActivity(new Intent(MainMenu.this, Backup.class));
 	}
 	
 	/*

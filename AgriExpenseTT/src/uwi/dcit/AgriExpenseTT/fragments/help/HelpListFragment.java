@@ -18,16 +18,18 @@ public class HelpListFragment extends ListFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // We need to use a different list item layout for devices older than Honeycomb
-        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
+        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         // Create an array adapter for the list view, using the Topics array
-        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, HelpTopics.Topics));
+        setListAdapter(new ArrayAdapter<String>(getActivity(), layout, HelpTopics.Topics)); //TODO Convert this to a String Array XML rather than a programatic constant
     }
 	
 	@Override
     public void onStart() {
         super.onStart();
-        
+        this.setupListeners();
+	}
+	
+	public void setupListeners(){
         this.getListView().setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 				
@@ -68,7 +70,7 @@ public class HelpListFragment extends ListFragment{
 					getFragmentManager()
 						.beginTransaction()
 						.replace(R.id.help_lists, frag)
-						.addToBackStack(null)
+						.addToBackStack("Help List")
 						.commit();
 				
 			}

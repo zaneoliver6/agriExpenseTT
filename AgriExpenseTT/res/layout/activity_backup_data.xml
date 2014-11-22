@@ -1,7 +1,62 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.BackupDataScreen"
-    tools:ignore="MergeRootFrame" />
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="uwi.dcit.AgriExpenseTT.Backup"
+	tools:ignore="MergeRootFrame" >
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical" >
+		<FrameLayout
+			
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1" >
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical" >
+
+				<TextView
+					android:id="@+id/tv_mainNew_header"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="25dp"
+					android:layout_marginStart="25dp"
+					android:layout_marginRight="20dp"
+					android:layout_marginEnd="25dp"
+					android:text="@string/backup_header_main"
+					android:textColor="#999999"
+					android:textSize="25sp" />
+				<TextView
+					android:id="@+id/tv_mainNew_subheader"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="25dp"
+					android:layout_marginStart="25dp"
+					android:layout_marginRight="25dp"
+					android:layout_marginEnd="25dp"
+					android:layout_marginTop="10dp"
+					android:text="@string/backup_header_description"
+					android:textColor="#999999"
+					android:textSize="16sp" />
+
+			</LinearLayout>
+
+		</FrameLayout>
+
+		<FrameLayout
+			android:id="@+id/fragment_backup_Container"
+			android:layout_width="match_parent"
+			android:layout_height="0dp" 
+			android:layout_weight="4">
+
+		</FrameLayout>
+
+	</LinearLayout>
+	
+</FrameLayout>
