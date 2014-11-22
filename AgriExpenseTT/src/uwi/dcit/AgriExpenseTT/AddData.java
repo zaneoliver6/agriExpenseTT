@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentAddData;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,7 +9,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import fragments.FragmentAddData;
 
 public class AddData extends ActionBarActivity {
 

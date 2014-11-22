@@ -1,59 +1,64 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_newcycle"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.NewCycleRedesigned"
-    tools:ignore="MergeRootFrame" >
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/container_newcycle"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="uwi.dcit.AgriExpenseTT.NewCycle"
+	tools:ignore="MergeRootFrame" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical" >
 
-        <FrameLayout
-            
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" >
+		<FrameLayout
+			
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/tv_mainNew_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Creating new crop cycle"
-                    android:textColor="#999999"
-                    android:textSize="25sp" />
-                <TextView
-                    android:id="@+id/tv_mainNew_subheader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Details:"
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
+				<TextView
+					android:id="@+id/tv_mainNew_header"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="25dp"
+					android:layout_marginStart="25dp"
+					android:layout_marginRight="20dp"
+					android:layout_marginEnd="25dp"
+					android:text="@string/txt_new_cycle_new"
+					android:textColor="#999999"
+					android:textSize="25sp" />
+				<TextView
+					android:id="@+id/tv_mainNew_subheader"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="25dp"
+					android:layout_marginStart="25dp"
+					android:layout_marginRight="25dp"
+					android:layout_marginEnd="25dp"
+					android:layout_marginTop="10dp"
+					android:text="@string/txt_general_details"
+					android:textColor="#999999"
+					android:textSize="16sp" />
 
-            </LinearLayout>
+			</LinearLayout>
 
-        </FrameLayout>
+		</FrameLayout>
 
-        <FrameLayout
-            android:id="@+id/NewCycleListContainer"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" 
-            android:layout_weight="4">
+		<FrameLayout
+			android:id="@+id/NewCycleListContainer"
+			android:layout_width="match_parent"
+			android:layout_height="0dp" 
+			android:layout_weight="4">
 
-        </FrameLayout>
+		</FrameLayout>
 
-    </LinearLayout>
+	</LinearLayout>
 
 </FrameLayout>
 

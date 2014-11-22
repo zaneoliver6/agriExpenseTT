@@ -1,11 +1,10 @@
 package uwi.dcit.AgriExpenseTT;
 
-import helper.DHelper;
-import helper.DbHelper;
-import helper.DbQuery;
-
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class EditChooseLists extends ActionBarActivity {
 	ArrayList<String> list;
@@ -52,7 +50,6 @@ public class EditChooseLists extends ActionBarActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			Toast.makeText(EditChooseLists.this, list.get(position), Toast.LENGTH_SHORT).show();
 			Intent i=new Intent();
 			i.putExtra("desc",content);
 			i.putExtra("content", list.get(position));
@@ -142,23 +139,17 @@ public class EditChooseLists extends ActionBarActivity {
 			 this.adpt=adpt;
 		 }
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,
-				int after) {
-			// TODO Auto-generated method stub
+		public void beforeTextChanged(CharSequence s, int start, int count,int after) {
 			
 		}
 
 		@Override
-		public void onTextChanged(CharSequence s, int start, int before,
-				int count) {
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			adpt.getFilter().filter(s);
-			// TODO Auto-generated method stub
-			
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
 			
 		}
 		 

@@ -1,7 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
-import helper.DbHelper;
-import helper.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import dataObjects.localCycle;
 
 public class SalesCost extends ActionBarActivity {
 	
@@ -33,7 +33,7 @@ public class SalesCost extends ActionBarActivity {
 	
 	double amtHarvest;
 	double costPer;
-	localCycle currCycle;
+	LocalCycle currCycle;
 	EditText et_sell;
 	double sellp;
 	String crop;
@@ -163,7 +163,7 @@ public class SalesCost extends ActionBarActivity {
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,
 				int after) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 
@@ -180,13 +180,13 @@ public class SalesCost extends ActionBarActivity {
 					salesDet2.setText("Total profit:$"+(sellp-costPer)*amtHarvest);
 				}
 			}
-			// TODO Auto-generated method stub
+			
 			
 		}
 
 		@Override
 		public void afterTextChanged(Editable s) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		 

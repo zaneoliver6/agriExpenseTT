@@ -32,7 +32,6 @@ public class RPurchase {
 	
 	public RPurchase() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public RPurchase(int pId, int resourceId, String quantifier,
 			double qty, double cost, double qtyRemaining,String type) {

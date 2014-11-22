@@ -6,8 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 
 public class ManageData extends ActionBarActivity {
 
@@ -15,36 +13,20 @@ public class ManageData extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_data);
-		setup();
-		
 	}
 
-	private void setup() {
-		Button add=(Button)findViewById(R.id.btn_manageData_add);
-		Button edit=(Button)findViewById(R.id.btn_manageData_edit);
-		Button delete=(Button)findViewById(R.id.btn_manageData_delete);
-		Click c=new Click();
-		edit.setOnClickListener(c);
-		delete.setOnClickListener(c);
-		add.setOnClickListener(c);
-		
+	
+	
+	public void openDataEdit(View view){		
+		startActivity(new Intent(ManageData.this,EditData.class));
 	}
-	public class Click implements OnClickListener{
+	public void openDataDelete(View view){		
+		startActivity(new Intent(ManageData.this,DeleteData.class));
+	}
+	public void openDataAdd(View view){		
+		startActivity(new Intent(ManageData.this,AddData.class));
+	}
 
-		@Override
-		public void onClick(View v) {
-			Intent i=null;
-			if(v.getId()==R.id.btn_manageData_add){
-				i=new Intent(ManageData.this,AddData.class);
-			}else if(v.getId()==R.id.btn_manageData_edit){
-				i=new Intent(ManageData.this,EditData.class);
-			}else if(v.getId()==R.id.btn_manageData_delete){
-				i=new Intent(ManageData.this,DeleteData.class);
-			}	
-			startActivity(i);
-		}
-		
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

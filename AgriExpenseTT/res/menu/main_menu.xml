@@ -1,19 +1,26 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="uwi.dcit.AgriExpenseTT.MainMenu" >
-
-     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings" android:visible="false"/>
-     <item android:id="@+id/item1" 
-         android:titleCondensed="item1" 
-         android:title="item1" 
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:mytest="http://schemas.android.com/apk/res-auto" >
+     
+     <item android:id="@+id/menu_item_help" 
+         android:title="@string/menu_help" 
+         android:icon="@drawable/ic_action_help"
          android:orderInCategory="1" 
-         android:showAsAction="always" 
-         android:icon="@drawable/icon_menu">nothing</item>
+         android:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_item_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="3"
+        android:showAsAction="always"
+        android:title="@string/menu_setting" />
+    
+    <item 
+        android:id="@+id/menu_item_about"
+        android:icon="@drawable/ic_action_about"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/menu_about" />
 	
   
 </menu>

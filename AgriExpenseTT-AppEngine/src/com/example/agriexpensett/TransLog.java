@@ -23,7 +23,6 @@ public class TransLog {
 	
 	public TransLog() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

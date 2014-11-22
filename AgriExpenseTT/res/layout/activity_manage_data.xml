@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:text="Edit Data" />
+        android:text="@string/manage_data_edit_btn"
+        android:onClick="openDataEdit" />
 
     <Button
         android:id="@+id/btn_manageData_delete"
@@ -25,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="Delete Data" />
+        android:text="@string/manage_data_delete_btn"
+        android:onClick="openDataDelete" />
     
     <Button
         android:id="@+id/btn_manageData_add"
@@ -34,5 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="Add Data" />
+        android:text="@string/manage_data_add_btn"
+        android:onClick="openDataAdd" />
 </LinearLayout>

@@ -18,3 +18,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# -injars libs/poi-3.10-FINAL-20140208.jar libs/google-oauth-client-1.18.0-rc.jar libs/google-http-client-jdo-1.18.0-rc.jar libs/google-http-client-1.18.0-rc.jar
+
+# -dontwarn javax.jdo.**
+ -dontwarn java.awt.**
+# -dontwarn javax.swing.**
+-dontwarn javax.**
+-dontwarn org.apache.commons.**

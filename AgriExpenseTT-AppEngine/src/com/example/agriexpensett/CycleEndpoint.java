@@ -206,7 +206,6 @@ public class CycleEndpoint {
 	  try {
 		et=datastore.get(k);
 	} catch (com.google.appengine.api.datastore.EntityNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	  if(et==null)
@@ -230,7 +229,6 @@ public class CycleEndpoint {
    */
   @ApiMethod(name = "insertCycle")
   public Cycle insertCycle(Cycle cycle) {
-	  //TODO
 	  NamespaceManager.set(cycle.getAccount());
 	  Key k=KeyFactory.createKey("Cycle",cycle.getId());
 	  cycle.setKey(k);

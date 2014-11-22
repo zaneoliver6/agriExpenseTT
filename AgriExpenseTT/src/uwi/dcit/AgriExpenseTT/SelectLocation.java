@@ -1,11 +1,10 @@
 package uwi.dcit.AgriExpenseTT;
 
-import fragments.FragmentSelectLocation;
-import android.support.v7.app.ActionBarActivity;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -15,27 +14,28 @@ public class SelectLocation extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_cycle_redesigned);
-		setupHeaders();
-		setupFrag();
+		setContentView(R.layout.activity_new_cycle_redesigned);		
+//		setupInitialFrag();
 	}
-
-	private void setupHeaders() {
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		TextView tv_sub=(TextView)findViewById(R.id.tv_mainNew_subheader);
+	
+	public void replaceSub(int main, int sub) {
+		((TextView)findViewById(R.id.tv_mainNew_header)).setText(main);
+		((TextView)findViewById(R.id.tv_mainNew_subheader)).setText(sub);		
+	}	
+	
+	public void setupInitialFrag() {
+		replaceSub(R.id.tv_mainNew_header, R.id.tv_mainNew_subheader);
 		
-		tv_main.setText("Selecting your County");
-		tv_sub.setText("This is where most/all of your crops are currently located. "
-				+ "Basically where is your farm closest to");
+		Bundle arguments = new Bundle();
+		arguments.putString("type", DHelper.location_country);
 		
-	}
-
-	private void setupFrag() {
-		Fragment frag=new FragmentSelectLocation();
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ft.add(R.id.NewCycleListContainer, frag);
-		ft.commit();
+		Fragment listfrag = new FragmentSelectLocation();
+		listfrag.setArguments(arguments);
+		
+		getFragmentManager()
+			.beginTransaction()
+			.add(R.id.NewCycleListContainer,listfrag)
+			.commit();
 	}
 
 	@Override
@@ -47,11 +47,7 @@ public class SelectLocation extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (item.getItemId() == R.id.action_settings) {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

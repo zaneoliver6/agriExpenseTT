@@ -1,4 +1,4 @@
-<helper.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menuContain"
     android:layout_width="match_parent"
@@ -24,84 +24,144 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/about_image_description_agrinett_logo"
             android:maxWidth="180dp"
             android:src="@drawable/logo_agrinet" />
         	
-        	<ScrollView
-        		android:id="@+id/scrollView1"
-        		android:layout_width="match_parent"
-        		android:layout_height="match_parent" >    
-	           <LinearLayout
-		        	android:layout_width="match_parent"
-		       	 	android:layout_height="match_parent"
-		        	android:orientation="vertical">  
-		   
+    	<ScrollView
+    		android:id="@+id/scrollView1"
+    		android:layout_width="match_parent"
+    		android:layout_height="match_parent" >    
+           	
+           	<LinearLayout
+	        	android:layout_width="match_parent"
+	       	 	android:layout_height="wrap_content"
+	        	android:orientation="vertical">  
+	   
 		         <Button
 		            android:id="@+id/NewPurchase"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="40dp"
+		            android:layout_width="@dimen/home_btn_width"
+		            android:layout_height="@dimen/home_btn_height"
 		            android:background="@drawable/btn_custom"
-		            android:text="Purchase" />
-		
-		        <Button
-		            android:id="@+id/newCycle"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
+		            android:drawableLeft="@drawable/mainmenu_shopping_cart"
+		            android:drawableStart="@drawable/mainmenu_shopping_cart"
+		            android:drawablePadding="10dp"
+		            android:layout_marginTop="@dimen/home_btn_magrin"
+		            android:padding="10dp"
 		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:clickable="true"
-		            android:text="Create new Cycle" />
-		
-		        <Button
-		            android:id="@+id/HireLabour"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:text="Hire Labour" />
-		
-		        <Button
-		            android:id="@+id/ResDetail"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:text="Manage Resources" />
-		
-		        <Button
-		            android:id="@+id/manageData"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:text="Manage data" />
-		        
-		         <Button
-		            android:id="@+id/generateFile"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:text="Generate report" />
-		         
+		            android:gravity="start|center_vertical"
+		            android:text="@string/btn_new_purchase"
+		            android:onClick="openNewPurchaseFragment" />
+	
 				<Button
-		            android:id="@+id/btn_SignIn"
-		            android:layout_width="180dp"
-		            android:layout_height="wrap_content"
-		            android:layout_gravity="center_horizontal"
-		            android:layout_marginTop="20dp"
-		            android:background="@drawable/btn_custom"
-		            android:text="Sign In" />
-		      
+				    android:id="@+id/newCycle"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"		
+				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_cycle_triangle"
+				    android:drawableStart="@drawable/mainmenu_cycle_triangle"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+		            android:gravity="start|center_vertical"	
+				    android:text="@string/btn_new_cycle" 
+				    android:onClick="openNewCycleFragment"/>
+
+				<Button
+				    android:id="@+id/HireLabour"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_shovel_single"
+				    android:drawableStart="@drawable/mainmenu_shovel_single"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_new_labour"
+				    android:onClick="openManageLabourFragment" />
+
+				<Button
+				    android:id="@+id/ResDetail"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_resources"
+				    android:drawableStart="@drawable/mainmenu_resources"
+				    android:drawablePadding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:padding="10dp"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_man_resource" 
+				    android:onClick="openManageResourceFragment"/>
+
+				<Button
+				    android:id="@+id/generateFile"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_reports"
+				    android:drawableStart="@drawable/mainmenu_reports"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_gen_report"
+				    android:onClick="openManageExports" />
+				
+				<Button
+				    android:id="@+id/manageData"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"		
+				    android:background="@drawable/btn_custom"
+				    android:drawableLeft="@drawable/mainmenu_data_settings"
+				    android:drawableStart="@drawable/mainmenu_data_settings"
+				    android:drawablePadding="10dp"
+				    android:layout_marginTop="@dimen/home_btn_magrin"	
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_man_data"
+				    android:onClick="openManageDataFragment" />
+				 
+				<Button
+				    android:id="@+id/btn_SignIn"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_signin"
+				    android:drawableStart="@drawable/mainmenu_signin"
+				    android:drawablePadding="4dp"
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_man_backup"
+				    android:onClick="openBackupDataFragment" />
+
+
+				<Button
+				    android:id="@+id/btn_About"
+				    android:layout_width="@dimen/home_btn_width"
+				    android:layout_height="@dimen/home_btn_height"
+				    android:background="@drawable/btn_custom"
+				    android:layout_marginTop="@dimen/home_btn_magrin"
+				    android:drawableLeft="@drawable/mainmenu_about"
+				    android:drawableStart="@drawable/mainmenu_about"
+				    android:drawablePadding="10dp"
+				    android:padding="10dp"
+				    android:layout_gravity="center_horizontal"
+				    android:gravity="start|center_vertical"
+				    android:text="@string/btn_man_about"
+				    android:onClick="openAboutFragment" />
+	      
 			</LinearLayout>
-		 </ScrollView>
+		</ScrollView>
+    
     </LinearLayout>
 
     
@@ -109,4 +169,4 @@
        
    
 
-</helper.FlyOutContainer>
+</uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer>

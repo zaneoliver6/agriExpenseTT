@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT;
 
+import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -9,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import fragments.HireLabourLists;
 
 public class HireLabour extends ActionBarActivity {
 

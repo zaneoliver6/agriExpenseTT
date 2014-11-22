@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import dataObjects.localCycleUse;
-import dataObjects.localResourcePurchase;
-import helper.DbHelper;
-import helper.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,20 +23,20 @@ import android.widget.TextView;
 public class ViewCycleUsege extends ActionBarActivity {
 	SQLiteDatabase db;
 	DbHelper dbh;
-	ArrayList<localCycleUse> list;
-	ArrayList<localResourcePurchase> pList;
+	ArrayList<LocalCycleUse> list;
+	ArrayList<LocalResourcePurchase> pList;
 	String type;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_cycle_usege);
-		list=new ArrayList<localCycleUse>();
+		list=new ArrayList<LocalCycleUse>();
 		type=getIntent().getStringExtra("type");
 		int cycleId=Integer.parseInt(getIntent().getStringExtra("id"));
 		dbh=new DbHelper(this);
 		db=dbh.getReadableDatabase();
 		
-		pList=new ArrayList<localResourcePurchase>();
+		pList=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pList, type, null,true);
 		ListView listview=(ListView)findViewById(R.id.listview_cycleUse);
 		
@@ -64,19 +64,18 @@ public class ViewCycleUsege extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	public class CycUseAdpt extends ArrayAdapter<localCycleUse>{
+	public class CycUseAdpt extends ArrayAdapter<LocalCycleUse>{
 
-		public CycUseAdpt(Context context, int resource,List<localCycleUse> objects) {
+		public CycUseAdpt(Context context, int resource,List<LocalCycleUse> objects) {
 			super(context, resource,  objects);
-			// TODO Auto-generated constructor stub
 		}
 		 @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			 View row;
 			 row=getLayoutInflater().inflate(R.layout.cycleuse_item,parent,false);
-			 localCycleUse curr=list.get(position);
+			 LocalCycleUse curr=list.get(position);
 			 int pos=pPos(curr.getPurchaseId());
-			 localResourcePurchase p=pList.get(pos);
+			 LocalResourcePurchase p=pList.get(pos);
 			 TextView tv_m1=(TextView)row.findViewById(R.id.tv_cycUseItem_head1);
 			 TextView tv_s1_1=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_1);
 			 TextView tv_s1_2=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_2);
@@ -95,7 +94,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 	}
 	public int pPos(int pId){
 		int i=0;
-		Iterator<localResourcePurchase> itr=pList.iterator();
+		Iterator<LocalResourcePurchase> itr=pList.iterator();
 		
 		while(itr.hasNext()){
 			if(pId==itr.next().getpId())
