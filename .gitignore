@@ -19,3 +19,9 @@ local.properties
 .buildpath
 .targets
 
+# Java Specific files
+
+*.class
+*.discovery
+*.api
+
