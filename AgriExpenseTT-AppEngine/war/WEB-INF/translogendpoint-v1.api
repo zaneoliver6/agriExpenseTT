@@ -43,22 +43,17 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "translogendpoint.getAllTranslog" : {
-      "path" : "translogcollection/{namespace}",
-      "httpMethod" : "GET",
+    "translogendpoint.insertTransLog" : {
+      "path" : "translog",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getAllTranslog",
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
       "request" : {
-        "parameters" : {
-          "namespace" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -89,17 +84,22 @@
         "body" : "empty"
       }
     },
-    "translogendpoint.insertTransLog" : {
-      "path" : "translog",
-      "httpMethod" : "POST",
+    "translogendpoint.getAllTranslog" : {
+      "path" : "translogcollection/{namespace}",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.getAllTranslog",
       "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -296,19 +296,19 @@
           "$ref" : "TransLog"
         }
       },
-      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
-        "response" : {
-          "$ref" : "TransLogCollection"
-        }
-      },
-      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
-      },
       "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
         "request" : {
           "$ref" : "TransLog"
         },
         "response" : {
           "$ref" : "TransLog"
+        }
+      },
+      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
+      },
+      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
+        "response" : {
+          "$ref" : "TransLogCollection"
         }
       },
       "com.example.agriexpensett.TransLogEndpoint.Logs" : {
