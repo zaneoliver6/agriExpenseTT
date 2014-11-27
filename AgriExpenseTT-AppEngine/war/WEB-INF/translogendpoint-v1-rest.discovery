@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"koCc_mmAOJe4d9CoedmJUnZeEcg/E754UaNn4UZZsWzvszdbJOZTDJ4\"",
+ "etag": "\"9mnLCPwbyZOHH18t8ExzO2gqgTk/E754UaNn4UZZsWzvszdbJOZTDJ4\"",
  "discoveryVersion": "v1",
  "id": "translogendpoint:v1",
  "name": "translogendpoint",

@@ -3,9 +3,6 @@ package uwi.dcit.AgriExpenseTT.helpers;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.MainMenu;
-
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -13,9 +10,13 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class SignInManager {
 	Context context;
@@ -39,47 +40,47 @@ public class SignInManager {
 	
 	public void signIn(){
 		UpAcc acc = isExisting(); 								// Check if Account is already created
-		if(acc == null)accSetUp();								// Account doesn't exist so we've to setup a new one (means we never signed in)
-		else{
-			ContentValues cv = new ContentValues();				// account exists already so we can sign in OR out
+		if(acc == null)accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
+		else{													// account exists already so we can sign in OR out
 			if(acc.getSignedIn() == 1){							// we're already signed in so lets sign out 
-				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	// updates the database that we signed out
-				((MainMenu)activity).toggleSignIn();			// Changes the text on the button to sign out
-				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); //TODO Determine why this is necessary
-			}else if(acc.getSignedIn() == 0){					// if we're signed out then we need to sign in 
+				// updates the database that we signed out
+				ContentValues cv = new ContentValues();	
+				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	
+				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); 
+			}else{												// if we're signed out then we need to sign in 
 				initialSignIn(acc.getAcc());					// Initiate Sign-in process
 			}
 		}
 	}
 	
 	private void initialSignIn(final String namespace){
-		//The SetupSignInTask will handle the process of signing in within a new task/thread
-		new SetupSignInTask(namespace).execute();
+		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
 	}
 	
-	public void accSetUp(){
-		ArrayList<String> deviceAccounts = new ArrayList<String>();
-		populateAccounts(deviceAccounts);
-		
+	public void accountSetUp(){
+		ArrayList<String> deviceAccounts = getAccounts();		
 		if(deviceAccounts.isEmpty()){
-			Toast.makeText(context, "No accounts available for sign-in. Create a google Account first and try again.", Toast.LENGTH_LONG).show();
-			noAccs();
+			handleNoAccounts();
 			return;
 		}
 			
-		final CharSequence[] items= new CharSequence[deviceAccounts.size()]; int i=0;
-		for(@SuppressWarnings("unused") String k:deviceAccounts)
-			items[i]=deviceAccounts.get(i++);
+		final CharSequence[] items = new CharSequence[deviceAccounts.size()]; 
+		int i=0;
 		
-	    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	    builder.setTitle("Select Account");
-	    builder.setItems(items, new DialogInterface.OnClickListener() {
-	        @Override
-			public void onClick(DialogInterface dialog, int item) {
-	            String namespace=convertString((items[item].toString()));
-	            initialSignIn(namespace);
-	        }
-	    }).show();
+		for(String k : deviceAccounts){
+//			items[i]=deviceAccounts.get(i++); 
+			items[i++] = k; //TODO Ensure that this works as expected
+			Log.d("SignIn Manager", "k => "+ k +", get => "+ deviceAccounts.get(i - 1));
+		}
+		//Display List to user for choosing account
+	    (new AlertDialog.Builder(context))
+	    	.setTitle("Select Account")
+	    	.setItems(items, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+		            initialSignIn(convertString2Namespace((items[item].toString()))); //convert choice to name space and attempt to upload
+		        }
+		    })
+		    .show();
 	}
 	
 	public void signInReturn(boolean success,String message){
@@ -93,29 +94,39 @@ public class SignInManager {
 				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 		}
 	}
+	
 	//--------------------------------------------------Helper stuff
-	private void noAccs(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle("No Accounts Available");
-		builder.setMessage("There are no accounts available to sign in with, please go to your phone's settings and create and account");
-		builder.setNeutralButton("ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) { }
-		});
-		builder.show();
+	private void handleNoAccounts(){		
+		(new AlertDialog.Builder(context))
+			.setTitle("No Accounts Available")
+			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
+			.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					context.startActivity(new Intent(context,MainMenu.class));
+				}
+			})
+			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
+				}
+			})
+			.show();
 	}
 	
-	private void populateAccounts(ArrayList<String> accountLists){
+	private ArrayList<String> getAccounts(){
+		ArrayList<String> accountList = new ArrayList<String>();
 		Account[] accounts = AccountManager.get(context).getAccounts();
 		for(Account a:accounts){
-		  accountLists.add(a.name);
+		  accountList.add(a.name);
 		}
+		return accountList;
 	}
 	
-	private String convertString(String str){
+	private String convertString2Namespace(String str){
 		int len = str.length();
 		String newStr = "_";
 		for(int i = 0; i < len; i++){
-			if(isChar(str.charAt(i)))
+			if(isChar(str.charAt(i))) //TODO Why only characters?
 				newStr += str.charAt(i);
 			else if(str.charAt(i) == '@')
 				break;
@@ -130,12 +141,18 @@ public class SignInManager {
 	}
 	
 	public UpAcc isExisting(){
-		UpAcc acc = DbQuery.getUpAcc(db); //Attemtp to retrieve the Account from the database Record		
-		if(acc.getAcc()==null || acc.getAcc().equals(""))return null; //The information returned will be null if no record exists
-		
-		System.out.println("Account already Created ... Returning existing Account");
+		UpAcc acc = DbQuery.getUpAcc(db); //Attempts to retrieve the Account from the database Record		
+		if(acc.getAcc() == null || acc.getAcc().equals(""))return null; //The information returned will be null if no record exists
+		Log.d("SignIn Manager","Account already Created ... Returning existing Account");
 		return acc; //Return the Account if received.
 	}
+	
+	public boolean isSignedIn(){
+		UpAcc account = this.isExisting();
+		if (account == null)return false; 		// No account created
+		return (account.getSignedIn() == 1); 	// Account create 1 of logged in 0 if logged out
+	}
+	
 	public SignInManager getSignin(){
 		return this;
 	}

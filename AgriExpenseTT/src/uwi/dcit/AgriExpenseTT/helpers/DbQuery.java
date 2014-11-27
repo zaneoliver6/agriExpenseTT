@@ -368,18 +368,20 @@ public class DbQuery {
 		return cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC));
 	}
 	public static UpAcc getUpAcc(SQLiteDatabase db){
-		String code="select * from "+DbHelper.TABLE_UPDATE_ACCOUNT;
+		String code="select * from " + DbHelper.TABLE_UPDATE_ACCOUNT;
 		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
-			return null;
-		cursor.moveToFirst();
-		UpAcc acc=new UpAcc();
+		if(cursor.getCount() < 1)return null;  	// No records exist so return null
+		
+		cursor.moveToFirst();					// Only one record should exist (TODO If only one record exist do we need an entire table?)
+		UpAcc acc = new UpAcc();
 		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_CLOUD_KEY)));
 		acc.setAcc(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ACC)));
 		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_UPDATED)));
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_SIGNEDIN)));
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_COUNTY)));
+		
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(DbHelper.UPDATE_ACCOUNT_ADDRESS)));
+		
 		return acc;
 	}
 	public static void updateAccount(SQLiteDatabase db,long time){

@@ -1,13 +1,13 @@
 {
   "files": [
     {
-      "downloadUrl": "/downloads/messageEndpoint/v1/20141017052516/java/1.18.0-rc/example.com-messageEndpoint-v1-20141017052516-java-1.18.0-rc-sources.jar", 
-      "path": "example.com-messageEndpoint-v1-20141017052516-java-1.18.0-rc-sources.jar", 
+      "downloadUrl": "/downloads/messageEndpoint/v1/20141127070534/java/1.18.0-rc/example.com-messageEndpoint-v1-20141127070534-java-1.18.0-rc-sources.jar", 
+      "path": "example.com-messageEndpoint-v1-20141127070534-java-1.18.0-rc-sources.jar", 
       "type": "source", 
-      "timestamp": "2014-10-17 05:25"
+      "timestamp": "2014-11-27 07:05"
     }, 
     {
-      "path": "example.com-messageEndpoint-v1-20141017052516-java-1.18.0-rc.jar.properties", 
+      "path": "example.com-messageEndpoint-v1-20141127070534-java-1.18.0-rc.jar.properties", 
       "type": "android.properties"
     }
   ], 
@@ -675,5 +675,5 @@
   "packagePath": "agriexpensett", 
   "language_version": "1.18.0-rc", 
   "id": "messageEndpoint:v1", 
-  "revision": 20141017052516
+  "revision": 20141127070534
 }

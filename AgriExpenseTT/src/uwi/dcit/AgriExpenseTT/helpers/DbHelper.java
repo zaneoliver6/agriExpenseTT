@@ -73,6 +73,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String TABLE_UPDATE_ACCOUNT="updateacc";
 	public static final String UPDATE_ACCOUNT_COUNTY="county";
 	public static final String UPDATE_ACCOUNT_ADDRESS="address";
+	public static final String UPDATE_ACCOUNT_COUNTRY="country";
 	public static final String UPDATE_ACCOUNT_ACC="acc";
 	public static final String UPDATE_ACCOUNT_UPDATED="lastUpdated";
 	public static final String UPDATE_ACCOUNT_CLOUD_KEY="cloudKey";

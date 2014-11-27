@@ -1,6 +1,6 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"koCc_mmAOJe4d9CoedmJUnZeEcg/5tioBephU53HkJoagAA1As_4zhY\"",
+ "etag": "\"9mnLCPwbyZOHH18t8ExzO2gqgTk/O0yk9i9BGnLnRgPY9ipHolqRklU\"",
  "discoveryVersion": "v1",
  "id": "cycleendpoint:v1",
  "name": "cycleendpoint",
@@ -200,6 +200,17 @@
    "parameterOrder": [
     "namespace"
    ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "fetchAllCycles": {
+   "id": "cycleendpoint.fetchAllCycles",
+   "path": "fetchAllCycles",
+   "httpMethod": "POST",
+   "response": {
+    "$ref": "CycleCollection"
+   },
    "scopes": [
     "https://www.googleapis.com/auth/userinfo.email"
    ]
