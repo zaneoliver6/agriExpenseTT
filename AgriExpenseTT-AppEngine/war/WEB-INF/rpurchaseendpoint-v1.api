@@ -27,21 +27,6 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
-    "rpurchaseendpoint.fetchAllPurchases" : {
-      "path" : "fetchAllPurchases",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases",
-      "request" : {
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "rpurchaseendpoint.deletePurchase" : {
       "path" : "purchase/{keyrep}/{namespace}",
       "httpMethod" : "DELETE",
@@ -65,6 +50,21 @@
       },
       "response" : {
         "body" : "empty"
+      }
+    },
+    "rpurchaseendpoint.fetchAllPurchases" : {
+      "path" : "fetchAllPurchases",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "rpurchaseendpoint.deleteAll" : {
@@ -145,24 +145,14 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-<<<<<<< HEAD
-    "rpurchaseendpoint.insertRPurchase" : {
-      "path" : "rpurchase",
-      "httpMethod" : "POST",
-=======
     "rpurchaseendpoint.getAllPurchases" : {
       "path" : "rpurchasecollection/{namespace}",
       "httpMethod" : "GET",
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-<<<<<<< HEAD
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase",
-=======
       "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.getAllPurchases",
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       "request" : {
         "parameters" : {
           "namespace" : {
@@ -176,24 +166,14 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-<<<<<<< HEAD
-    "rpurchaseendpoint.updateRPurchase" : {
-      "path" : "rpurchase",
-      "httpMethod" : "PUT",
-=======
     "rpurchaseendpoint.removeRPurchase" : {
       "path" : "rpurchase/{keyrep}/{namespace}",
       "httpMethod" : "DELETE",
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-<<<<<<< HEAD
-      "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase",
-=======
       "rosyMethod" : "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase",
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       "request" : {
         "parameters" : {
           "keyrep" : {
@@ -335,32 +315,16 @@
       }
     },
     "methods" : {
+      "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase" : {
+      },
       "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases" : {
         "response" : {
           "$ref" : "RPurchaseCollection"
         }
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.deletePurchase" : {
       },
       "com.example.agriexpensett.RPurchaseEndpoint.deleteAll" : {
       },
-<<<<<<< HEAD
-      "com.example.agriexpensett.RPurchaseEndpoint.getRPurchase" : {
-        "response" : {
-          "$ref" : "RPurchase"
-        }
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.removeRPurchase" : {
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.fetchAllPurchases" : {
-        "response" : {
-          "$ref" : "RPurchaseCollection"
-        }
-      },
-      "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase" : {
-=======
       "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase" : {
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
         "request" : {
           "$ref" : "RPurchase"
         },
@@ -368,7 +332,7 @@
           "$ref" : "RPurchase"
         }
       },
-      "com.example.agriexpensett.RPurchaseEndpoint.updateRPurchase" : {
+      "com.example.agriexpensett.RPurchaseEndpoint.insertRPurchase" : {
         "request" : {
           "$ref" : "RPurchase"
         },

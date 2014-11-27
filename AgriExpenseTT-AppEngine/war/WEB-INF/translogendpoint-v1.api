@@ -43,22 +43,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "translogendpoint.insertTransLog" : {
-      "path" : "translog",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "translogendpoint.removeTransLog" : {
       "path" : "translog/{keyrep}/{namespace}",
       "httpMethod" : "DELETE",
@@ -84,6 +68,22 @@
         "body" : "empty"
       }
     },
+    "translogendpoint.insertTransLog" : {
+      "path" : "translog",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "translogendpoint.getAllTranslog" : {
       "path" : "translogcollection/{namespace}",
       "httpMethod" : "GET",
@@ -105,31 +105,9 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-<<<<<<< HEAD
-    "translogendpoint.insertTransLog" : {
-      "path" : "translog",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.TransLogEndpoint.insertTransLog",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "translogendpoint.getAllTranslog" : {
-      "path" : "translogcollection/{namespace}",
-      "httpMethod" : "GET",
-=======
     "translogendpoint.logs" : {
       "path" : "Logs/{time}/{namespace}",
       "httpMethod" : "POST",
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
@@ -152,8 +130,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-<<<<<<< HEAD
-=======
     "translogendpoint.deleteAll" : {
       "path" : "all/{namespace}",
       "httpMethod" : "GET",
@@ -175,7 +151,6 @@
         "body" : "empty"
       }
     },
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
     "translogendpoint.listTransLog" : {
       "path" : "translog",
       "httpMethod" : "GET",
@@ -321,6 +296,8 @@
           "$ref" : "TransLog"
         }
       },
+      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
+      },
       "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
         "request" : {
           "$ref" : "TransLog"
@@ -329,33 +306,17 @@
           "$ref" : "TransLog"
         }
       },
-      "com.example.agriexpensett.TransLogEndpoint.removeTransLog" : {
-      },
-<<<<<<< HEAD
-      "com.example.agriexpensett.TransLogEndpoint.insertTransLog" : {
-        "request" : {
-          "$ref" : "TransLog"
-        },
-=======
       "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
         "response" : {
           "$ref" : "TransLogCollection"
         }
       },
       "com.example.agriexpensett.TransLogEndpoint.Logs" : {
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
         "response" : {
           "$ref" : "TransLogCollection"
         }
       },
-<<<<<<< HEAD
-      "com.example.agriexpensett.TransLogEndpoint.getAllTranslog" : {
-        "response" : {
-          "$ref" : "TransLogCollection"
-        }
-=======
       "com.example.agriexpensett.TransLogEndpoint.deleteAll" : {
->>>>>>> 9b1399e3d2576fcbf2b765f489ec41e4883df1ea
       },
       "com.example.agriexpensett.TransLogEndpoint.listTransLog" : {
         "response" : {
