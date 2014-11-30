@@ -1,27 +1,60 @@
 package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentBackupList;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class Backup extends ActionBarActivity {
 
-	protected SignInManager signInObject;
+	public static final int SIGN_IN = 0;
+	public static final int SIGN_UP = 1;
+	public static final int VIEW = 2;
+	
+	protected SignInManager signInManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		signInObject = new SignInManager(Backup.this, Backup.this);
+		signInManager = new SignInManager(Backup.this, Backup.this);
+		Fragment fragment = new FragmentBackupList();
+		
+		Bundle argument = this.getIntent().getExtras();
+		if (argument != null && argument.containsKey("ACTION")){
+			switch ( argument.getInt("ACTION")){
+				case SIGN_IN:
+					Log.d("Backup Activity", "Selected the Sign In Option as Account was already created");
+					signInManager.signIn();
+					break;
+				case SIGN_UP:
+					Log.d("Backup Activity", "Selected the Sign Up Option as Account was not previously created");
+					Bundle arguments = new Bundle();
+					arguments.putString("type", DHelper.location_country);					
+					fragment = new FragmentSelectLocation();
+					fragment.setArguments(arguments);
+					return;
+				case VIEW:
+					Log.d("Backup Activity", "Selected the View Option as Account was already created");
+					break;
+				default:
+					Log.d("Backup Activity", "No valid option found, reverting to view");
+			}
+			
+		}
+		
 		
 		setContentView(R.layout.activity_backup_data);
 		if (savedInstanceState == null) 
 			getSupportFragmentManager()
-					.beginTransaction()
-					.add(R.id.fragment_backup_Container, new FragmentBackupList())
-					.commit();
+				.beginTransaction()
+				.add(R.id.fragment_backup_Container, fragment)
+				.commit();
 	}
 
 	@Override
@@ -33,9 +66,7 @@ public class Backup extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		// Handle action bar item clicks here. The action bar will automatically handle clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;

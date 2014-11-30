@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer;
+import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -13,7 +14,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +23,9 @@ import android.widget.Toast;
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class MainMenu extends ActionBarActivity {
-	
 	protected FlyOutContainer root;
-	protected SignInManager signInObject;
-	
+	protected SignInManager signInManager;
 	public final static String APP_NAME = "AgriExpenseTT";
-	
 	
 	@SuppressLint("InflateParams")
 	@Override
@@ -36,11 +33,9 @@ public class MainMenu extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		this.root=(FlyOutContainer) this.getLayoutInflater().inflate(R.layout.activity_main_menu, null);
 		this.setContentView(root);
-		signInObject = new SignInManager(MainMenu.this,MainMenu.this);
+		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
 	}
-	
-	
 	
 	/*
 	 * Dealing with Button Configurations
@@ -49,47 +44,56 @@ public class MainMenu extends ActionBarActivity {
 	private void setupButtons() {
 		//Change the text of the sign-in button if user has signed in before
 		Button btn_SignIn=(Button)findViewById(R.id.btn_SignIn);		
-		UpAcc acc= signInObject.isExisting();
+		UpAcc acc= signInManager.isExisting();
 		if(acc!=null && acc.getSignedIn()== 1){
 			btn_SignIn.setText("Sign Out");
 		}
 	}
 	
 	public void openNewCycleFragment(View view){		
-		startActivity(new Intent(MainMenu.this,NewCycle.class));
+		startActivity(new Intent(getApplicationContext(),NewCycle.class));
 	}
 	
 	public void openNewPurchaseFragment(View view){
-		startActivity(new Intent(MainMenu.this,NewPurchase.class));
+		startActivity(new Intent(getApplicationContext(),NewPurchase.class));
 	}
 	
 	public void openManageLabourFragment(View view){
-		startActivity(new Intent(MainMenu.this,HireLabour.class));
+		startActivity(new Intent(getApplicationContext(),HireLabour.class));
 	}
 	
 	public void openManageResourceFragment(View view){
-		Log.d(MainMenu.APP_NAME, "Launching Open Resource Fragment");
-		startActivity(new Intent(MainMenu.this,ManageResources.class));
+		startActivity(new Intent(getApplicationContext(),ManageResources.class));
 	}
 	
 	public void openManageDataFragment(View view){
-		startActivity(new Intent(MainMenu.this,ManageData.class));
+		startActivity(new Intent(getApplicationContext(),ManageData.class));
 	}
 	
 	public void openManageExports(View view){
-		startActivity(new Intent(MainMenu.this, ManageReport.class));		
+		startActivity(new Intent(getApplicationContext(), ManageReport.class));		
 	}
 	
 	public void openAboutFragment(View view){
-		startActivity(new Intent(MainMenu.this, AboutScreen.class ));
+		startActivity(new Intent(getApplicationContext(), AboutScreen.class ));
 	}
 
 	public void openHelpFragment(View view){
-		startActivity(new Intent(MainMenu.this, HelpScreen.class));
+		startActivity(new Intent(getApplicationContext(), HelpScreen.class));
 	}
 	
 	public void openBackupDataFragment(View view){
-		startActivity(new Intent(MainMenu.this, Backup.class));
+		Intent i = new Intent(getApplicationContext(), Backup.class);
+		if (this.signInManager.isExisting() == null){ 			// User does not exist => check internet and then create user
+			if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+				Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+				return;
+			}
+			i.putExtra("ACTION",  Backup.SIGN_UP); 				// Launch the Backup activity with the sign-up action passed
+		}else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
+			i.putExtra("ACTION",  Backup.SIGN_IN); 				// Launch the Backup activity with the sign-in action passed
+		}else i.putExtra("ACTION", Backup.VIEW);				// Launch the Backup activity to simply view the data
+		startActivity(i);										// Launch the Backup activity
 	}
 	
 	/*
@@ -115,7 +119,6 @@ public class MainMenu extends ActionBarActivity {
 			case R.id.menu_item_settings:
 				this.openManageDataFragment(null);
 				return true;	
-			
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -138,7 +141,7 @@ public class MainMenu extends ActionBarActivity {
 			SQLiteDatabase db=dbh.getReadableDatabase();
 			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
 			System.out.println("result String"+county);
-			signInObject.signIn();
+			signInManager.signIn();
 		}
 	}
 	
@@ -150,18 +153,18 @@ public class MainMenu extends ActionBarActivity {
 		UpAcc acc=DbQuery.getUpAcc(db);
 		db.close();
 		if(!isNetworkAvailable()){
-			Toast.makeText(MainMenu.this, "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if(acc.getSignedIn()==0){//not signed in
 			if(acc.getCounty()==null||acc.getCounty().equals("")){//location was never set
-				Intent i=new Intent(MainMenu.this,SelectLocation.class);
+				Intent i=new Intent(getApplicationContext(),SelectLocation.class);
 				startActivityForResult(i, 1);
 			}else{
-				signInObject.signIn();
+				signInManager.signIn();
 			}
 		}else{
-			signInObject.signIn();
+			signInManager.signIn();
 		}
 	}
 	public void toggleSignIn(){

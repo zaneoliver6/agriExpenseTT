@@ -42,15 +42,26 @@ public class SignInManager {
 		UpAcc acc = isExisting(); 								// Check if Account is already created
 		if(acc == null)accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
 		else{													// account exists already so we can sign in OR out
-			if(acc.getSignedIn() == 1){							// we're already signed in so lets sign out 
+			Log.d("SignIn Manager", "Account Exists");
+			if(acc.getSignedIn() == 1){							// we're already signed in so lets sign out
+				Log.d("SignIn Manager", "Account Signed in Attempting to sign out");
 				// updates the database that we signed out
 				ContentValues cv = new ContentValues();	
 				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	
 				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); 
 			}else{												// if we're signed out then we need to sign in 
+				Log.d("SignIn Manager", "Account previously created attempting to signin with namespace: "+acc.getAcc());
 				initialSignIn(acc.getAcc());					// Initiate Sign-in process
 			}
 		}
+	}
+	
+	public boolean signOut(){
+		Log.d("SignIn Manager", "Account is logged in, attempting to sign out");
+		ContentValues cv = new ContentValues();	
+		cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	
+		db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); 
+		return true;
 	}
 	
 	private void initialSignIn(final String namespace){

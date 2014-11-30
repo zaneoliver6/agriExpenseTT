@@ -2,8 +2,8 @@ package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +32,7 @@ public class SelectLocation extends ActionBarActivity {
 		Fragment listfrag = new FragmentSelectLocation();
 		listfrag.setArguments(arguments);
 		
-		getFragmentManager()
+		getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.NewCycleListContainer,listfrag)
 			.commit();
