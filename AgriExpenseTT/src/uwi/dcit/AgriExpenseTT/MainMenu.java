@@ -2,16 +2,11 @@ package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.FlyOutContainer;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -23,16 +18,13 @@ import android.widget.Toast;
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class MainMenu extends ActionBarActivity {
-	protected FlyOutContainer root;
 	protected SignInManager signInManager;
 	public final static String APP_NAME = "AgriExpenseTT";
 	
-	@SuppressLint("InflateParams")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.root=(FlyOutContainer) this.getLayoutInflater().inflate(R.layout.activity_main_menu, null);
-		this.setContentView(root);
+		this.setContentView(R.layout.activity_main_menu);
 		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
 	}
@@ -84,7 +76,7 @@ public class MainMenu extends ActionBarActivity {
 	
 	public void openBackupDataFragment(View view){
 		Intent i = new Intent(getApplicationContext(), Backup.class);
-		if (this.signInManager.isExisting() == null){ 			// User does not exist => check internet and then create user
+		if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
 			if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
 				Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
 				return;
@@ -92,9 +84,10 @@ public class MainMenu extends ActionBarActivity {
 			i.putExtra("ACTION",  Backup.SIGN_UP); 				// Launch the Backup activity with the sign-up action passed
 		}else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
 			i.putExtra("ACTION",  Backup.SIGN_IN); 				// Launch the Backup activity with the sign-in action passed
-		}else i.putExtra("ACTION", Backup.VIEW);				// Launch the Backup activity to simply view the data
+		}else i.putExtra("ACTION", Backup.VIEW);				// Launch the Backup activity to simply view the data because user is existing and signed in
 		startActivity(i);										// Launch the Backup activity
 	}
+	
 	
 	/*
 	 * Dealing with Menu Operations
@@ -125,9 +118,9 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	
-	public void toggleMenu(View v){
-		this.root.toggleMenu();
-	}
+//	public void toggleMenu(View v){
+//		this.root.toggleMenu();
+//	}
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode==RESULT_CANCELED){
@@ -152,7 +145,7 @@ public class MainMenu extends ActionBarActivity {
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		UpAcc acc=DbQuery.getUpAcc(db);
 		db.close();
-		if(!isNetworkAvailable()){
+		if(!NetworkHelper.isNetworkAvailable(this)){
 			Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_SHORT).show();
 			return;
 		}
@@ -175,15 +168,4 @@ public class MainMenu extends ActionBarActivity {
 			btnSignIn.setText("Sign In");
 		}
 	}
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	private boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-	}
-	
-
 }

@@ -25,9 +25,9 @@ public class Backup extends ActionBarActivity {
 		signInManager = new SignInManager(Backup.this, Backup.this);
 		Fragment fragment = new FragmentBackupList();
 		
-		Bundle argument = this.getIntent().getExtras();
-		if (argument != null && argument.containsKey("ACTION")){
-			switch ( argument.getInt("ACTION")){
+		Bundle prev_argument = this.getIntent().getExtras();
+		if (prev_argument != null && prev_argument.containsKey("ACTION")){
+			switch ( prev_argument.getInt("ACTION")){
 				case SIGN_IN:
 					Log.d("Backup Activity", "Selected the Sign In Option as Account was already created");
 					signInManager.signIn();
@@ -38,14 +38,13 @@ public class Backup extends ActionBarActivity {
 					arguments.putString("type", DHelper.location_country);					
 					fragment = new FragmentSelectLocation();
 					fragment.setArguments(arguments);
-					return;
+					break;
 				case VIEW:
 					Log.d("Backup Activity", "Selected the View Option as Account was already created");
 					break;
 				default:
 					Log.d("Backup Activity", "No valid option found, reverting to view");
 			}
-			
 		}
 		
 		

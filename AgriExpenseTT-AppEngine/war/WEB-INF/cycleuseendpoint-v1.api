@@ -27,6 +27,27 @@
   "ownerName" : "example.com",
   "packagePath" : "agriexpensett",
   "methods" : {
+    "cycleuseendpoint.getAllCycleUse" : {
+      "path" : "cycleusecollection/{namespace}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.example.agriexpensett.CycleUseEndpoint.getAllCycleUse",
+      "request" : {
+        "parameters" : {
+          "namespace" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "cycleuseendpoint.listCycleUse" : {
       "path" : "cycleuse",
       "httpMethod" : "GET",
@@ -44,27 +65,6 @@
           "limit" : {
             "type" : "int32",
             "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "cycleuseendpoint.getAllCycleUse" : {
-      "path" : "cycleusecollection/{namespace}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.example.agriexpensett.CycleUseEndpoint.getAllCycleUse",
-      "request" : {
-        "parameters" : {
-          "namespace" : {
-            "type" : "string",
-            "required" : true
           }
         },
         "body" : "empty"
@@ -179,21 +179,6 @@
   },
   "descriptor" : {
     "schemas" : {
-      "CollectionResponse_CycleUse" : {
-        "id" : "CollectionResponse_CycleUse",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "CycleUse"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
-      },
       "CycleUse" : {
         "id" : "CycleUse",
         "type" : "object",
@@ -266,17 +251,32 @@
             }
           }
         }
+      },
+      "CollectionResponse_CycleUse" : {
+        "id" : "CollectionResponse_CycleUse",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "CycleUse"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "com.example.agriexpensett.CycleUseEndpoint.listCycleUse" : {
-        "response" : {
-          "$ref" : "CollectionResponse_CycleUse"
-        }
-      },
       "com.example.agriexpensett.CycleUseEndpoint.getAllCycleUse" : {
         "response" : {
           "$ref" : "CycleUseCollection"
+        }
+      },
+      "com.example.agriexpensett.CycleUseEndpoint.listCycleUse" : {
+        "response" : {
+          "$ref" : "CollectionResponse_CycleUse"
         }
       },
       "com.example.agriexpensett.CycleUseEndpoint.getCycleUse" : {

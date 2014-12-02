@@ -18,4 +18,12 @@
         <item>Delete Data</item>
         <item>Edit Data</item>
     </string-array>
+    
+    <string-array name="country_menu">
+        <item>Trinidad and Tobago</item>
+        <item>Jamaica</item>
+        <item>St Lucia</item>
+        <item>St Vincent</item>
+        <item>Barbados</item>
+    </string-array>
 </resources>

@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.R;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,14 +50,13 @@ public class FragmentSelectLocation extends ListFragment {
 	}
 		
 	private void populateList() {		
-		list = new ArrayList<String>();
-		
+		list = new ArrayList<String>();		
 		if (type.equals(DHelper.location_country)){		
-			list.add("Trinidad and Tobago");
-			list.add("St Lucia");
-			list.add("Jamaica");
-			list.add("Barbados");
-		}else if (type.equals(DHelper.location_county)){		
+			String [] countries = getResources().getStringArray(R.array.country_menu);
+			list = new ArrayList<String>(Arrays.asList(countries));
+			Log.d(getTag(), "Attempting to display "+list.size()+" countries");
+			
+		}else if (type.equals(DHelper.location_county)){			
 			if (country != null && country.equals("Trinidad and Tobago")){
 				list.add("St. George");
 				list.add("St. David");

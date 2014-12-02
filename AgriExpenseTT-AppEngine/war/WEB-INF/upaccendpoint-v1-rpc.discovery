@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"9mnLCPwbyZOHH18t8ExzO2gqgTk/tADTb98t9c2ABM4ZoRmiJeukPTs\"",
+ "etag": "\"9mnLCPwbyZOHH18t8ExzO2gqgTk/cIJ3ANBmHRhrL5aspWmIUxVVkkg\"",
  "discoveryVersion": "v1",
  "id": "upaccendpoint:v1",
  "name": "upaccendpoint",
@@ -123,6 +123,9 @@
      "type": "string"
     },
     "address": {
+     "type": "string"
+    },
+    "country": {
      "type": "string"
     },
     "county": {
