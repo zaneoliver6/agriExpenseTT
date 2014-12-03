@@ -10,21 +10,19 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentSelectLocation extends ListFragment {
 	protected String type;
 	protected String country;
+	protected String county;
 	
 	protected ArrayList<String> list;
 	protected SQLiteDatabase db;
@@ -43,19 +41,20 @@ public class FragmentSelectLocation extends ListFragment {
 		type = this.getArguments().getString("type");
 		if (this.getArguments().containsKey("country"))
 			this.country = this.getArguments().getString("country");
+		if(this.getArguments().containsKey("county"))
+			this.county = this.getArguments().getString("county");
 		
 		populateList();		
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
 	}
+	
+	
 		
 	private void populateList() {		
 		list = new ArrayList<String>();		
 		if (type.equals(DHelper.location_country)){		
-			String [] countries = getResources().getStringArray(R.array.country_menu);
-			list = new ArrayList<String>(Arrays.asList(countries));
-			Log.d(getTag(), "Attempting to display "+list.size()+" countries");
-			
+			list = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.country_menu)));
 		}else if (type.equals(DHelper.location_county)){			
 			if (country != null && country.equals("Trinidad and Tobago")){
 				list.add("St. George");
@@ -88,12 +87,12 @@ public class FragmentSelectLocation extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		Fragment frag = null;
 		
 		if (type.equals(DHelper.location_country)){
 			String country = list.get(position);			
-			Toast.makeText(getActivity(), country, Toast.LENGTH_LONG).show();
 			
-			ListFragment frag = new FragmentSelectLocation();
+			frag= new FragmentSelectLocation();
 			Bundle argument = new Bundle();
 			argument.putString("type", DHelper.location_county);
 			argument.putString("country", country);
@@ -101,7 +100,7 @@ public class FragmentSelectLocation extends ListFragment {
 			
 			getFragmentManager()
 				.beginTransaction()
-				.replace(R.id.NewCycleListContainer, frag)						//Load the New Fragment
+				.replace(R.id.fragment_backup_Container, frag)						//Load the New Fragment
 				.addToBackStack(type)													//add the transaction to the back stack
 				.commit();
 			
@@ -113,7 +112,6 @@ public class FragmentSelectLocation extends ListFragment {
 			i.putExtra("county", county );
 			i.putExtra("country", this.country);
 			
-			Toast.makeText(getActivity(), "country:" + country +" county: "+county , Toast.LENGTH_LONG).show();
 			
 			getActivity().setResult(1,i);//used to set the results for the parent activity ( the one that launched this one)
 			getActivity().finish();
@@ -124,31 +122,6 @@ public class FragmentSelectLocation extends ListFragment {
 			
 	
 	}
-	 public class TWatch implements TextWatcher{
-		 ArrayAdapter<String> adpt;
-		 public TWatch(ArrayAdapter<String> adpt){
-			 super();
-			 this.adpt=adpt;
-		 }
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-			
-			
-		}
-
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before,int count) {
-			adpt.getFilter().filter(s);
-			
-			
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {
-			
-			
-		}
-		 
-	 }
+	
 } 
 	

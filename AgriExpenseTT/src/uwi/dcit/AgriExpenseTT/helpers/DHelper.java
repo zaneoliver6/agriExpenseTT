@@ -41,4 +41,5 @@ public class DHelper {
 	//Location fragment codes
 	public static final String location_country = "country";
 	public static final String location_county = "county";
+	public static final String location_display = "display";
 }
