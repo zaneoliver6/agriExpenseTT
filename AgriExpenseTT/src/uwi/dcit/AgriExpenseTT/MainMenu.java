@@ -1,15 +1,21 @@
 package uwi.dcit.AgriExpenseTT;
 
+import java.util.Calendar;
+
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +31,8 @@ public class MainMenu extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRepeatingAlarm();
+		
 		this.setContentView(R.layout.activity_main_menu);
 		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
@@ -161,6 +169,30 @@ public class MainMenu extends ActionBarActivity {
 			signInManager.signIn();
 		}
 	}
+	
+	public void setRepeatingAlarm(){
+		NotificationCompat.Builder notifyBuilder = 
+			new NotificationCompat.Builder(this)
+			.setContentTitle("AgriExpense Reminder")
+			.setContentText("Did you remember to enter your farming activity today");
+
+		Intent myIntent = new Intent(this , MainMenu.class);
+		
+		if (PendingIntent.getService(this, 0,  myIntent, PendingIntent.FLAG_NO_CREATE) == null){ //returns null if does not exist
+			PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			notifyBuilder.setContentIntent(pendingIntent);
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			calendar.set(Calendar.HOUR_OF_DAY, 17);
+			((AlarmManager)getSystemService(ALARM_SERVICE)).setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY , pendingIntent);
+			
+			Log.d(APP_NAME, "Intent for notification registered" );
+		}else
+			Log.d(APP_NAME, "Intent for notification was previously registered");
+	}
+	
+	
 	public void toggleSignIn(){
 		Button btnSignIn=(Button)findViewById(R.id.btn_SignIn);
 		if(btnSignIn.getText().toString().equals("Sign In")){
