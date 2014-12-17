@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.helpers;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -47,8 +48,8 @@ public class SignInManager {
 				Log.d("SignIn Manager", "Account Signed in Attempting to sign out");
 				// updates the database that we signed out
 				ContentValues cv = new ContentValues();	
-				cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	
-				db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); 
+				cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);	
+				db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1",null); 
 			}else{												// if we're signed out then we need to sign in 
 				Log.d("SignIn Manager", "Account previously created attempting to signin with namespace: "+acc.getAcc());
 				initialSignIn(acc.getAcc());					// Initiate Sign-in process
@@ -59,8 +60,8 @@ public class SignInManager {
 	public boolean signOut(){
 		Log.d("SignIn Manager", "Account is logged in, attempting to sign out");
 		ContentValues cv = new ContentValues();	
-		cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 0);	
-		db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1",null); 
+		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);	
+		db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID + "=1",null); 
 		return true;
 	}
 	

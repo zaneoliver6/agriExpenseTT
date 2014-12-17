@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -66,11 +67,11 @@ public class HarvestDetails extends ActionBarActivity {
 
 		private void save() {
 			ContentValues cv=new ContentValues();
-			cv.put(DbHelper.CROPCYCLE_HARVEST_AMT, qty);
-			cv.put(DbHelper.CROPCYCLE_HARVEST_TYPE, qtfr);
+			cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, qty);
+			cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE, qtfr);
 			DbHelper dbh=new DbHelper(HarvestDetails.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+currCycle.getId(), null);
+			db.update(CycleEntry.TABLE_NAME, cv, CycleEntry._ID+"="+currCycle.getId(), null);
 			System.out.println("changes saved");
 		}
 		

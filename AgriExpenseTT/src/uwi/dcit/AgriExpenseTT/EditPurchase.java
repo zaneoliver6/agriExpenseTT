@@ -5,9 +5,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +18,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;
@@ -127,10 +127,10 @@ public class EditPurchase extends ActionBarActivity {
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
 		ContentValues cv = new ContentValues();
-		cv.put(DbHelper.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
-		cv.put(DbHelper.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
-		cv.put(DbHelper.RESOURCE_PURCHASE_QTY, qty);
-		cv.put(DbHelper.RESOURCE_PURCHASE_COST, cost);
+		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
+		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
+		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
+		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
 		DataManager dm=new DataManager(EditPurchase.this, db, dbh);
 		RPurchase rp=p.toRPurchase();

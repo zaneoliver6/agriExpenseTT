@@ -2,6 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -111,10 +112,10 @@ public class SalesCost extends ActionBarActivity {
 		}
 		private void save() {
 			ContentValues cv=new ContentValues();
-			cv.put(DbHelper.CROPCYCLE_COSTPER, sellp);
+			cv.put(CycleEntry.CROPCYCLE_COSTPER, sellp);
 			DbHelper dbh=new DbHelper(SalesCost.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(DbHelper.TABLE_CROPCYLE, cv, DbHelper.CROPCYCLE_ID+"="+currCycle.getId(), null);
+			db.update(CycleEntry.TABLE_NAME, cv, CycleEntry._ID+"="+currCycle.getId(), null);
 			currCycle.setCostPer(sellp);
 			currCycle.setHarvestAmt(amtHarvest);
 			currCycle.setHarvestType(qtfr);

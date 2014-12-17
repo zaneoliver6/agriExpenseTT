@@ -5,21 +5,22 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 public class FragmentNewPurchaseLast extends Fragment{
 	private View view;
@@ -97,19 +98,19 @@ public class FragmentNewPurchaseLast extends Fragment{
 				if(category.equals(DHelper.cat_labour)&&currC!=null){
 					//insert purchase
 					dm.insertPurchase(resId, quantifier, qty, category, cost);
-					int pId=DbQuery.getLast(db, dbh,DbHelper.TABLE_RESOURCE_PURCHASES);
+					int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
 					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
 					//use all of the qty of that purchase in the given cycle
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
 					//update purchase
 					p.setQtyRemaining(p.getQtyRemaining()-qty);
 					ContentValues cv=new ContentValues();
-					cv.put(DbHelper.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+					cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
 					dm.updatePurchase(p,cv);
 					//update cycle
 					currC.setTotalSpent(currC.getTotalSpent()+cost);
 					cv=new ContentValues();
-					cv.put(DbHelper.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
+					cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
 					dm.updateCycle(currC,cv);
 				}else{
 					if(category.equals(DHelper.cat_other)){//if its the other category

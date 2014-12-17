@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import java.text.DateFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -176,7 +177,7 @@ public class FragmentNewCycleLast extends Fragment{
 						
 						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
 						Intent i=new Intent(getActivity(),CycleUseageRedesign.class);
-						int n=DbQuery.getLast(db, dbh,DbHelper.TABLE_CROPCYLE);
+						int n=DbQuery.getLast(db, dbh, CycleEntry.TABLE_NAME);
 						c.setId(n);
 						i.putExtra("cycleMain",c);
 						startActivity(i);

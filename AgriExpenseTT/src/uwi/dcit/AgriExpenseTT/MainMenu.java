@@ -4,6 +4,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -129,10 +130,10 @@ public class MainMenu extends ActionBarActivity {
 		if(requestCode==1){
 			String county=data.getExtras().getString("county");
 			ContentValues cv=new ContentValues();
-			cv.put(DbHelper.UPDATE_ACCOUNT_COUNTY, county);
+			cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, county);
 			DbHelper dbh=new DbHelper(MainMenu.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+			db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
 			System.out.println("result String"+county);
 			signInManager.signIn();
 		}

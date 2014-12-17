@@ -6,6 +6,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -131,10 +132,10 @@ public class EditCycle extends ActionBarActivity {
 			landQty=Double.parseDouble(et_landQty.getText().toString());
 		}
 		ContentValues cv=new ContentValues();
-		cv.put(DbHelper.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
-		cv.put(DbHelper.CROPCYCLE_LAND_TYPE,land);
-		cv.put(DbHelper.CROPCYCLE_LAND_AMOUNT, landQty);
-		cv.put(DbHelper.CROPCYCLE_DATE, date);
+		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
+		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE,land);
+		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
+		cv.put(CycleEntry.CROPCYCLE_DATE, date);
 		//Toast.makeText(EditCycle.this, crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
 		dm.updateCycle(c, cv);

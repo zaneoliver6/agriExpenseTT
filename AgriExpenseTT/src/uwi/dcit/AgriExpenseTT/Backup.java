@@ -47,7 +47,6 @@ public class Backup extends ActionBarActivity {
 			}
 		}
 		
-		
 		setContentView(R.layout.activity_backup_data);
 		if (savedInstanceState == null) 
 			getSupportFragmentManager()

@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -72,7 +73,7 @@ public class Sync {
 				
 			}
 			ContentValues cv=new ContentValues();
-			cv.put(DbHelper.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
+			cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
 		//only local exist
 		}else{ 
 			System.out.println("cloud doesnt exist so pushing all to cloud");
@@ -100,14 +101,14 @@ public class Sync {
 			switch(option){
 				case updateCloudOpt:
 					tL.updateCloud(cloudUpdate);
-					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
 					break;
 					
 				case updateLocalOpt:
 					tL.logsUpdateLocal(namespace,localUpdate);
-					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
 					break;
 					
 				case overwriteCloudOpt:
@@ -117,8 +118,8 @@ public class Sync {
 					
 				case overwriteLocalOpt:
 					success=tL.pullAllFromCloud(cloudAcc);
-					cv.put(DbHelper.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(DbHelper.TABLE_UPDATE_ACCOUNT, cv, DbHelper.UPDATE_ACCOUNT_ID+"=1", null);
+					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
 					break;
 				case createCloudNewOpt:
 					CloudInterface cloudIF=new CloudInterface(context, db, dbh);
