@@ -1,11 +1,9 @@
-
-
-
 # Operating System Specific Files
 Desktop.ini
 .DS_Store
 .Trashes
 .LSOverride
+.idea
 
 # Eclipse Specific Files
 .metadata
@@ -20,8 +18,8 @@ local.properties
 .targets
 
 # Java Specific files
-
 *.class
 *.discovery
 *.api
+
 

@@ -121,7 +121,7 @@ public class DbQuery {
 	
 	public static int getCountryIdByName(SQLiteDatabase db, String country){
 		int id = -1;
-		String sqlStr = "SELECT _ID FROM "+ CountryEntry.TABLE_NAME +";";
+		String sqlStr = "SELECT "+ CountryEntry._ID + " FROM "+ CountryEntry.TABLE_NAME +";";
 		Cursor cursor = db.rawQuery(sqlStr, null);
 		if (cursor.getCount() > 0){
 			cursor.moveToFirst();
