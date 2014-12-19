@@ -1,3 +1,2 @@
-include ':appcompat_v7_2'
 include ':AgriExpenseTT'
 include ':AgriExpenseTT-AppEngine'
