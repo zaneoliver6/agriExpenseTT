@@ -5,11 +5,13 @@ import java.util.Calendar;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -37,7 +39,6 @@ public class MainMenu extends ActionBarActivity {
 		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
 	}
-	
 	/*
 	 * Dealing with Button Configurations
 	 */
@@ -127,9 +128,6 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	
-//	public void toggleMenu(View v){
-//		this.root.toggleMenu();
-//	}
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode==RESULT_CANCELED){
@@ -171,28 +169,31 @@ public class MainMenu extends ActionBarActivity {
 	}
 	
 	public void setRepeatingAlarm(){
-		NotificationCompat.Builder notifyBuilder = 
-			new NotificationCompat.Builder(this)
-			.setContentTitle("AgriExpense Reminder")
-			.setContentText("Did you remember to enter your farming activity today");
-
-		Intent myIntent = new Intent(this , MainMenu.class);
+		Log.d(APP_NAME, "Running Repeating Alarm notifications");
 		
-		if (PendingIntent.getService(this, 0,  myIntent, PendingIntent.FLAG_NO_CREATE) == null){ //returns null if does not exist
-			PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			notifyBuilder.setContentIntent(pendingIntent);
-			
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(System.currentTimeMillis());
-			calendar.set(Calendar.HOUR_OF_DAY, 17);
-			((AlarmManager)getSystemService(ALARM_SERVICE)).setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),  AlarmManager.INTERVAL_DAY , pendingIntent);
-			
-			Log.d(APP_NAME, "Intent for notification registered" );
-		}else
-			Log.d(APP_NAME, "Intent for notification was previously registered");
+		NotificationCompat.Builder mBuilder =
+		        new NotificationCompat.Builder(this)
+		        .setSmallIcon(R.drawable.logo_agrinet)
+		        .setContentTitle("AgriExpense Reminder")
+		        .setContentText("Did you remember to enter your farming activity today");
+		
+		Intent notificationIntent = new Intent(this, ReminderBroadcaster.class);
+		notificationIntent
+			.putExtra(ReminderBroadcaster.NOTIFICATION_ID, 1)
+        	.putExtra(ReminderBroadcaster.NOTIFICATION, mBuilder.build());
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		calendar.set(Calendar.HOUR_OF_DAY, 17);
+		
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        ((AlarmManager)getSystemService(Context.ALARM_SERVICE))
+        	.setInexactRepeating(AlarmManager.RTC_WAKEUP, 
+        					calendar.getTimeInMillis(), 
+        					AlarmManager.INTERVAL_DAY, 
+        					pendingIntent );
 	}
-	
-	
+
 	public void toggleSignIn(){
 		Button btnSignIn=(Button)findViewById(R.id.btn_SignIn);
 		if(btnSignIn.getText().toString().equals("Sign In")){
