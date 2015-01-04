@@ -3,13 +3,13 @@
 
     <persistence-unit name="transactions-optional">
         <provider>org.datanucleus.api.jpa.PersistenceProviderImpl</provider>
-    	<class>com.example.agriexpensett.Cycle</class>
-        <class>com.example.agriexpensett.CycleUse</class>
-        <class>com.example.agriexpensett.DeviceInfo</class>
-        <class>com.example.agriexpensett.MessageData</class>
-        <class>com.example.agriexpensett.RPurchase</class>
-        <class>com.example.agriexpensett.TransLog</class>
-        <class>com.example.agriexpensett.UpAcc</class>
+    	<class>uwi.dcit.agriexpensett.Cycle</class>
+        <class>uwi.dcit.agriexpensett.CycleUse</class>
+        <class>uwi.dcit.agriexpensett.DeviceInfo</class>
+        <class>uwi.dcit.agriexpensett.MessageData</class>
+        <class>uwi.dcit.agriexpensett.RPurchase</class>
+        <class>uwi.dcit.agriexpensett.TransLog</class>
+        <class>uwi.dcit.agriexpensett.UpAcc</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="datanucleus.NontransactionalRead" value="true"/>

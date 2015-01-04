@@ -31,7 +31,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 @SuppressWarnings("deprecation")
 public class ReportHelper {

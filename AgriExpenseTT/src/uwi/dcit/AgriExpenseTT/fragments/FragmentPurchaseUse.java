@@ -23,7 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

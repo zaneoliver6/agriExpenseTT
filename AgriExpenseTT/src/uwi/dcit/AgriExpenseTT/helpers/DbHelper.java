@@ -24,7 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class DbHelper extends SQLiteOpenHelper{	
 

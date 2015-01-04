@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;

@@ -4,11 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.agriexpensett.cycleendpoint.model.Cycle;
+import uwi.dcit.agriexpensett.cycleuseendpoint.model.CycleUse;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.translogendpoint.model.TransLog;
+import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
 import java.util.ArrayList;
 

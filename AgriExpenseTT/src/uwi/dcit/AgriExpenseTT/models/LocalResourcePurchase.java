@@ -1,6 +1,6 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import android.os.Parcel;
 import android.os.Parcelable;

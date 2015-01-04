@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class Sync {
 	private UpAcc localAcc;

@@ -30,8 +30,8 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.cycleendpoint.model.Cycle;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 @SuppressLint("InflateParams")
 public class CycleUseage extends ActionBarActivity {

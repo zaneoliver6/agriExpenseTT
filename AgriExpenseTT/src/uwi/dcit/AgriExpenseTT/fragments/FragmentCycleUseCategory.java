@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

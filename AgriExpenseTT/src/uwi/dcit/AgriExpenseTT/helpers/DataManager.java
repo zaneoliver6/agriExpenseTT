@@ -15,9 +15,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.agriexpensett.cycleendpoint.model.Cycle;
+import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class DataManager {
 	SQLiteDatabase db;

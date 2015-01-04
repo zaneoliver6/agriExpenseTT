@@ -17,7 +17,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class SignInManager {
 	Context context;
