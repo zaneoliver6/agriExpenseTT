@@ -1,11 +1,10 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +14,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 
 public class NewPurchase extends ActionBarActivity {
 	TextView sub_head;
@@ -35,7 +36,7 @@ public class NewPurchase extends ActionBarActivity {
 		ListFragment listfrag = new NewPurchaseLists();
 		listfrag.setArguments(arguments);
 		
-		getFragmentManager()
+		getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.NewCycleListContainer,listfrag)
 			.commit();
@@ -63,7 +64,7 @@ public class NewPurchase extends ActionBarActivity {
    }
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();

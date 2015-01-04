@@ -1,24 +1,14 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.support.v7.app.ActionBarActivity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ActionBar.Tab;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class DeleteData extends ActionBarActivity {
 
@@ -28,7 +18,9 @@ public class DeleteData extends ActionBarActivity {
 	SQLiteDatabase db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		/*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
 		//for empty lists
@@ -55,9 +47,9 @@ public class DeleteData extends ActionBarActivity {
     	getActionBar().addTab(t3);
     	getActionBar().addTab(t1);
     	getActionBar().addTab(t2);
-    	
+    	*/
 	}
-	
+	/*
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
 		Fragment currFragment;
@@ -136,5 +128,5 @@ public class DeleteData extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 }

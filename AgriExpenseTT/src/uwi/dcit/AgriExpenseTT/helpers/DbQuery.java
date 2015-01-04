@@ -1,5 +1,15 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.example.agriexpensett.cycleendpoint.model.Cycle;
+import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.example.agriexpensett.translogendpoint.model.TransLog;
+import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
@@ -15,15 +25,6 @@ import uwi.dcit.AgriExpenseTT.models.ResourceContract.ResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
 public class DbQuery {
 	
@@ -456,4 +457,24 @@ public class DbQuery {
 			db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
 		}
 	}
+
+    //checks to see if there are any crop cycles or not
+    public static boolean cyclesExist(SQLiteDatabase db){
+        String code="select COUNT(*) FROM "+CycleEntry.TABLE_NAME;
+        Cursor c=db.rawQuery(code,null);
+       if(c.moveToFirst()) {
+           System.out.println(c.getInt(0));
+           return c.getInt(0) > 0;
+       }
+       return false;
+    }
+    public static boolean resourceExist(SQLiteDatabase db){
+        String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
+        Cursor c=db.rawQuery(code,null);
+        if(c.moveToFirst()) {
+            System.out.println(c.getInt(0));
+            return c.getInt(0) > 0;
+        }
+        return false;
+    }
 }

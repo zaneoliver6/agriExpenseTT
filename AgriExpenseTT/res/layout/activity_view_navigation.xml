@@ -6,11 +6,11 @@
     tools:context="uwi.dcit.AgriExpenseTT.ManageResources"
     tools:ignore="MergeRootFrame" >
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
-
+-->
         <FrameLayout
             android:id="@+id/navContent"
             android:layout_width="match_parent"
@@ -19,7 +19,7 @@
 
         </FrameLayout>
 
-    </LinearLayout>
+    <!--/LinearLayout-->
 
 </FrameLayout>
 

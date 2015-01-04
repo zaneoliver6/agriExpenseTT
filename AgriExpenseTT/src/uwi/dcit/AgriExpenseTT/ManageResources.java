@@ -1,25 +1,18 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabsManageRes;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class ManageResources extends ActionBarActivity {
 	
@@ -30,11 +23,16 @@ public class ManageResources extends ActionBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
 		
 		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
-		
+        Fragment fragment=new FragmentSlidingTabsManageRes();
+        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.navContent,fragment);
+        ft.commit();
+		/*
 		//for empty lists
 		dbh	= new DbHelper(ManageResources.this);
 		db	= dbh.getReadableDatabase();
@@ -57,7 +55,8 @@ public class ManageResources extends ActionBarActivity {
 		// Initialize and Set the name of the tabs
 		TabListener tL=new TabListener();
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
+
+
 		ActionBar.Tab t1 = getActionBar().newTab();
 		t1.setText("Purchases").setTabListener(tL);
 		
@@ -73,9 +72,10 @@ public class ManageResources extends ActionBarActivity {
     	getActionBar().addTab(t2);
     	
     	Log.d(MainMenu.APP_NAME, "Completed the OnCreate Method");
+    	*/
 	}
 	
-	
+	/*
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
 		Fragment currFragment;
@@ -125,11 +125,7 @@ public class ManageResources extends ActionBarActivity {
 			ft.replace(R.id.navContent, fragment);
 		}
 
-		@Override
-		public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
-			
-			
-		}
+
 		
 	}
 	
@@ -157,5 +153,5 @@ public class ManageResources extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	
+
 }

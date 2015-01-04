@@ -1,6 +1,6 @@
 {
  "kind": "discovery#rpcDescription",
- "etag": "\"9mnLCPwbyZOHH18t8ExzO2gqgTk/fQV0nd5EPjQm7AeDQWVG0CSqphc\"",
+ "etag": "\"c05bU6zpvXPOpQakG5gG3IOJh8Y/fQV0nd5EPjQm7AeDQWVG0CSqphc\"",
  "discoveryVersion": "v1",
  "id": "rpurchaseendpoint:v1",
  "name": "rpurchaseendpoint",

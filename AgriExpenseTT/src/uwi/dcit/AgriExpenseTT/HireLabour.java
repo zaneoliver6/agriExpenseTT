@@ -1,15 +1,16 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
 
 public class HireLabour extends ActionBarActivity {
 
@@ -28,7 +29,7 @@ public class HireLabour extends ActionBarActivity {
 		b.putString("type","workers");
 		//b.putString(key, value);
 		start.setArguments(b);
-		FragmentManager fm=getFragmentManager();
+		FragmentManager fm=getSupportFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
 		ft.add(R.id.NewCycleListContainer, start);
 		ft.commit();
@@ -40,7 +41,7 @@ public class HireLabour extends ActionBarActivity {
 	}
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();

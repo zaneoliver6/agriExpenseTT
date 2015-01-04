@@ -1,5 +1,17 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
@@ -9,17 +21,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListFragment;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 public class UseResource extends ActionBarActivity {
 	private Double total;
@@ -53,7 +54,7 @@ public class UseResource extends ActionBarActivity {
 			parameter.putString("category", type);
 			fragment.setArguments(parameter);
 			
-			getFragmentManager()
+			getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.useExpenseFrag, fragment)
 				.commit();
@@ -74,7 +75,7 @@ public class UseResource extends ActionBarActivity {
 		ListFragment listfrag	= new ChoosePurchaseFragment();		
 		listfrag.setArguments(pass);
 		
-		getFragmentManager()
+		getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.useExpenseFrag,listfrag)
 			.commit();
@@ -95,7 +96,7 @@ public class UseResource extends ActionBarActivity {
 	}
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();
