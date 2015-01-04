@@ -1,17 +1,9 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class ViewCycleUsege extends ActionBarActivity {
 	SQLiteDatabase db;
@@ -30,6 +32,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_cycle_usege);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("View Cycle Usage");
 		list=new ArrayList<LocalCycleUse>();
 		type=getIntent().getStringExtra("type");
 		int cycleId=Integer.parseInt(getIntent().getStringExtra("id"));

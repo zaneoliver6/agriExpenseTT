@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -14,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class FragmentLabourType extends Fragment{
 	
 	View view;
@@ -23,6 +25,7 @@ public class FragmentLabourType extends Fragment{
 		view=inflater.inflate(R.layout.fragment_labour_type, container, false);
 		
 		setDetails();
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Labour Type Fragment");
 		return view;
 	}
 	private void setDetails() {

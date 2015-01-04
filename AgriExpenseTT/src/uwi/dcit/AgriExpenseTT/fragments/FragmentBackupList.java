@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.R;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,9 +7,12 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentBackupList  extends ListFragment {
 
@@ -21,6 +23,7 @@ public class FragmentBackupList  extends ListFragment {
 		// We need to use a different list item layout for devices older than Honeycomb
 		int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 		this.setListAdapter(new ArrayAdapter<String>(this.getActivity(), layout, menu));
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Backup List Fragment");
 	}
 	
 	public void updateHeading(){

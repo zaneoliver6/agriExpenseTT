@@ -7,12 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class ManageData extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_data);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Manage Data");
 	}
 
 	

@@ -1,8 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +12,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class HarvestDetails extends ActionBarActivity {
 	private final int REQ_MEASURE=1;
@@ -29,6 +31,7 @@ public class HarvestDetails extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_harvest_details);
 		setup();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Harvest Details");
 	}
 	private void setup() {
 		btn_qtfr=(Button)findViewById(R.id.btn_harvestDet_qtfr);

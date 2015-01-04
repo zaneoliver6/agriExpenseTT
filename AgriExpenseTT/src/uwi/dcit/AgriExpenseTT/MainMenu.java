@@ -1,13 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.Calendar;
-
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
-import uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -26,6 +18,16 @@ import android.widget.Toast;
 
 import com.example.agriexpensett.upaccendpoint.model.UpAcc;
 
+import java.util.Calendar;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster;
+import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
+
 public class MainMenu extends ActionBarActivity {
 	protected SignInManager signInManager;
 	public final static String APP_NAME = "AgriExpenseTT";
@@ -38,7 +40,11 @@ public class MainMenu extends ActionBarActivity {
 		this.setContentView(R.layout.activity_main_menu);
 		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
+
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Menu");
 	}
+
+
 	/*
 	 * Dealing with Button Configurations
 	 */

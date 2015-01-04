@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ListFragment;
@@ -16,6 +15,9 @@ import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class NewPurchase extends ActionBarActivity {
 	TextView sub_head;
 	@Override
@@ -26,6 +28,7 @@ public class NewPurchase extends ActionBarActivity {
 		tv_main.setText("Purchasing new materials");
 		setupUI();
 		setupInitialFrag();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
 	}
 	
 	private void setupInitialFrag() {

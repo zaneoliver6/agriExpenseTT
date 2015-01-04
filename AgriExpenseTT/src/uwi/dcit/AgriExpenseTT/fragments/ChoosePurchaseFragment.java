@@ -1,19 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-
-import uwi.dcit.AgriExpenseTT.EditPurchase;
-import uwi.dcit.AgriExpenseTT.MainMenu;
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -37,6 +24,21 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import uwi.dcit.AgriExpenseTT.EditPurchase;
+import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 
 public class ChoosePurchaseFragment extends ListFragment {
@@ -79,6 +81,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		populateList();
 		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
 	
 	private void populateList() {

@@ -1,14 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ListFragment;
@@ -20,6 +11,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class UseResource extends ActionBarActivity {
 	private Double total;
@@ -38,6 +40,7 @@ public class UseResource extends ActionBarActivity {
 		
 		setContentView(R.layout.activity_use_resource);
 		start(mainCycle,stype);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Use Resources");
 	}
 	
 	private void start(LocalCycle cycle, String type) {

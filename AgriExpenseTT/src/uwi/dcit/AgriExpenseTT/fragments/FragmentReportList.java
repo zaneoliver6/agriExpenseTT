@@ -1,10 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.DialogInterface;
@@ -21,6 +16,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 public class FragmentReportList extends ListFragment {
 
@@ -40,6 +42,7 @@ public class FragmentReportList extends ListFragment {
 		super.onCreate(savedInstanceState);
 		ReportHelper.createReportDirectory();
 		populateList();
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Report List Fragment");
 	}
 	
 	public void populateList() {

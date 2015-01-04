@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.NewPurchase;
-import uwi.dcit.AgriExpenseTT.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -13,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.NewPurchase;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
 public class FragmentNewPurchaseOther extends Fragment{
@@ -30,6 +32,7 @@ public class FragmentNewPurchaseOther extends Fragment{
 			Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_other_quanifier, container, false);
 		setup();
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment - Other Category");
 		return view;
 	}
 	private void setup() {

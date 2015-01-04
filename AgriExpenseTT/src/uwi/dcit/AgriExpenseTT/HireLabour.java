@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
@@ -11,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class HireLabour extends ActionBarActivity {
 
 	@Override
@@ -18,6 +20,7 @@ public class HireLabour extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitial();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}
 
 	private void setupInitial() {

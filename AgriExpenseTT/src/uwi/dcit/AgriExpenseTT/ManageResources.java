@@ -1,5 +1,16 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
@@ -8,18 +19,9 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.app.ActionBar.Tab;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.app.Fragment;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class ManageResources extends ActionBarActivity {
 	
@@ -33,7 +35,7 @@ public class ManageResources extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
 		
-		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Manage Resources");
 		
 		//for empty lists
 		dbh	= new DbHelper(ManageResources.this);
