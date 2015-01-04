@@ -1,23 +1,40 @@
 package uwi.dcit.AgriExpenseTT;
 
+<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+=======
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.help.FragmentSlidingTabsEdit;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class EditData extends ActionBarActivity {
 	ArrayList<LocalCycle> li;
 	ArrayList<LocalResourcePurchase> pli;
-	public final int req_cycle=1;
-	final int req_purchase=2;
+//	public final int req_cycle=1; //TODO Remove unused fields
+//	final int req_purchase=2;
 	DbHelper dbh;
 	SQLiteDatabase db;
 	@Override
@@ -30,7 +47,13 @@ public class EditData extends ActionBarActivity {
         ft.commit();
         /*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
+<<<<<<< HEAD
 
+=======
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_view_navigation);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Data");
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 		//for empty lists
 		dbh=new DbHelper(EditData.this);
 		db=dbh.getReadableDatabase();

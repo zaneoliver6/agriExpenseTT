@@ -1,13 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.Calendar;
-
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +12,16 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Calendar;
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class EditCycle extends ActionBarActivity {
 	Button btn_crop;
@@ -50,6 +52,7 @@ public class EditCycle extends ActionBarActivity {
 		dbh = new DbHelper(this);
 		db= dbh.getReadableDatabase();
 		initialize();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Cycle");
 	}
 
 	@SuppressWarnings("deprecation")

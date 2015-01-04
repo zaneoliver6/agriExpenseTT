@@ -19,6 +19,10 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 public class FragmentViewResources extends ListFragment{
 	SQLiteDatabase db;
@@ -35,6 +39,7 @@ public class FragmentViewResources extends ListFragment{
 		Collections.sort(rList);
 		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
 		setListAdapter(listAdapt);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
 	}
 	
 	private void populateList() {

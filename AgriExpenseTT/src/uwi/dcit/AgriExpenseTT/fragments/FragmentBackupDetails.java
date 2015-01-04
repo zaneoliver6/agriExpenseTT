@@ -1,9 +1,11 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentBackupDetails extends Fragment{
 
@@ -16,6 +18,7 @@ public class FragmentBackupDetails extends Fragment{
 		this.selectedOption = this.getArguments().getInt("backup_field");
 		this.selectedStrOption = getResources().getStringArray(R.array.backup_menu)[selectedOption];
 		updateHeading();
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Backup Details Fragment");
 	}
 	
 	public void updateHeading(){

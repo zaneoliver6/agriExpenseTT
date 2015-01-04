@@ -1,15 +1,17 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentBackupList;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import uwi.dcit.AgriExpenseTT.fragments.FragmentBackupList;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 
 public class Backup extends ActionBarActivity {
 
@@ -23,6 +25,8 @@ public class Backup extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		signInManager = new SignInManager(Backup.this, Backup.this);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Backup Screen");
+
 		Fragment fragment = new FragmentBackupList();
 		
 		Bundle prev_argument = this.getIntent().getExtras();

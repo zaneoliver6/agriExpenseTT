@@ -1,21 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
-import uwi.dcit.AgriExpenseTT.EditCycle;
-import uwi.dcit.AgriExpenseTT.HireLabour;
-import uwi.dcit.AgriExpenseTT.MainMenu;
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.support.v4.app.ListFragment;
@@ -37,6 +21,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.EditCycle;
+import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentViewCycles extends ListFragment{
 	String type=null;
@@ -69,6 +71,8 @@ public class FragmentViewCycles extends ListFragment{
 		populateList();
 		cycAdapt = new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 	
 	public void populateList() {

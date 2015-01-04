@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments.help;
 
-import uwi.dcit.AgriExpenseTT.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
 public class HelpNewPurchaseFragment extends Fragment {
@@ -42,6 +44,8 @@ public class HelpNewPurchaseFragment extends Fragment {
 		
 		TextView txt4 = (TextView)view.findViewById(R.id.article_text_4);
 		txt4.setText(getResources().getString(R.string.help_purchase_new_resource_4));
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Help New Purchase Fragment");
 		
 		return view;
 	}

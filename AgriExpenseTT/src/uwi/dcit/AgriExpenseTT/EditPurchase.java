@@ -1,11 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;
@@ -49,6 +51,7 @@ public class EditPurchase extends ActionBarActivity {
 		dbh=new DbHelper(this);
 		db=dbh.getReadableDatabase();
 		initialize();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Purchase");
 		
 	}
 	private void initialize() {

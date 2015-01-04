@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -11,12 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class NewCycle extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitialFrag();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Cycle");
 	}
 	
 	public void replaceSub(String text){

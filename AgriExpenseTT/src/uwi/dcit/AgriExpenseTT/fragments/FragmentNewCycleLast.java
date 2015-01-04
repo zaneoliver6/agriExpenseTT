@@ -1,18 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
-import uwi.dcit.AgriExpenseTT.MainMenu;
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
@@ -32,6 +19,21 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentNewCycleLast extends Fragment{
 	String plantMaterial;
@@ -56,6 +58,7 @@ public class FragmentNewCycleLast extends Fragment{
 		land = getArguments().getString("land");
 		Log.i(MainMenu.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
 		setDetails(view);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 		return view;
 	}
 	

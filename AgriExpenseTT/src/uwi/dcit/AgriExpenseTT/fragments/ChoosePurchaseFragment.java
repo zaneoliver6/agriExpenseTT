@@ -36,6 +36,10 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
@@ -80,6 +84,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		populateList();
 		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
 	
 	private void populateList() {

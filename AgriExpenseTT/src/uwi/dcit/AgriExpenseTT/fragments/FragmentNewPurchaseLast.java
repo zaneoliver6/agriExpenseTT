@@ -1,5 +1,9 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+<<<<<<< HEAD
+=======
+import android.app.Fragment;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,6 +23,10 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
@@ -68,6 +76,8 @@ public class FragmentNewPurchaseLast extends Fragment{
 		resId=DbQuery.getNameResourceId(db, dbh, resource);
 		Click c=new Click();
 		btn_done.setOnClickListener(c);
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
 		return view;
 	}
 	public class Click implements OnClickListener{

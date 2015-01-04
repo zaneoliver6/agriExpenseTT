@@ -35,6 +35,10 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
@@ -70,6 +74,7 @@ public class FragmentPurchaseUse extends Fragment {
 		int cycleId=Integer.parseInt(getArguments().getString("cycleId"));
 		TypeSpent=((UseResource)getActivity()).getTotal();
 		setDetails(pId,cycleId);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
 		return view;
 	}
 	

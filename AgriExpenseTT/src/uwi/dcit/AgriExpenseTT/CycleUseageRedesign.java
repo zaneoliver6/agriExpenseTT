@@ -1,9 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,12 +8,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+
 public class CycleUseageRedesign extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cycle_useage_redesign);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Cycle Usage");
 		int id = 1;
 		setup(id);
 	}
@@ -97,8 +100,9 @@ public class CycleUseageRedesign extends ActionBarActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		}else {
+            return super.onOptionsItemSelected(item);
+        }
 	}
 
 	/**

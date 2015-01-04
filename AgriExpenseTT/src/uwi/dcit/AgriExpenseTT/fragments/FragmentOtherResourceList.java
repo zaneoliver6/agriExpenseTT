@@ -1,5 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+<<<<<<< HEAD
+=======
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.ListFragment;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +31,10 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 public class FragmentOtherResourceList  extends ListFragment{
 	SQLiteDatabase db;
@@ -59,6 +70,7 @@ public class FragmentOtherResourceList  extends ListFragment{
 		TWatch tw=new TWatch(listAdapt);
 		et_search.addTextChangedListener(tw);
 		setupButton(view);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Resource List Fragment - Other Category");
 		return view;
 	}
 	 private void setupButton(View v) {

@@ -16,6 +16,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
+<<<<<<< HEAD
+=======
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+>>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 public class NewPurchase extends ActionBarActivity {
 	TextView sub_head;
@@ -27,6 +31,7 @@ public class NewPurchase extends ActionBarActivity {
 		tv_main.setText("Purchasing new materials");
 		setupUI();
 		setupInitialFrag();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
 	}
 	
 	private void setupInitialFrag() {

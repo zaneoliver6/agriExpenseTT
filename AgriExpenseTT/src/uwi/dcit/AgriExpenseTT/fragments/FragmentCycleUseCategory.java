@@ -1,19 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.UseResource;
-import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import android.app.Fragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +11,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.UseResource;
+import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 
 
 public class FragmentCycleUseCategory extends Fragment{
@@ -46,7 +48,7 @@ public class FragmentCycleUseCategory extends Fragment{
 		setupClick();
 		//cycleId or cycleObject
 		//category
-		
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
 		return view;
 	}
 	
