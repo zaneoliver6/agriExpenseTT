@@ -1,2 +1,2 @@
-include ':AgriExpenseTT'
+include ':AgriExpenseTT', ':backend'
 include ':AgriExpenseTT-AppEngine'

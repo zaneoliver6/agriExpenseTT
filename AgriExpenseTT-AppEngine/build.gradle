@@ -18,3 +18,14 @@ sourceSets {
     test.java.srcDirs = ['tests/java']
     test.resources.srcDirs = ['tests/resources']
 }
+
+appengine {
+    downloadSdk = true
+    appcfg {
+        oauth2 = true
+    }
+    endpoints {
+        getClientLibsOnBuild = true
+        getDiscoveryDocsOnBuild = true
+    }
+}
