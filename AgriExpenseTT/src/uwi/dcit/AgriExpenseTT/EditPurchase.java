@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -21,7 +21,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;
@@ -68,7 +68,7 @@ public class EditPurchase extends ActionBarActivity {
 		
 		//get data
 		p=getIntent().getExtras().getParcelable("purchase");
-		resource=DbQuery.findResourceName(db, dbh, p.getResourceId());
+		resource= DbQuery.findResourceName(db, dbh, p.getResourceId());
 		quantifier=p.getQuantifier();
 		qty=p.getQty();
 		cost=p.getCost();
@@ -130,10 +130,10 @@ public class EditPurchase extends ActionBarActivity {
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
 		ContentValues cv = new ContentValues();
-		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
-		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
-		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
-		cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
 		DataManager dm=new DataManager(EditPurchase.this, db, dbh);
 		RPurchase rp=p.toRPurchase();

@@ -36,10 +36,8 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
@@ -91,7 +89,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		pList	= new ArrayList<LocalResourcePurchase>();
 		
 		if(type != null && (type.equals("delete") || type.equals("edit")))
-			DbQuery.getPurchases(db, dbh, pList, null, null,true);
+			DbQuery.getPurchases(db, dbh, pList, null, null, true);
 		else
 			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
 	

@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import uwi.dcit.AgriExpenseTT.models.ResourceContract.ResourceEntry;
 import android.provider.BaseColumns;
 
 public class CycleContract {
@@ -21,7 +20,7 @@ public class CycleContract {
 			+CycleEntry.CROPCYCLE_COSTPER + REAL_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_RESOURCE + TEXT_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_COUNTY + TEXT_TYPE + COMMA_SEP
-			+"foreign key("+CycleEntry.CROPCYCLE_CROPID+") references "+ResourceEntry.TABLE_NAME+"("+ResourceEntry._ID+"));";
+			+"foreign key("+CycleEntry.CROPCYCLE_CROPID+") references "+ ResourceContract.ResourceEntry.TABLE_NAME+"("+ ResourceContract.ResourceEntry._ID+"));";
 		
 	
 	public static final String SQL_DELETE_CYCLE = "DROP TABLE IF EXISTS " + CycleEntry.TABLE_NAME;

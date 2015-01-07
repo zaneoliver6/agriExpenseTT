@@ -2,8 +2,9 @@ package uwi.dcit.AgriExpenseTT;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -48,7 +49,7 @@ public class SalesCost extends ActionBarActivity {
 		currCycle=getIntent().getParcelableExtra("cycle");
 		dbh=new DbHelper(this);
 		db=dbh.getReadableDatabase();
-		crop=DbQuery.findResourceName(db, dbh, currCycle.getCropId());
+		crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
 		setup();
 	}
 
@@ -112,10 +113,10 @@ public class SalesCost extends ActionBarActivity {
 		}
 		private void save() {
 			ContentValues cv=new ContentValues();
-			cv.put(CycleEntry.CROPCYCLE_COSTPER, sellp);
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, sellp);
 			DbHelper dbh=new DbHelper(SalesCost.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(CycleEntry.TABLE_NAME, cv, CycleEntry._ID+"="+currCycle.getId(), null);
+			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
 			currCycle.setCostPer(sellp);
 			currCycle.setHarvestAmt(amtHarvest);
 			currCycle.setHarvestType(qtfr);

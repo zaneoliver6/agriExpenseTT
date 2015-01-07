@@ -1,26 +1,20 @@
 package uwi.dcit.AgriExpenseTT;
 
-<<<<<<< HEAD
-=======
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+
 
 public class HireLabour extends ActionBarActivity {
 

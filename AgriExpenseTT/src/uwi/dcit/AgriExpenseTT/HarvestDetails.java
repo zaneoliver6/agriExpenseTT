@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
 
 public class HarvestDetails extends ActionBarActivity {
 	private final int REQ_MEASURE=1;
@@ -70,11 +70,11 @@ public class HarvestDetails extends ActionBarActivity {
 
 		private void save() {
 			ContentValues cv=new ContentValues();
-			cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, qty);
-			cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE, qtfr);
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, qty);
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, qtfr);
 			DbHelper dbh=new DbHelper(HarvestDetails.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(CycleEntry.TABLE_NAME, cv, CycleEntry._ID+"="+currCycle.getId(), null);
+			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
 			System.out.println("changes saved");
 		}
 		

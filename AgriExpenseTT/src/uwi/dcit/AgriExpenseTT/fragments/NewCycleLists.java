@@ -52,7 +52,7 @@ public class NewCycleLists extends ListFragment {
 		list = new ArrayList<String>();
 		
 		if(type.equals(DHelper.cat_plantingMaterial)){
-			DbQuery.getResources(db, dbh,DHelper.cat_plantingMaterial, list);
+			DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
 		}else if(type.equals("land")){
 			list.add("Acre");
 			list.add("Hectre");

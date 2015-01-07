@@ -32,8 +32,8 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
 
 public class FragmentNewCycleLast extends Fragment{
 	String plantMaterial;
@@ -72,7 +72,7 @@ public class FragmentNewCycleLast extends Fragment{
 		Button btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
 		landLbl.setText("Enter number of "+land+"s");//TODO revise wording and use string xml
 		
-		plantMaterialId=DbQuery.getNameResourceId(db, dbh, plantMaterial);
+		plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
 		
 		MyClickListener c = new MyClickListener(getActivity());
 		btnDate.setOnClickListener(c);
@@ -180,7 +180,7 @@ public class FragmentNewCycleLast extends Fragment{
 						
 						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
 						Intent i=new Intent(getActivity(),CycleUseageRedesign.class);
-						int n=DbQuery.getLast(db, dbh, CycleEntry.TABLE_NAME);
+						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
 						c.setId(n);
 						i.putExtra("cycleMain",c);
 						startActivity(i);

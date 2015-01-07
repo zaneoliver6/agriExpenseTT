@@ -1,11 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-<<<<<<< HEAD
-=======
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+import android.widget.EditText;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,15 +11,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 
 public class FragmentNewPurchaseOther extends Fragment{

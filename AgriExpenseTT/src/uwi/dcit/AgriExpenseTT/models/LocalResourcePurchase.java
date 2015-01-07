@@ -1,9 +1,10 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 public class LocalResourcePurchase implements Parcelable{
 	private int pId;

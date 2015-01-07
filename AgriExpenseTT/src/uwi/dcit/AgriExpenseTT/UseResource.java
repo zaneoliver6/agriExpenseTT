@@ -1,38 +1,16 @@
 package uwi.dcit.AgriExpenseTT;
 
-<<<<<<< HEAD
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-=======
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListFragment;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
-
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-=======
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 import java.util.ArrayList;
 
@@ -69,7 +47,7 @@ public class UseResource extends ActionBarActivity {
 		DbHelper dbh=new DbHelper(this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, type, null,false);
+		DbQuery.getPurchases(db, dbh, pList, type, null, false);
 		db.close();
 		if(pList.isEmpty()){
 			Fragment fragment	= new FragmentEmpty();

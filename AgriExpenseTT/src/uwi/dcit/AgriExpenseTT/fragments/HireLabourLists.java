@@ -1,11 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-<<<<<<< HEAD
-=======
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+import java.util.ArrayList;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,18 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class HireLabourLists extends ListFragment {
@@ -54,7 +45,7 @@ public class HireLabourLists extends ListFragment {
 	private void populateList() {
 		list=new ArrayList<String>();
 		if(type.equals("workers")){
-			DbQuery.getResources(db, dbh,DHelper.cat_labour, list);
+			DbQuery.getResources(db, dbh, DHelper.cat_labour, list);
 		}else if(type.equals("quantifier")){
 			list.add("hour");
 			list.add("day");
