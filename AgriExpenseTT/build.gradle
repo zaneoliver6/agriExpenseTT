@@ -17,9 +17,6 @@ android {
     compileSdkVersion 19
     buildToolsVersion "20.0.0"
 
-    dexOptions {
-        preDexLibraries = false
-    }
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 20
@@ -44,5 +41,8 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+    dexOptions {
+        preDexLibraries = false
     }
 }
