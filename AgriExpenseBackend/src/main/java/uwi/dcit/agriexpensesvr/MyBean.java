@@ -1,5 +1,4 @@
 package uwi.dcit.agriexpensesvr;
-
 /**
  * The object model for the data we are sending through endpoints
  */

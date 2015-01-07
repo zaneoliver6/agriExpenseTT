@@ -12,10 +12,13 @@ import com.google.api.server.spi.config.ApiNamespace;
 
 import javax.inject.Named;
 
+import uwi.dcit.agriexpensesvr.MyBean;
+
 /**
  * An endpoint class we are exposing
  */
-@Api(name = "myApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "agriexpensesvr.dcit.uwi", ownerName = "agriexpensesvr.dcit.uwi", packagePath = ""))
+@Api(name = "myTestApi", version = "v1", namespace = @ApiNamespace(ownerDomain = "agriexpensett.dcit.uwi",
+        ownerName = "agriexpensett.dcit.uwi", packagePath = ""))
 public class MyEndpoint {
 
     /**

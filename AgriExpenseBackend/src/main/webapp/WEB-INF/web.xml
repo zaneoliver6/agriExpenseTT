@@ -5,7 +5,9 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>uwi.dcit.agriexpensesvr.MyEndpoint</param-value>
+            <param-value>uwi.dcit.agriexpensesvr.MyEndpoint, uwi.dcit.agriexpensesvr.CycleEndpoint,
+                uwi.dcit.agriexpensesvr.CycleUseEndpoint, uwi.dcit.agriexpensesvr.RPurchaseEndpoint,
+                uwi.dcit.agriexpensesvr.TransLogEndpoint, uwi.dcit.agriexpensesvr.UpAccEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
