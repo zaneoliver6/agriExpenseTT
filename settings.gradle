@@ -1,1 +1,1 @@
-include ':AgriExpenseTT', ':AgriExpenseBackend'
+include ':AgriExpenseTT', ':AgriExpenseBackend', ':appcompat'
