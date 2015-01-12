@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.view.MotionEvent;
 import android.widget.EditText;
 
 import android.os.Bundle;
@@ -36,6 +37,19 @@ public class FragmentNewPurchaseOther extends Fragment{
 		view=inflater.inflate(R.layout.fragment_other_quanifier, container, false);
 		setup();
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment - Other Category");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	private void setup() {

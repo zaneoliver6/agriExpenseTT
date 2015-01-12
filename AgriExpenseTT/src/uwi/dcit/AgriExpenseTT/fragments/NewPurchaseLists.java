@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.util.ArrayList;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +8,15 @@ import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.NewPurchase;
@@ -22,7 +24,6 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
@@ -108,6 +109,18 @@ public class NewPurchaseLists extends ListFragment {
 			String q=getArguments().getString("resource");
 			et_main.setText("How is the "+q+" being sold by");
 		}
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
 		return view;
 	}
 		

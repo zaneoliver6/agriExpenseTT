@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -100,8 +102,24 @@ public class EditPurchase extends ActionBarActivity {
 			line.setBackgroundResource(R.color.colourChem);
 			btn_dne.setBackgroundResource(R.drawable.btn_custom_chem);
 		}
-		
+
+        View v=findViewById(R.id.contEditPurchase);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!(v instanceof EditText)){
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 	}
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	public class Click implements OnClickListener{
 
 		@Override

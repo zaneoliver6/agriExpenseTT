@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -49,7 +51,7 @@ public class FragmentNewCycleLast extends Fragment{
 	private TextView landLbl;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
+		final View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
 		
 		dbh = new DbHelper(getActivity().getBaseContext());
 		db = dbh.getReadableDatabase();
@@ -59,6 +61,19 @@ public class FragmentNewCycleLast extends Fragment{
 		Log.i(MainMenu.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
 		setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewCycle) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	

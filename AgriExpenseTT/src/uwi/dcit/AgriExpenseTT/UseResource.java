@@ -10,7 +10,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
@@ -41,6 +44,16 @@ public class UseResource extends ActionBarActivity {
 		setContentView(R.layout.activity_use_resource);
 		start(mainCycle,stype);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Use Resources");
+        View v=findViewById(R.id.cont_UseResource_main);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!(v instanceof EditText)){
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 	}
 	
 	private void start(LocalCycle cycle, String type) {
@@ -64,7 +77,12 @@ public class UseResource extends ActionBarActivity {
 			initialFrag(cycle,type);
 		}
 	}
-
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	public double getTotal(){
 		return total;
 	}

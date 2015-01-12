@@ -20,8 +20,8 @@ public class AddData extends ActionBarActivity {
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Add Data");
 
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		tv_main.setText("Adding new resources");
+//		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
+//		tv_main.setText("Adding new resources");
 		Fragment f=new FragmentAddData();
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();

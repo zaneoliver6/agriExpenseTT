@@ -5,18 +5,21 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class HarvestDetails extends ActionBarActivity {
 	private final int REQ_MEASURE=1;
@@ -47,6 +50,18 @@ public class HarvestDetails extends ActionBarActivity {
 		qtfr=currCycle.getHarvestType();
 		qty=currCycle.getHarvestAmt();
 		et_amt.setText(""+qty);
+        Log.i("Harvesting","setting up");
+
+        View v=findViewById(R.id.cont_harvestDet_main);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!(v instanceof EditText)){
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 	}
 	public class Click implements OnClickListener{
 
@@ -79,6 +94,12 @@ public class HarvestDetails extends ActionBarActivity {
 		}
 		
 	}
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);

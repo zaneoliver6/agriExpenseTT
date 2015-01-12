@@ -10,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -63,6 +65,19 @@ public class FragmentOtherResourceList  extends ListFragment{
 		et_search.addTextChangedListener(tw);
 		setupButton(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Resource List Fragment - Other Category");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	 private void setupButton(View v) {

@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
@@ -25,8 +23,8 @@ public class NewPurchase extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		tv_main.setText("Purchasing new materials");
+		//TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
+		//tv_main.setText("Purchasing new materials");
 		setupUI();
 		setupInitialFrag();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
@@ -44,11 +42,13 @@ public class NewPurchase extends ActionBarActivity {
 			.add(R.id.NewCycleListContainer,listfrag)
 			.commit();
 	}
-	
-	public static void hideSoftKeyboard(Activity activity) {
-	    InputMethodManager inputMethodManager = (InputMethodManager)  activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-	    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-	}
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	
 	public void setupUI() {
 		View v=findViewById(R.id.container_newcycle);
@@ -60,7 +60,7 @@ public class NewPurchase extends ActionBarActivity {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			if(v.getId()!=R.id.et_listReuse_search)
-				hideSoftKeyboard(NewPurchase.this);
+				hideSoftKeyboard();
 			return false;
 		}
 	   

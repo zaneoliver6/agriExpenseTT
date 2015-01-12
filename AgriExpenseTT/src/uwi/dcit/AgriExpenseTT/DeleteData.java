@@ -2,11 +2,15 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
@@ -18,6 +22,13 @@ public class DeleteData extends ActionBarActivity {
 	SQLiteDatabase db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_navigation);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Delete Data");
+        Fragment fragment=new FragmentSlidingDelete();
+        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.navContent,fragment);
+        ft.commit();
 		/*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 
