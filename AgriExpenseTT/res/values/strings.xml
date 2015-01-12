@@ -13,11 +13,11 @@
     <string name="title_activity_use_resource">Use Resource</string>
     <string name="title_activity_choose_purchase">Choose Purchase</string>
     <string name="title_activity_use_purchase_frag">Use Purchase</string>
-    <string name="title_activity_new_cycle_redesigned">New Cycle</string>
-    <string name="title_activity_new_purchase_redesign">New Purchase</string>
+    <string name="title_activity_new_cycle_redesigned">Creating crop cycle</string>
+    <string name="title_activity_new_purchase_redesign">Purchasing new materials</string>
     <string name="title_activity_manage_resources">Manage Resources</string>
     <string name="title_activity_cycle_useage_redesign">Cycle Usage</string>
-    <string name="title_activity_hire_labour">Hire Labour</string>
+    <string name="title_activity_hire_labour">Hiring labour</string>
     <string name="title_activity_delete_resoure">Delete Resoure</string>
     <string name="title_activity_delete_data">Delete Data</string>
     <string name="title_activity_edit_cycle">Edit Cycle</string>
