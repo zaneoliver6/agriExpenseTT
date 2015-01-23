@@ -31,10 +31,12 @@ public class FragmentEmpty extends Fragment{
 		}else if(type.equals("purchaseuse")){
 			if(category == null){
 				desc.setText("Sorry you haven't purchased any of this to use as yet");
-			}else{
+			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
 				desc.setText("Sorry you haven't purhased any "+category+", so there's nothing to use");
 			}
-		}
+		}else if(type.equals("select")){
+            desc.setText("Select something to begin operations");
+        }
 		return view;
 	}
 	

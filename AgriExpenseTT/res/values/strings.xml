@@ -111,11 +111,24 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="menu_action_view_report">View Report</string>
     <string name="menu_action_delete_report">Delete Report</string>
     <string name="title_activity_backup_data">Backup Data</string>
-
     <string name="manage_data_edit_btn">Edit Data</string>
     <string name="manage_data_add_btn">Add Data</string>
     <string name="manage_data_delete_btn">Delete</string>
-
     <string name="backup_header_main">Overview</string>
     <string name="backup_header_description">The follow list contains information that relates to what is stored by the system and provides options that will allow you to backup and sync your information online to increase the reliablity of the system</string>
+    <string name="title_activity_main_activity_redesign">MainActivityRedesign</string>
+    <string name="title_activity_main">Main</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="menu_item_newCycle">New Cycle</string>
+    <string name="menu_item_newPurchase">New Purchase</string>
+    <string name="menu_item_hireLabour">Hire Labour</string>
+    <string name="menu_item_genFile">Generate File</string>
+    <string name="menu_item_manageData">Manage Data</string>
+    <string name="menu_item_signIn">Sign In</string>
+    <string name="menu_item_about">About</string>
 </resources>

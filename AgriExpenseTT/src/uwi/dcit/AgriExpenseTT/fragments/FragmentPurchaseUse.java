@@ -30,14 +30,13 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.UseResource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 
 public class FragmentPurchaseUse extends Fragment {
@@ -69,7 +68,7 @@ public class FragmentPurchaseUse extends Fragment {
 		db=dbh.getReadableDatabase();
 		int pId=Integer.parseInt(getArguments().getString("pId"));
 		int cycleId=Integer.parseInt(getArguments().getString("cycleId"));
-		TypeSpent=((UseResource)getActivity()).getTotal();
+		TypeSpent=Double.parseDouble(getArguments().getString("total"));
 		setDetails(pId,cycleId);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
 		return view;
@@ -78,6 +77,8 @@ public class FragmentPurchaseUse extends Fragment {
 	private void setDetails(int pId,int cycleId) {
 		p= DbQuery.getARPurchase(db, dbh, pId);
 		c=getArguments().getParcelable("cycleMain");
+        Log.i("Fragment Purchase",c.getCropName());
+        Log.i("Fragment Purchase",p.getQuantifier());
 		amtRem=p.getQtyRemaining();amtPur=p.getQty();quantifier=p.getQuantifier();
 		btn_typeUse=(Button)view.findViewById(R.id.btn_UsePurchase_useType);
 		btn_typeUse.setText(quantifier);
