@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.app.ActionBar;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
@@ -180,5 +182,11 @@ public class Main extends ActionBarActivity
             Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
+    }
+    public void openNewCycle(View view){
+        startActivity(new Intent(getApplicationContext(),NewCycle.class));
+    }
+    public void openNewPurchase(View view){
+        startActivity(new Intent(getApplicationContext(),NewPurchase.class));
     }
 }

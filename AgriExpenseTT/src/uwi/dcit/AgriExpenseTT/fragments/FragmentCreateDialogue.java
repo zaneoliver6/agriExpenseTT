@@ -4,9 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 
+import uwi.dcit.AgriExpenseTT.NewCycle;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 
 /**
@@ -26,6 +30,10 @@ public class FragmentCreateDialogue extends DialogFragment{
                         FragmentCreateDialogue.this.getDialog().cancel();
                     }
                 });
+
         return builder.create();
     }
+
+
+
 }
