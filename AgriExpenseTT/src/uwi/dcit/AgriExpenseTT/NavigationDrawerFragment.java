@@ -25,11 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import uwi.dcit.AgriExpenseTT.helpers.MenuHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 
 /**
@@ -159,6 +159,8 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
+       /* if(R.drawable.drawer_shadow==null)
+            Log*/
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
@@ -280,11 +282,12 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        if (item.getItemId() == R.id.action_example) {
+        MenuHelper.handleClick((String)item.getTitle(),getActivity());
+        /*if (item.getItemId() == R.id.action_example) {
             Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
             return true;
-        }
+        }*/
+
 
         return super.onOptionsItemSelected(item);
     }

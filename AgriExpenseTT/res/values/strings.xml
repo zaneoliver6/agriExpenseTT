@@ -131,4 +131,6 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="menu_item_manageData">Manage Data</string>
     <string name="menu_item_signIn">Sign In</string>
     <string name="menu_item_about">About</string>
+    <string name="menu_item_createNew">Create</string>
+    <string name="cancel">cancel</string>
 </resources>
