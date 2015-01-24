@@ -1,5 +1,20 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
@@ -7,19 +22,9 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListFragment;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 
 public class UseResource extends ActionBarActivity {
 	private Double total;
@@ -38,13 +43,24 @@ public class UseResource extends ActionBarActivity {
 		
 		setContentView(R.layout.activity_use_resource);
 		start(mainCycle,stype);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Use Resources");
+        View v=findViewById(R.id.cont_UseResource_main);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!(v instanceof EditText)){
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 	}
 	
 	private void start(LocalCycle cycle, String type) {
 		DbHelper dbh=new DbHelper(this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
 		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, type, null,false);
+		DbQuery.getPurchases(db, dbh, pList, type, null, false);
 		db.close();
 		if(pList.isEmpty()){
 			Fragment fragment	= new FragmentEmpty();
@@ -53,7 +69,7 @@ public class UseResource extends ActionBarActivity {
 			parameter.putString("category", type);
 			fragment.setArguments(parameter);
 			
-			getFragmentManager()
+			getSupportFragmentManager()
 				.beginTransaction()
 				.add(R.id.useExpenseFrag, fragment)
 				.commit();
@@ -61,7 +77,12 @@ public class UseResource extends ActionBarActivity {
 			initialFrag(cycle,type);
 		}
 	}
-
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	public double getTotal(){
 		return total;
 	}
@@ -74,7 +95,7 @@ public class UseResource extends ActionBarActivity {
 		ListFragment listfrag	= new ChoosePurchaseFragment();		
 		listfrag.setArguments(pass);
 		
-		getFragmentManager()
+		getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.useExpenseFrag,listfrag)
 			.commit();
@@ -95,7 +116,7 @@ public class UseResource extends ActionBarActivity {
 	}
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();

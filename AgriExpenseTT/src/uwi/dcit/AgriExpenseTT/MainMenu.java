@@ -1,13 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.Calendar;
-
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
-import uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -24,7 +16,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
+import java.util.Calendar;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster;
+import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 public class MainMenu extends ActionBarActivity {
 	protected SignInManager signInManager;
@@ -38,7 +40,11 @@ public class MainMenu extends ActionBarActivity {
 		this.setContentView(R.layout.activity_main_menu);
 		signInManager = new SignInManager(MainMenu.this,MainMenu.this);
 		setupButtons();
+
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Menu");
 	}
+
+
 	/*
 	 * Dealing with Button Configurations
 	 */
@@ -136,10 +142,10 @@ public class MainMenu extends ActionBarActivity {
 		if(requestCode==1){
 			String county=data.getExtras().getString("county");
 			ContentValues cv=new ContentValues();
-			cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, county);
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, county);
 			DbHelper dbh=new DbHelper(MainMenu.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
-			db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
+			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 			System.out.println("result String"+county);
 			signInManager.signIn();
 		}
@@ -150,7 +156,7 @@ public class MainMenu extends ActionBarActivity {
 		
 		DbHelper dbh=new DbHelper(MainMenu.this);
 		SQLiteDatabase db=dbh.getReadableDatabase();
-		UpAcc acc=DbQuery.getUpAcc(db);
+		UpAcc acc= DbQuery.getUpAcc(db);
 		db.close();
 		if(!NetworkHelper.isNetworkAvailable(this)){
 			Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_SHORT).show();

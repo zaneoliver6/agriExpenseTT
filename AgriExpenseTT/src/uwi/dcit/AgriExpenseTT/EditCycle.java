@@ -1,13 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.Calendar;
-
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,11 +7,23 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Calendar;
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class EditCycle extends ActionBarActivity {
 	Button btn_crop;
@@ -50,6 +54,17 @@ public class EditCycle extends ActionBarActivity {
 		dbh = new DbHelper(this);
 		db= dbh.getReadableDatabase();
 		initialize();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Cycle");
+        View v=findViewById(R.id.contEditCycle);
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!(v instanceof EditText)){
+                    hideSoftKeyboard();
+                }
+                return false;
+            }
+        });
 	}
 
 	@SuppressWarnings("deprecation")
@@ -106,6 +121,13 @@ public class EditCycle extends ActionBarActivity {
 			t.setText(land);
 		}
 	}
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	
 	public class Click implements OnClickListener{
 

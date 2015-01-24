@@ -1,5 +1,21 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+
+import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
+import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
+import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+import com.dcit.agriexpensett.translogApi.TranslogApi;
+import com.dcit.agriexpensett.translogApi.model.TransLog;
+import com.dcit.agriexpensett.upAccApi.UpAccApi;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,25 +26,9 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
+import uwi.dcit.agriexpensett.cycleApi.CycleApi;
+import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 
-import com.example.agriexpensett.cycleendpoint.Cycleendpoint;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.Cycleuseendpoint;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.Rpurchaseendpoint;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.Translogendpoint;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
-import com.example.agriexpensett.upaccendpoint.Upaccendpoint;
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.json.jackson2.JacksonFactory;
-//import com.google.appengine.api.datastore.Key;
-//import com.google.appengine.api.datastore.KeyFactory;
 
 public class CloudInterface {
 	SQLiteDatabase db;
@@ -51,11 +51,12 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+
+            CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+            CycleApi endpoint= builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, CycleEntry.TABLE_NAME);
@@ -63,12 +64,13 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-				Cycle c=DbQuery.getCycle(db, dbh, rowId);
+                Cycle c = DbQuery.getCycle(db, dbh, rowId);
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
 				c.setKeyrep(keyrep);
 				try{
 					//c=endpoint.insertCycle(c).execute();
 					c=endpoint.updateCycle(c).execute();
+                    endpoint.updateCycle(c);
 				}catch(Exception e){
 					
 					System.out.println("could not update cycle");
@@ -110,11 +112,11 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+			RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
@@ -164,11 +166,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Cycle doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+			CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+			CycleApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
@@ -218,11 +220,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Cycle doInBackground(Void... params) {
-			Cycleuseendpoint.Builder builder = new Cycleuseendpoint.Builder(
+			CycleUseApi.Builder builder = new CycleUseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleuseendpoint endpoint = builder.build();
+            CycleUseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleResourceEntry.TABLE_NAME);
@@ -268,11 +270,11 @@ public class CloudInterface {
 		
 		@Override
 		protected RPurchase doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+            RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
@@ -318,11 +320,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+			CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+            CycleApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -391,11 +393,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Cycleuseendpoint.Builder builder = new Cycleuseendpoint.Builder(
+			CycleUseApi.Builder builder = new CycleUseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleuseendpoint endpoint = builder.build();
+            CycleUseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -452,11 +454,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+            RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -474,7 +476,7 @@ public class CloudInterface {
 				p.setKeyrep(keyrep);
 				if(keyrep!=null){
 					try{
-						endpoint.removeRPurchase(p.getKeyrep(),p.getAccount()).execute();
+						endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
 					}catch(Exception e){
 						e.printStackTrace();
 						p=null;
@@ -514,11 +516,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Void doInBackground(Void... params) {
-			Translogendpoint.Builder builder = new Translogendpoint.Builder(
+			TranslogApi.Builder builder = new TranslogApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Translogendpoint endpoint = builder.build();
+            TranslogApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, TransactionLogEntry.TABLE_NAME);
@@ -570,11 +572,11 @@ public class CloudInterface {
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
-			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+			UpAccApi.Builder builder = new UpAccApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Upaccendpoint endpoint = builder.build();
+            UpAccApi endpoint = builder.build();
 			UpAcc acc=new UpAcc();
 			acc.setAcc(namespace);
 			acc.setLastUpdated(time);
@@ -597,11 +599,11 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(UpAcc... params) {
-			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+            UpAccApi.Builder builder = new UpAccApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Upaccendpoint endpoint = builder.build();
+            UpAccApi endpoint = builder.build();
 			UpAcc acc=params[0];
 			try {
 				endpoint.updateUpAcc(acc).execute();
@@ -613,11 +615,11 @@ public class CloudInterface {
 		
 	}
 	public UpAcc getUpAcc(String namespace){
-		Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+        UpAccApi.Builder builder = new UpAccApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-		         null);         
+		         null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
-		Upaccendpoint endpoint = builder.build();
+        UpAccApi endpoint = builder.build();
 		UpAcc acc=null;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();

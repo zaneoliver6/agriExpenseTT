@@ -1,18 +1,11 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
-import android.app.Fragment;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -20,7 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
+import uwi.dcit.AgriExpenseTT.NewPurchase;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 
 public class FragmentNewPurchaseLast extends Fragment{
 	private View view;
@@ -64,9 +68,24 @@ public class FragmentNewPurchaseLast extends Fragment{
 		db=dbh.getReadableDatabase();
 		
 		Button btn_done=(Button)view.findViewById(R.id.btn_newpurchaselast_done);
-		resId=DbQuery.getNameResourceId(db, dbh, resource);
+		resId= DbQuery.getNameResourceId(db, dbh, resource);
 		Click c=new Click();
 		btn_done.setOnClickListener(c);
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	public class Click implements OnClickListener{

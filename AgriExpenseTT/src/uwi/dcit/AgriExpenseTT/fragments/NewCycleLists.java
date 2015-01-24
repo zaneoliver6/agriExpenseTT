@@ -1,5 +1,19 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.app.Fragment;
+import android.app.ListFragment;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,18 +22,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import android.app.Fragment;
-import android.app.ListFragment;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class NewCycleLists extends ListFragment {
 	String type;
@@ -43,13 +46,14 @@ public class NewCycleLists extends ListFragment {
 		populateList();		
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);		
 		setListAdapter(listAdapt);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle List Fragment");
 	}
 		
 	private void populateList() {
 		list = new ArrayList<String>();
 		
 		if(type.equals(DHelper.cat_plantingMaterial)){
-			DbQuery.getResources(db, dbh,DHelper.cat_plantingMaterial, list);
+			DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
 		}else if(type.equals("land")){
 			list.add("Acre");
 			list.add("Hectre");
@@ -76,6 +80,18 @@ public class NewCycleLists extends ListFragment {
 		}else if(type.equals("land")){
 			et_main.setText("Select the type of land you are using");
 		}
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if(v.getId()!=(R.id.et_newCycleLast_landqty)){
+                            ((NewCycle) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 		

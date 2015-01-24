@@ -1,12 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,6 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentSelectLocation extends ListFragment {
 	protected String type;
@@ -47,6 +49,7 @@ public class FragmentSelectLocation extends ListFragment {
 		populateList();		
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Select Location Fragment");
 	}
 	
 	

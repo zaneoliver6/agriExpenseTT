@@ -1,5 +1,21 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,19 +24,8 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 
 public class NewPurchaseLists extends ListFragment {
 	String type;
@@ -40,6 +45,7 @@ public class NewPurchaseLists extends ListFragment {
 		Collections.sort(list);
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase List Fragment");
 	}
 		
 	private void populateList() {
@@ -52,7 +58,7 @@ public class NewPurchaseLists extends ListFragment {
 			list.add(DHelper.cat_soilAmendment);
 			list.add(DHelper.cat_other);
 		}else if(type.equals("resource")){
-			DbQuery.getResources(db, dbh,getArguments().getString("category"), list);
+			DbQuery.getResources(db, dbh, getArguments().getString("category"), list);
 		}else if(type.equals("quantifier")){
 			String cat=getArguments().getString("category");
 			if(cat.equals(DHelper.cat_plantingMaterial)){
@@ -103,6 +109,18 @@ public class NewPurchaseLists extends ListFragment {
 			String q=getArguments().getString("resource");
 			et_main.setText("How is the "+q+" being sold by");
 		}
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
 		return view;
 	}
 		

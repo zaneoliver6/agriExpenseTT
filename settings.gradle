@@ -1,2 +1,1 @@
-include ':AgriExpenseTT'
-include ':AgriExpenseTT-AppEngine'
+include ':AgriExpenseTT', ':AgriExpenseBackend'

@@ -1,13 +1,15 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentReportList;
-import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import uwi.dcit.AgriExpenseTT.fragments.FragmentReportList;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 public class ManageReport extends ActionBarActivity {
 
@@ -18,6 +20,7 @@ public class ManageReport extends ActionBarActivity {
 		if (savedInstanceState == null) {
 			setupInitialFrag();
 		}
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Manage Reports");
 	}
 	
 	public void setupInitialFrag(){

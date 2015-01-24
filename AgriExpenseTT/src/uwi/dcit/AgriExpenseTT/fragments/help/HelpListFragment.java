@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments.help;
 
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.HelpTopics;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +10,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.HelpTopics;
+
 public class HelpListFragment extends ListFragment{
 	
 	@Override
@@ -21,6 +23,7 @@ public class HelpListFragment extends ListFragment{
         int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
         // Create an array adapter for the list view, using the Topics array
         setListAdapter(new ArrayAdapter<String>(getActivity(), layout, HelpTopics.Topics)); //TODO Convert this to a String Array XML rather than a programatic constant
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Help List Fragment");
     }
 	
 	@Override

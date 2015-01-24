@@ -1,5 +1,14 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+import com.dcit.agriexpensett.translogApi.model.TransLog;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
@@ -11,29 +20,21 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
-import uwi.dcit.AgriExpenseTT.models.ResourceContract.ResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.cycleuseendpoint.model.CycleUse;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import com.example.agriexpensett.translogendpoint.model.TransLog;
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import uwi.dcit.AgriExpenseTT.models.ResourceContract;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 
 public class DbQuery {
 	
 	//Used to insert a new Chemical, Crop, Fertilizer, Labourer
 	public static int insertResource(SQLiteDatabase db,DbHelper dbh,String type,String name){
 		ContentValues cv= new ContentValues();
-		cv.put(ResourceEntry.RESOURCES_NAME,name);
-		cv.put(ResourceEntry.RESOURCES_TYPE,type);
-		db.insert(ResourceEntry.TABLE_NAME, null, cv);
-		int rowId=getLast(db, dbh, ResourceEntry.TABLE_NAME);
+		cv.put(ResourceContract.ResourceEntry.RESOURCES_NAME,name);
+		cv.put(ResourceContract.ResourceEntry.RESOURCES_TYPE,type);
+		db.insert(ResourceContract.ResourceEntry.TABLE_NAME, null, cv);
+		int rowId=getLast(db, dbh, ResourceContract.ResourceEntry.TABLE_NAME);
 		
 		return rowId; 
 	}
@@ -135,9 +136,9 @@ public class DbQuery {
 	public static void getResources(SQLiteDatabase db, DbHelper dbh, String type,ArrayList<String> list){
 		String code;
 		if(type!=null)
-			code="select name from "+ResourceEntry.TABLE_NAME+" where "+ResourceEntry.RESOURCES_TYPE+"='"+type+"';";
+			code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry.RESOURCES_TYPE+"='"+type+"';";
 		else
-			code="select name from "+ResourceEntry.TABLE_NAME;
+			code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;
@@ -147,12 +148,12 @@ public class DbQuery {
 		cursor.close();
 	}
 	public static int getNameResourceId(SQLiteDatabase db,DbHelper dbh,String name){
-		String code="select "+ResourceEntry._ID+" from "+ResourceEntry.TABLE_NAME+" where "+ResourceEntry.RESOURCES_NAME+"='"+name+"';";
+		String code="select "+ ResourceContract.ResourceEntry._ID+" from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry.RESOURCES_NAME+"='"+name+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return -1;
 		cursor.moveToFirst();
-		return cursor.getInt(cursor.getColumnIndex(ResourceEntry._ID));
+		return cursor.getInt(cursor.getColumnIndex(ResourceContract.ResourceEntry._ID));
 	}
 	public static void getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalCycle> list){
 		String code="select * from "+CycleEntry.TABLE_NAME+";";
@@ -177,7 +178,7 @@ public class DbQuery {
 	}
 	
 	public static String findResourceName(SQLiteDatabase db, DbHelper dbh, int id){
-		String code="select name from "+ResourceEntry.TABLE_NAME+" where "+ ResourceEntry._ID +"="+id+";";
+		String code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry._ID +"="+id+";";
 		Cursor cursor=db.rawQuery(code,null);
 		if(cursor.getCount()>0){
 			cursor.moveToFirst();
@@ -338,11 +339,11 @@ public class DbQuery {
 	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
 		
 		ContentValues cv=new ContentValues();
-		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
-		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_ACC,acc.getAcc());
-		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
-		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
-		db.insert(UpdateAccountEntry.TABLE_NAME, null, cv);
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC,acc.getAcc());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
+		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, null, cv);
 	}
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
 		ContentValues cv = new ContentValues();
@@ -425,26 +426,26 @@ public class DbQuery {
 		return t;
 	}
 	public static String getAccount(SQLiteDatabase db){
-		String code="select "+UpdateAccountEntry.UPDATE_ACCOUNT_ACC+" from "+
-				UpdateAccountEntry.TABLE_NAME;
+		String code="select "+ UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC+" from "+
+				UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
+		return cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
 	}
 	public static UpAcc getUpAcc(SQLiteDatabase db){
-		String code="select * from " + UpdateAccountEntry.TABLE_NAME;
+		String code="select * from " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount() < 1)return null;  	// No records exist so return null
 		
 		cursor.moveToFirst();					// Only one record should exist (TODO If only one record exist do we need an entire table?)
 		UpAcc acc = new UpAcc();
 		
-		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY)));
-		acc.setAcc(cursor.getString(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_ACC)));
-		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
-		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
-		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
-		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
+		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY)));
+		acc.setAcc(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC)));
+		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
+		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
+		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
+		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
 		
 		return acc;
 	}
@@ -452,8 +453,28 @@ public class DbQuery {
 		UpAcc acc=DbQuery.getUpAcc(db);
 		if(acc.getLastUpdated()<=time){
 			ContentValues cv=new ContentValues();
-			cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
-			db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
+			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 		}
 	}
+
+    //checks to see if there are any crop cycles or not
+    public static boolean cyclesExist(SQLiteDatabase db){
+        String code="select COUNT(*) FROM "+CycleEntry.TABLE_NAME;
+        Cursor c=db.rawQuery(code,null);
+       if(c.moveToFirst()) {
+           System.out.println(c.getInt(0));
+           return c.getInt(0) > 0;
+       }
+       return false;
+    }
+    public static boolean resourceExist(SQLiteDatabase db){
+        String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
+        Cursor c=db.rawQuery(code,null);
+        if(c.moveToFirst()) {
+            System.out.println(c.getInt(0));
+            return c.getInt(0) > 0;
+        }
+        return false;
+    }
 }

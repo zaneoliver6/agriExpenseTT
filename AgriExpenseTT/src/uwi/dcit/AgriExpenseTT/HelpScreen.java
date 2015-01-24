@@ -1,10 +1,12 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.help.HelpListFragment;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+
+import uwi.dcit.AgriExpenseTT.fragments.help.HelpListFragment;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class HelpScreen extends ActionBarActivity {
 	@Override
@@ -15,6 +17,7 @@ public class HelpScreen extends ActionBarActivity {
         
         ListFragment fragment = new HelpListFragment(); 
         Log.d(MainMenu.APP_NAME, "Created Instance of HelpListFragment");
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Help Screen");
         
         //Set Initial Fragment
         this.getSupportFragmentManager()

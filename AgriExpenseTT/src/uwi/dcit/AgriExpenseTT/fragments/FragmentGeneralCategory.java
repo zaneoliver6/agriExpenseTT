@@ -1,5 +1,17 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,20 +21,11 @@ import uwi.dcit.AgriExpenseTT.SalesCost;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
-import android.app.Fragment;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class FragmentGeneralCategory extends Fragment{
+public class FragmentGeneralCategory extends Fragment {
 	TextView totalLbl;
 	TextView cat_pm;//planting material
 	TextView cat_fer;//fertilizer
@@ -47,6 +50,7 @@ public class FragmentGeneralCategory extends Fragment{
 		db=dbh.getReadableDatabase();
 		calcTotals();
 		setup();
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("General Category Fragment");
 		return view;
 	}
 	

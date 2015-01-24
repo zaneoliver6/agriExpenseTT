@@ -1,15 +1,21 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
-import android.os.Bundle;
+
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
+
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 
 public class HireLabour extends ActionBarActivity {
 
@@ -18,17 +24,18 @@ public class HireLabour extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitial();
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}
 
 	private void setupInitial() {
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		tv_main.setText("Hiring Labour");
+		//TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
+		//tv_main.setText("Hiring Labour");
 		ListFragment start=new HireLabourLists();
 		Bundle b=new Bundle();
 		b.putString("type","workers");
 		//b.putString(key, value);
 		start.setArguments(b);
-		FragmentManager fm=getFragmentManager();
+		FragmentManager fm=getSupportFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();
 		ft.add(R.id.NewCycleListContainer, start);
 		ft.commit();
@@ -38,9 +45,16 @@ public class HireLabour extends ActionBarActivity {
 		TextView sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
 		sub_head.setText(extras);
 	}
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();

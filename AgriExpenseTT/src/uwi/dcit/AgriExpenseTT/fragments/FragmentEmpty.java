@@ -1,12 +1,13 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import uwi.dcit.AgriExpenseTT.R;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.R;
 
 public class FragmentEmpty extends Fragment{
 	
@@ -30,10 +31,12 @@ public class FragmentEmpty extends Fragment{
 		}else if(type.equals("purchaseuse")){
 			if(category == null){
 				desc.setText("Sorry you haven't purchased any of this to use as yet");
-			}else{
+			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
 				desc.setText("Sorry you haven't purhased any "+category+", so there's nothing to use");
 			}
-		}
+		}else if(type.equals("select")){
+            desc.setText("Select something to begin operations");
+        }
 		return view;
 	}
 	

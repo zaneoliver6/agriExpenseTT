@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentAddData;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -10,14 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentAddData;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+
 public class AddData extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Add Data");
+
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		tv_main.setText("Adding new resources");
+//		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
+//		tv_main.setText("Adding new resources");
 		Fragment f=new FragmentAddData();
 		FragmentManager fm=getFragmentManager();
 		FragmentTransaction ft=fm.beginTransaction();

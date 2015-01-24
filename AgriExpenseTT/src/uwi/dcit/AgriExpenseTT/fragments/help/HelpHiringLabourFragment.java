@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments.help;
 
-import uwi.dcit.AgriExpenseTT.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class HelpHiringLabourFragment extends Fragment {
 
@@ -47,7 +49,8 @@ public class HelpHiringLabourFragment extends Fragment {
 		
 		TextView txt5 = (TextView)view.findViewById(R.id.article_text_5);
 		txt5.setText(getResources().getString(R.string.help_hiring_labour_5));
-		
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Help Hiring Labour Fragment");
 		return view;
 	}
 }

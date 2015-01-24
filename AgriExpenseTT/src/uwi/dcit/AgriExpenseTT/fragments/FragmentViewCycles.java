@@ -1,29 +1,15 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
-import uwi.dcit.AgriExpenseTT.EditCycle;
-import uwi.dcit.AgriExpenseTT.HireLabour;
-import uwi.dcit.AgriExpenseTT.MainMenu;
-import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -37,6 +23,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
+import uwi.dcit.AgriExpenseTT.EditCycle;
+import uwi.dcit.AgriExpenseTT.HireLabour;
+import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentViewCycles extends ListFragment{
 	String type=null;
@@ -69,6 +73,8 @@ public class FragmentViewCycles extends ListFragment{
 		populateList();
 		cycAdapt = new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
+
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 	
 	public void populateList() {
@@ -134,10 +140,23 @@ public class FragmentViewCycles extends ListFragment{
 	}
 	
 	public void launchCycleUsage(int position){
-		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
+//		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
+        Bundle arguments = new Bundle();
 		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
-		activity.putExtra("cycleMain",cycleList.get(position));
-		startActivity(activity);
+		arguments.putParcelable("cycleMain",cycleList.get(position));
+		Fragment newFrag= new FragmentCycleUseage();
+        newFrag.setArguments(arguments);
+        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+            ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+            return;
+        }
+        if(getActivity() instanceof NavigationControl) {
+            if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
+            ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
+                ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+            else
+                ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
+        }
 	}
 	
 	public void editCycleCoption(int position){

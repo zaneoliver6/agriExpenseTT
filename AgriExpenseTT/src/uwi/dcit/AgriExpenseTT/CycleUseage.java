@@ -1,13 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -30,8 +22,19 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.agriexpensett.cycleendpoint.model.Cycle;
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 
 @SuppressLint("InflateParams")
 public class CycleUseage extends ActionBarActivity {
@@ -105,7 +108,7 @@ public class CycleUseage extends ActionBarActivity {
 				populateArrayList(cycleId, DHelper.cat_soilAmendment);
 				showPopupList(CycleUseage.this);
 			}else if(v.getId()==R.id.btn_Cycle_plantMaterial2){
-				Cycle c=DbQuery.getCycle(db, dbh, cycleId);
+				Cycle c= DbQuery.getCycle(db, dbh, cycleId);
 				LocalCycle cyc=new LocalCycle();
 				cyc.setCropId(c.getCropId());
 				cyc.setId(c.getId());

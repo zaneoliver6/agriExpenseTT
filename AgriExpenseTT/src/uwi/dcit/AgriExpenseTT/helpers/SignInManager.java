@@ -1,9 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.MainMenu;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -17,7 +13,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.agriexpensett.upaccendpoint.model.UpAcc;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+
 
 public class SignInManager {
 	Context context;
@@ -48,8 +50,8 @@ public class SignInManager {
 				Log.d("SignIn Manager", "Account Signed in Attempting to sign out");
 				// updates the database that we signed out
 				ContentValues cv = new ContentValues();	
-				cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);	
-				db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1",null); 
+				cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);
+				db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1",null);
 			}else{												// if we're signed out then we need to sign in 
 				Log.d("SignIn Manager", "Account previously created attempting to signin with namespace: "+acc.getAcc());
 				initialSignIn(acc.getAcc());					// Initiate Sign-in process
@@ -60,8 +62,8 @@ public class SignInManager {
 	public boolean signOut(){
 		Log.d("SignIn Manager", "Account is logged in, attempting to sign out");
 		ContentValues cv = new ContentValues();	
-		cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);	
-		db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID + "=1",null); 
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);
+		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID + "=1",null);
 		return true;
 	}
 	
@@ -153,7 +155,7 @@ public class SignInManager {
 	}
 	
 	public UpAcc isExisting(){
-		UpAcc acc = DbQuery.getUpAcc(db); //Attempts to retrieve the Account from the database Record		
+		UpAcc acc = DbQuery.getUpAcc(db); //Attempts to retrieve the Account from the database Record
 		if(acc.getAcc() == null || acc.getAcc().equals(""))return null; //The information returned will be null if no record exists
 		Log.d("SignIn Manager","Account already Created ... Returning existing Account");
 		return acc; //Return the Account if received.
@@ -170,7 +172,7 @@ public class SignInManager {
 	}
 	
 	//Create an Asynchronous Task to create new thread to handle this process
-	class SetupSignInTask extends AsyncTask<Void, Void, UpAcc>{
+	class SetupSignInTask extends AsyncTask<Void, Void, UpAcc> {
 		private String namespace;
 		
 		public SetupSignInTask(String namespace){

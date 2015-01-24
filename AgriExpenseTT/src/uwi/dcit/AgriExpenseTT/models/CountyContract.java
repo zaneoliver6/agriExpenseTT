@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import uwi.dcit.AgriExpenseTT.models.CountryContract.CountryEntry;
 import android.provider.BaseColumns;
 
 public class CountyContract {
@@ -15,7 +14,7 @@ public class CountyContract {
 					CountyEntry.COLUMN_NAME_COUNTRY + INT_TYPE + COMMA_SEP + 
 					CountyEntry.COLUMN_NAME_COUNTY + TEXT_TYPE + COMMA_SEP + 
 					" FOREIGN KEY ("+ CountyEntry.COLUMN_NAME_COUNTRY +") REFERENCES "+
-					CountryEntry.TABLE_NAME + "(" + CountryEntry._ID + "));";
+					CountryContract.CountryEntry.TABLE_NAME + "(" + CountryContract.CountryEntry._ID + "));";
 	
 	public static final String SQL_DELETE_COUNTIES = ""
 			+ "DROP TABLE IF EXISTS " + CountyEntry.TABLE_NAME;
