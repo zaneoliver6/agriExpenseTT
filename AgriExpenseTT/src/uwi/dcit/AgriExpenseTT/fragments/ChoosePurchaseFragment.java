@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -163,7 +164,10 @@ public class ChoosePurchaseFragment extends ListFragment {
 		 
 		 Fragment newFrag=new FragmentPurchaseUse();
 		 newFrag.setArguments(arguments);
-
+         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+             ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+             return;
+         }
          if(getActivity() instanceof NavigationControl) {
              if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
                      ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))

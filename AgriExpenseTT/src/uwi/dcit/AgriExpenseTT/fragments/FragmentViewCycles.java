@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -145,6 +146,10 @@ public class FragmentViewCycles extends ListFragment{
 		arguments.putParcelable("cycleMain",cycleList.get(position));
 		Fragment newFrag= new FragmentCycleUseage();
         newFrag.setArguments(arguments);
+        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+            ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+            return;
+        }
         if(getActivity() instanceof NavigationControl) {
             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
             ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))

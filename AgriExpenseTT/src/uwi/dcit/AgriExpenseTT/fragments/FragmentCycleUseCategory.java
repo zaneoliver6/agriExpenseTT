@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -185,7 +186,10 @@ public class FragmentCycleUseCategory extends Fragment {
                 arguments.putString("total",""+catTotal);
                 newFrag.setArguments(arguments);
 			}
-
+            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+                ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+                return;
+            }
             if(getActivity() instanceof NavigationControl) {
                 if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
                         ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))

@@ -79,6 +79,27 @@ public class Main extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         Toast.makeText(getApplicationContext(),"something",Toast.LENGTH_SHORT).show();
+        switch (position){
+
+            case 0:
+                //new cycle
+                startActivity(new Intent(getApplicationContext(), NewCycle.class));
+                break;
+            case 1:
+                //new purchase
+                startActivity(new Intent(getApplicationContext(), NewPurchase.class));
+                break;
+            case 2:
+                startActivity(new Intent(getApplicationContext(), HireLabour.class));
+                //hire labour
+                break;
+            case 3:
+                //something else
+                break;
+
+
+        }
+
     }
 
     /*public void onSectionAttached(int number) {

@@ -165,8 +165,9 @@ public class FragmentPurchaseUse extends Fragment {
 					cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
 					dm.updateCycle(c,cv); 
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
-					IntentLauncher i=new IntentLauncher();
-					i.start();
+					/*IntentLauncher i=new IntentLauncher();
+					i.start();*/
+                    getActivity().recreate();
 				}
 			}
 		}
