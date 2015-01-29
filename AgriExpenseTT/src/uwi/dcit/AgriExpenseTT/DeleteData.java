@@ -27,7 +27,7 @@ public class DeleteData extends ActionBarActivity {
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Delete Data");
         Fragment fragment=new FragmentSlidingDelete();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
 		/*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;

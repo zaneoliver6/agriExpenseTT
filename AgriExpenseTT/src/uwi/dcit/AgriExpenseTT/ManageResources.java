@@ -31,7 +31,7 @@ public class ManageResources extends ActionBarActivity {
 		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
         Fragment fragment=new FragmentSlidingTabsManageRes();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
 		/*
 

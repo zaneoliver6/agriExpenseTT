@@ -29,7 +29,7 @@ public class MainActivityRedesign extends ActionBarActivity implements Navigatio
     private void setupPort() {
         Fragment fragment=new FragmentSlidingMain();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
     }
     private void setupLand() {
@@ -84,7 +84,7 @@ public class MainActivityRedesign extends ActionBarActivity implements Navigatio
             ft.replace(R.id.navContentRight,newFrag);
             rightFrag=newFrag;
         }else{
-            ft.replace(R.id.navContent,newFrag);
+            ft.replace(R.id.navContentLeft,newFrag);
         }
         ft.commit();
     }

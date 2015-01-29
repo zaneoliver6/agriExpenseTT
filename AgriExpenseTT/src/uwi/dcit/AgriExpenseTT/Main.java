@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -50,6 +51,9 @@ public class Main extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        if(savedInstanceState != null){
+
+        }
         if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -59,7 +63,7 @@ public class Main extends ActionBarActivity
     private void setupPort() {
         Fragment fragment=new FragmentSlidingMain();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
     }
     private void setupLand() {
@@ -102,27 +106,11 @@ public class Main extends ActionBarActivity
 
     }
 
-    /*public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
-    }
-*/
     public void restoreActionBar() {
-
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mTitle);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,6 +155,8 @@ public class Main extends ActionBarActivity
                 getString(R.string.menu_item_newPurchase),getString(R.string.menu_item_hireLabour)};
     }
 
+
+
     @Override
     public int[] getMenuImages() {
         return new int[]{R.drawable.mainmenu_cycle_triangle
@@ -185,10 +175,12 @@ public class Main extends ActionBarActivity
             oldFrag.setArguments(arguments);
             ft.replace(R.id.navContentLeft, oldFrag);
             leftFrag=oldFrag;
+            leftFrag.setRetainInstance(true);
             ft.replace(R.id.navContentRight,newFrag);
             rightFrag=newFrag;
+            rightFrag.setRetainInstance(false);
         }else{
-            ft.replace(R.id.navContent,newFrag);
+            ft.replace(R.id.navContentLeft,newFrag);
         }
         ft.commit();
     }
@@ -209,5 +201,16 @@ public class Main extends ActionBarActivity
     }
     public void openNewPurchase(View view){
         startActivity(new Intent(getApplicationContext(),NewPurchase.class));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if(findViewById(R.id.navContentRight)!=null){
+            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+            ft.remove(rightFrag).commit();
+            //have to put in someting here to purge transaction to ensure its still not running
+            getSupportFragmentManager().executePendingTransactions();
+        }
+        super.onSaveInstanceState(outState);
     }
 }
