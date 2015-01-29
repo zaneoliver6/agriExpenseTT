@@ -176,11 +176,11 @@ public class Main extends ActionBarActivity
             ft.replace(R.id.navContentLeft, oldFrag);
             leftFrag=oldFrag;
             leftFrag.setRetainInstance(true);
-            ft.replace(R.id.navContentRight,newFrag);
+            ft.replace(R.id.navContentRight,newFrag).addToBackStack("left");
             rightFrag=newFrag;
             rightFrag.setRetainInstance(false);
         }else{
-            ft.replace(R.id.navContentLeft,newFrag);
+            ft.replace(R.id.navContentLeft,newFrag).addToBackStack("right");
         }
         ft.commit();
     }
