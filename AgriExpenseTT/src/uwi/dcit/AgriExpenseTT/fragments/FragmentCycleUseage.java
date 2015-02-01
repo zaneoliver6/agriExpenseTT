@@ -4,6 +4,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class FragmentCycleUseage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("recreating fragment","before anything");
         view = inflater.inflate(R.layout.activity_cycle_useage_redesign, container, false);
         setup();
         return view;
@@ -38,7 +40,7 @@ public class FragmentCycleUseage extends Fragment {
         Bundle data = getArguments();
         LocalCycle curr = (LocalCycle) data.getParcelable("cycleMain");
 
-        Bundle generalArguments = new Bundle();
+               Bundle generalArguments = new Bundle();
         generalArguments.putString("category","general");
         generalArguments.putParcelable("cycle",curr);
         catGeneral.setArguments(generalArguments);
@@ -73,7 +75,12 @@ public class FragmentCycleUseage extends Fragment {
         otherArguments.putString("category", DHelper.cat_other);
         catOther.setArguments(otherArguments);
 
-        FragmentTransaction ft=getActivity().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft=getChildFragmentManager().beginTransaction();
+        Log.i("fragment Cycle Useage","right before the adding");
+        if(view.findViewById(R.id.cat_general_frag)==null)
+            Log.i("fragment Cycle Useage","the container does not exist");
+        else
+            Log.i("fragment Cycle Useage","the container exists");
         ft.add(R.id.cat_general_frag, catGeneral);
         ft.add(R.id.cat_plantMaterial_frag, catPlantMaterial);
         ft.add(R.id.cat_fertilizer_frag, catFertilizer);

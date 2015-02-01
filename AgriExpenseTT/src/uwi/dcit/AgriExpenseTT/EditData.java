@@ -27,7 +27,7 @@ public class EditData extends ActionBarActivity {
         setContentView(R.layout.activity_view_navigation);
         Fragment fragment=new FragmentSlidingTabsEdit();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
         /*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
