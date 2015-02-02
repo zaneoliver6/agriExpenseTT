@@ -51,6 +51,7 @@ public class Main extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
         if(savedInstanceState != null){
 
         }

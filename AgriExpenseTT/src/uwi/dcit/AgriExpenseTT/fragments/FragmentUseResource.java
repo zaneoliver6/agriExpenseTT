@@ -42,7 +42,7 @@ public class FragmentUseResource extends Fragment{
             parameter.putString("type","purchase");
             parameter.putString("category", type);
             fragment.setArguments(parameter);
-            getActivity().getSupportFragmentManager()
+            getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.useExpenseFrag, fragment)
                     .commit();
@@ -58,7 +58,7 @@ public class FragmentUseResource extends Fragment{
         ListFragment listfrag	= new ChoosePurchaseFragment();
         listfrag.setArguments(pass);
 
-        getActivity().getSupportFragmentManager()
+       getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.useExpenseFrag,listfrag)
                 .commit();
