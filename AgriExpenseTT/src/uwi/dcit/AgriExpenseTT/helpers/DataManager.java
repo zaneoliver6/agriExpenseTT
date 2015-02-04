@@ -111,8 +111,10 @@ public class DataManager {
 		//CYCLEUSE
 		//Delete CycleUse
 		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
-		DbQuery.deleteRecord(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId());
-		tL.insertTransLog(CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+        try {
+            DbQuery.deleteRecord(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId());
+        }catch(Exception e){e.printStackTrace();}
+        tL.insertTransLog(CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
@@ -163,8 +165,10 @@ public class DataManager {
 		}
 		//delete cycle
 		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
-		DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME,c.getId());
-		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
+        try {
+            DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId());
+        }catch (Exception e){e.printStackTrace();}
+        tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
 		if(acc!=null){
 			//insert into redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);

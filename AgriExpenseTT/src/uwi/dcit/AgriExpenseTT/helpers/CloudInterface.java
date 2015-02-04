@@ -82,8 +82,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
-					
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
@@ -141,8 +142,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
-					
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
@@ -193,7 +195,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -247,7 +251,10 @@ public class CloudInterface {
 					//store key of inserted cycleuse into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleResourceEntry.TABLE_NAME+"' and "
 							+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -296,7 +303,10 @@ public class CloudInterface {
 					//store key of inserted cycleuse into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"' and "
 							+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -353,10 +363,16 @@ public class CloudInterface {
 					int id=DbQuery.getCloudKeyId(db, dbh, CycleEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 					}
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+					try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleEntry.TABLE_NAME+
 							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -426,10 +442,16 @@ public class CloudInterface {
 					int id=DbQuery.getCloudKeyId(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 					}
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception  e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleResourceEntry.TABLE_NAME+
 							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -486,12 +508,18 @@ public class CloudInterface {
 				if(p!=null){//the removal was successful OR there was not ever inserted into the cloud
 					int id=DbQuery.getCloudKeyId(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
 					if(id!=-1){//if the key exists
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 						//getting the transaction from the transaction log that matches this operation	
 					}
 					
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+					try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//remove key of cycle that was deleted from cloud
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"'"
 							+ " and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -550,7 +578,10 @@ public class CloudInterface {
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					
 					//remove insert from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 				}
 			
 			}

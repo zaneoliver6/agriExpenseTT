@@ -430,7 +430,9 @@ public class TransactionLog {
 		}
 	}
 	private void logDeleteLocal(TransLog tLog, String namespace2) {
-		DbQuery.deleteRecord(db, dbh, tLog.getTableKind(), tLog.getRowId());
+        try {
+            DbQuery.deleteRecord(db, dbh, tLog.getTableKind(), tLog.getRowId());
+        }catch (Exception e){e.printStackTrace();}
 	}
 	private Cycle getCycle(String namespace, String keyrep){
 		CycleApi.Builder builder = new CycleApi.Builder(

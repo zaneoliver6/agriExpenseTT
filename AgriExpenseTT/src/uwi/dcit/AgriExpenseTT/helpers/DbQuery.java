@@ -20,9 +20,9 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
+import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
-import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 
@@ -333,8 +333,21 @@ public class DbQuery {
 		return getLast(db,dbh,RedoLogEntry.TABLE_NAME);
 	}
 	//can be used for all tables so far
-	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id){
-		db.delete(table, "id="+id, null);
+	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id)throws Exception{
+        if(table.equals(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME)){
+            db.delete(table, UpdateAccountContract.UpdateAccountEntry._ID+""+id, null);
+        }else if(table.equals(CycleEntry.TABLE_NAME)){
+            db.delete(table, CycleEntry._ID+"="+id, null);
+        }else if(table.equals(ResourcePurchaseEntry.TABLE_NAME)){
+            db.delete(table, ResourcePurchaseEntry._ID+"="+id, null);
+        }else if(table.equals(ResourceContract.ResourceEntry.TABLE_NAME)){
+            db.delete(table, ResourceContract.ResourceEntry._ID+"="+id, null);
+        }else if(table.equals(CycleResourceEntry.TABLE_NAME)){
+            db.delete(table,CycleResourceEntry._ID+"="+id,null);
+        }else{
+            throw new Exception("no contract defined for this table");
+        }
+
 	}
 	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
 		
