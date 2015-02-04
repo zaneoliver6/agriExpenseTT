@@ -7,7 +7,8 @@
             <param-name>services</param-name>
             <param-value>uwi.dcit.agriexpensesvr.MyEndpoint, uwi.dcit.agriexpensesvr.CycleEndpoint,
                 uwi.dcit.agriexpensesvr.CycleUseEndpoint, uwi.dcit.agriexpensesvr.RPurchaseEndpoint,
-                uwi.dcit.agriexpensesvr.TransLogEndpoint, uwi.dcit.agriexpensesvr.UpAccEndpoint</param-value>
+                uwi.dcit.agriexpensesvr.TransLogEndpoint, uwi.dcit.agriexpensesvr.UpAccEndpoint,
+                uwi.dcit.agriexpensesvr.AccNameEndpoint</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
