@@ -5,26 +5,42 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.help.FragmentSlidingTabsEdit;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
-public class EditData extends ActionBarActivity {
+public class EditData extends ActionBarActivity implements
+        NavigationDrawerFragment.NavigationDrawerCallbacks,NavigationControl {
 	ArrayList<LocalCycle> li;
 	ArrayList<LocalResourcePurchase> pli;
 //	public final int req_cycle=1; //TODO Remove unused fields
 //	final int req_purchase=2;
 	DbHelper dbh;
 	SQLiteDatabase db;
+    Fragment leftFrag,rightFrag;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
         Fragment fragment=new FragmentSlidingTabsEdit();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.navContentLeft,fragment);
@@ -61,6 +77,36 @@ public class EditData extends ActionBarActivity {
     	getActionBar().addTab(t1);
     	*/
 	}
+
+    @Override
+    public void navigate(Fragment oldFrag, Fragment newFrag) {
+
+    }
+
+    @Override
+    public Fragment getLeftFrag() {
+        return leftFrag;
+    }
+
+    @Override
+    public Fragment getRightFrag() {
+        return rightFrag;
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        return new String[0];
+    }
+
+    @Override
+    public int[] getMenuImages() {
+        return new int[0];
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+
+    }
     /*
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
