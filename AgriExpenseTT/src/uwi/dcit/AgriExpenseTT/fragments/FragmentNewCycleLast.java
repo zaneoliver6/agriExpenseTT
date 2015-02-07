@@ -25,7 +25,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.MainMenu;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
@@ -35,7 +35,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.CycleContract;
 
 public class FragmentNewCycleLast extends Fragment{
 	String plantMaterial;
@@ -194,13 +193,13 @@ public class FragmentNewCycleLast extends Fragment{
 						dm.insertCycle(plantMaterialId, land,landQty, unixdate);
 						
 						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
-						Intent i=new Intent(getActivity(),CycleUseageRedesign.class);
-						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
-						c.setId(n);
-						i.putExtra("cycleMain",c);
+						Intent i=new Intent(getActivity(),Main.class);
+//						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
+//						c.setId(n);
+//						i.putExtra("cycleMain",c);
+                        new IntentLauncher().run();
 						startActivity(i);
-						
-						getActivity().finish();
+//						getActivity().finish();
 						
 					}
 				}
@@ -208,5 +207,9 @@ public class FragmentNewCycleLast extends Fragment{
 			}
 			
 		}
+    private class IntentLauncher extends Thread{
+        @Override
+        public void run(){getActivity().finish();}
+    }
 
 }

@@ -76,10 +76,12 @@ public class FragmentSlidingMain extends Fragment {
                 arguments.putString("type", "cycle");
                 cycleFrag.setArguments(arguments);
             }
+
             if(DbQuery.resourceExist(db)){
                 resFrag = new ChoosePurchaseFragment();
             }else{
                 resFrag=new FragmentEmpty();
+                arguments	= new Bundle();
                 arguments.putString("type", "purchase");
                 resFrag.setArguments(arguments);
             }

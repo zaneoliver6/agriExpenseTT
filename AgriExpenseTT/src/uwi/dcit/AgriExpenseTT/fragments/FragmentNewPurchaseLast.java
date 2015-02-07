@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -140,9 +142,15 @@ public class FragmentNewPurchaseLast extends Fragment{
 					dm.insertPurchase(resId, quantifier, qty, category, cost);
 				}
 				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);
-				getActivity().finish();
+                Intent n=new Intent(getActivity(),Main.class);
+                new IntentLauncher().run();
+                getActivity().startActivity(n);
 			}
 		}
 		
+	}
+    private class IntentLauncher extends Thread{
+		@Override
+		public void run(){getActivity().finish();}
 	}
 }
