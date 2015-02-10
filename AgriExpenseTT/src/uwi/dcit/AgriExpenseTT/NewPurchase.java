@@ -23,10 +23,10 @@ public class NewPurchase extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
-		//TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		//tv_main.setText("Purchasing new materials");
 		setupUI();
 		setupInitialFrag();
+
+        //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
 	}
 	

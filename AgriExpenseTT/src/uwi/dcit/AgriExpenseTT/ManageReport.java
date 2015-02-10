@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,12 +10,13 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentReportList;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
-public class ManageReport extends ActionBarActivity {
+public class ManageReport extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_report_manager);
+
 		if (savedInstanceState == null) {
 			setupInitialFrag();
 		}
@@ -45,14 +45,8 @@ public class ManageReport extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	public void createExcelReport(){
-		
+
+		return (id == R.id.action_settings)  || super.onOptionsItemSelected(item);
 	}
 	
 	public void createNewReport(View view){

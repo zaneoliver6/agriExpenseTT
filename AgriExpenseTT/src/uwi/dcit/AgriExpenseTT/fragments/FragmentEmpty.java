@@ -13,6 +13,7 @@ import android.widget.TextView;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
@@ -43,6 +44,8 @@ public class FragmentEmpty extends Fragment{
 		}else if(type.equals("select")){
             desc.setText("Select something to begin operations");
         }
+        // Google Analytics
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
 		return view;
 	}
 

@@ -1,10 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.CycleContract;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +14,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
+import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class SalesCost extends ActionBarActivity {
 	
@@ -51,6 +52,9 @@ public class SalesCost extends ActionBarActivity {
 		db=dbh.getReadableDatabase();
 		crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
 		setup();
+
+        // Added Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Sales cost Screen");
 	}
 
 	private void setup() {

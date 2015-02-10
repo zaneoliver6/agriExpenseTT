@@ -70,7 +70,7 @@
     <string name="btn_reports_new">New Report</string>
     <string name="txt_general_details">Details:</string>
     <string name="txt_location_country_main">Select Country</string>
-    <string name="txt_location_country_sub"></string>
+    <string name="txt_location_country_sub">Select Subdivision</string>
     <string name="txt_location_county_main">Select County</string>
     <string name="txt_location_county_sub">This is where most/all of your crops are currently located Basically where is your farm closest to</string>
     <string name="about_image_description_uwi">University of the West Indies Logo</string>
@@ -123,11 +123,11 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+    <string name="menu_item_home">Home</string>
     <string name="menu_item_newCycle">New Cycle</string>
     <string name="menu_item_newPurchase">New Purchase</string>
     <string name="menu_item_hireLabour">Hire Labour</string>
-    <string name="menu_item_genFile">Generate File</string>
+    <string name="menu_item_genFile">Reports</string>
     <string name="menu_item_manageData">Manage Data</string>
     <string name="menu_item_signIn">Sign In</string>
     <string name="menu_item_about">About</string>
