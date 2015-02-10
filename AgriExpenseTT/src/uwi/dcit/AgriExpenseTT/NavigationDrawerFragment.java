@@ -290,7 +290,10 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        MenuHelper.handleClick((String)item.getTitle(),getActivity());
+
+        if (item.getTitle() != null)
+            MenuHelper.handleClick((String)item.getTitle(),getActivity());
+
         return super.onOptionsItemSelected(item);
     }
 

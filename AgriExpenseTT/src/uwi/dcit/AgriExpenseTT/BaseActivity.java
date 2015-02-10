@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.Window;
 
+import uwi.dcit.AgriExpenseTT.helpers.MenuHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 
@@ -111,4 +113,18 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         };
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // Respond to the action bar's Up/Home button
+//            case android.R.id.home:
+//                MenuHelper.handleClick(getResources().getString(R.string.menu_item_home), this);
+//                return true;
+//        }
+        if (item.getTitle() != null)
+            Log.d("Base Activity", item.getTitle().toString());
+        else
+            Log.d("Base Activity", "No Title Received");
+        return super.onOptionsItemSelected(item);
+    }
 }
