@@ -1,12 +1,11 @@
 package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class AboutScreen extends ActionBarActivity {
+public class AboutScreen extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

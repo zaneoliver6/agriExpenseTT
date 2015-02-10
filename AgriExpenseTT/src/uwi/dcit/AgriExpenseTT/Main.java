@@ -1,60 +1,37 @@
 package uwi.dcit.AgriExpenseTT;
 
 
-import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
-import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 
 
 public class Main extends BaseActivity {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
-
-
-    //if portrait will use leftfrag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_view_navigation);
+        // Needed after setContentView to refer to the appropriate XML View
+        setupNavDrawer();
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp( R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        //Check for orientation to determine which interface to load
+        // Check for orientation to determine which interface to load
+        // if portrait will use leftfrag
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -83,13 +60,6 @@ public class Main extends BaseActivity {
         ft.replace(R.id.navContentLeft,fragment);
         ft.replace(R.id.navContentRight,emptyFrag);
         ft.commit();
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-//        Toast.makeText(getApplicationContext(),"something",Toast.LENGTH_SHORT).show();
-
-
     }
 
     public void restoreActionBar() {

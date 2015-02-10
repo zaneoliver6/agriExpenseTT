@@ -2,13 +2,12 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
 import uwi.dcit.AgriExpenseTT.fragments.help.HelpListFragment;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
-public class HelpScreen extends ActionBarActivity {
+public class HelpScreen extends BaseActivity {
 	@Override
     
 	public void onCreate(Bundle savedInstanceState) {
