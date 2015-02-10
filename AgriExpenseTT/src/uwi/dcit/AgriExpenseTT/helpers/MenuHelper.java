@@ -12,9 +12,7 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue;
 
-/**
- * Created by Steffan on 16/01/2015.
- */
+
 public class MenuHelper {
     public static void handleClick(String item,Activity activity){
         if(item.equals(activity.getString(R.string.menu_item_newCycle))){

@@ -7,12 +7,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -122,6 +122,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
+
     class MenuArrayAdapter extends ArrayAdapter{
 
         public MenuArrayAdapter(Context context, int textViewResourceId,
@@ -135,7 +136,7 @@ public class NavigationDrawerFragment extends Fragment {
             LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             //LocalResourcePurchase curr=pList.get(position);
             //Get Layout of An Item and Store it in a view
-            View row=inflater.inflate(R.layout.menu_item, parent, false);
+            View row = inflater.inflate(R.layout.menu_item, parent, false);
             ImageView img=(ImageView)row.findViewById(R.id.listView_menuItem_img);
             TextView tv=(TextView)row.findViewById(R.id.tv_menuItem_option);
             img.setImageResource(imgs[position]);
@@ -170,13 +171,20 @@ public class NavigationDrawerFragment extends Fragment {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                getActivity(),                    /* host Activity */
+//                mDrawerLayout,                    /* DrawerLayout object */
+//                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+//                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
+//                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
+//        ) {
+
         mDrawerToggle = new ActionBarDrawerToggle(
-                getActivity(),                    /* host Activity */
-                mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-        ) {
+                getActivity(),
+                mDrawerLayout,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close
+        ){
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
@@ -262,8 +270,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Forward the new configuration the drawer toggle component.
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);// Forward the new configuration the drawer toggle component.
     }
 
     @Override
@@ -279,16 +286,11 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (item==null)Log.d("Navigation", "Item is null" );
+        if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         MenuHelper.handleClick((String)item.getTitle(),getActivity());
-        /*if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }*/
-
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -311,9 +313,6 @@ public class NavigationDrawerFragment extends Fragment {
      * Callbacks interface that all activities using this fragment must implement.
      */
     public static interface NavigationDrawerCallbacks {
-        /**
-         * Called when an item in the navigation drawer is selected.
-         */
         void onNavigationDrawerItemSelected(int position);
     }
 }

@@ -7,9 +7,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
@@ -23,6 +25,7 @@ public class Main extends BaseActivity {
 
     private CharSequence mTitle;
     private final int RequestCode_backup =2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +35,7 @@ public class Main extends BaseActivity {
 
         mTitle = getTitle();
 
-        // Check for orientation to determine which interface to load
-        // if portrait will use leftfrag
+        // Check for orientation to determine which interface to load => if portrait will use leftfrag
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -49,19 +51,19 @@ public class Main extends BaseActivity {
             .replace(R.id.navContentLeft,new FragmentSlidingMain())
             .commit();
     }
-    private void setupLand() {
-        Fragment fragment=new FragmentSlidingMain();
 
-        Fragment emptyFrag=new FragmentEmpty();
+    private void setupLand() {
+        leftFrag = new FragmentSlidingMain();
+        rightFrag = new FragmentEmpty();
+
         Bundle arguments=new Bundle();
         arguments.putString("type","select");
-        emptyFrag.setArguments(arguments);
-        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        leftFrag=fragment;
-        rightFrag=emptyFrag;
-        ft.replace(R.id.navContentLeft,fragment);
-        ft.replace(R.id.navContentRight,emptyFrag);
-        ft.commit();
+        rightFrag.setArguments(arguments);
+
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.navContentLeft, leftFrag)
+            .replace(R.id.navContentRight, rightFrag)
+            .commit();
     }
 
     public void restoreActionBar() {
@@ -99,6 +101,17 @@ public class Main extends BaseActivity {
     }
 
 
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
@@ -162,4 +175,13 @@ public class Main extends BaseActivity {
             }
         }
     }
+
+    public void openNewCycle(View view){
+        startActivity(new Intent(getApplicationContext(), NewCycle.class));
+    }
+
+    public void openNewPurchase(View view){
+        startActivity(new Intent(getApplicationContext(), NewPurchase.class));
+    }
+
 }
