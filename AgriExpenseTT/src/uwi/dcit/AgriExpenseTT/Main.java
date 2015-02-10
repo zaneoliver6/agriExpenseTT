@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
@@ -52,27 +53,27 @@ public class Main extends ActionBarActivity
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp( R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        if(savedInstanceState != null){
-
-        }
-        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
+        //Check for orientation to determine which interface to load
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
             setupPort();
         }
+        // Added Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
     }
+
     private void setupPort() {
-        Fragment fragment=new FragmentSlidingMain();
-        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContentLeft,fragment);
-        ft.commit();
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.navContentLeft,new FragmentSlidingMain())
+            .commit();
     }
     private void setupLand() {
         Fragment fragment=new FragmentSlidingMain();
+
         Fragment emptyFrag=new FragmentEmpty();
         Bundle arguments=new Bundle();
         arguments.putString("type","select");

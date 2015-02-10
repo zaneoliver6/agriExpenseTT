@@ -12,6 +12,7 @@ public class AboutScreen extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
+        //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("About Screen");
 	}
 }

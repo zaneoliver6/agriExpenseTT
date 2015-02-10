@@ -17,16 +17,16 @@ public class AddData extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Add Data");
 
 		setContentView(R.layout.activity_new_cycle_redesigned);
-//		TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-//		tv_main.setText("Adding new resources");
-		Fragment f=new FragmentAddData();
-		FragmentManager fm=getFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ft.add(R.id.NewCycleListContainer,f);
-		ft.commit();
+
+        getFragmentManager()
+            .beginTransaction()
+            .add(R.id.NewCycleListContainer, new FragmentAddData())
+            .commit();
+
+        // Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Add Data");
 	}
 
 	@Override

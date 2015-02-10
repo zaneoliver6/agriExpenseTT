@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
 
 /**
@@ -25,12 +26,16 @@ public class FragmentSlidingMain extends Fragment {
         private ViewPager mViewPager;
         protected ArrayList<FragItem> fragments;
         private SlidingTabLayout mSlidingTabLayout;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setRetainInstance(false);
             fragments=new ArrayList<FragItem>();
             populateList();
+
+            //Google Analytics
+            GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Sliding Menu Fragment");
         }
 
         @Override
