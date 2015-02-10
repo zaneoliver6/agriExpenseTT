@@ -56,6 +56,8 @@ public class ManageResources extends ActionBarActivity {
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		Log.d(MainMenu.APP_NAME, "Found Purchases: " + pli.size());
+
+
 		
 		// Initialize and Set the name of the tabs
 		TabListener tL=new TabListener();

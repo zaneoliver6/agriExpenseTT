@@ -1,61 +1,39 @@
 package uwi.dcit.AgriExpenseTT;
 
 
-import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 
 
-public class Main extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,NavigationControl {
+public class Main extends BaseActivity {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private final int RequestCode_backup=2;
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
+
     private CharSequence mTitle;
-    Fragment leftFrag,rightFrag;
-    protected SignInManager signInManager;
-
-    //if portrait will use leftfrag
+    private final int RequestCode_backup =2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
-        signInManager = new SignInManager(Main.this,Main.this);
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        // Needed after setContentView to refer to the appropriate XML View
+        setupNavDrawer();
+
         mTitle = getTitle();
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp( R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-
-        //Check for orientation to determine which interface to load
+        // Check for orientation to determine which interface to load
+        // if portrait will use leftfrag
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -86,40 +64,8 @@ public class Main extends ActionBarActivity
         ft.commit();
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        Toast.makeText(getApplicationContext(),"something",Toast.LENGTH_SHORT).show();
-        switch (position){
-
-            case 0:
-                //new cycle
-                startActivity(new Intent(getApplicationContext(), NewCycle.class));
-                break;
-            case 1:
-                //new purchase
-                startActivity(new Intent(getApplicationContext(), NewPurchase.class));
-                break;
-            case 2:
-                startActivity(new Intent(getApplicationContext(), HireLabour.class));
-                //hire labour
-                break;
-            case 3:
-                //something else
-                //startActivity(new Intent(getApplicationContext(),Generate));
-                break;
-            case 4:
-                startActivity(new Intent(getApplicationContext(),ManageData.class));
-                break;
-            case 5:
-                backUpData();
-                break;
-
-        }
-
-    }
-
     public void restoreActionBar() {
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mTitle);
     }
@@ -152,30 +98,7 @@ public class Main extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public Fragment getLeftFrag() {
-        return leftFrag;
-    }
-    @Override
-    public Fragment getRightFrag() {
-        return rightFrag;
-    }
 
-    @Override
-    public String[] getMenuOptions() {
-        return new String[]{getString(R.string.menu_item_newCycle),
-                getString(R.string.menu_item_newPurchase),getString(R.string.menu_item_hireLabour),getString(R.string.menu_item_genFile)
-                ,getString(R.string.menu_item_manageData)
-        ,getString(R.string.menu_item_signIn)};
-    }
-
-    @Override
-    public int[] getMenuImages() {
-        return new int[]{R.drawable.mainmenu_cycle_triangle
-                ,R.drawable.mainmenu_shopping_cart,R.drawable.mainmenu_shovel_single,
-                R.drawable.mainmenu_reports,R.drawable.mainmenu_data_settings,
-                R.drawable.mainmenu_signin};
-    }
 
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
@@ -199,23 +122,8 @@ public class Main extends ActionBarActivity
         ft.commit();
     }
 
-    @Override
-    public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
-    }
-    public void openNewCycle(View view){
-        startActivity(new Intent(getApplicationContext(),NewCycle.class));
-    }
-    public void openNewPurchase(View view){
-        startActivity(new Intent(getApplicationContext(),NewPurchase.class));
-    }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -227,6 +135,7 @@ public class Main extends ActionBarActivity
         }
         super.onSaveInstanceState(outState);
     }
+
     public void backUpData(){
         Intent i = new Intent(getApplicationContext(), Backup.class);
         if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
