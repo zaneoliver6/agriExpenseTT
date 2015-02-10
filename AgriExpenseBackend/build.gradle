@@ -35,6 +35,7 @@ appengine {
     downloadSdk = true
     appcfg {
         oauth2 = true
+        email="boodhoo100@gmail.com"
     }
     endpoints {
         getClientLibsOnBuild = true

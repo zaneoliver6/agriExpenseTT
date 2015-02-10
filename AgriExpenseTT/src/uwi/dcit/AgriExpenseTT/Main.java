@@ -33,7 +33,7 @@ public class Main extends ActionBarActivity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
+    private final int RequestCode_backup=2;
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -234,10 +234,23 @@ public class Main extends ActionBarActivity
                 Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
                 return;
             }
-            i.putExtra("ACTION",  Backup.SIGN_UP); 				// Launch the Backup activity with the sign-up action passed
+            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
         }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
-            i.putExtra("ACTION",  Backup.SIGN_IN); 				// Launch the Backup activity with the sign-in action passed
-        }else i.putExtra("ACTION", Backup.VIEW);				// Launch the Backup activity to simply view the data because user is existing and signed in
-        startActivity(i);
+            signInManager.signIn();
+        }
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == RequestCode_backup) {
+            // Make sure the request was successful
+            if (resultCode == 1) {
+                String country=data.getStringExtra("country");
+                String county=data.getStringExtra("county");
+                Log.d("Main Activity","returned with "+country+" "+county);
+                signInManager.signIn();
+            }
+        }
     }
 }

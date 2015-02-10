@@ -589,17 +589,20 @@ public class CloudInterface {
 		}
 		
 	}
-	public void insertUpAccC(String namespace,long time){
+	public void insertUpAccC(String namespace,long time,String country, String county){
 		if(time==-1)
 			time=System.currentTimeMillis()/1000L;
-		new insertUpAcc(namespace,time).execute();
+		new insertUpAcc(namespace,time,country,county).execute();
 	}
 	public class insertUpAcc extends AsyncTask<Void,Void,Void>{
 		String namespace;
 		long time;
-		public insertUpAcc(String namespace,long time){
+        String country,county;
+		public insertUpAcc(String namespace,long time,String country,String county){
 			this.namespace=namespace;
 			this.time=time;
+            this.country=country;
+            this.county=county;
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -611,6 +614,8 @@ public class CloudInterface {
 			UpAcc acc=new UpAcc();
 			acc.setAcc(namespace);
 			acc.setLastUpdated(time);
+            acc.setCounty(county);
+            acc.setCountry(country);
 			try {
 				acc=endpoint.insertUpAcc(acc).execute();
 				DbQuery.insertUpAcc(db, acc);

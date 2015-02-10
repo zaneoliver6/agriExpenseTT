@@ -124,7 +124,7 @@ public class Sync {
 					break;
 				case createCloudNewOpt:
 					CloudInterface cloudIF=new CloudInterface(context, db, dbh);
-					cloudIF.insertUpAccC(namespace,0);
+					cloudIF.insertUpAccC(namespace,0,signin.getCountry(),signin.getCounty());
 					success=tL.createCloud(namespace);
 					break;
 			}
