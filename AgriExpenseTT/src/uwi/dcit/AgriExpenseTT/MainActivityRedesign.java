@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 
 
@@ -20,18 +21,22 @@ public class MainActivityRedesign extends ActionBarActivity implements Navigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
-        if(this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE) {
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
             setupPort();
         }
+        // Added Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Activity Redesign Screen");
     }
+
     private void setupPort() {
         Fragment fragment=new FragmentSlidingMain();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
     }
+
     private void setupLand() {
         Fragment fragment=new FragmentSlidingMain();
         Fragment emptyFrag=new FragmentEmpty();
