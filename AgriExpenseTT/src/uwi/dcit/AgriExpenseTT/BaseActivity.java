@@ -112,19 +112,4 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
                 R.drawable.mainmenu_signin
         };
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            // Respond to the action bar's Up/Home button
-//            case android.R.id.home:
-//                MenuHelper.handleClick(getResources().getString(R.string.menu_item_home), this);
-//                return true;
-//        }
-        if (item.getTitle() != null)
-            Log.d("Base Activity", item.getTitle().toString());
-        else
-            Log.d("Base Activity", "No Title Received");
-        return super.onOptionsItemSelected(item);
-    }
 }
