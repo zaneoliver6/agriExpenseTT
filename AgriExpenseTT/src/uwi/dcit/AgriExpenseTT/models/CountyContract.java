@@ -2,7 +2,7 @@ package uwi.dcit.AgriExpenseTT.models;
 
 import android.provider.BaseColumns;
 
-public class CountyContract {
+public class    CountyContract {
 	
 	private static final String TEXT_TYPE = " TEXT";
 	private static final String INT_TYPE = " INTEGER";
