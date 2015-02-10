@@ -88,7 +88,7 @@ public class Main extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Toast.makeText(getApplicationContext(),"something",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),"something",Toast.LENGTH_SHORT).show();
         switch (position){
 
             case 0:
@@ -105,7 +105,7 @@ public class Main extends ActionBarActivity
                 break;
             case 3:
                 //something else
-                //startActivity(new Intent(getApplicationContext(),Generate));
+                startActivity(new Intent(getApplicationContext(),ManageReport.class));
                 break;
             case 4:
                 startActivity(new Intent(getApplicationContext(),ManageData.class));
