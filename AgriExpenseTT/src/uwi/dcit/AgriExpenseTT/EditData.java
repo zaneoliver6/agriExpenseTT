@@ -1,82 +1,85 @@
 package uwi.dcit.AgriExpenseTT;
 
-<<<<<<< HEAD
+
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-=======
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.help.FragmentSlidingTabsEdit;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-<<<<<<< HEAD
-=======
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
-public class EditData extends ActionBarActivity {
+public class EditData extends ActionBarActivity implements
+        NavigationDrawerFragment.NavigationDrawerCallbacks,NavigationControl {
 	ArrayList<LocalCycle> li;
 	ArrayList<LocalResourcePurchase> pli;
 //	public final int req_cycle=1; //TODO Remove unused fields
 //	final int req_purchase=2;
 	DbHelper dbh;
 	SQLiteDatabase db;
+    Fragment leftFrag,rightFrag;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
+
         Fragment fragment=new FragmentSlidingTabsEdit();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
-        /*
-		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
-<<<<<<< HEAD
 
-=======
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_view_navigation);
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Data");
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
-		//for empty lists
-		dbh=new DbHelper(EditData.this);
-		db=dbh.getReadableDatabase();
-		li=new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, li);
-		pli=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pli, null, null,true);
-		
-		TabListener tL=new TabListener();
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
-		ActionBar.Tab t1 = getActionBar().newTab();
-		t1.setText("Purchases");
-    	t1.setTabListener(tL);
-    	
-    	ActionBar.Tab t3 = getActionBar().newTab();
-    	t3.setText("Cycles");
-    	t3.setTabListener(tL);
-    	
-    	getActionBar().addTab(t3);
-    	getActionBar().addTab(t1);
-    	*/
+        // Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Data Screen");
 	}
+
+    @Override
+    public void navigate(Fragment oldFrag, Fragment newFrag) {
+
+    }
+
+    @Override
+    public Fragment getLeftFrag() {
+        return leftFrag;
+    }
+
+    @Override
+    public Fragment getRightFrag() {
+        return rightFrag;
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        return new String[0];
+    }
+
+    @Override
+    public int[] getMenuImages() {
+        return new int[0];
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+
+    }
     /*
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;

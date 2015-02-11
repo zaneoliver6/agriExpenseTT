@@ -1,32 +1,29 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract;
-import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
 import uwi.dcit.AgriExpenseTT.models.CountryContract;
 import uwi.dcit.AgriExpenseTT.models.CountyContract;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.LabourContract;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
-import uwi.dcit.AgriExpenseTT.models.ResourceContract.ResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
 
-public class DbHelper extends SQLiteOpenHelper{	
+public class DbHelper extends SQLiteOpenHelper{
 
 	public static final int VERSION = 171;
 	public static final String DATABASE_NAME="agriDb";
@@ -95,48 +92,48 @@ public class DbHelper extends SQLiteOpenHelper{
 	}
 	
 	private void createBackup(SQLiteDatabase db){
-		db.execSQL("ALTER TABLE " + ResourceEntry.TABLE_NAME + " RENAME TO " + ResourceEntry.TABLE_NAME + "_orig");
-		db.execSQL("ALTER TABLE " + CycleEntry.TABLE_NAME + " RENAME TO " + CycleEntry.TABLE_NAME + "_orig");
-		db.execSQL("ALTER TABLE " + ResourcePurchaseEntry.TABLE_NAME + " RENAME TO " + ResourcePurchaseEntry.TABLE_NAME + "_orig");
+		db.execSQL("ALTER TABLE " + ResourceContract.ResourceEntry.TABLE_NAME + " RENAME TO " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
+		db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " RENAME TO " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
+		db.execSQL("ALTER TABLE " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + " RENAME TO " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
 		db.execSQL("ALTER TABLE " + CycleResourceEntry.TABLE_NAME + " RENAME TO " + CycleResourceEntry.TABLE_NAME + "_orig");
 		// db.execSQL("ALTER TABLE " + LabourEntry.TABLE_NAME + "RENAME TO " + LabourEntry.TABLE_NAME + "_orig");
 		
-		db.execSQL("ALTER TABLE " + CloudKeyEntry.TABLE_NAME + " RENAME TO " + CloudKeyEntry.TABLE_NAME + "_orig");
+		db.execSQL("ALTER TABLE " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + " RENAME TO " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "_orig");
 		db.execSQL("ALTER TABLE " + RedoLogEntry.TABLE_NAME + " RENAME TO " + RedoLogEntry.TABLE_NAME + "_orig");
 		db.execSQL("ALTER TABLE " + TransactionLogEntry.TABLE_NAME + " RENAME TO " + TransactionLogEntry.TABLE_NAME + "_orig");
-		db.execSQL("ALTER TABLE " + UpdateAccountEntry.TABLE_NAME + " RENAME TO " + UpdateAccountEntry.TABLE_NAME + "_orig");
+		db.execSQL("ALTER TABLE " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + " RENAME TO " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
 
 		// db.execSQL("ALTER TABLE " + CountryEntry.TABLE_NAME + " RENAME TO " + CountryEntry.TABLE_NAME + "_orig");
 		// db.execSQL("ALTER TABLE " + CountyEntry.TABLE_NAME + " RENAME TO " + CountyEntry.TABLE_NAME + "_orig");
 	}
 	
 	private void translateData(SQLiteDatabase db){
-		db.execSQL("INSERT INTO " + ResourceEntry.TABLE_NAME + "(" + ResourceEntry._ID  + ", name, type)  SELECT id, name, type FROM  " + ResourceEntry.TABLE_NAME + "_orig");		
-		db.execSQL("INSERT INTO " + CycleEntry.TABLE_NAME + "(" + CycleEntry._ID +", cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName ) SELECT id, cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName FROM " + CycleEntry.TABLE_NAME + "_orig");
-		db.execSQL("INSERT INTO " + ResourcePurchaseEntry.TABLE_NAME + "(" + ResourcePurchaseEntry._ID  + ", rId, type, quantifier, qty, cost, remaining, date, resource)  SELECT id, rId, type, quantifier, qty, cost, remaining, date, resource FROM " + ResourcePurchaseEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + ResourceContract.ResourceEntry.TABLE_NAME + "(" + ResourceContract.ResourceEntry._ID  + ", name, type)  SELECT id, name, type FROM  " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + CycleContract.CycleEntry.TABLE_NAME + "(" + CycleContract.CycleEntry._ID +", cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName ) SELECT id, cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName FROM " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "(" + ResourcePurchaseContract.ResourcePurchaseEntry._ID  + ", rId, type, quantifier, qty, cost, remaining, date, resource)  SELECT id, rId, type, quantifier, qty, cost, remaining, date, resource FROM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + CycleResourceEntry.TABLE_NAME + "(" + CycleResourceEntry._ID  + ", pId, type, qty, quantifier, cycleId, useCost) SELECT id, pId, type, qty, quantifier, cycleId, useCost FROM  " + CycleResourceEntry.TABLE_NAME + "_orig");
 		// db.execSQL("INSERT INTO " + LabourEntry.TABLE_NAME + "(" + LabourEntry._ID  + ", labour, name) SELECT id, labour, name FROM  " + LabourEntry.TABLE_NAME + "_orig");
 
-		db.execSQL("INSERT INTO " + CloudKeyEntry.TABLE_NAME + "(" + CloudKeyEntry._ID  + ", key, ctable, rowid ) SELECT id, key, ctable, rowid  FROM " + CloudKeyEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "(" + CloudKeyContract.CloudKeyEntry._ID  + ", key, ctable, rowid ) SELECT id, key, ctable, rowid  FROM " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + RedoLogEntry.TABLE_NAME + "(" + RedoLogEntry._ID  + ", redotable, row_id, operation)  SELECT id, redotable, row_id, operation FROM " + RedoLogEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + TransactionLogEntry.TABLE_NAME + "(" + TransactionLogEntry._ID  + ", transtable, rowid, operation, transtime)  SELECT id, transtable, rowid, operation, transtime FROM  " + TransactionLogEntry.TABLE_NAME + "_orig");
-		db.execSQL("INSERT INTO " + UpdateAccountEntry.TABLE_NAME + "(" + UpdateAccountEntry._ID  + ", acc, county, address, lastUpdated, signedIn, cloudKey)  SELECT id, acc, county, address, lastUpdated, signedIn, cloudKey FROM " + UpdateAccountEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "(" + UpdateAccountContract.UpdateAccountEntry._ID  + ", acc, county, address, lastUpdated, signedIn, cloudKey)  SELECT id, acc, county, address, lastUpdated, signedIn, cloudKey FROM " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
 	
 		// db.execSQL("INSERT INTO " + CountryEntry.TABLE_NAME + "(" + CountryEntry._ID  + ", country, subdividion) SELECT (id, key, ctable, rowid ) FROM  " + CountryEntry.TABLE_NAME + "_orig");
 		// db.execSQL("INSERT INTO " + CountyEntry.TABLE_NAME + "(" + CountyEntry._ID  + ", county, country) SELECT (id, county, country)  FROM  " + CountyEntry.TABLE_NAME + "_orig");
 	}
 
 	private void dropBackups(SQLiteDatabase db){
-		db.execSQL("DROP TABLE IF EXISTS " + ResourceEntry.TABLE_NAME + "_orig");
-		db.execSQL("DROP TABLE IF EXISTS " + CycleEntry.TABLE_NAME + "_orig");
-		db.execSQL("DROP TABLE IF EXISTS " + ResourcePurchaseEntry.TABLE_NAME + "_orig");
+		db.execSQL("DROP TABLE IF EXISTS " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
+		db.execSQL("DROP TABLE IF EXISTS " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
+		db.execSQL("DROP TABLE IF EXISTS " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
 		db.execSQL("DROP TABLE IF EXISTS " + CycleResourceEntry.TABLE_NAME + "_orig");
 		// db.execSQL("DROP TABLE IF EXISTS " + LabourEntry.TABLE_NAME + "_orig");
 
-		db.execSQL("DROP TABLE IF EXISTS " + CloudKeyEntry.TABLE_NAME + "_orig");
+		db.execSQL("DROP TABLE IF EXISTS " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "_orig");
 		db.execSQL("DROP TABLE IF EXISTS " + RedoLogEntry.TABLE_NAME + "_orig");
 		db.execSQL("DROP TABLE IF EXISTS " + TransactionLogEntry.TABLE_NAME + "_orig");
-		db.execSQL("DROP TABLE IF EXISTS " + UpdateAccountEntry.TABLE_NAME + "_orig");
+		db.execSQL("DROP TABLE IF EXISTS " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
 	}
 	
 	private void createDb(SQLiteDatabase db) {
@@ -234,7 +231,6 @@ public class DbHelper extends SQLiteOpenHelper{
 	
 	public void insertDefaultCrops(SQLiteDatabase db){
 		//planting material - reference cardi - Caribbean Agricultural Research and Development Institute
-		
 		//general
 		DbQuery.insertResource(db, this, DHelper.cat_plantingMaterial, "SOYABEAN");
 		DbQuery.insertResource(db, this, DHelper.cat_plantingMaterial, "COCOA");

@@ -19,10 +19,8 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 public class FragmentViewResources extends ListFragment{
 	SQLiteDatabase db;

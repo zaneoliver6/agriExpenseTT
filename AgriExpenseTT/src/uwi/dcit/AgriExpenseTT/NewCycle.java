@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
@@ -19,6 +20,7 @@ public class NewCycle extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitialFrag();
+        //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Cycle");
 	}
 	
@@ -69,4 +71,11 @@ public class NewCycle extends ActionBarActivity {
 	        super.onBackPressed();  
 	    }
 	}
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 }

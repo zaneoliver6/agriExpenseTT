@@ -1,14 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-<<<<<<< HEAD
-=======
-import android.app.Fragment;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -16,17 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
+import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
@@ -73,11 +70,24 @@ public class FragmentNewPurchaseLast extends Fragment{
 		db=dbh.getReadableDatabase();
 		
 		Button btn_done=(Button)view.findViewById(R.id.btn_newpurchaselast_done);
-		resId=DbQuery.getNameResourceId(db, dbh, resource);
+		resId= DbQuery.getNameResourceId(db, dbh, resource);
 		Click c=new Click();
 		btn_done.setOnClickListener(c);
 
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	public class Click implements OnClickListener{
@@ -132,9 +142,15 @@ public class FragmentNewPurchaseLast extends Fragment{
 					dm.insertPurchase(resId, quantifier, qty, category, cost);
 				}
 				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);
-				getActivity().finish();
+                Intent n=new Intent(getActivity(),Main.class);
+                new IntentLauncher().run();
+                getActivity().startActivity(n);
 			}
 		}
 		
+	}
+    private class IntentLauncher extends Thread{
+		@Override
+		public void run(){getActivity().finish();}
 	}
 }

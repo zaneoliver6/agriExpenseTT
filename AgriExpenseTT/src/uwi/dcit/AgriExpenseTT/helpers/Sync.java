@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract.UpdateAccountEntry;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -9,7 +8,9 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
+import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 public class Sync {
 	private UpAcc localAcc;
@@ -73,7 +74,7 @@ public class Sync {
 				
 			}
 			ContentValues cv=new ContentValues();
-			cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
 		//only local exist
 		}else{ 
 			System.out.println("cloud doesnt exist so pushing all to cloud");
@@ -101,14 +102,14 @@ public class Sync {
 			switch(option){
 				case updateCloudOpt:
 					tL.updateCloud(cloudUpdate);
-					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
+					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
 					
 				case updateLocalOpt:
 					tL.logsUpdateLocal(namespace,localUpdate);
-					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
+					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
 					
 				case overwriteCloudOpt:
@@ -118,12 +119,12 @@ public class Sync {
 					
 				case overwriteLocalOpt:
 					success=tL.pullAllFromCloud(cloudAcc);
-					cv.put(UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
-					db.update(UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountEntry._ID+"=1", null);
+					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
 				case createCloudNewOpt:
 					CloudInterface cloudIF=new CloudInterface(context, db, dbh);
-					cloudIF.insertUpAccC(namespace,0);
+					cloudIF.insertUpAccC(namespace,0,signin.getCountry(),signin.getCounty());
 					success=tL.createCloud(namespace);
 					break;
 			}

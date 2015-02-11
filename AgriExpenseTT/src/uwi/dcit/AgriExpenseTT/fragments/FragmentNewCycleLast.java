@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,15 +25,15 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentNewCycleLast extends Fragment{
@@ -49,7 +50,7 @@ public class FragmentNewCycleLast extends Fragment{
 	private TextView landLbl;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
+		final View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
 		
 		dbh = new DbHelper(getActivity().getBaseContext());
 		db = dbh.getReadableDatabase();
@@ -59,6 +60,19 @@ public class FragmentNewCycleLast extends Fragment{
 		Log.i(MainMenu.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
 		setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewCycle) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	
@@ -72,7 +86,7 @@ public class FragmentNewCycleLast extends Fragment{
 		Button btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
 		landLbl.setText("Enter number of "+land+"s");//TODO revise wording and use string xml
 		
-		plantMaterialId=DbQuery.getNameResourceId(db, dbh, plantMaterial);
+		plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
 		
 		MyClickListener c = new MyClickListener(getActivity());
 		btnDate.setOnClickListener(c);
@@ -179,13 +193,13 @@ public class FragmentNewCycleLast extends Fragment{
 						dm.insertCycle(plantMaterialId, land,landQty, unixdate);
 						
 						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
-						Intent i=new Intent(getActivity(),CycleUseageRedesign.class);
-						int n=DbQuery.getLast(db, dbh, CycleEntry.TABLE_NAME);
-						c.setId(n);
-						i.putExtra("cycleMain",c);
+						Intent i=new Intent(getActivity(),Main.class);
+//						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
+//						c.setId(n);
+//						i.putExtra("cycleMain",c);
+                        new IntentLauncher().run();
 						startActivity(i);
-						
-						getActivity().finish();
+//						getActivity().finish();
 						
 					}
 				}
@@ -193,5 +207,9 @@ public class FragmentNewCycleLast extends Fragment{
 			}
 			
 		}
+    private class IntentLauncher extends Thread{
+        @Override
+        public void run(){getActivity().finish();}
+    }
 
 }

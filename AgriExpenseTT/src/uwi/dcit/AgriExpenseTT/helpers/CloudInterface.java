@@ -1,5 +1,21 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+
+import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
+import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
+import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+import com.dcit.agriexpensett.translogApi.TranslogApi;
+import com.dcit.agriexpensett.translogApi.model.TransLog;
+import com.dcit.agriexpensett.upAccApi.UpAccApi;
+import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,25 +26,9 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
+import uwi.dcit.agriexpensett.cycleApi.CycleApi;
+import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 
-import uwi.dcit.agriexpensett.cycleendpoint.Cycleendpoint;
-import uwi.dcit.agriexpensett.cycleendpoint.model.Cycle;
-import uwi.dcit.agriexpensett.cycleuseendpoint.Cycleuseendpoint;
-import uwi.dcit.agriexpensett.cycleuseendpoint.model.CycleUse;
-import uwi.dcit.agriexpensett.rpurchaseendpoint.Rpurchaseendpoint;
-import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
-import uwi.dcit.agriexpensett.translogendpoint.Translogendpoint;
-import uwi.dcit.agriexpensett.translogendpoint.model.TransLog;
-import uwi.dcit.agriexpensett.upaccendpoint.Upaccendpoint;
-import uwi.dcit.agriexpensett.upaccendpoint.model.UpAcc;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.json.jackson2.JacksonFactory;
-//import com.google.appengine.api.datastore.Key;
-//import com.google.appengine.api.datastore.KeyFactory;
 
 public class CloudInterface {
 	SQLiteDatabase db;
@@ -51,11 +51,12 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+
+            CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+            CycleApi endpoint= builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, CycleEntry.TABLE_NAME);
@@ -63,12 +64,13 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-				Cycle c=DbQuery.getCycle(db, dbh, rowId);
+                Cycle c = DbQuery.getCycle(db, dbh, rowId);
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
 				c.setKeyrep(keyrep);
 				try{
 					//c=endpoint.insertCycle(c).execute();
 					c=endpoint.updateCycle(c).execute();
+                    endpoint.updateCycle(c);
 				}catch(Exception e){
 					
 					System.out.println("could not update cycle");
@@ -80,8 +82,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
-					
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
@@ -110,11 +113,11 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+			RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
@@ -139,8 +142,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
-					
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
@@ -164,11 +168,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Cycle doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+			CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+			CycleApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
@@ -191,7 +195,9 @@ public class CloudInterface {
 					//store key of inserted cycle into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -218,11 +224,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Cycle doInBackground(Void... params) {
-			Cycleuseendpoint.Builder builder = new Cycleuseendpoint.Builder(
+			CycleUseApi.Builder builder = new CycleUseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleuseendpoint endpoint = builder.build();
+            CycleUseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleResourceEntry.TABLE_NAME);
@@ -245,7 +251,10 @@ public class CloudInterface {
 					//store key of inserted cycleuse into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+CycleResourceEntry.TABLE_NAME+"' and "
 							+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -268,11 +277,11 @@ public class CloudInterface {
 		
 		@Override
 		protected RPurchase doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+            RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
@@ -294,7 +303,10 @@ public class CloudInterface {
 					//store key of inserted cycleuse into cloud - cloud key table
 					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getAccount(),rowId);
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"' and "
 							+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_INS+"'";
@@ -318,11 +330,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Cycleendpoint.Builder builder = new Cycleendpoint.Builder(
+			CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleendpoint endpoint = builder.build();
+            CycleApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -351,10 +363,16 @@ public class CloudInterface {
 					int id=DbQuery.getCloudKeyId(db, dbh, CycleEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 					}
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+					try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleEntry.TABLE_NAME+
 							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -391,11 +409,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Cycleuseendpoint.Builder builder = new Cycleuseendpoint.Builder(
+			CycleUseApi.Builder builder = new CycleUseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Cycleuseendpoint endpoint = builder.build();
+            CycleUseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -424,10 +442,16 @@ public class CloudInterface {
 					int id=DbQuery.getCloudKeyId(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 					}
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception  e){e.printStackTrace();}
+
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleResourceEntry.TABLE_NAME+
 							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -452,11 +476,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			Rpurchaseendpoint.Builder builder = new Rpurchaseendpoint.Builder(
+			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Rpurchaseendpoint endpoint = builder.build();
+            RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
@@ -474,7 +498,7 @@ public class CloudInterface {
 				p.setKeyrep(keyrep);
 				if(keyrep!=null){
 					try{
-						endpoint.removeRPurchase(p.getKeyrep(),p.getAccount()).execute();
+						endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
 					}catch(Exception e){
 						e.printStackTrace();
 						p=null;
@@ -484,12 +508,18 @@ public class CloudInterface {
 				if(p!=null){//the removal was successful OR there was not ever inserted into the cloud
 					int id=DbQuery.getCloudKeyId(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
 					if(id!=-1){//if the key exists
-						DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        try {
+                            DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
+                        }catch (Exception e){e.printStackTrace();}
+
 						//getting the transaction from the transaction log that matches this operation	
 					}
 					
 					//remove from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+					try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 					//remove key of cycle that was deleted from cloud
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"'"
 							+ " and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
@@ -514,11 +544,11 @@ public class CloudInterface {
 		
 		@Override
 		protected Void doInBackground(Void... params) {
-			Translogendpoint.Builder builder = new Translogendpoint.Builder(
+			TranslogApi.Builder builder = new TranslogApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Translogendpoint endpoint = builder.build();
+            TranslogApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, TransactionLogEntry.TABLE_NAME);
@@ -548,7 +578,10 @@ public class CloudInterface {
 					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					
 					//remove insert from redo log
-					DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    try {
+                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                    }catch (Exception e){e.printStackTrace();}
+
 				}
 			
 			}
@@ -556,28 +589,33 @@ public class CloudInterface {
 		}
 		
 	}
-	public void insertUpAccC(String namespace,long time){
+	public void insertUpAccC(String namespace,long time,String country, String county){
 		if(time==-1)
 			time=System.currentTimeMillis()/1000L;
-		new insertUpAcc(namespace,time).execute();
+		new insertUpAcc(namespace,time,country,county).execute();
 	}
 	public class insertUpAcc extends AsyncTask<Void,Void,Void>{
 		String namespace;
 		long time;
-		public insertUpAcc(String namespace,long time){
+        String country,county;
+		public insertUpAcc(String namespace,long time,String country,String county){
 			this.namespace=namespace;
 			this.time=time;
+            this.country=country;
+            this.county=county;
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
-			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+			UpAccApi.Builder builder = new UpAccApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Upaccendpoint endpoint = builder.build();
+            UpAccApi endpoint = builder.build();
 			UpAcc acc=new UpAcc();
 			acc.setAcc(namespace);
 			acc.setLastUpdated(time);
+            acc.setCounty(county);
+            acc.setCountry(country);
 			try {
 				acc=endpoint.insertUpAcc(acc).execute();
 				DbQuery.insertUpAcc(db, acc);
@@ -597,11 +635,11 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(UpAcc... params) {
-			Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+            UpAccApi.Builder builder = new UpAccApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			Upaccendpoint endpoint = builder.build();
+            UpAccApi endpoint = builder.build();
 			UpAcc acc=params[0];
 			try {
 				endpoint.updateUpAcc(acc).execute();
@@ -613,11 +651,11 @@ public class CloudInterface {
 		
 	}
 	public UpAcc getUpAcc(String namespace){
-		Upaccendpoint.Builder builder = new Upaccendpoint.Builder(
+        UpAccApi.Builder builder = new UpAccApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-		         null);         
+		         null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
-		Upaccendpoint endpoint = builder.build();
+        UpAccApi endpoint = builder.build();
 		UpAcc acc=null;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();

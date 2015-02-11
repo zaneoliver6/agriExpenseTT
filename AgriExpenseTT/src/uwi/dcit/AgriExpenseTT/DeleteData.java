@@ -1,40 +1,29 @@
 package uwi.dcit.AgriExpenseTT;
 
-<<<<<<< HEAD
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-=======
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
-import java.util.ArrayList;
-
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-<<<<<<< HEAD
-=======
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class DeleteData extends ActionBarActivity {
-
-	ArrayList<LocalCycle> li;
-	ArrayList<LocalResourcePurchase> pli;
 	DbHelper dbh;
 	SQLiteDatabase db;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_delete_data);
+
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Delete Data");
+        Fragment fragment=new FragmentSlidingDelete();
+        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container_delete_frag,fragment);
+        ft.commit();
 		/*
 		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 

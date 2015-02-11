@@ -1,12 +1,5 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-<<<<<<< HEAD
-=======
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +14,8 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-<<<<<<< HEAD
-=======
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+
 
 public class FragmentLabourType extends Fragment{
 	

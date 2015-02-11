@@ -15,7 +15,6 @@ package uwi.dcit.AgriExpenseTT.models;/*
  */
 
 
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -27,6 +26,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 /**
@@ -170,9 +170,12 @@ public class SlidingTabLayout extends HorizontalScrollView {
      */
     protected TextView createDefaultTabView(Context context) {
         TextView textView = new TextView(context);
+        //todo my changes
+        textView.setLayoutParams(new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 1f));
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);
         textView.setTypeface(Typeface.DEFAULT_BOLD);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             // If we're running on Honeycomb or newer, then we can use the Theme's
@@ -221,6 +224,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
             tabView.setOnClickListener(tabClickListener);
 
             mTabStrip.addView(tabView);
+            mTabStrip.setGravity(Gravity.CENTER_HORIZONTAL);// TODO my changes
+
         }
     }
 

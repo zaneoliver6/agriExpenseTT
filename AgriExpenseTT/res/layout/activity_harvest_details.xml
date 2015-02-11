@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uwi.dcit.AgriExpenseTT.HarvestDetails" >
+    tools:context="uwi.dcit.AgriExpenseTT.HarvestDetails"
+    android:id="@+id/cont_harvestDet_main">
 	
     <ScrollView
         android:id="@+id/scrollview_harvestDet"

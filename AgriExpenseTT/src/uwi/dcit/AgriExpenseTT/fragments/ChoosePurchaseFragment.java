@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.res.Configuration;
 import android.support.v4.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,10 +37,9 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
@@ -91,7 +91,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		pList	= new ArrayList<LocalResourcePurchase>();
 		
 		if(type != null && (type.equals("delete") || type.equals("edit")))
-			DbQuery.getPurchases(db, dbh, pList, null, null,true);
+			DbQuery.getPurchases(db, dbh, pList, null, null, true);
 		else
 			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
 	
@@ -156,18 +156,30 @@ public class ChoosePurchaseFragment extends ListFragment {
 	 
 	 public void launchPurchaseView(int position){
 		 Bundle arguments = new Bundle();
-		 if(curr != null)arguments.putParcelable("cycleMain", curr);
+		 if(curr != null)
+             arguments.putParcelable("cycleMain", curr);
 		 arguments.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
 		 arguments.putString("cycleId",""+cycleId);					// passes the id of the cycle
+         arguments.putString("total",getArguments().getString("total"));
 		 
-		 Fragment newFragment =new FragmentPurchaseUse();
-		 newFragment.setArguments(arguments);
-
-         getFragmentManager()
+		 Fragment newFrag=new FragmentPurchaseUse();
+		 newFrag.setArguments(arguments);
+         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+             ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+             return;
+         }
+         if(getActivity() instanceof NavigationControl) {
+             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
+                     ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
+                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+             else
+                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
+         }
+      /*   getFragmentManager()
 		 	.beginTransaction()
 		 	.replace(R.id.useExpenseFrag,newFragment)			// Replace whatever is in the fragment_container view with this fragment,
 		 	.addToBackStack(null)								// and add the transaction to the back stack
-		 	.commit();
+		 	.commit();*/
 	 }
 	 
 	 public void deletePurchaseOption(ListView l, int position){

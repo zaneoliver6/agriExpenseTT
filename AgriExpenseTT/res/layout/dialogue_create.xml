@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/mainmenu_cycle_triangle"
+        android:background="@drawable/btn_custom"
+        android:text="@string/menu_item_newCycle"
+        android:onClick="openNewCycle"
+        android:id="@+id/btn_dialogue_createCycle"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="5dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/mainmenu_shopping_cart"
+        android:background="@drawable/btn_custom"
+        android:text="@string/menu_item_newPurchase"
+        android:onClick="openNewPurchase"
+        android:id="@+id/btn_dialogue_createPurchase"
+        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="10dp" />
+</LinearLayout>

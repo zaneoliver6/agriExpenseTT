@@ -1,10 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,6 +14,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class EditChooseLists extends ActionBarActivity {
 	ArrayList<String> list;
@@ -43,7 +45,9 @@ public class EditChooseLists extends ActionBarActivity {
 		EditText et_search=(EditText)findViewById(R.id.et_listReuse_search);
 		et_search.addTextChangedListener(tw);
 		//on click events
-		
+
+        // Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Choose Lists Screen");
 	}
 	public class ItemClick implements OnItemClickListener{
 

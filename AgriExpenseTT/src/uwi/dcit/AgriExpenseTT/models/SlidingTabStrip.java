@@ -118,7 +118,7 @@ class SlidingTabStrip extends LinearLayout {
         final int height = getHeight();
         final int childCount = getChildCount();
         final int dividerHeightPx = (int) (Math.min(Math.max(0f, mDividerHeight), 1f) * height);
-        final uwi.dcit.AgriExpenseTT.models.SlidingTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
+        final SlidingTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
                 ? mCustomTabColorizer
                 : mDefaultTabColorizer;
 

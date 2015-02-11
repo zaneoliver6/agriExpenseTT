@@ -1,30 +1,32 @@
 apply plugin: 'android'
-
+repositories {
+    mavenCentral();
+}
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
-    //compile project(':appcompat_v7_2')
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    //compile'com.google.api-client:google-api-client-android:1.19.0'
+    //compile 'com.android.support:support-v4:20.0.+'
+    compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.google.android.gms:play-services:6.5.87'
-    compile project(path: ':AgriExpenseTT-AppEngine', configuration: 'android-endpoints')
+    compile 'com.android.support:multidex:1.0.0'
+    compile project(path: ':AgriExpenseBackend', configuration: 'android-endpoints')
+    //compile project(path: ':appcompat')
 }
-
+apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.1"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 20
+        targetSdkVersion 21
+        multiDexEnabled true
     }
 
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src', 'endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source', 'endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source', 'endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source', 'endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source', 'endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source', 'endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source', 'endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source']
-            resources.srcDirs = ['src', 'endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source', 'endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source', 'endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source', 'endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source', 'endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source', 'endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source', 'endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source']
-            aidl.srcDirs = ['src', 'endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source', 'endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source', 'endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source', 'endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source', 'endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source', 'endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source', 'endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source']
-            renderscript.srcDirs = ['src', 'endpoint-libs/libdeviceinfoendpoint-v1/deviceinfoendpoint/deviceinfoendpoint-v1-generated-source', 'endpoint-libs/librpurchaseendpoint-v1/rpurchaseendpoint/rpurchaseendpoint-v1-generated-source', 'endpoint-libs/libupaccendpoint-v1/upaccendpoint/upaccendpoint-v1-generated-source', 'endpoint-libs/libcycleendpoint-v1/cycleendpoint/cycleendpoint-v1-generated-source', 'endpoint-libs/libtranslogendpoint-v1/translogendpoint/translogendpoint-v1-generated-source', 'endpoint-libs/libmessageEndpoint-v1/messageEndpoint/messageendpoint-v1-generated-source', 'endpoint-libs/libcycleuseendpoint-v1/cycleuseendpoint/cycleuseendpoint-v1-generated-source']
+            java.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
@@ -40,5 +42,23 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+    dexOptions {
+        preDexLibraries = false
+        incremental true
+        javaMaxHeapSize "4g"
+
+    }
+
+}
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith('dex')
+    }.each { dx ->
+        if (dx.additionalParameters == null) {
+            dx.additionalParameters = []
+        }
+        dx.additionalParameters += '--multi-dex'
+        //dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -52,7 +53,7 @@ public class NewCycleLists extends ListFragment {
 		list = new ArrayList<String>();
 		
 		if(type.equals(DHelper.cat_plantingMaterial)){
-			DbQuery.getResources(db, dbh,DHelper.cat_plantingMaterial, list);
+			DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
 		}else if(type.equals("land")){
 			list.add("Acre");
 			list.add("Hectre");
@@ -79,6 +80,18 @@ public class NewCycleLists extends ListFragment {
 		}else if(type.equals("land")){
 			et_main.setText("Select the type of land you are using");
 		}
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if(v.getId()!=(R.id.et_newCycleLast_landqty)){
+                            ((NewCycle) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 		

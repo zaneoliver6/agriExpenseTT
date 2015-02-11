@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import uwi.dcit.AgriExpenseTT.models.ResourceContract.ResourceEntry;
 import android.provider.BaseColumns;
 
 public class ResourcePurchaseContract {
@@ -19,7 +18,7 @@ public class ResourcePurchaseContract {
 			+ResourcePurchaseEntry.RESOURCE_PURCHASE_COST+" real,"
 			+ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE+" timestamp,"
 			+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE+" text,"
-			+"foreign key("+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+") references "+ ResourceEntry.TABLE_NAME + "(" + ResourceEntry._ID + "));";
+			+"foreign key("+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+") references "+ ResourceContract.ResourceEntry.TABLE_NAME + "(" + ResourceContract.ResourceEntry._ID + "));";
 	
 	public static final String SQL_DELETE_RESOURCE_PURCHASE = 
 			"DROP TABLE IF EXISTS " + ResourcePurchaseEntry.TABLE_NAME;

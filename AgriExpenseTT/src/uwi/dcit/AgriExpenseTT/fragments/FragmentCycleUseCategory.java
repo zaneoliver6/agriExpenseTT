@@ -1,10 +1,11 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.app.Fragment;
-import android.content.Intent;
+
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,24 +13,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.UseResource;
-import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 
 
-public class FragmentCycleUseCategory extends Fragment{
+public class FragmentCycleUseCategory extends Fragment {
 	TextView catMain;
 	TextView catDet1;
 	TextView catDet2;
@@ -168,20 +168,38 @@ public class FragmentCycleUseCategory extends Fragment{
 
 		@Override
 		public void onClick(View v) {
-			if(v.getId()==R.id.btn_Cycle_useage){
-				Intent n=new Intent(getActivity(),ViewCycleUsege.class);
-				n.putExtra("type",category);
+            Fragment newFrag=null;
+            if(v.getId()==R.id.btn_Cycle_useage){
+				//Intent n=new Intent(getActivity(),ViewCycleUsege.class);
+				Bundle arguments = new Bundle();
+                arguments .putString("type", category);
 				currCycle=getArguments().getParcelable("cycle");
-				n.putExtra("id",""+currCycle.getId());
-				getActivity().startActivity(n);
+				arguments.putString("id", "" + currCycle.getId());
+
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-				IntentLauncher launcher=new IntentLauncher();
-				launcher.start();
+//				IntentLauncher launcher=new IntentLauncher();
+//				launcher.start();
+                newFrag=new FragmentUseResource();
+                Bundle arguments = new Bundle();
+                arguments.putString("type",category);
+                arguments.putParcelable("cycle", currCycle);
+                arguments.putString("total",""+catTotal);
+                newFrag.setArguments(arguments);
 			}
+            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+                ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+                return;
+            }
+            if(getActivity() instanceof NavigationControl) {
+                if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
+                        ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
+                    ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+                else
+                    ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
+            }
 		}
-		
 	}
-	private class IntentLauncher extends Thread{
+	/*private class IntentLauncher extends Thread{
 		@Override
 		public void run(){
 			Bundle b=new Bundle();
@@ -194,5 +212,5 @@ public class FragmentCycleUseCategory extends Fragment{
 			getActivity().finish();
 		}
 	}
-
+*/
 }

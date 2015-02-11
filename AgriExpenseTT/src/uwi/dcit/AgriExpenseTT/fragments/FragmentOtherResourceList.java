@@ -1,13 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-<<<<<<< HEAD
-=======
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,14 +22,13 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
+
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
 
 public class FragmentOtherResourceList  extends ListFragment{
 	SQLiteDatabase db;
@@ -71,6 +65,19 @@ public class FragmentOtherResourceList  extends ListFragment{
 		et_search.addTextChangedListener(tw);
 		setupButton(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Resource List Fragment - Other Category");
+
+        view.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (!(v instanceof EditText)) {
+                            ((NewPurchase) getActivity()).hideSoftKeyboard();
+                        }
+                        return false;
+                    }
+                }
+        );
+
 		return view;
 	}
 	 private void setupButton(View v) {

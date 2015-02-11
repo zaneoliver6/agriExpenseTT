@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="uwi.dcit.AgriExpenseTT"
-    android:versionCode="10"
-    android:versionName="5.6" >
+    android:versionCode="11"
+    android:versionName="6.1" >
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,20 +11,17 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo_agrinet"
-        android:label="AgriExpense"
+        android:label="@string/app_name"
         android:logo="@drawable/large_a_logo"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".MainMenu"
-            android:label="AgriExpense"
+            android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".NewPurchase"
@@ -31,7 +29,7 @@
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".NewCycle"
@@ -39,7 +37,7 @@
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".HireLabour"
@@ -47,28 +45,28 @@
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".ManageResources"
             android:label="@string/title_activity_manage_resources" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".ManageData"
             android:label="@string/title_activity_manage_data" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".AboutScreen"
             android:label="@string/title_activity_about" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".CycleUseage"
@@ -78,19 +76,6 @@
             android:name=".UseResource"
             android:label="@string/title_activity_use_resource"
             android:windowSoftInputMode="stateHidden" >
-        </activity>
-        <activity
-            android:name=".fragments.ChoosePurchase"
-            android:label="@string/title_activity_choose_purchase"
-            android:windowSoftInputMode="stateHidden" >
-        </activity>
-        <activity
-            android:name=".UsePurchaseFrag"
-            android:label="@string/title_activity_use_purchase_frag"
-            android:windowSoftInputMode="stateHidden" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
         </activity>
         <activity
             android:name=".CycleUseageRedesign"
@@ -149,10 +134,10 @@
         <activity
             android:name=".HelpScreen"
             android:label="@string/title_activity_help_screen"
-            android:parentActivityName=".MainMenu" >
+            android:parentActivityName=".Main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".ManageReport"
@@ -165,10 +150,10 @@
         <activity
             android:name=".Backup"
             android:label="@string/title_activity_backup_data"
-            android:parentActivityName=".MainMenu" >
+            android:parentActivityName=".Main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.MainMenu" />
+                android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
 
         <receiver android:name=".helpers.ReminderBroadcaster" />
@@ -176,6 +161,20 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".MainActivityRedesign"
+            android:label="@string/title_activity_main_activity_redesign" >
+        </activity>
+
+        <activity
+            android:name=".Main"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

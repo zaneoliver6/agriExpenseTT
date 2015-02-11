@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.models;
 
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import android.provider.BaseColumns;
 
 public class CycleResourceContract {
@@ -17,8 +15,8 @@ public class CycleResourceContract {
 			+CycleResourceEntry.CYCLE_RESOURCE_QTY+" integer,"
 			+CycleResourceEntry.CYCLE_RESOURCE_USECOST+" real,"
 			+CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER+" text,"
-			+"foreign key("+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+") references "+CycleEntry.TABLE_NAME+"("+CycleEntry._ID+"),"
-			+"foreign key("+CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID+") references "+ResourcePurchaseEntry.TABLE_NAME+"("+ResourcePurchaseEntry._ID+"))";
+			+"foreign key("+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+") references "+ CycleContract.CycleEntry.TABLE_NAME+"("+ CycleContract.CycleEntry._ID+"),"
+			+"foreign key("+CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID+") references "+ ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME+"("+ ResourcePurchaseContract.ResourcePurchaseEntry._ID+"))";
 		
 	
 	public static final String SQL_DELETE_CYCLE_RESOURCE =

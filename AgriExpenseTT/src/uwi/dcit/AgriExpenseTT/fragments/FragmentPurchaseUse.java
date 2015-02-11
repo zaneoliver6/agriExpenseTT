@@ -23,25 +23,21 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import uwi.dcit.agriexpensett.rpurchaseendpoint.model.RPurchase;
+import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.UseResource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-<<<<<<< HEAD
-=======
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
->>>>>>> 5e9d2318b9214de3ccb86720f6fe26c21d577e50
-import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 
 public class FragmentPurchaseUse extends Fragment {
 	private View view;
@@ -72,15 +68,17 @@ public class FragmentPurchaseUse extends Fragment {
 		db=dbh.getReadableDatabase();
 		int pId=Integer.parseInt(getArguments().getString("pId"));
 		int cycleId=Integer.parseInt(getArguments().getString("cycleId"));
-		TypeSpent=((UseResource)getActivity()).getTotal();
+		TypeSpent=Double.parseDouble(getArguments().getString("total"));
 		setDetails(pId,cycleId);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
 		return view;
 	}
 	
 	private void setDetails(int pId,int cycleId) {
-		p=DbQuery.getARPurchase(db, dbh,pId);
+		p= DbQuery.getARPurchase(db, dbh, pId);
 		c=getArguments().getParcelable("cycleMain");
+        Log.i("Fragment Purchase",c.getCropName());
+        Log.i("Fragment Purchase",p.getQuantifier());
 		amtRem=p.getQtyRemaining();amtPur=p.getQty();quantifier=p.getQuantifier();
 		btn_typeUse=(Button)view.findViewById(R.id.btn_UsePurchase_useType);
 		btn_typeUse.setText(quantifier);
@@ -159,16 +157,17 @@ public class FragmentPurchaseUse extends Fragment {
 					//updating purchase
 					p.setQtyRemaining(rem);
 					ContentValues cv=new ContentValues();
-					cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+					cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
 					dm.updatePurchase(p,cv);
 					//updating cycle
 					c.setTotalSpent(c.getTotalSpent()+calcost);
 					cv=new ContentValues();
-					cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+					cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
 					dm.updateCycle(c,cv); 
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
-					IntentLauncher i=new IntentLauncher();
-					i.start();
+					/*IntentLauncher i=new IntentLauncher();
+					i.start();*/
+                    getActivity().recreate();
 				}
 			}
 		}

@@ -31,7 +31,7 @@ public class ManageResources extends ActionBarActivity {
 		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
         Fragment fragment=new FragmentSlidingTabsManageRes();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.navContent,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
 		/*
 
@@ -56,6 +56,8 @@ public class ManageResources extends ActionBarActivity {
 		DbQuery.getPurchases(db, dbh, pli, null, null,true);
 		
 		Log.d(MainMenu.APP_NAME, "Found Purchases: " + pli.size());
+
+
 		
 		// Initialize and Set the name of the tabs
 		TabListener tL=new TabListener();
