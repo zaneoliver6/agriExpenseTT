@@ -14,7 +14,6 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue;
 
-
 public class MenuHelper {
     public static void handleClick(String item,Activity activity){
         if (item.equals(R.string.menu_item_home)){
