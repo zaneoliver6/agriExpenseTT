@@ -35,7 +35,7 @@ public class CycleUseage extends ActionBarActivity {
 
 
         Bundle data = getIntent().getExtras();
-        LocalCycle curr = (LocalCycle) data.getParcelable("cycleMain");
+        LocalCycle curr = data.getParcelable("cycleMain");
 
         Bundle generalArguments = new Bundle();
         generalArguments.putString("category","general");
