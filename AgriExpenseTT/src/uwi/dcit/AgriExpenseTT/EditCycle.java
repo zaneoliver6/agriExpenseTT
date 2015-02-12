@@ -140,7 +140,7 @@ public class EditCycle extends ActionBarActivity {
 			}else if(v.getId()==R.id.btn_editCycle_land){
 				i.putExtra("desc", "land");
 				startActivityForResult(i,REQ_LANDTYPE);
-			}else if(v.getId()==R.id.btn_editCycle_date){
+//			}else if(v.getId()==R.id.btn_editCycle_date){
 				//i.putExtra("desc", "crop");
 			}else if(v.getId()==R.id.btn_editCycle_done){
 				updateCycle();
@@ -150,7 +150,7 @@ public class EditCycle extends ActionBarActivity {
 	}
 	
 	private void updateCycle() {
-		if(!(et_landQty.getText().toString().equals(null)||et_landQty.getText().toString().equals(""))){
+		if(!(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals(""))){
 			landQty=Double.parseDouble(et_landQty.getText().toString());
 		}
 		ContentValues cv=new ContentValues();

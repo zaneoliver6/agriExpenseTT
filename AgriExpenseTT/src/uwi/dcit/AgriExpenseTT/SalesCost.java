@@ -176,7 +176,7 @@ public class SalesCost extends ActionBarActivity {
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,
 				int count) {
-			if(!(s.toString().equals(null)||s.toString().equals(""))){
+			if(!(s.toString() == null||s.toString().equals(""))){
 				sellp=Double.parseDouble(s.toString());
 				if(sellp<costPer){
 					salesDet1.setText("$"+sellp+" per "+qtfr+":loss of $"+(costPer-sellp));

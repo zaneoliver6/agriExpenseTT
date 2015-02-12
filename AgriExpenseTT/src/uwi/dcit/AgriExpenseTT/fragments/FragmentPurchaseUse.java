@@ -134,7 +134,7 @@ public class FragmentPurchaseUse extends Fragment {
 				return;
 			}
 			
-			if(et_amt.getText().toString().equals(null)||et_amt.getText().toString().equals("")){
+			if(et_amt.getText().toString() == null||et_amt.getText().toString().equals("")){
 				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
 				return;
 			}else{

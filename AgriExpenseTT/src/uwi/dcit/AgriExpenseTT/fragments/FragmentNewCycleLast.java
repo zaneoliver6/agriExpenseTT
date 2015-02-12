@@ -174,7 +174,7 @@ public class FragmentNewCycleLast extends Fragment{
 					showPopupDate(activity);
 				}else if(v.getId()==R.id.btn_newCyclelast_dne){
 					Double landQty=0.0;
-					if(et_landQty.getText().toString().equals(null)||et_landQty.getText().toString().equals("")){
+					if(et_landQty.getText().toString() == null ||et_landQty.getText().toString().equals("")){
 						Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
 						error.setVisibility(View.VISIBLE);
 						error.setText("Enter the Land Quantity");

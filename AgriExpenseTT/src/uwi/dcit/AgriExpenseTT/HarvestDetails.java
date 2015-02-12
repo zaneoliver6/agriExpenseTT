@@ -72,7 +72,7 @@ public class HarvestDetails extends ActionBarActivity {
 				i.putExtra("desc","measurement");
 				startActivityForResult(i, REQ_MEASURE);
 			}else if(v.getId()==R.id.btn_harvestDet_done){
-					if(!(et_amt.getText().toString().equals(null)||(et_amt.getText().toString().equals(""))))
+					if(!(et_amt.getText().toString() == null||(et_amt.getText().toString().equals(""))))
 							qty=Double.parseDouble(et_amt.getText().toString());
 					save();
 					Intent i=new Intent();

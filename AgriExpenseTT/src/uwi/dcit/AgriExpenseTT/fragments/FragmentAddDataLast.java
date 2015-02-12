@@ -44,7 +44,7 @@ public class FragmentAddDataLast extends Fragment{
 		public void onClick(View v) {
 			if(v.getId()==R.id.btn_addData_dne){
 				String name=et_name.getText().toString();
-				if(name.equals(null)||name.equals("")){
+				if(name == null||name.equals("")){
 					tv_error.setText("Please enter name of "+getArguments().getString("type"));
 					tv_error.setVisibility(View.VISIBLE);
 					return;

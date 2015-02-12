@@ -75,11 +75,11 @@ public class FragmentNewPurchaseOther extends Fragment{
 				if(getArguments().getString("found").equals("no"))
 					resource=et_res.getText().toString();
 				quantifier=et_qtfr.getText().toString();
-				if(resource.equals(null)||resource.equals("")){
+				if(resource == null ||resource.equals("")){
 					tv_error_res.setText("enter the name of your resource");
 					tv_error_res.setVisibility(View.VISIBLE);
 					return;
-				}else if(quantifier.equals(null)||quantifier.equals("")){
+				}else if(quantifier == null||quantifier.equals("")){
 					tv_error_qtfr.setText("enter how you are going to measure what you are buying");
 					tv_error_qtfr.setVisibility(View.VISIBLE);
 					return;

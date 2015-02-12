@@ -16,7 +16,7 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue;
 
 public class MenuHelper {
     public static void handleClick(String item,Activity activity){
-        if (item.equals(R.string.menu_item_home)){
+        if (item.equals(activity.getString(R.string.menu_item_home))){
             activity.startActivity(new Intent(activity.getApplicationContext(), Main.class));
         }else if(item.equals(activity.getString(R.string.menu_item_newCycle))){
             activity.startActivity(new Intent(activity.getApplicationContext(), NewCycle.class));

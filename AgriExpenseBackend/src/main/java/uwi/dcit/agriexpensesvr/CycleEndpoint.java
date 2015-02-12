@@ -77,8 +77,8 @@ public class CycleEndpoint {
             // Tight loop for fetching all entities from datastore and
             // accomodate
             // for lazy fetch.
-            for (Cycle obj : execute)
-                ;
+//            for (Cycle obj : execute)
+//                ;
         } finally {
             if (mgr != null)mgr.close();
         }

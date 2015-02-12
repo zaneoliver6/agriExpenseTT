@@ -349,7 +349,7 @@ public class CloudInterface {
 				c.setId(rowId);
 				c.setAccount(DbQuery.getAccount(db));
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, rowId);
-				if(!keyrep.equals(null)){//was never inserted :o
+				if(keyrep != null){//was never inserted :o
 					try{
 						endpoint.removeCycle(c.getKeyrep(),c.getAccount()).execute();
 					}catch(Exception e){
@@ -429,7 +429,7 @@ public class CloudInterface {
 				c.setAccount(DbQuery.getAccount(db));
 				String keyrep=DbQuery.getKey(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 				c.setKeyrep(keyrep);
-				if(keyrep.equals(null)){
+				if(keyrep == null){
 					try{
 						System.out.println("Key:"+c);
 						endpoint.removeCycleUse(c.getKeyrep(),c.getAccount()).execute();

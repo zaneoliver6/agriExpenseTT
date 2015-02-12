@@ -96,14 +96,14 @@ public class FragmentNewPurchaseLast extends Fragment{
 		public void onClick(View v) {
 			if(v.getId()==R.id.btn_newpurchaselast_done){
 				double qty,cost;
-				if( ((et_qty.getText().toString()).equals(null))||((et_qty.getText().toString()).equals(""))  ){
+				if( ((et_qty.getText().toString()) == null)||((et_qty.getText().toString()).equals(""))  ){
 					error.setVisibility(View.VISIBLE);
 					error.setText("Enter Quantity");
 					return;
 				}else{
 					qty=Double.parseDouble(et_qty.getText().toString());
 				}
-				if( (et_cost.getText().toString().equals(null)) || ((et_cost.getText().toString()).equals("")) ){
+				if( (et_cost.getText().toString() == null) || ((et_cost.getText().toString()).equals("")) ){
 					error.setVisibility(View.VISIBLE);
 					error.setText("Enter cost");
 					return;

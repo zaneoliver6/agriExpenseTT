@@ -55,9 +55,7 @@ public class FragmentViewResources extends ListFragment{
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		String type=getArguments().getString("type");
-		if(type==null){
-			
-		}else if(type.equals("delete")){
+		if(type.equals("delete")){
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
             builder1.setMessage("Are you sure you want to delete");
             builder1.setCancelable(true);

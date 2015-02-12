@@ -141,10 +141,10 @@ public class EditPurchase extends ActionBarActivity {
 	
 
 	private void updatePurchase() {
-		if(!(et_qty.getText().toString().equals(null)||et_qty.getText().toString().equals(""))){
+		if(!(et_qty.getText().toString() == null||et_qty.getText().toString().equals(""))){
 			qty=Double.parseDouble(et_qty.getText().toString());
 		}
-		if(!(et_cost.getText().toString().equals(null)||et_cost.getText().toString().equals(""))){
+		if(!(et_cost.getText().toString() == null ||et_cost.getText().toString().equals(""))){
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
 		ContentValues cv = new ContentValues();
