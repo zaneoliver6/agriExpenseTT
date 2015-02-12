@@ -23,10 +23,9 @@ public class FragmentEmpty extends Fragment{
 		String category = getArguments().getString("category");
 		
 		view = inflater.inflate(R.layout.fragment_empty_purchaselist, container, false);
-		
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
 		setupButton(type);
-        Log.d("Fragment Empty type",type);
+
 		if(type.equals("purchase")){
 			if(category == null){
 				desc.setText("Tap here to create a new purchase");
