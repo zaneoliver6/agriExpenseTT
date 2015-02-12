@@ -7,14 +7,17 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 
 public class Main extends BaseActivity {
@@ -31,8 +34,7 @@ public class Main extends BaseActivity {
 
         mTitle = getTitle();
 
-        // Check for orientation to determine which interface to load
-        // if portrait will use leftfrag
+        // Check for orientation to determine which interface to load => if portrait will use leftfrag
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -48,19 +50,19 @@ public class Main extends BaseActivity {
             .replace(R.id.navContentLeft,new FragmentSlidingMain())
             .commit();
     }
-    private void setupLand() {
-        Fragment fragment=new FragmentSlidingMain();
 
-        Fragment emptyFrag=new FragmentEmpty();
+    private void setupLand() {
+        leftFrag = new FragmentSlidingMain();
+        rightFrag = new FragmentEmpty();
+
         Bundle arguments=new Bundle();
         arguments.putString("type","select");
-        emptyFrag.setArguments(arguments);
-        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        leftFrag=fragment;
-        rightFrag=emptyFrag;
-        ft.replace(R.id.navContentLeft,fragment);
-        ft.replace(R.id.navContentRight,emptyFrag);
-        ft.commit();
+        rightFrag.setArguments(arguments);
+
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.navContentLeft, leftFrag)
+            .replace(R.id.navContentRight, rightFrag)
+            .commit();
     }
 
     public void restoreActionBar() {
@@ -98,6 +100,17 @@ public class Main extends BaseActivity {
     }
 
 
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
@@ -121,23 +134,8 @@ public class Main extends BaseActivity {
         ft.commit();
     }
 
-    @Override
-    public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
-    }
-    public void openNewCycle(View view){
-        startActivity(new Intent(getApplicationContext(),NewCycle.class));
-    }
-    public void openNewPurchase(View view){
-        startActivity(new Intent(getApplicationContext(),NewPurchase.class));
-    }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -148,6 +146,41 @@ public class Main extends BaseActivity {
             getSupportFragmentManager().executePendingTransactions();
         }
         super.onSaveInstanceState(outState);
+    }
+
+    public void backUpData(){
+        Intent i = new Intent(getApplicationContext(), Backup.class);
+        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
+            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+                return;
+            }
+            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
+            signInManager.signIn();
+        }
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == RequestCode_backup) {
+            // Make sure the request was successful
+            if (resultCode == 1) {
+                String country=data.getStringExtra("country");
+                String county=data.getStringExtra("county");
+                Log.d("Main Activity","returned with "+country+" "+county);
+                signInManager.signIn();
+            }
+        }
+    }
+
+    public void openNewCycle(View view){
+        startActivity(new Intent(getApplicationContext(), NewCycle.class));
+    }
+
+    public void openNewPurchase(View view){
+        startActivity(new Intent(getApplicationContext(), NewPurchase.class));
     }
 
 }

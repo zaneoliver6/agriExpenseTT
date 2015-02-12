@@ -69,14 +69,16 @@ public class FragmentSlidingMain extends Fragment {
         }
         private void populateList(){
             SQLiteDatabase db;
-            DbHelper dbh=new DbHelper(getActivity().getApplicationContext());
-            db=dbh.getReadableDatabase();
-            Fragment cycleFrag,resFrag;
-            Bundle arguments	= new Bundle();
+            DbHelper dbh = new DbHelper(getActivity().getApplicationContext());
+            db = dbh.getReadableDatabase();
+
+            Fragment cycleFrag, resFrag;
+            Bundle arguments = new Bundle();
 
             if(DbQuery.cyclesExist(db)){
                 cycleFrag = new FragmentViewCycles();
             }else{
+
                 cycleFrag = new FragmentEmpty();
                 arguments.putString("type", "cycle");
                 cycleFrag.setArguments(arguments);
