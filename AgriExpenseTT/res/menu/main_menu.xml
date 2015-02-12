@@ -1,25 +1,25 @@
 <menu 
     xmlns:android="http://schemas.android.com/apk/res/android"
-     xmlns:mytest="http://schemas.android.com/apk/res-auto" >
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
      
      <item android:id="@+id/menu_item_help" 
          android:title="@string/menu_help" 
          android:icon="@drawable/ic_action_help"
          android:orderInCategory="1" 
-         android:showAsAction="ifRoom" />
+         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_item_settings"
         android:icon="@drawable/ic_action_settings"
         android:orderInCategory="3"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/menu_setting" />
     
     <item 
         android:id="@+id/menu_item_about"
         android:icon="@drawable/ic_action_about"
         android:orderInCategory="2"
-        android:showAsAction="always"
+        app:showAsAction="always"
         android:title="@string/menu_about" />
 	
   

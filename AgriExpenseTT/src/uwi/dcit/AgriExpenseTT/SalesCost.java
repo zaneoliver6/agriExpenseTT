@@ -109,7 +109,7 @@ public class SalesCost extends ActionBarActivity {
 			public void run(){
 				//Bundle b=new Bundle();
 				//b.putParcelable("cycle",currCycle);
-				Intent n=new Intent(SalesCost.this,CycleUseageRedesign.class);
+				Intent n=new Intent(SalesCost.this,CycleUseage.class);
 				n.putExtra("cycleMain", currCycle);
 				startActivity(n);
 				finish();

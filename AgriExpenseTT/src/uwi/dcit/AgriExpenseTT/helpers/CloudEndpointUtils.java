@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT.helpers;
 
 import java.io.IOException;
 
-import uwi.dcit.AgriExpenseTT.MainMenu;
 import android.app.Activity;
 import android.util.Log;
 
@@ -11,6 +10,8 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import uwi.dcit.AgriExpenseTT.Main;
 
 /**
  * Common utilities for working with Cloud Endpoints.
@@ -139,7 +140,7 @@ public class CloudEndpointUtils {
 		activity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Log.e(MainMenu.APP_NAME, errorMessage);
+				Log.e(Main.APP_NAME, errorMessage);
 			}
 		});
 	}

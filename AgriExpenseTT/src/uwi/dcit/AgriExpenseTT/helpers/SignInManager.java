@@ -17,7 +17,7 @@ import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 
@@ -98,33 +98,33 @@ public class SignInManager {
 	}
 	
 	public void signInReturn(boolean success,String message){
-		if(success){
-			((MainMenu)activity).toggleSignIn();
-			Toast.makeText(activity.getBaseContext(), "Sign-in Successfully Completed", Toast.LENGTH_SHORT).show();
-		}else{
-			if(message==null||message.equals(""))
-				Toast.makeText(activity, "The sign-in process was not successful. Please try again", Toast.LENGTH_SHORT).show();
-			else 
-				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-		}
+//		if(success){
+//			((Main)activity).toggleSignIn();
+//			Toast.makeText(activity.getBaseContext(), "Sign-in Successfully Completed", Toast.LENGTH_SHORT).show();
+//		}else{
+//			if(message==null||message.equals(""))
+//				Toast.makeText(activity, "The sign-in process was not successful. Please try again", Toast.LENGTH_SHORT).show();
+//			else
+//				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+//		}
 	}
 	
 	//--------------------------------------------------Helper stuff
 	private void handleNoAccounts(){		
-		(new AlertDialog.Builder(context))
-			.setTitle("No Accounts Available")
-			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
-			.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					context.startActivity(new Intent(context,MainMenu.class));
-				}
-			})
-			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
-				}
-			})
-			.show();
+//		(new AlertDialog.Builder(context))
+//			.setTitle("No Accounts Available")
+//			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
+//			.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int item) {
+//					context.startActivity(new Intent(context,MainMenu.class));
+//				}
+//			})
+//			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int item) {
+//					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
+//				}
+//			})
+//			.show();
 	}
 	
 	private ArrayList<String> getAccounts(){

@@ -26,7 +26,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.Main;
-import uwi.dcit.AgriExpenseTT.MainMenu;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -57,7 +56,7 @@ public class FragmentNewCycleLast extends Fragment{
 		
 		plantMaterial = getArguments().getString(DHelper.cat_plantingMaterial);
 		land = getArguments().getString("land");
-		Log.i(MainMenu.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
+		Log.i(Main.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
 		setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 

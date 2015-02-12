@@ -28,7 +28,7 @@ public class ManageResources extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_navigation);
 
-		Log.d(MainMenu.APP_NAME, "OnCreate Method was ran");
+		Log.d(Main.APP_NAME, "OnCreate Method was ran");
         Fragment fragment=new FragmentSlidingTabsManageRes();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.navContentLeft,fragment);

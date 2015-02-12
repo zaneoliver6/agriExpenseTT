@@ -126,7 +126,7 @@ public class DbQuery {
 		Cursor cursor = db.rawQuery(sqlStr, null);
 		if (cursor.getCount() > 0){
 			cursor.moveToFirst();
-			id = (int)cursor.getInt(0);
+			id = cursor.getInt(0);
 		}
 		cursor.close();
 		return id;

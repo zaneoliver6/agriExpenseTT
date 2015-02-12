@@ -38,7 +38,7 @@ public class FragmentCycleUseage extends Fragment {
 
 
         Bundle data = getArguments();
-        LocalCycle curr = (LocalCycle) data.getParcelable("cycleMain");
+        LocalCycle curr = data.getParcelable("cycleMain");
 
                Bundle generalArguments = new Bundle();
         generalArguments.putString("category","general");

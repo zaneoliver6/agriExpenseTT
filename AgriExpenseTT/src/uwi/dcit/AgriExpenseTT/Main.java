@@ -20,6 +20,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 public class Main extends BaseActivity {
 
     private CharSequence mTitle;
+    public final static String APP_NAME = "AgriExpenseTT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

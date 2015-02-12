@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
-import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -78,7 +78,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 
 		try {//for when called by ManageResources the type will be null so we can see all types of purhases
 			type=getArguments().getString("det");
-			Log.i(MainMenu.APP_NAME, "type: "+type);
+			Log.i(Main.APP_NAME, "type: "+type);
 		} catch (Exception e) { }
 		
 		populateList();
@@ -124,11 +124,11 @@ public class ChoosePurchaseFragment extends ListFragment {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		switch(item.getItemId()){
 			case R.id.resource_edit: 								//Edit Purchase
-				Log.i(MainMenu.APP_NAME, "Edit The details for resource: "+pList.get(info.position).getQuantifier());
+				Log.i(Main.APP_NAME, "Edit The details for resource: "+pList.get(info.position).getQuantifier());
 				editPurchaseOption(info.position);
 				break;
 			case R.id.resource_delete:								//Delete Purchase
-				Log.i(MainMenu.APP_NAME, "Delete The details for resource: "+pList.get(info.position).getQuantifier());
+				Log.i(Main.APP_NAME, "Delete The details for resource: "+pList.get(info.position).getQuantifier());
 				deletePurchaseOption(this.getListView(), info.position);
 				break;
 			default:

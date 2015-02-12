@@ -32,7 +32,7 @@ import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
-import uwi.dcit.AgriExpenseTT.MainMenu;
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -47,7 +47,8 @@ public class FragmentViewCycles extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	final int req_edit=1;
-	final String className = MainMenu.APP_NAME +".FragmentViewCucles";
+	final String className = Main.APP_NAME +".FragmentViewCucles";
+
 	
 	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
 	CycleListAdapter cycAdapt;
@@ -108,15 +109,15 @@ public class FragmentViewCycles extends ListFragment{
 		
 		switch(item.getItemId()){
 			case R.id.resource_view:
-				Log.i(MainMenu.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
+				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
 				launchCycleUsage(info.position);
 				break;
 			case R.id.resource_edit: //Edit Cycle
-				Log.i(MainMenu.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
+				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
 				editCycleCoption(info.position);
 				break;
 			case R.id.resource_delete:
-				Log.i(MainMenu.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
+				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
 				deletCycleOption(this.getListView(), info.position); //Use the same delete operation from list item click
 				break;
 			default:

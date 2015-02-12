@@ -28,7 +28,7 @@ import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.CycleUseageRedesign;
+import uwi.dcit.AgriExpenseTT.CycleUseage;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -178,7 +178,7 @@ public class FragmentPurchaseUse extends Fragment {
 			//Bundle b=new Bundle();
 			//b.putParcelable("cycleMain",c);
 			System.out.println("i am here !!!");
-			Intent n=new Intent(getActivity(),CycleUseageRedesign.class);
+			Intent n=new Intent(getActivity(),CycleUseage.class);
 			n.putExtra("cycleMain", c);
 			//n.putExtra("cycleMain",b);
 			getActivity().startActivity(n);

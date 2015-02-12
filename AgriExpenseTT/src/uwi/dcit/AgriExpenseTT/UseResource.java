@@ -130,7 +130,7 @@ public class UseResource extends ActionBarActivity {
 	private class IntentLauncher extends Thread{
 		@Override
 		public void run(){
-			Intent i =new Intent(UseResource.this,CycleUseageRedesign.class);
+			Intent i =new Intent(UseResource.this,CycleUseage.class);
 	        i.putExtra("cycleMain", mainCycle);
 			startActivity(i);
 			finish();
