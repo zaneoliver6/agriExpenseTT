@@ -34,9 +34,7 @@ public class DbQuery {
 		cv.put(ResourceContract.ResourceEntry.RESOURCES_NAME,name);
 		cv.put(ResourceContract.ResourceEntry.RESOURCES_TYPE,type);
 		db.insert(ResourceContract.ResourceEntry.TABLE_NAME, null, cv);
-		int rowId=getLast(db, dbh, ResourceContract.ResourceEntry.TABLE_NAME);
-		
-		return rowId; 
+		return getLast(db, dbh, ResourceContract.ResourceEntry.TABLE_NAME);
 	}
 	//this is for when the farmer buys any material crop, fertilizer, chemical NOT WHEN HE USES
 	public static int insertResourceExp(SQLiteDatabase db, DbHelper dbh, String type, int resourceId, String quantifier, double qty, double cost, TransactionLog tl){
@@ -375,8 +373,7 @@ public class DbQuery {
 			return null;
 		}
 		cursor.moveToFirst();
-		String n=cursor.getString(cursor.getColumnIndex(CloudKeyEntry.CLOUD_KEY));
-		return n;
+		return cursor.getString(cursor.getColumnIndex(CloudKeyEntry.CLOUD_KEY));
 	}
 	public static int getCloudKeyId(SQLiteDatabase db,DbHelper dbh,String table,int id){String code="select * from "+CloudKeyEntry.TABLE_NAME+" where "
 			+CloudKeyEntry.CLOUD_KEY_TABLE+"='"+table+"' and "

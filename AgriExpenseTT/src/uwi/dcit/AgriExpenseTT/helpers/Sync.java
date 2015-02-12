@@ -13,8 +13,7 @@ import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 public class Sync {
-	private UpAcc localAcc;
-	private UpAcc cloudAcc;
+    private UpAcc cloudAcc;
 	protected SignInManager signin;
 	SQLiteDatabase db;
 	DbHelper dbh;
@@ -32,11 +31,11 @@ public class Sync {
 	}
 	public void start(String namespace,UpAcc cloudAcc){
 		System.out.println("gonna sync now");
-		localAcc=DbQuery.getUpAcc(db);
+        UpAcc localAcc = DbQuery.getUpAcc(db);
 		this.cloudAcc=cloudAcc;
 		//both exist
 		if(cloudAcc!=null){System.out.println("Both exist");
-			long localUpdate=localAcc.getLastUpdated();
+			long localUpdate= localAcc.getLastUpdated();
 			long cloudUpdate=cloudAcc.getLastUpdated();
 			if(localUpdate>=cloudUpdate){//local more recent than cloud
 				//the local does not have an account which means it has never been synced 

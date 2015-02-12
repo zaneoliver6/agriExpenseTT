@@ -73,8 +73,7 @@ public class LocalResourcePurchase implements Parcelable{
 	}
 	@Override
 	public String toString() {
-		String n="purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
-		return n;
+		return "purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 	}
 	
 	public RPurchase toRPurchase(){

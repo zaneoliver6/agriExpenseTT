@@ -1,7 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +25,8 @@ public class ManageReport extends BaseActivity {
 	
 	public void setupInitialFrag(){
 		ListFragment fragment = new FragmentReportList();
-		
-		getFragmentManager()
+
+        getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.reportListContainer, fragment)
 			.commit();

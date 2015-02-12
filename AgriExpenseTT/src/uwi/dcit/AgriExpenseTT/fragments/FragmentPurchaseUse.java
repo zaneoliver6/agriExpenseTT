@@ -136,7 +136,6 @@ public class FragmentPurchaseUse extends Fragment {
 			
 			if(et_amt.getText().toString() == null||et_amt.getText().toString().equals("")){
 				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
-				return;
 			}else{
 				useAmount=Double.parseDouble(et_amt.getText().toString());
 				if(useAmount>amtRem){

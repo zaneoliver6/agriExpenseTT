@@ -29,8 +29,7 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 
 public class FragmentNewPurchaseLast extends Fragment{
-	private View view;
-	private EditText et_qty;
+    private EditText et_qty;
 	private EditText et_cost;
 	private TextView error;
 	private String category;
@@ -44,12 +43,12 @@ public class FragmentNewPurchaseLast extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view=inflater.inflate(R.layout.fragment_newpurchase_last, container, false);
+        View view = inflater.inflate(R.layout.fragment_newpurchase_last, container, false);
 		//curr=savedInstanceState.getParcelable("details");
-		et_qty=(EditText)view.findViewById(R.id.et_newPurchaselast_qty);
-		et_cost=(EditText)view.findViewById(R.id.et_newPurchaselast_cost);
+		et_qty=(EditText) view.findViewById(R.id.et_newPurchaselast_qty);
+		et_cost=(EditText) view.findViewById(R.id.et_newPurchaselast_cost);
 		
-		error=(TextView)view.findViewById(R.id.tv_newPurchase_error);
+		error=(TextView) view.findViewById(R.id.tv_newPurchase_error);
 		category=getArguments().getString("category");
 		resource=getArguments().getString("resource");
 		quantifier=getArguments().getString("quantifier");
@@ -69,7 +68,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 		dbh=new DbHelper(getActivity().getBaseContext());
 		db=dbh.getReadableDatabase();
 		
-		Button btn_done=(Button)view.findViewById(R.id.btn_newpurchaselast_done);
+		Button btn_done=(Button) view.findViewById(R.id.btn_newpurchaselast_done);
 		resId= DbQuery.getNameResourceId(db, dbh, resource);
 		Click c=new Click();
 		btn_done.setOnClickListener(c);

@@ -46,8 +46,8 @@ public class FragmentNewCycleLast extends Fragment{
 	EditText et_landQty;
 	TextView tv_dte;
 	TextView error;
-	private TextView landLbl;
-	@Override
+
+    @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
 		
@@ -76,14 +76,14 @@ public class FragmentNewCycleLast extends Fragment{
 	}
 	
 	private void setDetails(View view) {
-		landLbl=(TextView)view.findViewById(R.id.tv_newCyclelast_landQty);
+        TextView landLbl = (TextView) view.findViewById(R.id.tv_newCyclelast_landQty);
 		et_landQty=(EditText)view.findViewById(R.id.et_newCycleLast_landqty);
 		tv_dte=(TextView)view.findViewById(R.id.tv_newCycle_date);
 		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
 		
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
 		Button btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
-		landLbl.setText("Enter number of "+land+"s");//TODO revise wording and use string xml
+		landLbl.setText("Enter number of " + land + "s");//TODO revise wording and use string xml
 		
 		plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
 		
@@ -184,7 +184,6 @@ public class FragmentNewCycleLast extends Fragment{
 						Toast.makeText(getActivity().getBaseContext(),"Select a date", Toast.LENGTH_SHORT).show();
 						error.setVisibility(View.VISIBLE);
 						error.setText("Select date to start crop cycle");
-						return;
 					}else{
 						
 						DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);

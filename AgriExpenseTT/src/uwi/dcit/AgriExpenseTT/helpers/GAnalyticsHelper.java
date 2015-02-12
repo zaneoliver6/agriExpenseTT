@@ -13,14 +13,12 @@ public class GAnalyticsHelper {
 
     public static final String APP_TRACKER = "AgriExpense"; //Tracker used only in this app
 
-    private Context context;
     private Tracker tracker;
 
     private static GAnalyticsHelper instance = null;
 
     private GAnalyticsHelper(Context context){
-        this.context = context;
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this.context);
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         this.tracker = analytics.newTracker(APP_TRACKER);
         tracker.enableAdvertisingIdCollection(true);
     }

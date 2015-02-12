@@ -61,7 +61,7 @@ public class FragmentGeneralCategory extends Fragment {
 		cat_soilam=(TextView)view.findViewById(R.id.tv_catTotal_soilam);
 		cat_chem=(TextView)view.findViewById(R.id.tv_catTotal_chemical);
 		cat_labr=(TextView)view.findViewById(R.id.tv_catTotal_labour);
-		cat_other=(TextView)view.findViewById(R.id.tv_catTotal_other);;
+		cat_other=(TextView)view.findViewById(R.id.tv_catTotal_other);
 		Button btn_calc=(Button)view.findViewById(R.id.btn_general_calculate);
 		Click c=new Click();
 		btn_calc.setOnClickListener(c);

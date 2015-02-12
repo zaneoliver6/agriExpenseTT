@@ -99,11 +99,10 @@ public class CycleUse {
 
     @Override
     public String toString() {
-        String m = "id: " + this.id + " cycleid:" + this.cycleid
+        return "id: " + this.id + " cycleid:" + this.cycleid
                 + " purchaseid:" + this.purchaseId + " resource:"
                 + this.resource + " quantity:" + this.amount + "  cost:"
                 + this.cost;
-        return m;
     }
 
     public String getKeyrep() {

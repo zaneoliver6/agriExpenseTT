@@ -1,12 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.app.AlertDialog;
-import android.app.ListFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
@@ -27,9 +27,7 @@ import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 public class FragmentReportList extends ListFragment {
 
 	private ArrayList<String> list;
-	private ArrayAdapter<String> listAdapt;
-	private String path;
-	private File files[];
+    private File files[];
 		
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -47,7 +45,7 @@ public class FragmentReportList extends ListFragment {
 	
 	public void populateList() {
 		list = new ArrayList<String>(); //Reinitialise to ensure always a empty list starting with		
-		path = Environment.getExternalStorageDirectory().toString()+"/"+ReportHelper.folderLocation;
+        String path = Environment.getExternalStorageDirectory().toString() + "/" + ReportHelper.folderLocation;
 		files = (new File(path)).listFiles(); //Store the file in an array of files
 		Log.d(FragmentReportList.class.toString(), "Path: " + path + " Size: "+ files.length);
 		for (int i=0; i < files.length; i++){
@@ -55,7 +53,7 @@ public class FragmentReportList extends ListFragment {
 		    list.add(files[i].getName());
 		}
 //		Collections.sort(list); //Removed sorting because it would cause the order to be inconsistent with the file array
-		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
+        ArrayAdapter<String> listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
 		setListAdapter(listAdapt);
 	}
 	

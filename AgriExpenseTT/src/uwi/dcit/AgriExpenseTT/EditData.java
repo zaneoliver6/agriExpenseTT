@@ -27,15 +27,15 @@ public class EditData extends ActionBarActivity implements
 	SQLiteDatabase db;
     Fragment leftFrag,rightFrag;
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle;
-	@Override
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+//        CharSequence mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(

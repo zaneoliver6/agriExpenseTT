@@ -22,9 +22,8 @@ import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
  * Created by Steffan on 24/12/2014.
  */
 public class FragmentSlidingTabsManageRes extends Fragment{
-    private ViewPager mViewPager;
     protected ArrayList<FragItem> fragments;
-    private SlidingTabLayout mSlidingTabLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +39,9 @@ public class FragmentSlidingTabsManageRes extends Fragment{
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
+        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
         mViewPager.setAdapter(new PageAdapter(getChildFragmentManager()));
-        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
         mSlidingTabLayout.setViewPager(mViewPager);
 
         // BEGIN_INCLUDE (tab_colorizer)

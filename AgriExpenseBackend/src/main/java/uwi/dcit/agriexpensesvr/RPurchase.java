@@ -122,10 +122,9 @@ public class RPurchase {
 
     @Override
     public String toString() {
-        String n = "purchaseId:" + pId + " resourceId:" + resourceId
+        return "purchaseId:" + pId + " resourceId:" + resourceId
                 + " quantifier:" + quantifier + " qty:" + qty + " cost:" + cost
                 + " remaining:" + qtyRemaining;
-        return n;
     }
 
     public String getElementName() {

@@ -56,8 +56,8 @@ public class FragmentCycleUseCategory extends Fragment {
 	private void initialSetup() {
 		//getting views
 		catMain=(TextView)view.findViewById(R.id.tv_cycle_catMain);
-		catDet1=(TextView)view.findViewById(R.id.tv_cycle_catDet1);;
-		catDet2=(TextView)view.findViewById(R.id.tv_cycle_catDet2);;
+		catDet1=(TextView)view.findViewById(R.id.tv_cycle_catDet1);
+		catDet2=(TextView)view.findViewById(R.id.tv_cycle_catDet2);
 		btn_useage=(Button)view.findViewById(R.id.btn_Cycle_useage);
 		btn_useMore=(Button)view.findViewById(R.id.btn_Cycle_useMore);
 		View line=view.findViewById(R.id.line);
@@ -131,7 +131,7 @@ public class FragmentCycleUseCategory extends Fragment {
 						pos++;
 					}
 				}
-				if(found==false){//if we didnt find the name in the list
+				if(!found){//if we didnt find the name in the list
 					Names.add(name);//add the name to the list
 					Totals[pos]=lcu.getUseCost();//set the corresponding cost
 				}

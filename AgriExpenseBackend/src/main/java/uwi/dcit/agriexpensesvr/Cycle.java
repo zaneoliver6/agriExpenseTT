@@ -127,8 +127,7 @@ private Key key;
 
     @Override
     public String toString() {
-        String n = "cycleId:" + id + " cropId:" + cropId + " landType:" + landType + " landQty" + landQty + " cropName" + cropName + "";
-        return n;
+        return "cycleId:" + id + " cropId:" + cropId + " landType:" + landType + " landQty" + landQty + " cropName" + cropName + "";
     }
 
 }
