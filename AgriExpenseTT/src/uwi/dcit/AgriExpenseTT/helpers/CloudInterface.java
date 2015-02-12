@@ -438,7 +438,7 @@ public class CloudInterface {
 						System.out.println("could not delete cycle");
 					}
 				}
-				if(!c.equals(null)){
+				if(c != null){
 					int id=DbQuery.getCloudKeyId(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
@@ -573,17 +573,10 @@ public class CloudInterface {
 					System.out.println("could not insert Log");
 					return null;
 				}
-				if(t!=null){
-					//WE DO NOT NEED TO STORE THE KEY
-					//DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
-					
-					//remove insert from redo log
-                    try {
-                        DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
-                    }catch (Exception e){e.printStackTrace();}
 
-				}
-			
+                try {
+                    DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
+                }catch (Exception e){e.printStackTrace();}
 			}
 			return null;
 		}

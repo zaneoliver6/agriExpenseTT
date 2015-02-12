@@ -72,7 +72,7 @@ public class CycleUseEndpoint {
             for (CycleUse obj : execute)
                 ;
         } finally {
-            mgr.close();
+            if (mgr != null)mgr.close();
         }
 
         return CollectionResponse.<CycleUse> builder().setItems(execute)

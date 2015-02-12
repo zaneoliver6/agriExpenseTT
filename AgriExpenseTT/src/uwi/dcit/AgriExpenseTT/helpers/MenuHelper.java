@@ -36,7 +36,7 @@ public class MenuHelper {
             FragmentCreateDialogue p = new FragmentCreateDialogue();
             p.show(activity.getFragmentManager(),"fm");
         }else{
-            if (item != null)Toast.makeText(activity.getApplicationContext(), "Unable to find " + item, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity.getApplicationContext(), "Unable to find " + item, Toast.LENGTH_SHORT).show();
             activity.startActivity(new Intent(activity.getApplicationContext(), Main.class));
         }
     }

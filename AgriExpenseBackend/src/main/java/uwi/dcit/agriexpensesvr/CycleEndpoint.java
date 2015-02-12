@@ -80,7 +80,7 @@ public class CycleEndpoint {
             for (Cycle obj : execute)
                 ;
         } finally {
-            mgr.close();
+            if (mgr != null)mgr.close();
         }
 
         return CollectionResponse.<Cycle> builder().setItems(execute)

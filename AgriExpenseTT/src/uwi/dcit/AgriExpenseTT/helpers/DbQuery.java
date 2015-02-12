@@ -197,7 +197,7 @@ public class DbQuery {
 			//else
 				code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE+"='"+type+"';";
 		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1 || cursor==null)
+		if(cursor==null || cursor.getCount()<1 )
 			return;
 		while(cursor.moveToNext()){
 			LocalResourcePurchase m=new LocalResourcePurchase();

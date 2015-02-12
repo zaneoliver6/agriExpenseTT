@@ -341,19 +341,21 @@ public class TransactionLog {
 			try {
 				tlist=endpoint.logs(lastLocalUpdate, namespace).execute();
 			} catch (IOException e) {e.printStackTrace();}
-			List<TransLog> transList=tlist.getItems();
-			Iterator<TransLog> i=transList.iterator();
-			while(i.hasNext()){
-				TransLog tLog=i.next();
-				if(tLog.getOperation().equals(TransactionLog.TL_INS))
-					logInsertLocal(tLog,namespace);
-				else if(tLog.getOperation().equals(TransactionLog.TL_UPDATE))
-					logUpdateLocal(tLog,namespace);
-				else if(tLog.getOperation().equals(TransactionLog.TL_DEL)){
-					logDeleteLocal(tLog,namespace);
-				}
-					
-			}
+			if (tlist != null) {
+                List<TransLog> transList = tlist.getItems();
+                Iterator<TransLog> i = transList.iterator();
+                while (i.hasNext()) {
+                    TransLog tLog = i.next();
+                    if (tLog.getOperation().equals(TransactionLog.TL_INS))
+                        logInsertLocal(tLog, namespace);
+                    else if (tLog.getOperation().equals(TransactionLog.TL_UPDATE))
+                        logUpdateLocal(tLog, namespace);
+                    else if (tLog.getOperation().equals(TransactionLog.TL_DEL)) {
+                        logDeleteLocal(tLog, namespace);
+                    }
+
+                }
+            }
 			return null;
 		}
 	}

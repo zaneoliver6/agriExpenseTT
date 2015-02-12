@@ -192,25 +192,11 @@ public class FragmentCycleUseCategory extends Fragment {
             }
             if(getActivity() instanceof NavigationControl) {
                 if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
-                        ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
+                        || (newFrag != null &&  (((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass())))
                     ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
                 else
                     ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
             }
 		}
 	}
-	/*private class IntentLauncher extends Thread{
-		@Override
-		public void run(){
-			Bundle b=new Bundle();
-			b.putParcelable("cyc",currCycle);
-			Intent n=new Intent(getActivity(),UseResource.class);
-			n.putExtra("cyc",b);
-			n.putExtra("type",category);
-			n.putExtra("total",""+catTotal);
-			getActivity().startActivity(n);
-			getActivity().finish();
-		}
-	}
-*/
 }

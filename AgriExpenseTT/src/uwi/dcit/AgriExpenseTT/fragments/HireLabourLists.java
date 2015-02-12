@@ -98,7 +98,7 @@ public class HireLabourLists extends ListFragment {
 						+", "+list.get(position));
 				newFragment=new FragmentNewPurchaseLast();
 			}
-			newFragment.setArguments(b);
+			if (newFragment != null) newFragment.setArguments(b);
 			// Replace whatever is in the fragment_container view with this fragment,
 			// and add the transaction to the back stack
 			transaction.replace(R.id.NewCycleListContainer, newFragment);
