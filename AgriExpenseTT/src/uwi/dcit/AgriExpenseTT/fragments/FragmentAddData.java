@@ -1,10 +1,9 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.app.ListFragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,7 +27,6 @@ public class FragmentAddData extends ListFragment {
 	 ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	int cycleId;
 	TextView tv_main;
 	TextView et_search;
 	View view;
@@ -73,18 +71,18 @@ public class FragmentAddData extends ListFragment {
 	
 	 @Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Fragment newFragment=new FragmentAddDataLast();
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			Fragment newFragment = new FragmentAddDataLast();
 			Bundle b=new Bundle();
 			
 			//pass the category to the resource
 			b.putString("type", list.get(position));
 			newFragment.setArguments(b);
 			((AddData)getActivity()).appendSub(" "+list.get(position));
-			transaction.replace(R.id.NewCycleListContainer, newFragment);
-			transaction.commit();
-			// Replace whatever is in the fragment_container view with this fragment,
-			
+
+         getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.NewCycleListContainer, newFragment)
+			.commit();
 		}
 	 
 	 public class TWatch implements TextWatcher{

@@ -19,7 +19,6 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentViewResources extends ListFragment{

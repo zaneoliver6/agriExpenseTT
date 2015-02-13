@@ -1,7 +1,7 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.AboutScreen;
@@ -15,7 +15,8 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue;
 
 public class MenuHelper {
-    public static void handleClick(String item,Activity activity){
+
+    public static void handleClick(String item,FragmentActivity activity){
         if (item.equals(activity.getString(R.string.menu_item_home))){
             activity.startActivity(new Intent(activity.getApplicationContext(), Main.class));
         }else if(item.equals(activity.getString(R.string.menu_item_newCycle))){
@@ -34,7 +35,7 @@ public class MenuHelper {
             activity.startActivity(new Intent(activity.getApplicationContext(), ManageData.class));
         }else if(item.equals(activity.getString(R.string.menu_item_createNew))){
             FragmentCreateDialogue p = new FragmentCreateDialogue();
-            p.show(activity.getFragmentManager(),"fm");
+            p.show(activity.getSupportFragmentManager(), "fm");
         }else{
             Toast.makeText(activity.getApplicationContext(), "Unable to find " + item, Toast.LENGTH_SHORT).show();
             activity.startActivity(new Intent(activity.getApplicationContext(), Main.class));

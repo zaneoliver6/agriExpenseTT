@@ -1,7 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.database.sqlite.SQLiteDatabase;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +26,6 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentOtherResourceList  extends ListFragment{

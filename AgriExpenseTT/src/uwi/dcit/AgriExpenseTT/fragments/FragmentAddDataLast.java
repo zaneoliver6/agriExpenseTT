@@ -1,7 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +15,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class FragmentAddDataLast extends Fragment{
+public class FragmentAddDataLast extends Fragment {
 	DataManager dm;
 	View view;
 	EditText et_name;

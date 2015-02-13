@@ -1,9 +1,10 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.app.Fragment;
-import android.app.ListFragment;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -105,7 +106,7 @@ public class NewCycleLists extends ListFragment {
 	
 	 @Override
 		public void onListItemClick(ListView l, View v, int position, long id) {
-			Fragment nextFragment = null;			
+			Fragment nextFragment = null;
 			Bundle arguments = new Bundle();
 		
 			if(type.equals(DHelper.cat_plantingMaterial)){

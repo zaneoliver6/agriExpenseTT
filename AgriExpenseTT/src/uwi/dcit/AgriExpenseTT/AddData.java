@@ -17,7 +17,7 @@ public class AddData extends ActionBarActivity {
 
 		setContentView(R.layout.activity_new_cycle_redesigned);
 
-        getFragmentManager()
+        getSupportFragmentManager()
             .beginTransaction()
             .add(R.id.NewCycleListContainer, new FragmentAddData())
             .commit();

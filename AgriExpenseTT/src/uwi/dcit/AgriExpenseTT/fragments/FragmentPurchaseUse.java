@@ -153,11 +153,13 @@ public class FragmentPurchaseUse extends Fragment {
 					
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
 					Toast.makeText(getActivity(), rem+" Remaining", Toast.LENGTH_SHORT).show();
+
 					//updating purchase
 					p.setQtyRemaining(rem);
 					ContentValues cv=new ContentValues();
 					cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
 					dm.updatePurchase(p,cv);
+
 					//updating cycle
 					c.setTotalSpent(c.getTotalSpent()+calcost);
 					cv=new ContentValues();
@@ -166,7 +168,12 @@ public class FragmentPurchaseUse extends Fragment {
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
 					/*IntentLauncher i=new IntentLauncher();
 					i.start();*/
-                    getActivity().recreate();
+
+                    //getActivity().recreate(); //TODO Find a way to implement this compatible with API9
+
+                    Intent intent = getActivity().getIntent();
+                    getActivity().finish();
+                    getActivity().startActivity(intent);
 				}
 			}
 		}

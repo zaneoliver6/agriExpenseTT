@@ -1,7 +1,6 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,6 +8,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
@@ -228,15 +228,16 @@ public class ReportHelper {
 		PendingIntent pIntent = PendingIntent.getActivity(activity.getBaseContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		//notification details
-		Notification.Builder noti = new Notification.Builder(activity);
-		noti.setContentTitle("Excel generated");
-		noti.setContentText("Your Report "+ name +" has been generated"); //TODO Create Notification String Value
-		noti.setSmallIcon(R.drawable.money_bag_down);
-		noti.setAutoCancel(true);
-		noti.setOnlyAlertOnce(true);
-		noti.setTicker("AgriExpense excel file");//TODO Create Notification String Value
-		noti.setContentIntent(pIntent);
-		NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder noti = new NotificationCompat.Builder(activity);
+		noti.setContentTitle("Excel generated")
+		    .setContentText("Your Report "+ name +" has been generated") //TODO Create Notification String Value
+		    .setSmallIcon(R.drawable.money_bag_down)
+		    .setAutoCancel(true)
+		    .setOnlyAlertOnce(true)
+		    .setTicker("AgriExpense excel file")//TODO Create Notification String Value
+		    .setContentIntent(pIntent);
+
+        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(0, noti.build()); 
 		//activity.finish();
 	}

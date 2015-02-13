@@ -1,8 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
-import android.app.FragmentManager;
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +35,7 @@ public class NewCycle extends ActionBarActivity {
 		ListFragment listfrag = new NewCycleLists();
 		listfrag.setArguments(arguments);
 		
-		getFragmentManager()
+		this.getSupportFragmentManager()
 			.beginTransaction()
 			.add(R.id.NewCycleListContainer,listfrag)
 			.commit();
@@ -62,7 +62,7 @@ public class NewCycle extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getFragmentManager();
+	    FragmentManager fm = this.getSupportFragmentManager();
 	    if (fm.getBackStackEntryCount() > 0) {
 	        Log.i("MainActivity", "popping backstack");
 	        fm.popBackStack();

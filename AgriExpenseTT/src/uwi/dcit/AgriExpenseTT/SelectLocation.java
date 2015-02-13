@@ -1,14 +1,14 @@
 package uwi.dcit.AgriExpenseTT;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 
 public class SelectLocation extends ActionBarActivity {
 

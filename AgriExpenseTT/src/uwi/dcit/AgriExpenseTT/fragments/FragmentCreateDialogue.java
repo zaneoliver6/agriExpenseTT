@@ -2,21 +2,17 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
-import android.view.View;
 
-import uwi.dcit.AgriExpenseTT.NewCycle;
-import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 
 /**
  * Created by Steffan on 23/01/2015.
  */
-public class FragmentCreateDialogue extends DialogFragment{
+public class FragmentCreateDialogue extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

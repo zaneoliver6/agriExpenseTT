@@ -1,13 +1,12 @@
 package uwi.dcit.AgriExpenseTT;
 
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,7 +59,8 @@ public class Main extends BaseActivity {
         arguments.putString("type","select");
         rightFrag.setArguments(arguments);
 
-        getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager()
+            .beginTransaction()
             .replace(R.id.navContentLeft, leftFrag)
             .replace(R.id.navContentRight, rightFrag)
             .commit();
@@ -103,7 +103,8 @@ public class Main extends BaseActivity {
 
     @Override
     public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
+
+        FragmentManager fm = getSupportFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             Log.i("MainActivity", "popping backstack");
             fm.popBackStack();

@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.util.Log;
 
@@ -10,6 +8,8 @@ import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.services.AbstractGoogleClient;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import java.io.IOException;
 
 import uwi.dcit.AgriExpenseTT.Main;
 
