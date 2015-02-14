@@ -77,7 +77,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.options= new ArrayList<String>(Arrays.asList(((NavigationControl)getActivity()).getMenuOptions()));
+        this.options= new ArrayList<>(Arrays.asList(((NavigationControl)getActivity()).getMenuOptions()));
         this.imgs=((NavigationControl)getActivity()).getMenuImages();
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
