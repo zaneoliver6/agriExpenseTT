@@ -45,9 +45,14 @@ android {
         preDexLibraries = false
         incremental true
         javaMaxHeapSize "4g"
-
     }
 
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android.txt')
+        }
+    }
 }
 afterEvaluate {
     tasks.matching {
