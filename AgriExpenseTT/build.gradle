@@ -63,3 +63,11 @@ afterEvaluate {
         //dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()
     }
 }
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
