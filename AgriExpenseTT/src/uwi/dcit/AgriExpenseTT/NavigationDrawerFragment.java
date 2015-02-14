@@ -123,10 +123,9 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerListView;
     }
 
-    class MenuArrayAdapter extends ArrayAdapter{
+    class MenuArrayAdapter extends ArrayAdapter <String>{
 
-        public MenuArrayAdapter(Context context, int textViewResourceId,
-                             ArrayList<String> objects) {
+        public MenuArrayAdapter(Context context, int textViewResourceId,ArrayList<String> objects) {
             super(context, textViewResourceId, objects);
         }
 
@@ -304,7 +303,7 @@ public class NavigationDrawerFragment extends Fragment {
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.app_name);
     }
 
