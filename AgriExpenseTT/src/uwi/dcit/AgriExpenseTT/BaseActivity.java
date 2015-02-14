@@ -16,12 +16,14 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
     protected SignInManager signInManager;
     protected Fragment leftFrag,rightFrag;
     protected NavigationDrawerFragment mNavigationDrawerFragment;
+    protected boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
         super.onCreate(savedInstanceState);
         signInManager = new SignInManager(BaseActivity.this,BaseActivity.this);
+        isTablet = this.getResources().getBoolean(R.bool.isTablet);
     }
 
     public void setupNavDrawer(){

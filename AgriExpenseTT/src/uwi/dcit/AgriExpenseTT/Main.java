@@ -33,9 +33,10 @@ public class Main extends BaseActivity {
         setupNavDrawer();
 
         mTitle = getTitle();
+        Log.d(APP_NAME, "Is this a tablet: " + this.isTablet);
 
         // Check for orientation to determine which interface to load => if portrait will use leftfrag
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
             setupPort();
@@ -117,7 +118,8 @@ public class Main extends BaseActivity {
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        if(this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+        if(this.isTablet && this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
+
             Class reflectClass = oldFrag.getClass();
             Bundle arguments=oldFrag.getArguments();
             try {
