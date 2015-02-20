@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -93,11 +92,11 @@ public class Sync {
 			this.cloudUpdate=cloudUpdate;
 			this.localUpdate=localUpdate;
 		}
-		@SuppressLint("UseValueOf") @Override
+		@Override
 		protected Boolean doInBackground(Option... params) {
 			Option option=params[0];
 			ContentValues cv=new ContentValues();
-			Boolean success = Boolean.valueOf(true);
+			Boolean success = Boolean.valueOf("true");
 			switch(option){
 				case updateCloudOpt:
 					tL.updateCloud(cloudUpdate);
