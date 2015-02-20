@@ -50,7 +50,6 @@ public class DataManager {
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
 			//try insert into cloud
 			if(acc.getSignedIn()==1){
-				System.out.println("trying to insert into cloud");
 				CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 				c.insertCycleC();
 			}
@@ -63,10 +62,8 @@ public class DataManager {
 		if(acc!=null){
 			//insert into redo log table
 			int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
-			System.out.println("transLog:"+i);
 			//try to insert into cloud
 			if(acc.getSignedIn()==1){
-				System.out.println("trying to insert into cloud");
 				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 				c.insertPurchase();
 			}

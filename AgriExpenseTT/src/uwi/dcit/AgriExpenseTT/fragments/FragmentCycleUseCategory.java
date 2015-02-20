@@ -148,7 +148,6 @@ public class FragmentCycleUseCategory extends Fragment {
 				if(Totals[x]>Totals[maxPos]){
 					maxPos=x;
 				}
-				System.out.println(category+" "+namesItr.next());
 				x++;
 			}
 			catDet2.setText("The most amount of money was spent on "

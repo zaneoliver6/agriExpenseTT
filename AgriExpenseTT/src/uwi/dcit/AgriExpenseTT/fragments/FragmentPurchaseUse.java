@@ -93,7 +93,6 @@ public class FragmentPurchaseUse extends Fragment {
 		et_amt=(EditText)view.findViewById(R.id.et_useAmt);
 		
 		//Setting Labels
-		System.out.println("resId"+p.getResourceId());
 		h_main.setText("Currently");
 		h_sub.setText("Use");
 		
@@ -183,7 +182,6 @@ public class FragmentPurchaseUse extends Fragment {
 		public void run(){
 			//Bundle b=new Bundle();
 			//b.putParcelable("cycleMain",c);
-			System.out.println("i am here !!!");
 			Intent n=new Intent(getActivity(),CycleUseage.class);
 			n.putExtra("cycleMain", c);
 			//n.putExtra("cycleMain",b);

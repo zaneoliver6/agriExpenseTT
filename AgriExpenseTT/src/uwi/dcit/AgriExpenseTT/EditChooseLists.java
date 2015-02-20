@@ -114,7 +114,6 @@ public class EditChooseLists extends ActionBarActivity {
 		lv=(ListView)findViewById(android.R.id.list);
 		Bundle data=getIntent().getExtras();
 		content=data.getString("desc");
-		System.out.println(content);
 	}
 
 

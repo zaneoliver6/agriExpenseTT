@@ -369,7 +369,6 @@ public class DbQuery {
 			+CloudKeyEntry.CLOUD_KEY_ROWID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1){
-//			System.out.println("no key found");
 			return null;
 		}
 		cursor.moveToFirst();
@@ -411,14 +410,12 @@ public class DbQuery {
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return;
-//		System.out.println("length:"+cursor.getCount());
 		while(cursor.moveToNext()){
 			int n=cursor.getInt(cursor.getColumnIndex(RedoLogEntry.REDO_LOG_ROW_ID));
 			rowIds.add(Integer.valueOf(n));
 			n=cursor.getInt(cursor.getColumnIndex(RedoLogEntry._ID));
 			logIds.add(Integer.valueOf(n));
 		}
-//		System.out.println("array length:"+logIds.size());
 	}
 	public static TransLog getLog(SQLiteDatabase db, DbHelper dbh, int rowId) {
 		TransLog t=new TransLog();
@@ -473,7 +470,6 @@ public class DbQuery {
         String code="select COUNT(*) FROM "+CycleEntry.TABLE_NAME;
         Cursor c=db.rawQuery(code,null);
        if(c.moveToFirst()) {
-           System.out.println(c.getInt(0));
            return c.getInt(0) > 0;
        }
        return false;
@@ -482,7 +478,6 @@ public class DbQuery {
         String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
         Cursor c=db.rawQuery(code,null);
         if(c.moveToFirst()) {
-            System.out.println(c.getInt(0));
             return c.getInt(0) > 0;
         }
         return false;

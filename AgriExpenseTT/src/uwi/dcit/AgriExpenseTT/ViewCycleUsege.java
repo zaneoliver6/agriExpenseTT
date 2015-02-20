@@ -28,6 +28,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 	ArrayList<LocalCycleUse> list;
 	ArrayList<LocalResourcePurchase> pList;
 	String type;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,7 +47,6 @@ public class ViewCycleUsege extends ActionBarActivity {
 		DbQuery.getCycleUse(db, dbh, cycleId, list, type);
 		CycUseAdpt c=new CycUseAdpt(this,R.layout.cycleuse_item,list);
 		listview.setAdapter(c);
-		
 	}
 
 	@Override
@@ -95,6 +95,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 			 return row;
 		 }
 	}
+
 	public int pPos(int pId){
 		int i=0;
 		Iterator<LocalResourcePurchase> itr=pList.iterator();

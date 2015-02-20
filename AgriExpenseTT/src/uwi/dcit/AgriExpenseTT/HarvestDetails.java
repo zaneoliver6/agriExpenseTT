@@ -46,11 +46,9 @@ public class HarvestDetails extends ActionBarActivity {
 		et_amt=(EditText)findViewById(R.id.et_harvestDet_qty);
 		Bundle b=getIntent().getExtras().getBundle("cyc");
 		currCycle=b.getParcelable("cycle");
-		System.out.println("id : "+currCycle.getCropId());
 		qtfr=currCycle.getHarvestType();
 		qty=currCycle.getHarvestAmt();
 		et_amt.setText(""+qty);
-        Log.i("Harvesting","setting up");
 
         View v=findViewById(R.id.cont_harvestDet_main);
         v.setOnTouchListener(new View.OnTouchListener() {
@@ -90,7 +88,6 @@ public class HarvestDetails extends ActionBarActivity {
 			DbHelper dbh=new DbHelper(HarvestDetails.this);
 			SQLiteDatabase db=dbh.getReadableDatabase();
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
-			System.out.println("changes saved");
 		}
 		
 	}

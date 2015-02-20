@@ -58,7 +58,6 @@ public class FragmentViewResources extends ListFragment{
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
             builder1.setMessage("Are you sure you want to delete");
             builder1.setCancelable(true);
-            System.out.println(position);
             @SuppressWarnings("unchecked")
 			Confirm c=new Confirm(position,(ArrayAdapter<String>) l.getAdapter());
             builder1.setPositiveButton("Yes",c);
@@ -82,8 +81,7 @@ public class FragmentViewResources extends ListFragment{
 				dm.deleteResource(id);
 				rList.remove(position);
 				adpt.notifyDataSetChanged();
-				 System.out.println(position);
-				Toast.makeText(getActivity(),"Resource deleted", Toast.LENGTH_SHORT).show();			
+				Toast.makeText(getActivity(),"Resource deleted", Toast.LENGTH_SHORT).show();
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){

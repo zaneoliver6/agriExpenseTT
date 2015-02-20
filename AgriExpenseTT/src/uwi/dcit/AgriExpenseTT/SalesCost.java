@@ -95,7 +95,6 @@ public class SalesCost extends ActionBarActivity {
 				Intent i=new Intent(SalesCost.this,HarvestDetails.class);
 				Bundle b=new Bundle();
 				b.putParcelable("cycle", currCycle);
-				System.out.println("dfds"+currCycle.getCropId());
 				i.putExtra("cyc",b);
 				startActivityForResult(i,REQ_HARVEST);
 			}else if(v.getId()==R.id.btn_salesCost_dne){
@@ -124,7 +123,6 @@ public class SalesCost extends ActionBarActivity {
 			currCycle.setCostPer(sellp);
 			currCycle.setHarvestAmt(amtHarvest);
 			currCycle.setHarvestType(qtfr);
-			System.out.println("changes saved");
 		}
 		
 	}

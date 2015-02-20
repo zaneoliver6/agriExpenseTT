@@ -29,16 +29,15 @@ public class Sync {
 		tL=new TransactionLog(dbh, db,context);
 	}
 	public void start(String namespace,UpAcc cloudAcc){
-		System.out.println("gonna sync now");
         UpAcc localAcc = DbQuery.getUpAcc(db);
 		this.cloudAcc=cloudAcc;
 		//both exist
-		if(cloudAcc!=null){System.out.println("Both exist");
+		if(cloudAcc!=null){
 			long localUpdate= localAcc.getLastUpdated();
 			long cloudUpdate=cloudAcc.getLastUpdated();
 			if(localUpdate>=cloudUpdate){//local more recent than cloud
 				//the local does not have an account which means it has never been synced 
-				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){System.out.println("confirm sync");
+				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){
 					/*there is no local account, the user must decide 
 					 * if he's gonna use the datastore or if he's going to overwrite it*/
 					confirmSync(localUpdate,cloudUpdate,namespace);
@@ -56,7 +55,7 @@ public class Sync {
 				
 			}else if(cloudUpdate>localUpdate){//Cloud is more updated
 				//the local does not have an account which means it has never been synced 
-				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){System.out.println("confirm sync");
+				if(localAcc.getAcc()==null || localAcc.getAcc().equals("")){
 					/*there is no local account, the user must decide 
 					 * if he's gonna use the datastore or if he's going to overwrite it*/
 					confirmSync(localUpdate,cloudUpdate,namespace);
@@ -75,8 +74,7 @@ public class Sync {
 			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
 		//only local exist
 		}else{ 
-			System.out.println("cloud doesnt exist so pushing all to cloud");
-			
+
 			new SyncExec(tL, namespace, 0, 0).execute(Option.createCloudNewOpt);
 		//only cloud exist
 		}
@@ -162,7 +160,6 @@ public class Sync {
 				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){//overwrite cloud
-				System.out.println("updating cloud");
 				new SyncExec(tL, namespace, lastCloudUpdated, lastLocalUpdated).execute(Option.overwriteCloudOpt);
 				
 				dialog.cancel();

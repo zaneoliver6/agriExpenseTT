@@ -135,7 +135,6 @@ public class EditPurchase extends ActionBarActivity {
 			}else if(v.getId()==R.id.btn_editPurchase_done){
 				updatePurchase();
 			}
-			System.out.println("request");
 		}
 	}
 	

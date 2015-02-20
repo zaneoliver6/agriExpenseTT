@@ -92,7 +92,6 @@ public class HireLabourLists extends ListFragment {
 				}
 				b.putString("category", DHelper.cat_labour);
 				b.putString("quantifier",list.get(position));
-				System.out.println("res "+getArguments().getString("name"));
 				b.putString("resource",getArguments().getString("name"));
 				((HireLabour)getActivity()).replaceSub("Details:"+getArguments().getString("name")
 						+", "+list.get(position));

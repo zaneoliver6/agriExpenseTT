@@ -110,12 +110,10 @@ public class EditCycle extends ActionBarActivity {
 		}
 		if(requestCode==REQ_CROP){
 			crop=data.getExtras().getString("content");
-			System.out.println("result String"+crop);
 			TextView t=(TextView)findViewById(R.id.tv_editcycle_cropVal);
 			t.setText(crop);
 		}else if(requestCode==REQ_LANDTYPE){
 			land=data.getExtras().getString("content");
-			System.out.println("result String"+land);
 			TextView t=(TextView)findViewById(R.id.tv_editcycle_landVal);
 			t.setText(land);
 		}

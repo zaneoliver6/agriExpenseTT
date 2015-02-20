@@ -128,12 +128,10 @@ public class CloudInterface {
 				RPurchase p=DbQuery.getARPurchase(db, dbh, rowId);
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
 				try{
-					System.out.println("purchase key rep"+keyrep);
 					p.setKeyrep(keyrep);
 					p=endpoint.updateRPurchase(p).execute();
 				}catch(Exception e){
 					
-					System.out.println("could not update Purchase");
 					return null;
 				}
 				if(p!=null){
@@ -186,7 +184,6 @@ public class CloudInterface {
 					c=endpoint.insertCycle(c).execute();
 				}catch(Exception e){
 					
-					System.out.println("could not insert cycle");
 					return null;
 				}
 				if(c!=null){
@@ -242,7 +239,6 @@ public class CloudInterface {
 				try{
 					c=endpoint.insertCycleUse(c).execute();
 				}catch(Exception e){
-					System.out.println("could not insert cycleUse");
 					return null;
 				}
 				if(c!=null){
@@ -294,7 +290,6 @@ public class CloudInterface {
 				try{
 					purchase=endpoint.insertRPurchase(purchase).execute();
 				}catch(Exception e){
-					System.out.println("could not insert purchase");
 					return null;
 				}
 				if(purchase!=null){
@@ -344,7 +339,6 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				System.out.println("row to delete from "+CycleEntry.TABLE_NAME+": "+rowId);
 				Cycle c=new Cycle();
 				c.setId(rowId);
 				c.setAccount(DbQuery.getAccount(db));
@@ -354,8 +348,6 @@ public class CloudInterface {
 						endpoint.removeCycle(c.getKeyrep(),c.getAccount()).execute();
 					}catch(Exception e){
 						c=null;
-						System.out.println("could not delete cycle");
-						//return null;
 					}
 				}
 				
@@ -423,7 +415,6 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				System.out.println("row to delete from "+CycleResourceEntry.TABLE_NAME+": "+rowId);
 				CycleUse c=new CycleUse();
 				c.setId(rowId);
 				c.setAccount(DbQuery.getAccount(db));
@@ -431,11 +422,9 @@ public class CloudInterface {
 				c.setKeyrep(keyrep);
 				if(keyrep == null){
 					try{
-						System.out.println("Key:"+c);
 						endpoint.removeCycleUse(c.getKeyrep(),c.getAccount()).execute();
 					}catch(Exception e){
 						c=null;
-						System.out.println("could not delete cycle");
 					}
 				}
 				if(c != null){
@@ -490,7 +479,6 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				System.out.println("row to delete from "+ResourcePurchaseEntry.TABLE_NAME+": "+rowId);
 				RPurchase p=new RPurchase();
 				p.setPId(rowId);
 				p.setAccount(DbQuery.getAccount(db));
@@ -502,7 +490,6 @@ public class CloudInterface {
 					}catch(Exception e){
 						e.printStackTrace();
 						p=null;
-						System.out.println("could not delete Purchase");
 					}
 				}
 				if(p!=null){//the removal was successful OR there was not ever inserted into the cloud
@@ -563,13 +550,11 @@ public class CloudInterface {
 				t.setKeyrep(k);//stores the keyrep for its relating object
 				
 				t.setAccount(DbQuery.getAccount(db));
-				System.out.println(t.toString());
 				try{
-					System.out.println(t.getId());
 					t=endpoint.insertTransLog(t).execute();
 					updateUpAccC(t.getTransTime());
 				}catch(Exception e){
-					System.out.println("could not insert Log");
+                    e.printStackTrace();
 					return null;
 				}
 
