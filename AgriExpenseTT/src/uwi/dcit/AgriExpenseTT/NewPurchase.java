@@ -59,8 +59,8 @@ public class NewPurchase extends ActionBarActivity {
 	public class TouchL implements OnTouchListener{
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			if(v.getId()!=R.id.et_listReuse_search)
-				hideSoftKeyboard();
+//			if(v.getId()!=R.id.et_listReuse_search)
+//				hideSoftKeyboard();
 			return false;
 		}
 	   

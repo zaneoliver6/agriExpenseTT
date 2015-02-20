@@ -28,7 +28,7 @@ public class FragmentAddData extends ListFragment {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	TextView tv_main;
-	TextView et_search;
+//	TextView et_search;
 	View view;
 	ArrayAdapter<String> listAdapt;
 	@Override
@@ -61,7 +61,7 @@ public class FragmentAddData extends ListFragment {
 		//returns the inflated layout which contains the listview
 		view= inflater.inflate(R.layout.list_reuse, container, false);
 		tv_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 		tv_main.setText("Choose category of resource");
 		return view;
 	}

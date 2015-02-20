@@ -33,7 +33,7 @@ public class FragmentSelectLocation extends ListFragment {
 	protected SQLiteDatabase db;
 	protected DbHelper dbh;
 	protected TextView tv_main;
-	protected TextView et_search;
+//	protected TextView et_search;
 	protected ArrayAdapter<String> listAdapt;
 	protected View view;
 	
@@ -94,7 +94,7 @@ public class FragmentSelectLocation extends ListFragment {
 		view= inflater.inflate(R.layout.list_reuse, container, false);
 
 		tv_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 
         if (type.equals(DHelper.location_county)) {
 

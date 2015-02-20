@@ -42,8 +42,8 @@ public class EditChooseLists extends ActionBarActivity {
 		ItemClick c=new ItemClick();
 		lv.setOnItemClickListener(c);
 		TWatch tw=new TWatch(listAdapt);
-		EditText et_search=(EditText)findViewById(R.id.et_listReuse_search);
-		et_search.addTextChangedListener(tw);
+//		EditText et_search=(EditText)findViewById(R.id.et_listReuse_search);
+//		et_search.addTextChangedListener(tw);
 		//on click events
 
         // Google Analytics

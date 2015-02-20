@@ -13,13 +13,13 @@
 
             <TextView
                 android:id="@+id/tv_frag_mainHead_new"
-                 android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:text="Creating new crop cycle"
                     android:textColor="@color/secondary_text"
-                    android:textSize="15sp" />
+                    android:textSize="21sp" />
 
             <!--<EditText-->
                 <!--android:id="@+id/et_listReuse_search"-->

@@ -33,7 +33,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentNewCycleLast extends Fragment {
 	String plantMaterial;
@@ -46,6 +45,7 @@ public class FragmentNewCycleLast extends Fragment {
 	EditText et_landQty;
 	TextView tv_dte;
 	TextView error;
+    private Button btnDate;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,12 +82,13 @@ public class FragmentNewCycleLast extends Fragment {
 		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
 		
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
-		Button btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
+		btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
+
 		landLbl.setText("Enter number of " + land + "s");//TODO revise wording and use string xml
 		
 		plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
 		
-		MyClickListener c = new MyClickListener(getActivity());
+		NewCycleClickListener c = new NewCycleClickListener(getActivity());
 		btnDate.setOnClickListener(c);
 		btnDone.setOnClickListener(c);
 		
@@ -108,6 +109,8 @@ public class FragmentNewCycleLast extends Fragment {
 		Date d = calender.getTime();
 		strDate = DateFormat.getDateInstance().format(d);
 		tv_dte.setText(strDate);
+        btnDate.setText(strDate);
+
 		return strDate;
 	}
 	
@@ -117,8 +120,12 @@ public class FragmentNewCycleLast extends Fragment {
 		
 		@SuppressLint("InflateParams")
 		public void showPopupDate(final Activity c){
+//            http://developer.android.com/guide/topics/ui/controls/pickers.html
+
 				int pWidth=800;
 				int pHeight=750;
+
+
 				LayoutInflater inflater = (LayoutInflater)getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				View datePick = inflater.inflate(R.layout.popup_datepicker, null);
 				
@@ -160,18 +167,18 @@ public class FragmentNewCycleLast extends Fragment {
 		}
 		
 		
-		public class MyClickListener implements OnClickListener{
+		public class NewCycleClickListener implements OnClickListener{
 			Activity activity;
 			
-			MyClickListener(Activity c){
+			NewCycleClickListener(Activity c){
 				this.activity=c;
 			}
 			
 			@Override
 			public void onClick(View v) {
 				if(v.getId()==R.id.btn_newCycleLast_date){
-					System.out.println("11111");
 					showPopupDate(activity);
+
 				}else if(v.getId()==R.id.btn_newCyclelast_dne){
 					Double landQty;
 					if(et_landQty.getText().toString() == null ||et_landQty.getText().toString().equals("")){

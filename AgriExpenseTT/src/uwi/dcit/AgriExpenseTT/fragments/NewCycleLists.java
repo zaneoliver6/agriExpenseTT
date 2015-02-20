@@ -68,13 +68,13 @@ public class NewCycleLists extends ListFragment {
 		view= inflater.inflate(R.layout.list_reuse, container, false);
 
 		et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
-		if(getArguments().getString("type").equals("land")){
-			et_search.setVisibility(View.GONE);
-		}else{
-			TWatch tw=new TWatch(listAdapt);
-			et_search.addTextChangedListener(tw);
-		}
+//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+//		if(getArguments().getString("type").equals("land")){
+//			et_search.setVisibility(View.GONE);
+//		}else{
+//			TWatch tw=new TWatch(listAdapt);
+//			et_search.addTextChangedListener(tw);
+//		}
 		if(type.equals(DHelper.cat_plantingMaterial)){
 			et_main.setText("Select the crop to plant for this cycle");
 		}else if(type.equals("land")){
@@ -111,7 +111,7 @@ public class NewCycleLists extends ListFragment {
 			if(type.equals(DHelper.cat_plantingMaterial)){
 				arguments.putString("type","land");										//passes the type of the data we want in the new list fragment
 				arguments.putString(DHelper.cat_plantingMaterial, list.get(position));	//passes the crop chosen to the land list fragment
-				updateSub("Details: "+list.get(position)+", ");								//Change the details section of the fragment 
+                updateSub("Details: "+list.get(position)+", ");								//Change the details section of the fragment
 				nextFragment = new NewCycleLists();										//Launch a new instance of the class to deal with the land type selection
 			}else if(type.equals("land")){
 																						//Pass the crop specified in previous activity on to the next action
