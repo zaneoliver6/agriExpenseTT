@@ -1,14 +1,15 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +38,7 @@ public class FragmentNewCycleLast extends Fragment {
 	String plantMaterial;
 	String land;
 	int plantMaterialId;
-	long unixdate=0;
-//	View view;
+	long unixDate =0;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	EditText et_landQty;
@@ -61,15 +60,13 @@ public class FragmentNewCycleLast extends Fragment {
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 
         view.setOnTouchListener(
-                new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (!(v instanceof EditText)) {
-                            ((NewCycle) getActivity()).hideSoftKeyboard();
-                        }
-                        return false;
-                    }
+            new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (!(v instanceof EditText)) ((NewCycle) getActivity()).hideSoftKeyboard();
+                    return false;
                 }
+            }
         );
 
 		return view;
@@ -105,7 +102,7 @@ public class FragmentNewCycleLast extends Fragment {
 			calender.set(Calendar.SECOND, 0);
 			calender.set(Calendar.MILLISECOND, 0);
 		}
-		unixdate = calender.getTimeInMillis();
+		unixDate = calender.getTimeInMillis();
 		Date d = calender.getTime();
 		strDate = DateFormat.getDateInstance().format(d);
 		tv_dte.setText(strDate);
@@ -113,105 +110,63 @@ public class FragmentNewCycleLast extends Fragment {
 
 		return strDate;
 	}
-	
 
-	//------------------------------------------------------------------DATE PICKER POPUP
-		PopupWindow curr;
-		
-		@SuppressLint("InflateParams")
-		public void showPopupDate(final Activity c){
-//            http://developer.android.com/guide/topics/ui/controls/pickers.html
+    public class NewCycleClickListener implements OnClickListener{
+        FragmentActivity activity;
 
-				int pWidth=800;
-				int pHeight=750;
+        NewCycleClickListener(FragmentActivity c){
+            this.activity=c;
+        }
 
+        @Override
+        public void onClick(View v) {
+            if(v.getId()==R.id.btn_newCycleLast_date){
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
+            }else if(v.getId()==R.id.btn_newCyclelast_dne){
+                if(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
+                    error.setVisibility(View.VISIBLE);
+                    error.setText("Enter the Land Quantity");
+                    return;
+                }
+                if(unixDate == 0){
+                    Toast.makeText(getActivity().getBaseContext(),"Select a date", Toast.LENGTH_SHORT).show();
+                    error.setVisibility(View.VISIBLE);
+                    error.setText("Select date to start crop cycle");
+                }else{
+                    DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+                    dm.insertCycle(plantMaterialId, land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
-				LayoutInflater inflater = (LayoutInflater)getActivity().getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				View datePick = inflater.inflate(R.layout.popup_datepicker, null);
-				
-				registerDateClick(datePick);
-				// Creating the PopupWindow
-				System.out.println("222222");
-				   final PopupWindow popup = new PopupWindow(c);
-				   curr=popup;
-				   popup.setContentView(datePick);
-				   popup.setWidth(pWidth);
-				   popup.setHeight(pHeight);
-				   popup.setFocusable(true);
-				   // Displaying the popup at the specified location, + offsets.
-				   popup.showAtLocation(datePick, Gravity.CENTER_HORIZONTAL,0, 0);
-			}
-		
-		
-		
-		private void registerDateClick(final View datePick) {
-			Button btn_getDate=(Button)datePick.findViewById(R.id.btn_newCycle_datepick);
-			class popupClick implements OnClickListener{
-//				@SuppressWarnings("deprecation")
-				@Override
-				public void onClick(View v) {
-					if(v.getId()==R.id.btn_newCycle_datepick){
-						DatePicker datepick=(DatePicker) datePick.findViewById(R.id.datePicker1);
-						int day =datepick.getDayOfMonth();
-						int month=datepick.getMonth();
-						int year=datepick.getYear();
-						Calendar calender= Calendar.getInstance();
-						calender.set(year, month, day);
-						formatDisplayDate(calender);						
-					}
-					curr.dismiss();
-				}
-			}
-			popupClick pc=new popupClick();
-			btn_getDate.setOnClickListener(pc);
-		}
-		
-		
-		public class NewCycleClickListener implements OnClickListener{
-			Activity activity;
-			
-			NewCycleClickListener(Activity c){
-				this.activity=c;
-			}
-			
-			@Override
-			public void onClick(View v) {
-				if(v.getId()==R.id.btn_newCycleLast_date){
-					showPopupDate(activity);
+                    new IntentLauncher().run();
+                    Intent i=new Intent(getActivity(),Main.class);
+                    startActivity(i);
+                }
+            }
+        }
+    }
 
-				}else if(v.getId()==R.id.btn_newCyclelast_dne){
-					Double landQty;
-					if(et_landQty.getText().toString() == null ||et_landQty.getText().toString().equals("")){
-						Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
-						error.setVisibility(View.VISIBLE);
-						error.setText("Enter the Land Quantity");
-						return;
-					}
-					if(unixdate==0){
-						Toast.makeText(getActivity().getBaseContext(),"Select a date", Toast.LENGTH_SHORT).show();
-						error.setVisibility(View.VISIBLE);
-						error.setText("Select date to start crop cycle");
-					}else{
-						
-						DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);
-						landQty=Double.parseDouble(et_landQty.getText().toString());
-						dm.insertCycle(plantMaterialId, land,landQty, unixdate);
-						
-//						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
-						Intent i=new Intent(getActivity(),Main.class);
-//						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
-//						c.setId(n);
-//						i.putExtra("cycleMain",c);
-                        new IntentLauncher().run();
-						startActivity(i);
-//						getActivity().finish();
-						
-					}
-				}
-				
-			}
-			
-		}
+    @SuppressLint("ValidFragment")
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+            formatDisplayDate(cal);
+        }
+    }
+
     private class IntentLauncher extends Thread{
         @Override
         public void run(){getActivity().finish();}
