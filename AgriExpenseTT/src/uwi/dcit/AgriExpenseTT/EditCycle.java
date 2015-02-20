@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -67,7 +68,7 @@ public class EditCycle extends ActionBarActivity {
         });
 	}
 
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	private void initialize() {
 		//setup buttons
 		btn_crop=(Button)findViewById(R.id.btn_editCycle_crop);
@@ -100,7 +101,8 @@ public class EditCycle extends ActionBarActivity {
 		tv_landQty.setText(""+landQty);
 		Calendar cal=Calendar.getInstance();
 		cal.setTimeInMillis(date);
-		tv_date.setText(cal.getTime().toLocaleString());
+
+		tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
 	}
 	
 	@Override

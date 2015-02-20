@@ -42,7 +42,6 @@ public class FragmentNewCycleLast extends Fragment {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	EditText et_landQty;
-	TextView tv_dte;
 	TextView error;
     private Button btnDate;
 
@@ -75,11 +74,10 @@ public class FragmentNewCycleLast extends Fragment {
 	private void setDetails(View view) {
         TextView landLbl = (TextView) view.findViewById(R.id.tv_newCyclelast_landQty);
 		et_landQty=(EditText)view.findViewById(R.id.et_newCycleLast_landqty);
-		tv_dte=(TextView)view.findViewById(R.id.tv_newCycle_date);
 		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
 		
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
-		btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);//@+id/btn_newCycleLast_date
+		btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);
 
 		landLbl.setText("Enter number of " + land + "s");//TODO revise wording and use string xml
 		
@@ -89,7 +87,7 @@ public class FragmentNewCycleLast extends Fragment {
 		btnDate.setOnClickListener(c);
 		btnDone.setOnClickListener(c);
 		
-		formatDisplayDate(null); //Attempt to set the date to default to today//TODO test
+		formatDisplayDate(null);
 	}
 	
 	
@@ -105,7 +103,6 @@ public class FragmentNewCycleLast extends Fragment {
 		unixDate = calender.getTimeInMillis();
 		Date d = calender.getTime();
 		strDate = DateFormat.getDateInstance().format(d);
-		tv_dte.setText(strDate);
         btnDate.setText(strDate);
 
 		return strDate;

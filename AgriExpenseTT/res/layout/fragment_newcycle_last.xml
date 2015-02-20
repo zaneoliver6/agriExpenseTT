@@ -44,7 +44,8 @@
 	                android:layout_marginTop="20dp"
 	                android:text="@string/txt_new_cycle_land_quantity"
 	                android:textColor="@color/primary_text"
-	                android:textSize="17sp" />
+	                android:textSize="17sp"
+                    android:layout_gravity="center_horizontal" />
 	
 	            <EditText
 	                android:id="@+id/et_newCycleLast_landqty"
@@ -55,7 +56,8 @@
 	                android:layout_marginTop="20dp"
 	                android:ems="10"
 	                android:hint="@string/hint_new_cycle_land_quantity"
-	                android:inputType="numberDecimal" />
+	                android:inputType="numberDecimal"
+                    android:layout_gravity="center_horizontal" />
 	        </LinearLayout>
 	
 	        <LinearLayout
@@ -72,7 +74,8 @@
 	                android:layout_marginTop="20dp"
 	                android:text="@string/txt_new_cycle_date"
 	                android:textColor="@color/primary_text"
-	                android:textSize="17sp" />
+	                android:textSize="17sp"
+                    android:layout_gravity="center_horizontal" />
 	
 	            <LinearLayout
 	                android:layout_width="match_parent"
@@ -80,30 +83,20 @@
 	
 	                <Button
 	                    android:id="@+id/btn_newCycleLast_date"
-	                    android:layout_width="180dp"
+	                    android:layout_width="match_parent"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="20dp"
 	                    android:layout_marginRight="20dp"
 	                    android:layout_marginTop="20dp"
 	                    android:background="@drawable/btn_custom"
 	                    android:text="@string/btn_new_cycle_date" />
-	
-	                <TextView
-	                    android:id="@+id/tv_newCycle_date"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_marginLeft="10dp"
-	                    android:layout_marginRight="10dp"
-	                    android:layout_marginTop="20dp"
-	                    android:text="@string/txt_new_cycle_default_date"
-	                    android:textColor="#cccccc"
-	                    android:textSize="17sp" />
-	            </LinearLayout>
+
+                </LinearLayout>
 	        </LinearLayout>
 	
 	        <Button
 	            android:id="@+id/btn_newCyclelast_dne"
-	            android:layout_width="180dp"
+	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="20dp"
 	            android:layout_marginRight="20dp"

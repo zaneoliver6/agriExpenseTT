@@ -36,6 +36,7 @@ import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -47,7 +48,7 @@ public class FragmentViewCycles extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	final int req_edit=1;
-	final String className = Main.APP_NAME +".FragmentViewCucles";
+	final String className = "ViewCycles";
 
 	
 	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
@@ -67,9 +68,8 @@ public class FragmentViewCycles extends ListFragment{
 		
 		try{//when called from hiring labour
 			type = getArguments().getString("type");
-			Log.i(className, type+" passed as a parameter");
-		}catch (Exception e){ 
-			Log.i(className, "No Type Passed"); 
+		}catch (Exception e){
+			Log.i(className, "No Type Passed");
 		}
 		populateList();
 		cycAdapt = new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
@@ -249,8 +249,7 @@ public class FragmentViewCycles extends ListFragment{
 			 super(context, textViewResourceId, objects);
 			 myContext = context;
 		  }
-		
-		  @SuppressWarnings("deprecation")
+
 		  @SuppressLint("ViewHolder") 
 		  @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
@@ -275,7 +274,6 @@ public class FragmentViewCycles extends ListFragment{
 				txt=qty+" "+txt;
 				Land.setText(txt);
 		
-				TextView DateR=(TextView)row.findViewById(R.id.tv_cycleList_date);
 				TextView DayL=(TextView)row.findViewById(R.id.tv_cycleList_day);
 				Long dateMils=currCycle.getTime();
 				Calendar calender=Calendar.getInstance();
@@ -289,8 +287,8 @@ public class FragmentViewCycles extends ListFragment{
 				}else{
 					DayL.setText(days[cid]);
 				}
-				Date d=calender.getTime();
-				DateR.setText(d.toLocaleString());
+
+              ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText(DateFormatStandard.getDateStr(calender.getTime()));
 				
 			   return row;
 		  }
