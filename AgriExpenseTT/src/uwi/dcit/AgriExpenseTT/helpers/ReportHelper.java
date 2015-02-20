@@ -77,7 +77,7 @@ public class ReportHelper {
 	
 	/**
 	 * Create a report with the supplied filename up to the current time frame
-	 * @param filename
+	 * @param filename This string will identify the name of the file that will be generated
 	 */
 	public void createReport(String filename){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);

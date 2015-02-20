@@ -97,7 +97,7 @@ public class Sync {
 		protected Boolean doInBackground(Option... params) {
 			Option option=params[0];
 			ContentValues cv=new ContentValues();
-			Boolean success = new Boolean(true);
+			Boolean success = Boolean.valueOf(true);
 			switch(option){
 				case updateCloudOpt:
 					tL.updateCloud(cloudUpdate);
