@@ -15,21 +15,21 @@
                 android:id="@+id/tv_frag_mainHead_new"
                  android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Creating new crop cycle"
-                    android:textColor="#999999"
-                    android:textSize="21sp" />
+                    android:textColor="@color/secondary_text"
+                    android:textSize="15sp" />
 
-            <EditText
-                android:id="@+id/et_listReuse_search"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Search " >
-                <requestFocus />
-            </EditText>
+            <!--<EditText-->
+                <!--android:id="@+id/et_listReuse_search"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:ems="10"-->
+                <!--android:hint="Search " >-->
+                <!--<requestFocus />-->
+            <!--</EditText>-->
 
         </LinearLayout>
 
