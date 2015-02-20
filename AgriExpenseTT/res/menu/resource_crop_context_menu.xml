@@ -2,15 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles" >
 
-    <item android:id="@+id/resource_view"
+    <item android:id="@+id/crop_view"
         android:orderInCategory="1"
         android:title="@string/menu_action_view_crop" />
     
-    <item android:id="@+id/resource_edit"
+    <item android:id="@+id/crop_edit"
         android:orderInCategory="2"
         android:title="@string/menu_action_edit_crop" />
     
-    <item android:id="@+id/resource_delete"
+    <item android:id="@+id/crop_delete"
         android:orderInCategory="3"
         android:title="@string/menu_action_delete_crop" />
 

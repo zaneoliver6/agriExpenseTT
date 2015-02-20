@@ -15,7 +15,7 @@
             android:id="@+id/tv_pItem_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#999999"
+            android:textColor="@color/primary_text"
             android:textStyle="bold"
             android:layout_gravity="fill"
             android:layout_marginBottom="5dp"
@@ -33,7 +33,7 @@
             android:id="@+id/tv_pitem_det1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#cccccc"
+            android:textColor="@color/secondary_text"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="14dp"
@@ -44,7 +44,7 @@
             android:id="@+id/tv_pitem_det2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#cccccc"
+            android:textColor="@color/secondary_text"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="14dp"
             android:text="TextView"
@@ -63,7 +63,7 @@
             android:adjustViewBounds="true"
             android:maxHeight="128dp"
             android:maxWidth="128dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/money_doller1" />
 
     </FrameLayout>
 

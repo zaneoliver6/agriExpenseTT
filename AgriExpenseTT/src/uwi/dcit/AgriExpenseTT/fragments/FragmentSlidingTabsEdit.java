@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT.fragments.help;
+package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
@@ -80,7 +77,7 @@ public class FragmentSlidingTabsEdit extends Fragment{
             cycleFrag.setArguments(arguments);
         }
         if(DbQuery.resourceExist(db)){
-            resFrag = new ChoosePurchaseFragment();
+            resFrag = new FragmentChoosePurchase();
             arguments.putString("det", "edit");
             resFrag.setArguments(arguments);
         }else{

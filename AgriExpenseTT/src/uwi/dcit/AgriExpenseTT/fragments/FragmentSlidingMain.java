@@ -19,119 +19,117 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
 
-/**
- * Created by Steffan on 12/01/2015.
- */
 public class FragmentSlidingMain extends Fragment {
     protected ArrayList<FragItem> fragments;
 
     @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setRetainInstance(false);
-            fragments=new ArrayList<FragItem>();
-            populateList();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(false);
+        fragments=new ArrayList<FragItem>();
+        populateList();
 
-            //Google Analytics
-            GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Sliding Menu Fragment");
+        //Google Analytics
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Sliding Menu Fragment");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_manage_resources, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
+        mViewPager.setAdapter(new PageAdapter(getChildFragmentManager()));
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
+        mSlidingTabLayout.setViewPager(mViewPager);
+
+        // BEGIN_INCLUDE (tab_colorizer)
+        // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
+        // the tab at the position, and return it's set color
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+
+            @Override
+            public int getIndicatorColor(int position) {
+                return fragments.get(position).getColour();
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return fragments.get(position).getColour();
+            }
+
+        });
+    }
+    private void populateList(){
+        SQLiteDatabase db;
+        DbHelper dbh = new DbHelper(getActivity().getApplicationContext());
+        db = dbh.getReadableDatabase();
+
+        Fragment cycleFrag, resFrag;
+        Bundle arguments = new Bundle();
+
+        if(DbQuery.cyclesExist(db)){
+            cycleFrag = new FragmentViewCycles();
+        }else{
+
+            cycleFrag = new FragmentEmpty();
+            arguments.putString("type", "cycle");
+            cycleFrag.setArguments(arguments);
+        }
+
+        if(DbQuery.resourceExist(db)){
+            resFrag = new FragmentChoosePurchase();
+        }else{
+            resFrag=new FragmentEmpty();
+            arguments	= new Bundle();
+            arguments.putString("type", "purchase");
+            resFrag.setArguments(arguments);
+        }
+
+        fragments.add(new FragItem(cycleFrag, Color.BLUE,"Cycles"));
+        fragments.add(new FragItem(resFrag,Color.GREEN,"Purchases"));
+    }
+
+    protected class PageAdapter extends FragmentPagerAdapter {
+        public PageAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_manage_resources, container, false);
+        public Fragment getItem(int position) {
+            return fragments.get(position).getFrag();
         }
+
         @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
-            mViewPager.setAdapter(new PageAdapter(getChildFragmentManager()));
-            SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
-            mSlidingTabLayout.setViewPager(mViewPager);
-
-            // BEGIN_INCLUDE (tab_colorizer)
-            // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
-            // the tab at the position, and return it's set color
-            mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
-
-                @Override
-                public int getIndicatorColor(int position) {
-                    return fragments.get(position).getColour();
-                }
-
-                @Override
-                public int getDividerColor(int position) {
-                    return fragments.get(position).getColour();
-                }
-
-            });
-        }
-        private void populateList(){
-            SQLiteDatabase db;
-            DbHelper dbh = new DbHelper(getActivity().getApplicationContext());
-            db = dbh.getReadableDatabase();
-
-            Fragment cycleFrag, resFrag;
-            Bundle arguments = new Bundle();
-
-            if(DbQuery.cyclesExist(db)){
-                cycleFrag = new FragmentViewCycles();
-            }else{
-
-                cycleFrag = new FragmentEmpty();
-                arguments.putString("type", "cycle");
-                cycleFrag.setArguments(arguments);
-            }
-
-            if(DbQuery.resourceExist(db)){
-                resFrag = new ChoosePurchaseFragment();
-            }else{
-                resFrag=new FragmentEmpty();
-                arguments	= new Bundle();
-                arguments.putString("type", "purchase");
-                resFrag.setArguments(arguments);
-            }
-            fragments.add(new FragItem(cycleFrag, Color.BLUE,"Cycles"));
-            fragments.add(new FragItem(resFrag,Color.GREEN,"Purchases"));
+        public int getCount() {
+            return fragments.size();
         }
 
-        protected class PageAdapter extends FragmentPagerAdapter {
-            public PageAdapter(FragmentManager fm) {
-                super(fm);
-            }
-
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position).getFrag();
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return fragments.get(position).getTitle();
-            }
-        }
-        protected class FragItem{
-            private Fragment frag;
-            private int colour;
-            private String title;
-            public FragItem(Fragment frag,int colour,String title){
-                this.frag=frag;
-                this.colour=colour;
-                this.title=title;
-            }
-            public Fragment getFrag() {
-                return frag;
-            }
-            public int getColour() {
-                return colour;
-            }
-            public String getTitle(){
-                return title;
-            }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragments.get(position).getTitle();
         }
     }
+    protected class FragItem{
+        private Fragment frag;
+        private int colour;
+        private String title;
+        public FragItem(Fragment frag,int colour,String title){
+            this.frag=frag;
+            this.colour=colour;
+            this.title=title;
+        }
+        public Fragment getFrag() {
+            return frag;
+        }
+        public int getColour() {
+            return colour;
+        }
+        public String getTitle(){
+            return title;
+        }
+    }
+}
 

@@ -1,19 +1,26 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.annotation.SuppressLint;
+//import android.app.DatePickerDialog;
+//import android.app.Dialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -47,7 +54,7 @@ public class EditCycle extends ActionBarActivity {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	
-	LocalCycle c;
+	LocalCycle cycle;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,37 +75,27 @@ public class EditCycle extends ActionBarActivity {
         });
 	}
 
-//	@SuppressWarnings("deprecation")
 	private void initialize() {
-		//setup buttons
-		btn_crop=(Button)findViewById(R.id.btn_editCycle_crop);
-		btn_landType=(Button)findViewById(R.id.btn_editCycle_land);
-		btn_date=(Button)findViewById(R.id.btn_editCycle_date);
-		Button btn_done=(Button)findViewById(R.id.btn_editCycle_done);
-		et_landQty=(EditText)findViewById(R.id.et_editCycle_landQty);
-		Click click=new Click();
-		btn_crop.setOnClickListener(click);
-		btn_landType.setOnClickListener(click);
-		btn_date.setOnClickListener(click);
-		btn_done.setOnClickListener(click);
-		
 		//get Data
 		//p=getIntent().getExtras().getParcelable("purchase");
-		c=getIntent().getExtras().getParcelable("cycle");
-		crop=DbQuery.findResourceName(db, dbh, c.getCropId());
-		land=c.getLandType();
-		landQty=c.getLandQty();
-		date=c.getTime();
+		cycle   = getIntent().getExtras().getParcelable("cycle");
+		crop    = DbQuery.findResourceName(db, dbh, cycle.getCropId());
+		land    = cycle.getLandType();
+		landQty = cycle.getLandQty();
+		date    = cycle.getTime();
 		
 		//Get Text Views
-		tv_crop=(TextView)findViewById(R.id.tv_editcycle_cropVal);
-		tv_landType=(TextView)findViewById(R.id.tv_editcycle_landVal);
-		tv_landQty=(TextView)findViewById(R.id.tv_editcycle_landQtyVal);
-		tv_date=(TextView)findViewById(R.id.tv_editcycle_dateVal);
+		tv_crop     = (TextView)findViewById(R.id.tv_editcycle_cropVal);
+		tv_landType = (TextView)findViewById(R.id.tv_editcycle_landVal);
+		tv_landQty  = (TextView)findViewById(R.id.tv_editcycle_landQtyVal);
+		tv_date     = (TextView)findViewById(R.id.tv_editcycle_dateVal);
+        et_landQty  = (EditText)findViewById(R.id.et_editCycle_landQty);
+
 		//initialize views
 		tv_crop.setText(crop);
 		tv_landType.setText(land);
-		tv_landQty.setText(""+landQty);
+		tv_landQty.setText(String.valueOf(landQty));
+
 		Calendar cal=Calendar.getInstance();
 		cal.setTimeInMillis(date);
 
@@ -130,39 +127,44 @@ public class EditCycle extends ActionBarActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-	
-	public class Click implements OnClickListener{
 
-		@Override
-		public void onClick(View v) {
-			Intent i=new Intent(EditCycle.this,EditChooseLists.class);
-			if(v.getId()==R.id.btn_editCycle_crop){
-				i.putExtra("desc",DHelper.cat_plantingMaterial);
-				startActivityForResult(i,REQ_CROP);
-			}else if(v.getId()==R.id.btn_editCycle_land){
-				i.putExtra("desc", "land");
-				startActivityForResult(i,REQ_LANDTYPE);
-//			}else if(v.getId()==R.id.btn_editCycle_date){
-				//i.putExtra("desc", "crop");
-			}else if(v.getId()==R.id.btn_editCycle_done){
-				updateCycle();
-			}
-			System.out.println("request");
-		}
-	}
+
+    public void editCrop(View v){
+        Intent i=new Intent(EditCycle.this,EditChooseLists.class);
+        i.putExtra("desc",DHelper.cat_plantingMaterial);
+        startActivityForResult(i,REQ_CROP);
+    }
+
+    public void editLand(View v){
+        Intent i=new Intent(EditCycle.this,EditChooseLists.class);
+        i.putExtra("desc", "land");
+        startActivityForResult(i,REQ_LANDTYPE);
+    }
+
+    public void editDate(View v){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "Choose Date");
+    }
 	
-	private void updateCycle() {
-		if(!(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals(""))){
-			landQty=Double.parseDouble(et_landQty.getText().toString());
+	public void updateCycle(View v) {
+		if(!(et_landQty.getText().toString() == null && !et_landQty.getText().toString().equals(""))){
+			landQty = Double.parseDouble(et_landQty.getText().toString());
 		}
-		ContentValues cv=new ContentValues();
+
+		ContentValues cv = new ContentValues();
 		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
 		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE,land);
 		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(CycleEntry.CROPCYCLE_DATE, date);
-		//Toast.makeText(EditCycle.this, crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
+
+//		Toast.makeText(getApplicationContext(),"Updating "+ crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
+
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
-		dm.updateCycle(c, cv);
+		boolean result = dm.updateCycle(cycle, cv);
+
+        if (result) Toast.makeText(getApplicationContext(), "Cycle was successfully Updated", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getApplicationContext(), "Cycle was not updated", Toast.LENGTH_SHORT).show();
+
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();
@@ -186,4 +188,32 @@ public class EditCycle extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    private void formatDisplayDate(Calendar cal) {
+        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+        date = cal.getTimeInMillis();
+    }
+
+    @SuppressLint("ValidFragment")
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+            formatDisplayDate(cal);
+        }
+    }
+
+
 }

@@ -55,7 +55,7 @@ public class FragmentUseResource extends Fragment{
         pass.putParcelable("cycle",cycle);
         pass.putString("det",type);
         pass.putString("total",""+total);
-        ListFragment listfrag	= new ChoosePurchaseFragment();
+        ListFragment listfrag	= new FragmentChoosePurchase();
         listfrag.setArguments(pass);
 
        getChildFragmentManager()

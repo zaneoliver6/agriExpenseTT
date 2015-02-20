@@ -17,7 +17,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.fragments.ChoosePurchaseFragment;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentChoosePurchase;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -92,12 +92,12 @@ public class UseResource extends ActionBarActivity {
 		pass.putParcelable("cycle",c);
 		pass.putString("det",s);
 		
-		ListFragment listfrag	= new ChoosePurchaseFragment();		
-		listfrag.setArguments(pass);
+		ListFragment listFrag	= new FragmentChoosePurchase();
+		listFrag.setArguments(pass);
 		
 		getSupportFragmentManager()
 			.beginTransaction()
-			.add(R.id.useExpenseFrag,listfrag)
+			.add(R.id.useExpenseFrag,listFrag)
 			.commit();
 		
 		View line=findViewById(R.id.line_header_useRes);

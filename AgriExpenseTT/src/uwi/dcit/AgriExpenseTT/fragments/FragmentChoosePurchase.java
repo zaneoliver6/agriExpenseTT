@@ -43,8 +43,8 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 
-public class ChoosePurchaseFragment extends ListFragment {
-	MyListAdapter myListAdapter;
+public class FragmentChoosePurchase extends ListFragment {
+	PurchaseListAdapter myListAdapter;
 	ArrayList<LocalResourcePurchase> pList;
 	SQLiteDatabase db;
 	DbHelper dbh;
@@ -81,7 +81,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		} catch (Exception e) { e.printStackTrace(); }
 		
 		populateList();
-		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
+		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
@@ -157,9 +157,9 @@ public class ChoosePurchaseFragment extends ListFragment {
 		 Bundle arguments = new Bundle();
 		 if(curr != null)
              arguments.putParcelable("cycleMain", curr);
-		 arguments.putString("pId",pList.get(position).getpId()+"");//passes the id of the purchase
+		 arguments.putString("pId", pList.get(position).getpId() + "");//passes the id of the purchase
 		 arguments.putString("cycleId",""+cycleId);					// passes the id of the cycle
-         arguments.putString("total",getArguments().getString("total"));
+         arguments.putString("total", getArguments().getString("total"));
 		 
 		 Fragment newFrag=new FragmentPurchaseUse();
 		 newFrag.setArguments(arguments);
@@ -185,7 +185,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		 AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 	        builder1.setMessage("Are you sure you want to delete");
 	        builder1.setCancelable(true);
-	        Confirm c=new Confirm(position,(MyListAdapter) l.getAdapter());
+	        Confirm c=new Confirm(position,(PurchaseListAdapter) l.getAdapter());
 	        builder1.setPositiveButton("Yes",c);
 	        builder1.setNegativeButton("Nope",c);
 	        AlertDialog alert1 = builder1.create();
@@ -203,8 +203,8 @@ public class ChoosePurchaseFragment extends ListFragment {
 	 
 	 private class Confirm implements DialogInterface.OnClickListener{
 		int position;
-		MyListAdapter l;
-		public Confirm(int position,MyListAdapter l){
+		PurchaseListAdapter l;
+		public Confirm(int position,PurchaseListAdapter l){
 			this.position=position;
 			this.l=l;
 		}
@@ -222,12 +222,12 @@ public class ChoosePurchaseFragment extends ListFragment {
 		}
 	 }
 	 
-	 public class MyListAdapter extends ArrayAdapter<LocalResourcePurchase> {
+	 public class PurchaseListAdapter extends ArrayAdapter<LocalResourcePurchase> {
 		  
 		 Context myContext;
 		
-		  public MyListAdapter(Context context, int textViewResourceId,
-		    ArrayList<LocalResourcePurchase> objects) {
+		  public PurchaseListAdapter(Context context, int textViewResourceId,
+                                     ArrayList<LocalResourcePurchase> objects) {
 			  super(context, textViewResourceId, objects);
 		   myContext = context;
 		  }
@@ -242,7 +242,6 @@ public class ChoosePurchaseFragment extends ListFragment {
 			   //Get Layout of An Item and Store it in a view
 			   View row=inflater.inflate(R.layout.purchased_item, parent, false);
 			   //setting the colours
-			   ImageView icon=(ImageView)row.findViewById(R.id.icon_pitem_next);
 			   View line=row.findViewById(R.id.line_pitem);
 			   if(curr.getType().equals(DHelper.cat_plantingMaterial)){
 				   line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
@@ -268,11 +267,12 @@ public class ChoosePurchaseFragment extends ListFragment {
 			   det2.setText("Cost:$"+curr.getCost());
 			   
 			   
-			   //when called by ManageResources we dont want the next icon
-			   if(type==null)
-				   icon.setImageResource(R.drawable.money_doller1);
-			   else
-				   icon.setImageResource(R.drawable.money_doller1);
+			   //TODO Set a custom icon based on the type of the resource purchaseds
+//			   ImageView icon=(ImageView)row.findViewById(R.id.icon_pitem_next);
+//			   if(type==null)
+//				   icon.setImageResource(R.drawable.money_doller1);
+//			   else
+//				   icon.setImageResource(R.drawable.money_doller1);
 			   return row;
 		  }
 	 }

@@ -108,15 +108,15 @@ public class FragmentViewCycles extends ListFragment{
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		
 		switch(item.getItemId()){
-			case R.id.resource_view:
+			case R.id.crop_view:
 				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
 				launchCycleUsage(info.position);
 				break;
-			case R.id.resource_edit: //Edit Cycle
+			case R.id.crop_edit: //Edit Cycle
 				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
 				editCycleCoption(info.position);
 				break;
-			case R.id.resource_delete:
+			case R.id.crop_delete:
 				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
 				deletCycleOption(this.getListView(), info.position); //Use the same delete operation from list item click
 				break;
@@ -143,7 +143,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void launchCycleUsage(int position){
 //		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
         Bundle arguments = new Bundle();
-//		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
+		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
 		arguments.putParcelable("cycleMain",cycleList.get(position));
 		Fragment newFrag= new FragmentCycleUseage();
         newFrag.setArguments(arguments);
@@ -163,7 +163,7 @@ public class FragmentViewCycles extends ListFragment{
 	}
 	
 	public void editCycleCoption(int position){
-		Intent i=new Intent(getActivity(),EditCycle.class);
+		Intent i = new Intent(getActivity(),EditCycle.class);
  		i.putExtra("cycle", cycleList.get(position));
  		startActivityForResult(i,req_edit);
 	}
@@ -242,56 +242,53 @@ public class FragmentViewCycles extends ListFragment{
 	}
 	
 	public class CycleListAdapter extends ArrayAdapter<LocalCycle> {
-		  
-		 Context myContext;
-		
-		 public CycleListAdapter(Context context, int textViewResourceId, ArrayList<LocalCycle> objects) {
-			 super(context, textViewResourceId, objects);
-			 myContext = context;
-		  }
+        Context myContext;
+        public CycleListAdapter(Context context, int textViewResourceId, ArrayList<LocalCycle> objects) {
+		    super(context, textViewResourceId, objects);
+		    myContext = context;
+		}
 
-		  @SuppressLint("ViewHolder") 
-		  @Override
-		  public View getView(int position, View convertView, ViewGroup parent) {
-			   //return super.getView(position, convertView, parent);
-			   
-			   LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			   
-			   //Get Layout of An Item and Store it in a view
-			   View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
-			   //get the elements of that view and set them accordingly
-			   TextView Crop = (TextView)row.findViewById(R.id.tv_cycleList_crop);
-				
-			   LocalCycle currCycle=cycleList.get(position);
-			   int cid=currCycle.getCropId();
-				String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
-				Crop.setText(txt);
-				ImageView imageView=(ImageView)row.findViewById(R.id.icon_purchaseType);
-				imageView.setImageResource(R.drawable.crop_under_rain_solid);
-				TextView Land=(TextView)row.findViewById(R.id.tv_cycleList_Land);
-				double qty=currCycle.getLandQty();
-				txt=currCycle.getLandType();
-				txt=qty+" "+txt;
-				Land.setText(txt);
-		
-				TextView DayL=(TextView)row.findViewById(R.id.tv_cycleList_day);
-				Long dateMils=currCycle.getTime();
-				Calendar calender=Calendar.getInstance();
-				calender.setTimeInMillis(dateMils);
-				
-				cid=calender.get(Calendar.DAY_OF_WEEK);
-				String[] days={"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
-				
-				if(cid==7){
-					DayL.setText(days[6]);
-				}else{
-					DayL.setText(days[cid]);
-				}
+        @SuppressLint("ViewHolder")
+		@Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-              ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText(DateFormatStandard.getDateStr(calender.getTime()));
-				
-			   return row;
-		  }
+            //Get Layout of An Item and Store it in a view
+            View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
+            //get the elements of that view and set them accordingly
+            LocalCycle currCycle=cycleList.get(position);
+            int cid = currCycle.getCropId();
+
+            String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
+            ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText(txt);
+
+            // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
+//            ImageView imageView=(ImageView)row.findViewById(R.id.icon_purchaseType);
+//            imageView.setImageResource(R.drawable.crop_under_rain_solid);
+
+            double qty=currCycle.getLandQty();
+            txt=currCycle.getLandType();
+            txt=qty+" "+txt;
+            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText(txt);
+
+            TextView DayL=(TextView)row.findViewById(R.id.tv_cycleList_day);
+            Long dateMils=currCycle.getTime();
+            Calendar calender=Calendar.getInstance();
+            calender.setTimeInMillis(dateMils);
+
+            cid=calender.get(Calendar.DAY_OF_WEEK);
+            String[] days={"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
+
+            if(cid==7){
+            DayL.setText(days[6]);
+            }else{
+            DayL.setText(days[cid]);
+            }
+
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText(DateFormatStandard.getDateStr(calender.getTime()));
+
+            return row;
+		}
 		  
 		  //register click  
 	 }

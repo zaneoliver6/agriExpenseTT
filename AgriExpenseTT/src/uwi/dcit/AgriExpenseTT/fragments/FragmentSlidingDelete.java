@@ -78,7 +78,7 @@ public class FragmentSlidingDelete extends Fragment {
             cycleFrag.setArguments(arguments);
         }
         if(DbQuery.resourceExist(db)){
-            resFrag =new ChoosePurchaseFragment();
+            resFrag =new FragmentChoosePurchase();
             arguments.putString("det", "delete");
             resFrag.setArguments(arguments);
         }else{

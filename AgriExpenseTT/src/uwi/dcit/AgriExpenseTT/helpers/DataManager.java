@@ -236,10 +236,10 @@ public class DataManager {
 			}
 		}
 	}
-	public void updateCycle(LocalCycle c,ContentValues cv){
-		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+c.getId(), null);
+	public boolean updateCycle(LocalCycle c, ContentValues cv){
+		int result = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+c.getId(), null);
 		//update the cloud
-		TransactionLog tl=new TransactionLog(dbh, db,context);
+		TransactionLog tl = new TransactionLog(dbh, db,context);
 		tl.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(),TransactionLog.TL_UPDATE);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
@@ -249,6 +249,7 @@ public class DataManager {
 				cloud.updateCycleC();
 			}
 		}
+        return (result != -1);
 	}
 	
 	//------------------------------------------------------------------fixed deletes
