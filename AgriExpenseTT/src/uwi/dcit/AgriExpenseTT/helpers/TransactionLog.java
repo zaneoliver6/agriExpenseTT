@@ -36,8 +36,8 @@ public class TransactionLog {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Context context;
-	public static final String TL_BEGIN="begin";
-	public static final String TL_END="end";
+//	public static final String TL_BEGIN="begin";
+//	public static final String TL_END="end";
 	public static final String TL_INS="ins";
 	public static final String TL_DEL="del";
 	public static final String TL_UPDATE="updt";
@@ -52,7 +52,7 @@ public class TransactionLog {
 	public boolean pullAllFromCloud(UpAcc cloudAcc){
 		System.out.println("----"+cloudAcc.getAcc());
 		
-		CycleCollection responseCycles = null;
+		CycleCollection responseCycles;
 		CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
@@ -65,19 +65,19 @@ public class TransactionLog {
 		List<Cycle> cycleList=responseCycles.getItems();
 			
 			
-		CycleUseCollection responseCycleUse = null;
+		CycleUseCollection responseCycleUse;
 		CycleUseApi.Builder builderUse = new CycleUseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),			         null);         
 		builderUse = CloudEndpointUtils.updateBuilder(builderUse);
         CycleUseApi endpointUse = builderUse.build();
 		try {
 			responseCycleUse = endpointUse.getAllCycleUse(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace();
-			return false;}
-		List<CycleUse> cycleUseList=responseCycleUse.getItems();
+		} catch (IOException e) { e.printStackTrace(); return false; }
+
+        List<CycleUse> cycleUseList=responseCycleUse.getItems();
 		
 		
-		RPurchaseCollection responsePurchase = null;
+		RPurchaseCollection responsePurchase;
 		RPurchaseApi.Builder builderPurchase = new RPurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
@@ -85,11 +85,11 @@ public class TransactionLog {
         RPurchaseApi endpointPurchase = builderPurchase.build();
 		try {
 			responsePurchase = endpointPurchase.getAllPurchases(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace();
-			return false;}
+		} catch (IOException e) {e.printStackTrace();return false;}
+
 		List<RPurchase> purchaseList=responsePurchase.getItems();
 		
-		TransLogCollection responseTranslog = null;
+		TransLogCollection responseTranslog;
 		TranslogApi.Builder builderTransLog = new TranslogApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
@@ -97,9 +97,9 @@ public class TransactionLog {
         TranslogApi endpointTranslog = builderTransLog.build();
 		try {
 			responseTranslog = endpointTranslog.getAllTranslog(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace();
-			return false;}
-		List<TransLog> translogList=responseTranslog.getItems();
+		} catch (IOException e) {e.printStackTrace(); return false;}
+
+		List<TransLog> translogList = responseTranslog.getItems();
 		
 		dbh.dropTables(db);
 		dbh.onCreate(db);
@@ -203,6 +203,7 @@ public class TransactionLog {
 			//by inserting it into the redo log I can be assured it will be inserted when possible
 			DbQuery.insertRedoLog(db, dbh, table, rowId, operation);
 		}
+        cursor.close();
 		CloudInterface c=new CloudInterface(context, db, dbh);
 		c.flushToCloud();
 	}
@@ -252,6 +253,9 @@ public class TransactionLog {
 			System.out.println(c.getKeyrep()+"  "+c.getId());
 			DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
+        cursor.close();
+
+
 		code="select * from "+CycleResourceEntry.TABLE_NAME;
 		cursor=db.rawQuery(code, null);
 		while(cursor.moveToNext()){
@@ -270,6 +274,8 @@ public class TransactionLog {
 				return false;}
 			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
+        cursor.close();
+
 		code="select * from "+ ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME;
 		cursor=db.rawQuery(code, null);
 		while(cursor.moveToNext()){
@@ -288,11 +294,13 @@ public class TransactionLog {
 				return false;}
 			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
 		}
-		
+		cursor.close();
+
 		ContentValues cv=new ContentValues();
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, namespace);
 		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
-		
+
+
 		code="select * from "+ TransactionLogContract.TransactionLogEntry.TABLE_NAME;
 		CloudInterface cloudIF=new CloudInterface(context, db, dbh);
 		cursor=db.rawQuery(code, null);
@@ -312,6 +320,8 @@ public class TransactionLog {
 			} catch (IOException e) {e.printStackTrace();
 				return false;}
 		}
+        cursor.close();
+
 		cv=new ContentValues();
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
 		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
@@ -343,9 +353,7 @@ public class TransactionLog {
 			} catch (IOException e) {e.printStackTrace();}
 			if (tlist != null) {
                 List<TransLog> transList = tlist.getItems();
-                Iterator<TransLog> i = transList.iterator();
-                while (i.hasNext()) {
-                    TransLog tLog = i.next();
+                for (TransLog tLog : transList) {
                     if (tLog.getOperation().equals(TransactionLog.TL_INS))
                         logInsertLocal(tLog, namespace);
                     else if (tLog.getOperation().equals(TransactionLog.TL_UPDATE))
@@ -353,7 +361,6 @@ public class TransactionLog {
                     else if (tLog.getOperation().equals(TransactionLog.TL_DEL)) {
                         logDeleteLocal(tLog, namespace);
                     }
-
                 }
             }
 			return null;
@@ -431,11 +438,14 @@ public class TransactionLog {
 			db.update(CycleResourceEntry.TABLE_NAME, cv, CycleResourceEntry._ID+"="+t.getRowId(), null);
 		}
 	}
+
+    //TODO Refactor code to only accept one parameter when full use is determined
 	private void logDeleteLocal(TransLog tLog, String namespace2) {
         try {
             DbQuery.deleteRecord(db, dbh, tLog.getTableKind(), tLog.getRowId());
         }catch (Exception e){e.printStackTrace();}
 	}
+
 	private Cycle getCycle(String namespace, String keyrep){
 		CycleApi.Builder builder = new CycleApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),

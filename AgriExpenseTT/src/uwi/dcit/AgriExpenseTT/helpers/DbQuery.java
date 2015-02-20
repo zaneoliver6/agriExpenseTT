@@ -141,7 +141,7 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return;
 		while(cursor.moveToNext()){
-			list.add(new String(cursor.getString(cursor.getColumnIndex("name"))));
+			list.add(cursor.getString(cursor.getColumnIndex("name")));
 		}
 		cursor.close();
 	}

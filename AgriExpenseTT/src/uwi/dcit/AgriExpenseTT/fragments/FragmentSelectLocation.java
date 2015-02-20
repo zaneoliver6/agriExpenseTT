@@ -109,12 +109,10 @@ public class FragmentSelectLocation extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Fragment frag = null;
-		
 		if (type.equals(DHelper.location_country)){
-			String country = list.get(position);			
-			
-			frag= new FragmentSelectLocation();
+			String country = list.get(position);
+
+            Fragment frag= new FragmentSelectLocation();
 			Bundle argument = new Bundle();
 			argument.putString("type", DHelper.location_county);
 			argument.putString("country", country);

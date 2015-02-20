@@ -71,14 +71,14 @@ public class ChoosePurchaseFragment extends ListFragment {
 		
 		try{//when called by ManageResources we dont need any particular cycle
 			curr = getArguments().getParcelable("cycle");
-		}catch(Exception e){ }
+		}catch(Exception e){ e.printStackTrace(); }
 		
 		if(curr != null)cycleId = curr.getId();
 
 		try {//for when called by ManageResources the type will be null so we can see all types of purhases
 			type=getArguments().getString("det");
 			Log.i(Main.APP_NAME, "type: "+type);
-		} catch (Exception e) { }
+		} catch (Exception e) { e.printStackTrace(); }
 		
 		populateList();
 		myListAdapter = new MyListAdapter(getActivity(), R.layout.purchased_item, pList);
@@ -87,7 +87,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 	}
 	
 	private void populateList() {
-		pList	= new ArrayList<LocalResourcePurchase>();
+		pList	= new ArrayList<>();
 		
 		if(type != null && (type.equals("delete") || type.equals("edit")))
 			DbQuery.getPurchases(db, dbh, pList, null, null, true);
@@ -196,7 +196,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 	 public void onActivityResult(int requestCode,int resultCode,Intent data){
 		 super.onActivityResult(requestCode, resultCode, data);
 		 //refill list
-		 pList=new ArrayList<LocalResourcePurchase>();
+		 pList=new ArrayList<>();
 		 DbQuery.getPurchases(db, dbh, pList, null, null,true);
 		 myListAdapter.notifyDataSetChanged();
 	 }
@@ -233,7 +233,7 @@ public class ChoosePurchaseFragment extends ListFragment {
 		  }
 		
 		  @SuppressLint("ViewHolder")
-		@Override
+          @Override
 		  public View getView(int position, View convertView, ViewGroup parent) {
 			   //return super.getView(position, convertView, parent);
 			   

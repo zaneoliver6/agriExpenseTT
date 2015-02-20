@@ -96,7 +96,7 @@ public class FragmentNewCycleLast extends Fragment {
 	
 	
 	public String formatDisplayDate(Calendar calender){
-		String strDate = null;
+		String strDate;
 		if ( calender == null){
 			calender = Calendar.getInstance();
 			calender.set(Calendar.HOUR_OF_DAY, 0);
@@ -173,7 +173,7 @@ public class FragmentNewCycleLast extends Fragment {
 					System.out.println("11111");
 					showPopupDate(activity);
 				}else if(v.getId()==R.id.btn_newCyclelast_dne){
-					Double landQty=0.0;
+					Double landQty;
 					if(et_landQty.getText().toString() == null ||et_landQty.getText().toString().equals("")){
 						Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
 						error.setVisibility(View.VISIBLE);
@@ -190,7 +190,7 @@ public class FragmentNewCycleLast extends Fragment {
 						landQty=Double.parseDouble(et_landQty.getText().toString());
 						dm.insertCycle(plantMaterialId, land,landQty, unixdate);
 						
-						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
+//						LocalCycle c=new LocalCycle(plantMaterialId,land,landQty,unixdate);
 						Intent i=new Intent(getActivity(),Main.class);
 //						int n=DbQuery.getLast(db, dbh, CycleContract.CycleEntry.TABLE_NAME);
 //						c.setId(n);

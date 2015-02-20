@@ -569,7 +569,6 @@ public class CloudInterface {
 					t=endpoint.insertTransLog(t).execute();
 					updateUpAccC(t.getTransTime());
 				}catch(Exception e){
-					t=null;
 					System.out.println("could not insert Log");
 					return null;
 				}
@@ -649,7 +648,7 @@ public class CloudInterface {
 		         null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
         UpAccApi endpoint = builder.build();
-		UpAcc acc=null;
+		UpAcc acc;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();
 		}catch (IOException e) {e.printStackTrace();

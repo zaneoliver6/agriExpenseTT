@@ -30,7 +30,6 @@ public class NewCycleLists extends ListFragment {
 	 ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	int cycleId;
 	TextView et_main;
 	TextView et_search;
 	ArrayAdapter<String> listAdapt;
@@ -128,14 +127,16 @@ public class NewCycleLists extends ListFragment {
 				
 				nextFragment = new FragmentNewCycleLast();
 			}
-			
-			nextFragment.setArguments(arguments);										//Add Arguments to the next fragment to be loaded
-			
-			getFragmentManager()
-				.beginTransaction()
-				.replace(R.id.NewCycleListContainer, nextFragment)						//Load the New Fragment
-				.addToBackStack(type)													//add the transaction to the back stack
-				.commit();
+
+            if (nextFragment != null) {
+                nextFragment.setArguments(arguments);                                        //Add Arguments to the next fragment to be loaded
+
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.NewCycleListContainer, nextFragment)                        //Load the New Fragment
+                        .addToBackStack(type)                                                    //add the transaction to the back stack
+                        .commit();
+            }
 			
 	 }
 	 public class TWatch implements TextWatcher{

@@ -290,7 +290,7 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getTitle() != null)
+        if (item != null && item.getTitle() != null)
             MenuHelper.handleClick((String)item.getTitle(),getActivity());
 
         return super.onOptionsItemSelected(item);

@@ -308,7 +308,7 @@ public class FragmentPurchaseUse extends Fragment {
 				return (5*1000);
 			}
 		}else if(typePur.equals(DHelper.qtf_soilAmendment_truck)){
-			
+			Log.d("Fragment Purchase Use", "Soil Amendment");
 		}else if(typePur.equals(DHelper.qtf_chemical_L)){//litre to ...
 			if(typeUse.equals(DHelper.qtf_chemical_ml)){
 				return (1000);
