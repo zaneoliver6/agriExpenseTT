@@ -163,7 +163,8 @@ public class ChoosePurchaseFragment extends ListFragment {
 		 
 		 Fragment newFrag=new FragmentPurchaseUse();
 		 newFrag.setArguments(arguments);
-         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT
+                 || ((NavigationControl) getActivity()).getRightFrag()==null){
              ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
              return;
          }

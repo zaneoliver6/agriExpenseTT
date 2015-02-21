@@ -186,7 +186,7 @@ public class FragmentCycleUseCategory extends Fragment {
                 arguments.putString("total",""+catTotal);
                 newFrag.setArguments(arguments);
 			}
-            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT || ((NavigationControl) getActivity()).getRightFrag()==null ){
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
                 return;
             }
