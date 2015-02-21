@@ -9,53 +9,52 @@ import android.support.v7.app.ActionBarActivity;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 
-public class DeleteData extends ActionBarActivity {
+public class DeleteData extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks,NavigationControl {
 	DbHelper dbh;
 	SQLiteDatabase db;
-
+    Fragment leftFrag,rightFrag;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_data);
+        setContentView(R.layout.activity_view_navigation);
 
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Delete Data");
         Fragment fragment=new FragmentSlidingDelete();
         FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container_delete_frag,fragment);
+        ft.replace(R.id.navContentLeft,fragment);
         ft.commit();
-		/*
-		//ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
-
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_view_navigation);
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Delete Data");
-		//for empty lists
-		dbh=new DbHelper(DeleteData.this);
-		db=dbh.getReadableDatabase();
-		li=new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, li);
-		pli=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pli, null, null,true);
-		
-		TabListener tL=new TabListener();
-		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		
-		ActionBar.Tab t1 = getActionBar().newTab();
-		t1.setText("Purchases");
-    	t1.setTabListener(tL);
-    	ActionBar.Tab t2 = getActionBar().newTab();
-    	t2.setText("Resources");
-    	t2.setTabListener(tL);
-    	ActionBar.Tab t3 = getActionBar().newTab();
-    	t3.setText("Cycles");
-    	t3.setTabListener(tL);
-    	
-    	getActionBar().addTab(t3);
-    	getActionBar().addTab(t1);
-    	getActionBar().addTab(t2);
-    	*/
 	}
+    @Override
+    public void navigate(Fragment oldFrag, Fragment newFrag) {
+
+    }
+
+    @Override
+    public Fragment getLeftFrag() {
+        return leftFrag;
+    }
+
+    @Override
+    public Fragment getRightFrag() {
+        return rightFrag;
+    }
+
+    @Override
+    public String[] getMenuOptions() {
+        return new String[0];
+    }
+
+    @Override
+    public int[] getMenuImages() {
+        return new int[0];
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+
+    }
 	/*
 	public class TabListener implements ActionBar.TabListener{
 		ActionBarActivity mActivity;
