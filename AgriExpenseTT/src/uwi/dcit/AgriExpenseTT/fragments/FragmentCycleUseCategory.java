@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -169,15 +171,15 @@ public class FragmentCycleUseCategory extends Fragment {
 		public void onClick(View v) {
             Fragment newFrag=null;
             if(v.getId()==R.id.btn_Cycle_useage){
-				//Intent n=new Intent(getActivity(),ViewCycleUsege.class);
+				Intent n = new Intent(getActivity(),ViewCycleUsege.class);
 				Bundle arguments = new Bundle();
                 arguments .putString("type", category);
 				currCycle=getArguments().getParcelable("cycle");
 				arguments.putString("id", "" + currCycle.getId());
-
+                n.putExtras(arguments);
+                startActivity(n);
+                return;
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-//				IntentLauncher launcher=new IntentLauncher();
-//				launcher.start();
                 newFrag=new FragmentUseResource();
                 Bundle arguments = new Bundle();
                 arguments.putString("type",category);
@@ -185,6 +187,7 @@ public class FragmentCycleUseCategory extends Fragment {
                 arguments.putString("total",""+catTotal);
                 newFrag.setArguments(arguments);
 			}
+
             if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
                 return;
