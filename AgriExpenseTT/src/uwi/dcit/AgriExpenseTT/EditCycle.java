@@ -145,7 +145,7 @@ public class EditCycle extends ActionBarActivity {
     }
 	
 	public void updateCycle(View v) {
-		if(!(et_landQty.getText().toString() == null && !et_landQty.getText().toString().equals(""))){
+		if(et_landQty.getText().toString() != null && !et_landQty.getText().toString().equals("")){
 			landQty = Double.parseDouble(et_landQty.getText().toString());
 		}
 
@@ -155,16 +155,15 @@ public class EditCycle extends ActionBarActivity {
 		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(CycleEntry.CROPCYCLE_DATE, date);
 
-//		Toast.makeText(getApplicationContext(),"Updating "+ crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
-
+		Toast.makeText(getApplicationContext(),"Updating "+ crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
+//
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
 		boolean result = dm.updateCycle(cycle, cv);
-
         if (result) Toast.makeText(getApplicationContext(), "Cycle was successfully Updated", Toast.LENGTH_SHORT).show();
         else Toast.makeText(getApplicationContext(), "Cycle was not updated", Toast.LENGTH_SHORT).show();
-
-		Intent i=new Intent();
-		setResult(1,i);
+//
+//		Intent i=new Intent();
+//		setResult(1,i);
 		finish();
 	}
 	

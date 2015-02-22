@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="340dp"
+    android:layout_width="match_parent"
     android:background="#ffffff"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -12,7 +12,7 @@
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#999999"
+	    android:textColor="@color/primary_text"
 		android:textStyle="bold"
 		android:layout_gravity="fill"
 		android:textSize="20sp"
@@ -29,7 +29,7 @@
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#999999"
+	    android:textColor="@color/primary_text"
 		android:textStyle="bold"
 		android:layout_gravity="fill"
 		android:textSize="18sp"
@@ -43,7 +43,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Planting material:" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Fertilizer" />
 
     <TextView
@@ -65,7 +65,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Soil Amendment" />
 
     <TextView
@@ -76,7 +76,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Chemical" />
     
     <TextView
@@ -87,7 +87,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Labour" />
      <TextView
         android:id="@+id/tv_catTotal_other"
@@ -97,7 +97,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Other" />
     
     <TextView
@@ -107,7 +107,7 @@
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#999999"
+	    android:textColor="@color/primary_text"
 		android:textStyle="bold"
 		android:layout_gravity="fill"
 		android:textSize="18sp"
@@ -121,7 +121,7 @@
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="#cccccc"
+	    android:textColor="@color/secondary_text"
         android:text="Labour" />
     <View
         android:layout_width="match_parent"
@@ -132,8 +132,11 @@
 		android:id="@+id/btn_general_calculate"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="0dp"
+		android:layout_marginTop="2dp"
 		android:background="@drawable/btn_custom_general"
-		android:text="Calculate sales" />
+		android:text="Calculate sales"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp" />
 
 </LinearLayout>
