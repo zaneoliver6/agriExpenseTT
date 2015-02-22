@@ -133,8 +133,8 @@ public class NewPurchaseLists extends ListFragment {
 			Bundle b=new Bundle();
 			if(type.equals("category")){
 				//pass type as resource
-				((NewPurchase)getActivity()).replaceSub("Details: "+list.get(position));
-				if(list.get(position).equals(DHelper.cat_other)){
+				((NewPurchase)getActivity()).replaceSub("Details: "+listAdapt.getItem(position));
+				if(listAdapt.getItem(position).equals(DHelper.cat_other)){
 					ArrayList<String> test=new ArrayList<String>();
 					DbQuery.getResources(db, dbh, DHelper.cat_other, test);
 					if(test.isEmpty()){
@@ -148,7 +148,7 @@ public class NewPurchaseLists extends ListFragment {
 				}else{
 					b.putString("type", "resource");
 					//pass the category to the resource
-					b.putString("category", list.get(position));
+					b.putString("category", listAdapt.getItem(position));
 					newFragment =new NewPurchaseLists();
 				}
 				
@@ -156,11 +156,11 @@ public class NewPurchaseLists extends ListFragment {
 				//pass the category to quantifier
 				b.putString("category",getArguments().getString("category"));
 				//pass the resource to quantifier
-				b.putString("resource",list.get(position));
+				b.putString("resource",listAdapt.getItem(position));
 				//pass the type as quantifier
 				b.putString("type","quantifier");
 				((NewPurchase)getActivity()).replaceSub("Details: "
-				+getArguments().getString("category")+", "+list.get(position));
+				+getArguments().getString("category")+", "+listAdapt.getItem(position));
 				
 				newFragment =new NewPurchaseLists();
 				
@@ -170,10 +170,10 @@ public class NewPurchaseLists extends ListFragment {
 				//pass the resource to quantifier
 				b.putString("resource",getArguments().getString("resource"));
 				//pass the type as quantifier
-				b.putString("quantifier",list.get(position));
+				b.putString("quantifier",listAdapt.getItem(position));
 				//to final Purchase fragment
 				((NewPurchase)getActivity()).replaceSub("Details: "+getArguments().getString("category")
-						+", "+getArguments().getString("resource")+", "+list.get(position));
+						+", "+getArguments().getString("resource")+", "+listAdapt.getItem(position));
 				
 				newFragment =new FragmentNewPurchaseLast();
 			}

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,6 +31,7 @@ public class NewCycleLists extends ListFragment {
 	 ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
+	int cycleId;
 	TextView et_main;
 	TextView et_search;
 	ArrayAdapter<String> listAdapt;
@@ -68,13 +70,13 @@ public class NewCycleLists extends ListFragment {
 		view= inflater.inflate(R.layout.list_reuse, container, false);
 
 		et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
-//		if(getArguments().getString("type").equals("land")){
-//			et_search.setVisibility(View.GONE);
-//		}else{
-//			TWatch tw=new TWatch(listAdapt);
-//			et_search.addTextChangedListener(tw);
-//		}
+		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+		if(getArguments().getString("type").equals("land")){
+			et_search.setVisibility(View.GONE);
+		}else{
+			TWatch tw=new TWatch(listAdapt);
+			et_search.addTextChangedListener(tw);
+		}
 		if(type.equals(DHelper.cat_plantingMaterial)){
 			et_main.setText("Select the crop to plant for this cycle");
 		}else if(type.equals("land")){
@@ -107,22 +109,22 @@ public class NewCycleLists extends ListFragment {
 		public void onListItemClick(ListView l, View v, int position, long id) {
 			Fragment nextFragment = null;
 			Bundle arguments = new Bundle();
-		
+
 			if(type.equals(DHelper.cat_plantingMaterial)){
 				arguments.putString("type","land");										//passes the type of the data we want in the new list fragment
 				arguments.putString(DHelper.cat_plantingMaterial, list.get(position));	//passes the crop chosen to the land list fragment
-                updateSub("Details: "+list.get(position)+", ");								//Change the details section of the fragment
+				updateSub("Details: "+listAdapt.getItem(position)+", ");								//Change the details section of the fragment
 				nextFragment = new NewCycleLists();										//Launch a new instance of the class to deal with the land type selection
 			}else if(type.equals("land")){
 																						//Pass the crop specified in previous activity on to the next action
 				arguments.putString(DHelper.cat_plantingMaterial, getArguments().getString(DHelper.cat_plantingMaterial));
-				arguments.putString("land", list.get(position));						//Pass on the land type selected to the next activity
+				arguments.putString("land", listAdapt.getItem(position));						//Pass on the land type selected to the next activity
 				
 				StringBuilder stb = new StringBuilder();								//Using String builder to get details rather than concatenation
 				stb.append("Details: ")
 					.append(getArguments().getString(DHelper.cat_plantingMaterial))
 					.append(", ")
-					.append(list.get(position));
+					.append(listAdapt.getItem(position));
 				updateSub(stb.toString());												//Change the details section to reflect user choice
 				
 				nextFragment = new FragmentNewCycleLast();

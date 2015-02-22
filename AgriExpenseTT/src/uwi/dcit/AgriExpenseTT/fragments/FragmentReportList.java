@@ -108,8 +108,8 @@ public class FragmentReportList extends ListFragment {
 	public void viewReport(int position){
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.setAction(Intent.ACTION_VIEW);
 		String type = "application/vnd.ms-excel";
+        Log.d("URI",Uri.fromFile(files[position]).toString());
 		intent.setDataAndType(Uri.fromFile(files[position]), type);
 		startActivity(intent);
 	}
