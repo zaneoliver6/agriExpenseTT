@@ -20,7 +20,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
+//        requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
         super.onCreate(savedInstanceState);
         signInManager = new SignInManager(BaseActivity.this,BaseActivity.this);
         isTablet = this.getResources().getBoolean(R.bool.isTablet);
