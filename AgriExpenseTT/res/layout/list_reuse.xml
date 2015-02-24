@@ -15,11 +15,12 @@
                 android:id="@+id/tv_frag_mainHead_new"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:text="Creating new crop cycle"
                     android:textColor="@color/secondary_text"
-                    android:textSize="21sp" />
+                    android:textSize="@dimen/list_reuse_description"
+                android:layout_gravity="center_horizontal" />
 
             <EditText
                 android:id="@+id/et_listReuse_search"

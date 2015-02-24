@@ -44,7 +44,7 @@
 	                android:layout_marginTop="20dp"
 	                android:text="@string/txt_new_cycle_land_quantity"
 	                android:textColor="@color/primary_text"
-	                android:textSize="17sp"
+	                android:textSize="@dimen/list_reuse_description"
                     android:layout_gravity="center_horizontal" />
 	
 	            <EditText

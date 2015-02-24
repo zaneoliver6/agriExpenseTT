@@ -7,5 +7,6 @@
     -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="navigation_drawer_width">320dp</dimen>
+    <dimen name="list_reuse_description">21sp</dimen>
 
 </resources>
