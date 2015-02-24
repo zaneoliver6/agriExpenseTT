@@ -21,15 +21,15 @@
                     android:textColor="@color/secondary_text"
                     android:textSize="21sp" />
 
-            <!--<EditText-->
-                <!--android:id="@+id/et_listReuse_search"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:ems="10"-->
-                <!--android:hint="Search " >-->
-                <!--<requestFocus />-->
-            <!--</EditText>-->
+            <EditText
+                android:id="@+id/et_listReuse_search"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Search " >
+                <requestFocus />
+            </EditText>
 
         </LinearLayout>
 

@@ -93,13 +93,13 @@ public class NewPurchaseLists extends ListFragment {
 		//returns the inflated layout which contains the listview
 		View view= inflater.inflate(R.layout.list_reuse, container, false);
 		TextView et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-//		TextView et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
-//		if(getArguments().getString("type").equals("category")||getArguments().getString("type").equals("quantifier")){
-//			et_search.setVisibility(View.GONE);
-//		}else{
-//			TWatch tw=new TWatch(listAdapt);
-//			et_search.addTextChangedListener(tw);
-//		}
+		TextView et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+		if(getArguments().getString("type").equals("category")||getArguments().getString("type").equals("quantifier")){
+			et_search.setVisibility(View.GONE);
+		}else{
+			TWatch tw=new TWatch(listAdapt);
+			et_search.addTextChangedListener(tw);
+		}
 		if(type.equals("category")) et_main.setText("Select the type of material you are buying");
         else if(type.equals("resource")){
 			String s=getArguments().getString("category");
