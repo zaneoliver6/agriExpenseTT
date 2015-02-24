@@ -6,7 +6,9 @@
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     -->
     <dimen name="activity_horizontal_margin">64dp</dimen>
-    <dimen name="navigation_drawer_width">320dp</dimen>
-    <dimen name="list_reuse_description">21sp</dimen>
 
+    <dimen name="navigation_drawer_width">320dp</dimen>
+
+    <dimen name="list_reuse_description">21sp</dimen>
+    <dimen name="list_reuse_details">23sp</dimen>
 </resources>

@@ -139,8 +139,6 @@ public class Main extends BaseActivity {
     }
 
 
-
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if(findViewById(R.id.navContentRight)!=null){

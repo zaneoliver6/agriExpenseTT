@@ -27,14 +27,14 @@
 					android:id="@+id/tv_mainNew_subheader"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="25dp"
+					android:layout_marginLeft="2dp"
 					android:layout_marginStart="25dp"
-					android:layout_marginRight="25dp"
+					android:layout_marginRight="2dp"
 					android:layout_marginEnd="25dp"
-					android:layout_marginTop="10dp"
+					android:layout_marginTop="5dp"
 					android:text="@string/txt_general_details"
 					android:textColor="@color/secondary_text"
-					android:textSize="21sp" />
+					android:textSize="@dimen/list_reuse_details" />
 
 			</LinearLayout>
 
