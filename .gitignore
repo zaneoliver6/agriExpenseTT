@@ -9,6 +9,7 @@ Desktop.ini
 .metadata
 .gradle
 bin/
+gen/
 tmp/
 local.properties
 .settings/
@@ -22,10 +23,11 @@ local.properties
 *.discovery
 *.api
 
-
-.gradle
-local.properties
 .idea/workspace.xml
 .idea/libraries
 build
 *.iml
+gradle/
+gradle
+gradlew
+gradlew.bat
