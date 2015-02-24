@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
-
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract;
 import uwi.dcit.AgriExpenseTT.models.CountryContract;
 import uwi.dcit.AgriExpenseTT.models.CountyContract;
@@ -21,6 +19,8 @@ import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+
+//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 
 public class DbHelper extends SQLiteOpenHelper{

@@ -15,7 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -24,6 +25,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
 public class EditPurchase extends ActionBarActivity {
 	Button btn_res;

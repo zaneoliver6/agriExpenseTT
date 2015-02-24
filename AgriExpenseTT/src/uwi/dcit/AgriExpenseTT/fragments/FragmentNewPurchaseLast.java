@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewPurchase;

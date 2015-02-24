@@ -1,5 +1,4 @@
 package uwi.dcit.agriexpensesvr;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -27,8 +26,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
-@Api(name = "cycleUseApi", namespace = @ApiNamespace(ownerDomain = "dcit.com",
-        ownerName = "dcit.com", packagePath = "agriexpensett"))
+@Api(name = "cycleUseApi",
+        version = "v1",
+        namespace = @ApiNamespace(
+                ownerDomain = "agriexpensesvr.dcit.uwi",
+                ownerName = "agriexpensesvr.dcit.uwi",
+                packagePath = ""
+        ))
 public class CycleUseEndpoint {
 
     /**
@@ -130,7 +134,7 @@ public class CycleUseEndpoint {
      * This method gets the entity having primary key id. It uses HTTP GET
      * method.
      *
-     * @param id
+     * //@param id
      *            the primary key of the java bean.
      * @return The entity with primary key id.
      */
@@ -221,7 +225,7 @@ public class CycleUseEndpoint {
      * This method removes the entity with primary key id. It uses HTTP DELETE
      * method.
      *
-     * @param id
+     * //@param id
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycleUse", httpMethod = HttpMethod.DELETE)

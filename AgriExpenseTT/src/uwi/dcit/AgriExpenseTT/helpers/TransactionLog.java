@@ -6,21 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
-import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
-import com.dcit.agriexpensett.cycleUseApi.model.CycleUseCollection;
-import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchaseCollection;
-import com.dcit.agriexpensett.translogApi.TranslogApi;
-import com.dcit.agriexpensett.translogApi.model.TransLog;
-import com.dcit.agriexpensett.translogApi.model.TransLogCollection;
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
@@ -31,6 +20,17 @@ import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensett.cycleApi.CycleApi;
 import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensett.cycleApi.model.CycleCollection;
+
+//import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
+//import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
+//import com.dcit.agriexpensett.cycleUseApi.model.CycleUseCollection;
+//import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchaseCollection;
+//import com.dcit.agriexpensett.translogApi.TranslogApi;
+//import com.dcit.agriexpensett.translogApi.model.TransLog;
+//import com.dcit.agriexpensett.translogApi.model.TransLogCollection;
+//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 public class TransactionLog {
 	SQLiteDatabase db;

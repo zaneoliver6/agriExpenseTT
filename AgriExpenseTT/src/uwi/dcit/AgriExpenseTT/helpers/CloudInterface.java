@@ -5,14 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
-import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
-import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-import com.dcit.agriexpensett.translogApi.TranslogApi;
-import com.dcit.agriexpensett.translogApi.model.TransLog;
-import com.dcit.agriexpensett.upAccApi.UpAccApi;
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
@@ -26,8 +18,27 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
-import uwi.dcit.agriexpensett.cycleApi.CycleApi;
-import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
+import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
+import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
+import uwi.dcit.agriexpensesvr.upAccApi.UpAccApi;
+import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensett.cycleApi.CycleApi;
+//import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
+
+//import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
+//import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
+//import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+//import com.dcit.agriexpensett.translogApi.TranslogApi;
+//import com.dcit.agriexpensett.translogApi.model.TransLog;
+//import com.dcit.agriexpensett.upAccApi.UpAccApi;
+//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 
 public class CloudInterface {

@@ -27,16 +27,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
-@Api(
-        name = "cycleApi",
+@Api( name = "cycleApi",
         version = "v1",
-
         namespace = @ApiNamespace(
-                ownerDomain = "agriexpensett.dcit.uwi",
-                ownerName = "agriexpensett.dcit.uwi",
+                ownerDomain = "agriexpensesvr.dcit.uwi",
+                ownerName = "agriexpensesvr.dcit.uwi",
                 packagePath = ""
-        )
-)
+        ))
 public class CycleEndpoint {
 
     /**
@@ -238,7 +235,7 @@ public class CycleEndpoint {
      * This method gets the entity having primary key id. It uses HTTP GET
      * method.
      *
-     * @param id
+     * //@param id
      *            the primary key of the java bean.
      * @return The entity with primary key id.
      */
@@ -322,7 +319,7 @@ public class CycleEndpoint {
      * This method removes the entity with primary key id. It uses HTTP DELETE
      * method.
      *
-     * @param id
+     * //@param id
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)

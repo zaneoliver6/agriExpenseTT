@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments;
 
 
 import android.app.Activity;
@@ -29,6 +29,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.MenuHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 

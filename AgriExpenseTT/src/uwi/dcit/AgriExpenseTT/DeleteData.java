@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete;
+import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;

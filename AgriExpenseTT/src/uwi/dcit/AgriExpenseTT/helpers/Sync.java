@@ -7,9 +7,9 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
-
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+
+//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 public class Sync {
     private UpAcc cloudAcc;

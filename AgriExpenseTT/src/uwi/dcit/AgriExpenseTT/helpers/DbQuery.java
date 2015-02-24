@@ -4,11 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-import com.dcit.agriexpensett.translogApi.model.TransLog;
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
-
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
@@ -24,7 +19,11 @@ import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
+import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbQuery {
 	

@@ -1,5 +1,4 @@
 package uwi.dcit.agriexpensesvr;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -13,11 +12,8 @@ import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-/**
- * An endpoint class we are exposing
- */
-@Api(
-        name = "accNameApi",
+@Api(name = "accNameApi",
+        version = "v1",
         namespace = @ApiNamespace(
                 ownerDomain = "agriexpensesvr.dcit.uwi",
                 ownerName = "agriexpensesvr.dcit.uwi",

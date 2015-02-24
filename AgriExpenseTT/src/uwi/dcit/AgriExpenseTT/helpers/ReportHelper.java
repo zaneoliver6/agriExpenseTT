@@ -11,18 +11,15 @@ import android.os.Environment;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-//import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,6 +31,9 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
+
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+//import org.apache.poi.hssf.util.CellRangeAddress;
 
 @SuppressWarnings("deprecation")
 public class ReportHelper {

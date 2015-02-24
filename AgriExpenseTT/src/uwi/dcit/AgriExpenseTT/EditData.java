@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabsEdit;
+import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;

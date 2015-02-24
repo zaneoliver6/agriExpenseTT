@@ -5,9 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-import com.dcit.agriexpensett.upAccApi.model.UpAcc;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -18,7 +15,9 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
-import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 
 public class DataManager {
