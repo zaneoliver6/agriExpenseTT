@@ -46,12 +46,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="Resource"
-                        android:textColor="#999999"
+                        android:textColor="@color/primary_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="280dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
 
@@ -63,7 +63,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="TextView"
-                        android:textColor="#cccccc"
+                        android:textColor="@color/secondary_text"
                         android:textSize="17sp" />
 
                     <Button
@@ -92,12 +92,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="Quantifier Type"
-                        android:textColor="#999999"
+                        android:textColor="@color/primary_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="280dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
 
@@ -109,7 +109,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="TextView"
-                        android:textColor="#cccccc"
+                        android:textColor="@color/secondary_text"
                         android:textSize="17sp" />
 
                     <Button
@@ -130,6 +130,53 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/tv_editPurchase_dateLbl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="7dp"
+                        android:text="Date"
+                        android:textColor="@color/primary_text"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/tv_editPurchase_dateVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="7dp"
+                        android:text="Date"
+                        android:textColor="@color/secondary_text"
+                        android:textSize="17sp" />
+
+                    <Button
+                        android:id="@+id/btn_editPurchase_date"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="7dp"
+                        android:background="@drawable/btn_custom"
+                        android:text="Change Date" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="#ffffff"
+                    android:orientation="vertical" >
+
+                    <TextView
                         android:id="@+id/tv_editPurchase_QtyLbl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -138,12 +185,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="Quantity"
-                        android:textColor="#999999"
+                        android:textColor="@color/primary_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="280dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
 
@@ -155,7 +202,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="TextView"
-                        android:textColor="#cccccc"
+                        android:textColor="@color/secondary_text"
                         android:textSize="17sp" />
 
                     <EditText
@@ -184,12 +231,12 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="Cost"
-                        android:textColor="#999999"
+                        android:textColor="@color/primary_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <View
-                        android:layout_width="280dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
                         android:background="@android:color/darker_gray" />
 
@@ -201,7 +248,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="7dp"
                         android:text="TextView"
-                        android:textColor="#cccccc"
+                        android:textColor="@color/secondary_text"
                         android:textSize="17sp" />
 
                     <EditText

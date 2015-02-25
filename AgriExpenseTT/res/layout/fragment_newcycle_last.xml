@@ -41,7 +41,7 @@
 	                android:layout_height="wrap_content"
 	                android:layout_marginLeft="20dp"
 	                android:layout_marginRight="20dp"
-	                android:layout_marginTop="20dp"
+	                android:layout_marginTop="@dimen/label_dataentry_margin"
 	                android:text="@string/txt_new_cycle_land_quantity"
 	                android:textColor="@color/primary_text"
 	                android:textSize="@dimen/list_reuse_description"
@@ -53,11 +53,12 @@
 	                android:layout_height="wrap_content"
 	                android:layout_marginLeft="20dp"
 	                android:layout_marginRight="20dp"
-	                android:layout_marginTop="20dp"
+	                android:layout_marginTop="@dimen/label_dataentry_margin"
 	                android:ems="10"
 	                android:hint="@string/hint_new_cycle_land_quantity"
 	                android:inputType="numberDecimal"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/label_dataentry_margin" />
 	        </LinearLayout>
 	
 	        <LinearLayout
@@ -71,11 +72,12 @@
 	                android:layout_height="wrap_content"
 	                android:layout_marginLeft="20dp"
 	                android:layout_marginRight="20dp"
-	                android:layout_marginTop="20dp"
+	                android:layout_marginTop="@dimen/label_dataentry_margin"
 	                android:text="@string/txt_new_cycle_date"
 	                android:textColor="@color/primary_text"
 	                android:textSize="17sp"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/label_dataentry_margin" />
 	
 	            <LinearLayout
 	                android:layout_width="match_parent"
@@ -87,7 +89,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="20dp"
 	                    android:layout_marginRight="20dp"
-	                    android:layout_marginTop="20dp"
+	                    android:layout_marginTop="@dimen/label_dataentry_margin"
 	                    android:background="@drawable/btn_custom"
 	                    android:text="@string/btn_new_cycle_date" />
 
@@ -100,7 +102,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_marginLeft="20dp"
 	            android:layout_marginRight="20dp"
-	            android:layout_marginTop="40dp"
+	            android:layout_marginTop="30dp"
 	            android:background="@drawable/btn_custom"
 	            android:text="@string/btn_new_cycle_save" />
 	    </LinearLayout>

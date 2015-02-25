@@ -9,15 +9,15 @@ public class ResourcePurchaseContract {
 	
 	public static final String SQL_CREATE_RESOURCE_PURCHASE =
 			"CREATE TABLE IF NOT EXISTS "+ResourcePurchaseEntry.TABLE_NAME+"("
-			+ResourcePurchaseEntry._ID+" integer primary key autoincrement,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+" integer,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE+" text,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER+" text,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY+" integer,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+" integer,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_COST+" real,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE+" timestamp,"
-			+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE+" text,"
+			+ResourcePurchaseEntry._ID+ INT_TYPE + " primary key autoincrement,"
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID + INT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE+ TEXT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER + TEXT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY + INT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING + INT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_COST+" REAL" + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE+ INT_TYPE + COMMA_SEP
+			+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE + TEXT_TYPE + COMMA_SEP
 			+"foreign key("+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+") references "+ ResourceContract.ResourceEntry.TABLE_NAME + "(" + ResourceContract.ResourceEntry._ID + "));";
 	
 	public static final String SQL_DELETE_RESOURCE_PURCHASE = 

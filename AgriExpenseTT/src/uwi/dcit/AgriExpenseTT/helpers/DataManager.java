@@ -59,6 +59,7 @@ public class DataManager {
 	public void insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
 		//insert into database
 		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
+
 		if(acc!=null){
 			//insert into redo log table
 			int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
@@ -69,6 +70,20 @@ public class DataManager {
 			}
 		}
 	}
+
+    public void insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
+        int id = DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, time, tL);
+
+        if(acc!=null){
+            //insert into redo log table
+            int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
+            //try to insert into cloud
+            if(acc.getSignedIn()==1){
+                CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+                c.insertPurchase();
+            }
+        }
+    }
 	
 	
 	
