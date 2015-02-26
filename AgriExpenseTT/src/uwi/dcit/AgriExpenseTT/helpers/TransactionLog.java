@@ -17,20 +17,20 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.agriexpensett.cycleApi.CycleApi;
-import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
-import uwi.dcit.agriexpensett.cycleApi.model.CycleCollection;
+import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleApi.model.CycleCollection;
+import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
+import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
+import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUseCollection;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchaseCollection;
+import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
+import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
+import uwi.dcit.agriexpensesvr.translogApi.model.TransLogCollection;
+import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
-//import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
-//import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
-//import com.dcit.agriexpensett.cycleUseApi.model.CycleUseCollection;
-//import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchaseCollection;
-//import com.dcit.agriexpensett.translogApi.TranslogApi;
-//import com.dcit.agriexpensett.translogApi.model.TransLog;
-//import com.dcit.agriexpensett.translogApi.model.TransLogCollection;
-//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 public class TransactionLog {
 	SQLiteDatabase db;
