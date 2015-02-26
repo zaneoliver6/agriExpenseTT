@@ -55,7 +55,10 @@ public class EditCycle extends ActionBarActivity {
 	DbHelper dbh;
 	
 	LocalCycle cycle;
-	@Override
+    private EditText et_name;
+    private String name;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_cycle);
@@ -83,6 +86,7 @@ public class EditCycle extends ActionBarActivity {
 		land    = cycle.getLandType();
 		landQty = cycle.getLandQty();
 		date    = cycle.getTime();
+        name    = cycle.getCycleName();
 		
 		//Get Text Views
 		tv_crop     = (TextView)findViewById(R.id.tv_editcycle_cropVal);
@@ -90,11 +94,13 @@ public class EditCycle extends ActionBarActivity {
 		tv_landQty  = (TextView)findViewById(R.id.tv_editcycle_landQtyVal);
 		tv_date     = (TextView)findViewById(R.id.tv_editcycle_dateVal);
         et_landQty  = (EditText)findViewById(R.id.et_editCycle_landQty);
+        et_name     = (EditText)findViewById(R.id.et_editCycle_name);
 
 		//initialize views
 		tv_crop.setText(crop);
 		tv_landType.setText(land);
 		tv_landQty.setText(String.valueOf(landQty));
+        et_name.setText(name);
 
 		Calendar cal=Calendar.getInstance();
 		cal.setTimeInMillis(date);
@@ -148,17 +154,20 @@ public class EditCycle extends ActionBarActivity {
 		if(et_landQty.getText().toString() != null && !et_landQty.getText().toString().equals("")){
 			landQty = Double.parseDouble(et_landQty.getText().toString());
 		}
+        name = et_name.getText().toString();
 
 		ContentValues cv = new ContentValues();
 		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
 		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE,land);
 		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(CycleEntry.CROPCYCLE_DATE, date);
+        cv.put(CycleEntry.CROPCYCLE_NAME, name);
 
 		Toast.makeText(getApplicationContext(),"Updating "+ crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
 //
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
 		boolean result = dm.updateCycle(cycle, cv);
+
         if (result) Toast.makeText(getApplicationContext(), "Cycle was successfully Updated", Toast.LENGTH_SHORT).show();
         else Toast.makeText(getApplicationContext(), "Cycle was not updated", Toast.LENGTH_SHORT).show();
 //

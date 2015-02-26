@@ -14,6 +14,7 @@ public class LocalCycle implements Parcelable{
 	private String harvestType;
 	private double costPer;
 	private String cropName;
+    private String cycleName;
 	
 	public String getCropName() {
 		return cropName;
@@ -56,8 +57,32 @@ public class LocalCycle implements Parcelable{
 		this.time=dte;
 		totalSpent=0;
 	}
-	
-	public int getId() {
+
+    public LocalCycle(int cropId, String name, String landType, double landQty,long dte) {
+        super();
+        this.cropId = cropId;
+        this.cycleName = name;
+        this.landType = landType;
+        this.landQty = landQty;
+        this.time=dte;
+        totalSpent=0;
+    }
+
+    public LocalCycle(int id, int cropId, String landType, double landQty, long time, double totalSpent, double harvestAmt, String harvestType, double costPer, String cropName, String cycleName) {
+        this.id = id;
+        this.cropId = cropId;
+        this.landType = landType;
+        this.landQty = landQty;
+        this.time = time;
+        this.totalSpent = totalSpent;
+        this.harvestAmt = harvestAmt;
+        this.harvestType = harvestType;
+        this.costPer = costPer;
+        this.cropName = cropName;
+        this.cycleName = cycleName;
+    }
+
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -81,10 +106,20 @@ public class LocalCycle implements Parcelable{
 	public void setLandQty(double landQty) {
 		this.landQty = landQty;
 	}
-	@Override
+
+    public String getCycleName() {
+        return cycleName;
+    }
+
+    public void setCycleName(String cycleName) {
+        this.cycleName = cycleName;
+    }
+
+    @Override
 	public String toString() {
 		return "cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+"";
 	}
+
 	public LocalCycle(Parcel dest){
 		id=dest.readInt();
 		cropId=dest.readInt();
@@ -95,6 +130,7 @@ public class LocalCycle implements Parcelable{
 		harvestAmt=dest.readDouble();
 		harvestType=dest.readString();
 		costPer=dest.readDouble();
+        cycleName =dest.readString();
 	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
@@ -108,6 +144,7 @@ public class LocalCycle implements Parcelable{
 		dest.writeDouble(harvestAmt);
 		dest.writeString(harvestType);
 		dest.writeDouble(costPer);
+        dest.writeString(cycleName);
 	}
 	
 	public static final Parcelable.Creator<LocalCycle> CREATOR = new Parcelable.Creator<LocalCycle>() {

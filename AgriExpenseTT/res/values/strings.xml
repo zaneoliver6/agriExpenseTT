@@ -59,7 +59,7 @@
     <string name="btn_new_purchase_save">Done</string>
     <string name="txt_new_cycle_placeholder">Crop Cycle</string>
     <string name="txt_new_cycle_new">Creating new crop cycle</string>
-    <string name="txt_new_cycle_land_quantity">Enter Land Quantity</string>
+    <string name="txt_new_cycle_land_quantity">Land Quantity</string>
     <string name="hint_new_cycle_land_quantity">Enter Land Quantity</string>
     <string name="txt_new_cycle_date">Select Date</string>
     <string name="txt_new_cycle_default_date">--no date--</string>
@@ -133,4 +133,6 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="menu_item_about">About</string>
     <string name="menu_item_createNew">Create</string>
     <string name="cancel">Cancel</string>
+    <string name="hint_new_cycle_name">Enter Cycle Name</string>
+    <string name="txt_new_cycle_name">Crop Cycle Name</string>
 </resources>

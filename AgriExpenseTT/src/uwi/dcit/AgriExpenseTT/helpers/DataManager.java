@@ -56,6 +56,23 @@ public class DataManager {
 		}
 		//update database last updated time
 	}
+
+    public void insertCycle(int cropId, String name, String landType, double landQty,long time){
+        //insert into database
+        int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
+        if(acc!=null){
+            //insert into transaction table
+            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
+            //try insert into cloud
+            if(acc.getSignedIn()==1){
+                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+                c.insertCycleC();
+            }
+        }
+        //update database last updated time
+    }
+
+
 	public void insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
 		//insert into database
 		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);

@@ -34,6 +34,30 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/tv_newCyclelast_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="@dimen/label_dataentry_margin"
+                    android:text="@string/txt_new_cycle_name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/list_reuse_description"
+                    android:layout_gravity="center_horizontal" />
+
+                <EditText
+                    android:id="@+id/et_newCycleLast_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="@dimen/label_dataentry_margin"
+                    android:ems="10"
+                    android:hint="@string/hint_new_cycle_name"
+                    android:inputType="text"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/label_dataentry_margin" />
 	
 	            <TextView
 	                android:id="@+id/tv_newCyclelast_landQty"

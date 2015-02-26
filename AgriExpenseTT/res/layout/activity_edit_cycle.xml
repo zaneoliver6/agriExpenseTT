@@ -23,6 +23,51 @@
                 android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/tv_editcycle_hdname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="7dp"
+                    android:text="Cycle Name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <View
+                    android:id="@+id/line_editCyle_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+                <TextView
+                    android:id="@+id/tv_editcycle_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="7dp"
+                    android:text="TextView"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="17sp" />
+                <EditText
+                    android:id="@+id/et_editCycle_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="7dp"
+                    android:ems="10"
+                    android:inputType="text" >
+
+                </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
                 <TextView
                     android:id="@+id/tv_editcycle_cropLbl"
@@ -38,7 +83,7 @@
                     android:textStyle="bold" />
                 <View
                     android:id="@+id/line_editCyle_crop"
-                    android:layout_width="280dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
                 <TextView
@@ -82,7 +127,7 @@
                     android:textStyle="bold" />
                 <View
                     android:id="@+id/line_editCyle_landtype"
-                    android:layout_width="280dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
                 <TextView
@@ -126,7 +171,7 @@
                     android:textStyle="bold" />
                 <View
                     android:id="@+id/line_editCyle_landqty"
-                    android:layout_width="280dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
                 <TextView
@@ -171,7 +216,7 @@
                     android:textStyle="bold" />
                 <View
                     android:id="@+id/line_editCyle_date"
-                    android:layout_width="280dp"
+                    android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray" />
                 <TextView

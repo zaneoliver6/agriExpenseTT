@@ -44,6 +44,7 @@ public class FragmentNewCycleLast extends Fragment {
 	EditText et_landQty;
 	TextView error;
     private Button btnDate;
+    private EditText et_CycleName;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +75,9 @@ public class FragmentNewCycleLast extends Fragment {
 	private void setDetails(View view) {
         TextView landLbl = (TextView) view.findViewById(R.id.tv_newCyclelast_landQty);
 		et_landQty=(EditText)view.findViewById(R.id.et_newCycleLast_landqty);
+        et_CycleName = (EditText)view.findViewById(R.id.et_newCycleLast_name);
+        et_CycleName.setText(plantMaterial);
+
 		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
 		
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
@@ -121,19 +125,26 @@ public class FragmentNewCycleLast extends Fragment {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
             }else if(v.getId()==R.id.btn_newCyclelast_dne){
+
                 if(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals("")){
                     Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
                     error.setVisibility(View.VISIBLE);
                     error.setText("Enter the Land Quantity");
                     return;
                 }
+                if (et_CycleName.getText().toString().equals("")){
+                    et_CycleName.setText(plantMaterial);
+                }
                 if(unixDate == 0){
                     Toast.makeText(getActivity().getBaseContext(),"Select a date", Toast.LENGTH_SHORT).show();
                     error.setVisibility(View.VISIBLE);
                     error.setText("Select date to start crop cycle");
                 }else{
+
+
                     DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-                    dm.insertCycle(plantMaterialId, land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+//                    dm.insertCycle(plantMaterialId, land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+                    dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
                     new IntentLauncher().run();
                     Intent i=new Intent(getActivity(),Main.class);
