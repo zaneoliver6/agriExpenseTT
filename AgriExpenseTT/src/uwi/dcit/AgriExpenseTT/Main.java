@@ -11,12 +11,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 
 public class Main extends BaseActivity {
@@ -33,7 +31,6 @@ public class Main extends BaseActivity {
         setupNavDrawer();
 
         mTitle = getTitle();
-        Log.d(APP_NAME, "Is this a tablet: " + this.isTablet);
 
         // Check for orientation to determine which interface to load => if portrait will use leftfrag
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -150,18 +147,6 @@ public class Main extends BaseActivity {
         super.onSaveInstanceState(outState);
     }
 
-//    public void backUpData(){
-//        Intent i = new Intent(getApplicationContext(), Backup.class);
-//        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
-//            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-//                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-//        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
-//            signInManager.signIn();
-//        }
-//    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to

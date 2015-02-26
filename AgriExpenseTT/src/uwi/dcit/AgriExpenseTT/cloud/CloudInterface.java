@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT.helpers;
+package uwi.dcit.AgriExpenseTT.cloud;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;

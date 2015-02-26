@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.helpers.SignInManager;
 
 public class Backup extends ActionBarActivity {
 

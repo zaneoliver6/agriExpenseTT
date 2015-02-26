@@ -19,16 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
@@ -71,6 +68,7 @@ public class FragmentViewCycles extends ListFragment{
 			Log.i(className, "No Type Passed");
 		}
 		populateList();
+
 		cycAdapt = new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
 

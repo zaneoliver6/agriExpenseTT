@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT.helpers;
+package uwi.dcit.AgriExpenseTT.cloud;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -13,6 +13,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 

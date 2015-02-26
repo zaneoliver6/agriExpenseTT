@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT.helpers;
+package uwi.dcit.AgriExpenseTT.cloud;
 
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 

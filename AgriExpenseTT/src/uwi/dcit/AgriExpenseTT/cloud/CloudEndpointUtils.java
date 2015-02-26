@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT.helpers;
+package uwi.dcit.AgriExpenseTT.cloud;
 
 import android.app.Activity;
 import android.util.Log;
@@ -15,11 +15,11 @@ import uwi.dcit.AgriExpenseTT.Main;
 
 /**
  * Common utilities for working with Cloud Endpoints.
- * 
+ *
  * If you'd like to test using a locally-running version of your App Engine
  * backend (i.e. running on the Development App Server), you need to set
  * LOCAL_ANDROID_RUN to 'true'.
- * 
+ *
  * See the documentation at
  * http://developers.google.com/eclipse/docs/cloud_endpoints for more
  * information.
@@ -57,7 +57,7 @@ public class CloudEndpointUtils {
 	/**
 	 * Updates the Google client builder to connect the appropriate server based
 	 * on whether LOCAL_ANDROID_RUN is true or false.
-	 * 
+	 *
 	 * @param builder
 	 *            Google client builder
 	 * @return same Google client builder
@@ -87,7 +87,7 @@ public class CloudEndpointUtils {
 
 	/**
 	 * Logs the given message and shows an error alert dialog with it.
-	 * 
+	 *
 	 * @param activity
 	 *            activity
 	 * @param tag
@@ -103,7 +103,7 @@ public class CloudEndpointUtils {
 	/**
 	 * Logs the given throwable and shows an error alert dialog with its
 	 * message.
-	 * 
+	 *
 	 * @param activity
 	 *            activity
 	 * @param tag
@@ -128,7 +128,7 @@ public class CloudEndpointUtils {
 
 	/**
 	 * Shows an error alert dialog with the given message.
-	 * 
+	 *
 	 * @param activity
 	 *            activity
 	 * @param message

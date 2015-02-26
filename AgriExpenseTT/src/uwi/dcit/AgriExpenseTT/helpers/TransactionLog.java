@@ -12,6 +12,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import java.io.IOException;
 import java.util.List;
 
+import uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils;
+import uwi.dcit.AgriExpenseTT.cloud.CloudInterface;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
