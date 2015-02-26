@@ -37,6 +37,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
 public class FragmentNewPurchaseLast extends Fragment{
     private EditText et_qty;

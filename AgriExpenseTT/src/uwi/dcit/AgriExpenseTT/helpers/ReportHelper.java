@@ -31,6 +31,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 //import org.apache.poi.hssf.util.CellRangeAddress;

@@ -29,6 +29,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
 
 public class FragmentCycleUseCategory extends Fragment {
