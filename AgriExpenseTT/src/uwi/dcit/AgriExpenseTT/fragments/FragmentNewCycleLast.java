@@ -91,17 +91,17 @@ public class FragmentNewCycleLast extends Fragment {
 	}
 	
 	
-	public String formatDisplayDate(Calendar calender){
+	public String formatDisplayDate(Calendar calendar){
 		String strDate;
-		if ( calender == null){
-			calender = Calendar.getInstance();
-			calender.set(Calendar.HOUR_OF_DAY, 0);
-			calender.set(Calendar.MINUTE, 0);
-			calender.set(Calendar.SECOND, 0);
-			calender.set(Calendar.MILLISECOND, 0);
+		if ( calendar == null){
+			calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
 		}
-		unixDate = calender.getTimeInMillis();
-		Date d = calender.getTime();
+		unixDate = calendar.getTimeInMillis();
+		Date d = calendar.getTime();
 		strDate = DateFormat.getDateInstance().format(d);
         btnDate.setText(strDate);
 

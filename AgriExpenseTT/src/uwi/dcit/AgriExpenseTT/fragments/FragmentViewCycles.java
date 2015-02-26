@@ -49,7 +49,6 @@ public class FragmentViewCycles extends ListFragment{
 	DbHelper dbh;
 	final int req_edit=1;
 	final String className = "ViewCycles";
-
 	
 	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
 	CycleListAdapter cycAdapt;
@@ -252,40 +251,22 @@ public class FragmentViewCycles extends ListFragment{
 		@Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            //Get Layout of An Item and Store it in a view
             View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
+
             //get the elements of that view and set them accordingly
-            LocalCycle currCycle=cycleList.get(position);
+            LocalCycle currCycle = cycleList.get(position);
             int cid = currCycle.getCropId();
 
             String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
-            ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText(txt);
+            ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);
 
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
-//            ImageView imageView=(ImageView)row.findViewById(R.id.icon_purchaseType);
-//            imageView.setImageResource(R.drawable.crop_under_rain_solid);
 
             double qty=currCycle.getLandQty();
-            txt=currCycle.getLandType();
-            txt=qty+" "+txt;
-            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText(txt);
-
-            TextView DayL=(TextView)row.findViewById(R.id.tv_cycleList_day);
-            Long dateMils=currCycle.getTime();
-            Calendar calender=Calendar.getInstance();
-            calender.setTimeInMillis(dateMils);
-
-            cid=calender.get(Calendar.DAY_OF_WEEK);
-            String[] days={"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
-
-            if(cid==7){
-            DayL.setText(days[6]);
-            }else{
-            DayL.setText(days[cid]);
-            }
-
-            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText(DateFormatStandard.getDateStr(calender.getTime()));
+            txt = currCycle.getLandType();
+            txt = qty +" "+ txt;
+            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatStandard.getDateStr(currCycle.getTime()));
 
             return row;
 		}

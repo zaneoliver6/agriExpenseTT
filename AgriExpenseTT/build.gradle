@@ -42,9 +42,9 @@ android {
             proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
         }
         debug {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
 }

@@ -43,7 +43,12 @@ public class DbHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
 		Log.d(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
-		
+
+        //TODO When updating to newest version ensure that purchase has a default date (otherwise program will crash)
+        //TODO change the purchase from timestamp to date (may not be necessary)
+        //TODO Add logic to place the crop name as the cycle name for existing cycle records
+
+
 		if (oldVersion < 170){
 			Log.d(TAG_NAME, "version too old to support Removing all tables so far and restart");
 			this.dropTables(db);

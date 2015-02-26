@@ -7,6 +7,8 @@ import android.os.Parcelable;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
 
+import java.util.Date;
+
 public class LocalResourcePurchase implements Parcelable{
 	private int pId;
 	private int resourceId;
@@ -15,10 +17,12 @@ public class LocalResourcePurchase implements Parcelable{
 	private double cost;
 	private double qtyRemaining;
 	private String type;
+    private long date;
 	
 	public LocalResourcePurchase() {
 		super();
 	}
+
 	public LocalResourcePurchase(int pId, int resourceId, String quantifier,
 			double qty, double cost, double qtyRemaining,String type) {
 		super();
@@ -30,7 +34,19 @@ public class LocalResourcePurchase implements Parcelable{
 		this.qtyRemaining = qtyRemaining;
 		this.type=type;
 	}
-	public int getpId() {
+
+    public LocalResourcePurchase(int pId, int resourceId, String quantifier, double qty, double cost, double qtyRemaining, String type, long date) {
+        this.pId = pId;
+        this.resourceId = resourceId;
+        this.quantifier = quantifier;
+        this.qty = qty;
+        this.cost = cost;
+        this.qtyRemaining = qtyRemaining;
+        this.type = type;
+        this.date = date;
+    }
+
+    public int getpId() {
 		return pId;
 	}
 	public void setpId(int pId) {
@@ -72,7 +88,16 @@ public class LocalResourcePurchase implements Parcelable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	@Override
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    @Override
 	public String toString() {
 		return "purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 	}
@@ -88,6 +113,8 @@ public class LocalResourcePurchase implements Parcelable{
 		p.setResourceId(this.resourceId);
 		return p;
 	}
+
+    //TODO Create converter for RPurchase to accommodate date
 	
 	@Override
 	public int describeContents() {
@@ -97,7 +124,6 @@ public class LocalResourcePurchase implements Parcelable{
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		
 		dest.writeInt(pId);
 		dest.writeInt(resourceId);
 		dest.writeString(type);
@@ -105,16 +131,20 @@ public class LocalResourcePurchase implements Parcelable{
 		dest.writeDouble(cost);
 		dest.writeDouble(qty);
 		dest.writeDouble(qtyRemaining);
+        dest.writeLong(date);
 	}
+
 	public LocalResourcePurchase(Parcel dest){
-		pId=dest.readInt();
-		resourceId=dest.readInt();
-		type=dest.readString();
-		quantifier=dest.readString();
-		cost=dest.readDouble();
-		qty=dest.readDouble();
+		pId         = dest.readInt();
+		resourceId  = dest.readInt();
+		type        = dest.readString();
+		quantifier  = dest.readString();
+		cost        = dest.readDouble();
+		qty         = dest.readDouble();
 		qtyRemaining=dest.readDouble();
+        date        = dest.readLong();
 	}
+
 	public final static Parcelable.Creator<LocalResourcePurchase> CREATOR = new Parcelable.Creator<LocalResourcePurchase>() {
 
 		@Override

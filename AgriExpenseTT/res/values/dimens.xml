@@ -16,5 +16,8 @@
 
     <dimen name="list_reuse_description">17sp</dimen>
     <dimen name="list_reuse_details">19sp</dimen>
+    <dimen name="label_dataentry_margin">10dp</dimen>
+    <dimen name="lable_item_details_bottom_margin">4dp</dimen>
+    <dimen name="lable_item_details_left_margin">12dp</dimen>
 
 </resources>

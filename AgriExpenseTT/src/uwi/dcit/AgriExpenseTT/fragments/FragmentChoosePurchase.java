@@ -26,15 +26,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -123,11 +128,9 @@ public class FragmentChoosePurchase extends ListFragment {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 		switch(item.getItemId()){
 			case R.id.resource_edit: 								//Edit Purchase
-				Log.i(Main.APP_NAME, "Edit The details for resource: "+pList.get(info.position).getQuantifier());
 				editPurchaseOption(info.position);
 				break;
 			case R.id.resource_delete:								//Delete Purchase
-				Log.i(Main.APP_NAME, "Delete The details for resource: "+pList.get(info.position).getQuantifier());
 				deletePurchaseOption(this.getListView(), info.position);
 				break;
 			default:
@@ -149,7 +152,10 @@ public class FragmentChoosePurchase extends ListFragment {
 	 
 	 public void editPurchaseOption(int position){
 		 Intent i=new Intent(getActivity(),EditPurchase.class);
-		 i.putExtra("purchase",pList.get(position));
+         LocalResourcePurchase l = pList.get(position);
+         Log.d(this.getClass().getName(),"Date of the Purchase as " + l.getDate());
+         i.putExtra("purchase", l );
+//		 i.putExtra("purchase",pList.get(position));
 		 startActivityForResult(i, req_edit);
 	 }
 	 
@@ -226,56 +232,51 @@ public class FragmentChoosePurchase extends ListFragment {
 	 public class PurchaseListAdapter extends ArrayAdapter<LocalResourcePurchase> {
 		  
 		 Context myContext;
-		
-		  public PurchaseListAdapter(Context context, int textViewResourceId,
-                                     ArrayList<LocalResourcePurchase> objects) {
-			  super(context, textViewResourceId, objects);
-		   myContext = context;
-		  }
-		
-		  @SuppressLint("ViewHolder")
-          @Override
-		  public View getView(int position, View convertView, ViewGroup parent) {
-			   //return super.getView(position, convertView, parent);
-			   
-			   LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			   LocalResourcePurchase curr=pList.get(position);
-			   //Get Layout of An Item and Store it in a view
-			   View row=inflater.inflate(R.layout.purchased_item, parent, false);
-			   //setting the colours
-			   View line=row.findViewById(R.id.line_pitem);
-			   if(curr.getType().equals(DHelper.cat_plantingMaterial)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
-			   }else if(curr.getType().equals(DHelper.cat_fertilizer)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
-			   }else if(curr.getType().equals(DHelper.cat_soilAmendment)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
-			   }else if(curr.getType().equals(DHelper.cat_chemical)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
-			   }else if(curr.getType().equals(DHelper.cat_labour)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
-			   }else if(curr.getType().equals(DHelper.cat_other)){
-				   line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
-			   }
+         public PurchaseListAdapter(Context context, int textViewResourceId,ArrayList<LocalResourcePurchase> objects) {
+             super(context, textViewResourceId, objects);
+             myContext = context;
+		 }
+         @SuppressLint("ViewHolder")
+         @Override
+         public View getView(int position, View convertView, ViewGroup parent) {
+             LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+             LocalResourcePurchase curr = pList.get(position);
+
+             //Get Layout of An Item and Store it in a view
+			 View row=inflater.inflate(R.layout.purchased_item, parent, false);
+
+			 //setting the colours
+			 View line=row.findViewById(R.id.line_pitem);
+             if(curr.getType().equals(DHelper.cat_plantingMaterial)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
+                }else if(curr.getType().equals(DHelper.cat_fertilizer)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
+                }else if(curr.getType().equals(DHelper.cat_soilAmendment)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
+                }else if(curr.getType().equals(DHelper.cat_chemical)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
+                }else if(curr.getType().equals(DHelper.cat_labour)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+                }else if(curr.getType().equals(DHelper.cat_other)){
+                line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
+             }
 			 
 			   //get the elements of that view and set them accordingly
-			   TextView header=(TextView)row.findViewById(R.id.tv_pItem_header);
-			   TextView det1=(TextView)row.findViewById(R.id.tv_pitem_det1);
-			   TextView det2=(TextView)row.findViewById(R.id.tv_pitem_det2);
+			 TextView header=(TextView)row.findViewById(R.id.tv_pItem_header);
+			 TextView det1=(TextView)row.findViewById(R.id.tv_pitem_det1);
+			 TextView det2=(TextView)row.findViewById(R.id.tv_pitem_det2);
+             TextView dateTV = (TextView)row.findViewById(R.id.tv_pitem_date);
+
 			   //int pId=Integer.parseInt(ids[position]);		
-			   header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
-			   det1.setText("Quantity:"+curr.getQty()+" "+curr.getQuantifier());
-			   det2.setText("Cost:$"+curr.getCost());
+			 header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
+			 det1.setText("Quantity: "+curr.getQty()+" "+curr.getQuantifier());
+             det2.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
+             dateTV.setText("Date: " + DateFormatStandard.getDateStr(curr.getDate()));
 			   
 			   
-			   //TODO Set a custom icon based on the type of the resource purchaseds
-//			   ImageView icon=(ImageView)row.findViewById(R.id.icon_pitem_next);
-//			   if(type==null)
-//				   icon.setImageResource(R.drawable.money_doller1);
-//			   else
-//				   icon.setImageResource(R.drawable.money_doller1);
-			   return row;
-		  }
+			 //TODO Set a custom icon based on the type of the resource purchased
+			 return row;
+		 }
 	 }
 
 }

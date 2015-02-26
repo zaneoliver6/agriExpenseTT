@@ -35,6 +35,7 @@ public class DbQuery {
 		db.insert(ResourceContract.ResourceEntry.TABLE_NAME, null, cv);
 		return getLast(db, dbh, ResourceContract.ResourceEntry.TABLE_NAME);
 	}
+
 	//this is for when the farmer buys any material crop, fertilizer, chemical NOT WHEN HE USES
 	public static int insertResourceExp(SQLiteDatabase db, DbHelper dbh, String type, int resourceId, String quantifier, double qty, double cost, TransactionLog tl){
 		ContentValues cv= new ContentValues();
@@ -50,6 +51,23 @@ public class DbQuery {
 		 tl.insertTransLog(ResourcePurchaseEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);//records the insert of a purchase
 		return rowId;
 	}
+
+    public static int insertResourceExp(SQLiteDatabase db, DbHelper dbh, String type, int resourceId, String quantifier, double qty, double cost, long time, TransactionLog tl){
+        ContentValues cv= new ContentValues();
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, resourceId);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, type);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, qty);
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE, DbQuery.findResourceName(db, dbh, resourceId));
+        cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, time);
+
+        db.insert(ResourcePurchaseEntry.TABLE_NAME, null, cv);
+        int rowId=getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
+        tl.insertTransLog(ResourcePurchaseEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);//records the insert of a purchase
+        return rowId;
+    }
 	
 	//based on the material being used inserts USE of a particular material for a particular CYCLE
 	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
@@ -66,6 +84,22 @@ public class DbQuery {
 		tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
 		return rowId; 
 	}
+
+    public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty, String quantifier, double useCost, long time, TransactionLog tl){
+        ContentValues cv= new ContentValues();
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
+        cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
+//        cv.put(CycleResourceEntry.)
+
+        db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
+        int rowId=getLast(db, dbh, CycleResourceEntry.TABLE_NAME);
+        tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
+        return rowId;
+    }
 	
 	public static int insertCycle(SQLiteDatabase db, DbHelper dbh,int cropId, String landType, double landQty,TransactionLog tl,long time){
 		ContentValues cv=new ContentValues();
@@ -186,17 +220,16 @@ public class DbQuery {
 	
 	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,String type,String quantifier,boolean allowFinished){
 		String code;
-		if(type==null)
+		if(type == null)
 			code="select * from "+ResourcePurchaseEntry.TABLE_NAME+";";
 		else
-			//if(!allowFinished)//not allowing finished
-				//code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "+DbHelper.RESOURCE_PURCHASE_TYPE+"='"+type+"' and "+DbHelper.RESOURCE_PURCHASE_REMAINING+">0;";
-			//else
-				code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE+"='"+type+"';";
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor==null || cursor.getCount()<1 )
+			code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE+"='"+type+"';";
+
+        Cursor cursor = db.rawQuery(code, null);
+		if(cursor == null || cursor.getCount() < 1 )
 			return;
-		while(cursor.moveToNext()){
+
+        while(cursor.moveToNext()){
 			LocalResourcePurchase m=new LocalResourcePurchase();
 			m.setpId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseEntry._ID)));
 			m.setResourceId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID)));
@@ -205,6 +238,7 @@ public class DbQuery {
 			m.setQty(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY)));
 			m.setCost(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_COST)));
 			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
+            m.setDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			list.add(m);
 		}
 	}

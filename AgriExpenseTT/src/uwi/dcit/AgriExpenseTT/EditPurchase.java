@@ -1,10 +1,15 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -12,18 +17,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 
+import java.util.Calendar;
+
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
+import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
@@ -42,13 +52,18 @@ public class EditPurchase extends ActionBarActivity {
 	String resource=null;
 	final int REQ_QTFR=2;
 	String quantifier=null;
+
 	double qty;
 	double cost;
+    long date;
+
 	SQLiteDatabase db;
 	DbHelper dbh;
 	LocalResourcePurchase p;
-	
-	@Override
+    private TextView tv_date;
+    private Button btn_date;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_purchase);
@@ -59,35 +74,51 @@ public class EditPurchase extends ActionBarActivity {
 		
 	}
 	private void initialize() {
-		//setup buttons
-		btn_res=(Button)findViewById(R.id.btn_editPurchase_crop);
-		btn_qtfr=(Button)findViewById(R.id.btn_editPurchase_quantifier);
-		Button btn_dne=(Button)findViewById(R.id.btn_editPurchase_done);
-		et_qty=(EditText)findViewById(R.id.et_editPurchase_Qty);
+		//setup text views
+        et_qty=(EditText)findViewById(R.id.et_editPurchase_Qty);
 		et_cost=(EditText)findViewById(R.id.et_editPurchase_cost);
-		Click c=new Click();
-		btn_res.setOnClickListener(c);
+
+
+        //setup buttons
+        btn_res=(Button)findViewById(R.id.btn_editPurchase_crop);
+        btn_qtfr=(Button)findViewById(R.id.btn_editPurchase_quantifier);
+        Button btn_dne=(Button)findViewById(R.id.btn_editPurchase_done);
+        btn_date = (Button)findViewById((R.id.btn_editPurchase_date));
+        Click c=new Click();
+        btn_res.setOnClickListener(c);
 		btn_qtfr.setOnClickListener(c);
+        btn_date.setOnClickListener(c);
 		btn_dne.setOnClickListener(c);
 		
 		//get data
-		p=getIntent().getExtras().getParcelable("purchase");
-		resource= DbQuery.findResourceName(db, dbh, p.getResourceId());
-		quantifier=p.getQuantifier();
-		qty=p.getQty();
-		cost=p.getCost();
+		p = getIntent().getExtras().getParcelable("purchase");
+		resource = DbQuery.findResourceName(db, dbh, p.getResourceId());
+		quantifier = p.getQuantifier();
+		qty = p.getQty();
+		cost = p.getCost();
+        date = p.getDate();
+
+        Log.d("EditPurchase", "Integer is: " + date);
+
+        //process date
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(date);
 		
 		//set up text views
 		tv_res=(TextView)findViewById(R.id.tv_editPurchase_resVal);
 		tv_qtfr=(TextView)findViewById(R.id.tv_editPurchase_quantifierVal);
 		tv_qty=(TextView)findViewById(R.id.tv_editPurchase_QtyVal);
 		tv_cost=(TextView)findViewById(R.id.tv_editPurchase_costVal);
+        tv_date = (TextView) findViewById(R.id.tv_editPurchase_dateVal);
+
 		//initialize text views
 		tv_res.setText(resource);
 		tv_qtfr.setText(quantifier);
 		tv_qty.setText("previous quantity:"+p.getQty());
 		tv_cost.setText("previous cost:$"+p.getCost());
-		
+        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+
+
 		View line=findViewById(R.id.line_header);
 		//line.setBackgroundColor(Color.parseColor("#80000000"));
 		//line.getBackground().setAlpha(50);
@@ -136,7 +167,10 @@ public class EditPurchase extends ActionBarActivity {
 				startActivityForResult(i,REQ_QTFR);
 			}else if(v.getId()==R.id.btn_editPurchase_done){
 				updatePurchase();
-			}
+			}else if (v.getId() == R.id.btn_editPurchase_date){
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getSupportFragmentManager(), "Choose Date");
+            }
 		}
 	}
 	
@@ -153,6 +187,7 @@ public class EditPurchase extends ActionBarActivity {
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);
+        cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, date);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
 		DataManager dm=new DataManager(EditPurchase.this, db, dbh);
 		RPurchase rp=p.toRPurchase();
@@ -196,4 +231,30 @@ public class EditPurchase extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    private void formatDisplayDate(Calendar cal) {
+        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+        date = cal.getTimeInMillis();
+    }
+
+    @SuppressLint("ValidFragment")
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        @Override
+        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+            formatDisplayDate(cal);
+        }
+    }
 }
