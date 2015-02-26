@@ -26,7 +26,7 @@ import java.util.Calendar;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -99,7 +99,7 @@ public class EditCycle extends ActionBarActivity {
 		Calendar cal=Calendar.getInstance();
 		cal.setTimeInMillis(date);
 
-		tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+		tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
 	}
 	
 	@Override
@@ -187,7 +187,7 @@ public class EditCycle extends ActionBarActivity {
 	}
 
     private void formatDisplayDate(Calendar cal) {
-        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+        tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
         date = cal.getTimeInMillis();
     }
 

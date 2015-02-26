@@ -28,12 +28,11 @@ import java.util.Calendar;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
@@ -116,7 +115,7 @@ public class EditPurchase extends ActionBarActivity {
 		tv_qtfr.setText(quantifier);
 		tv_qty.setText("previous quantity:"+p.getQty());
 		tv_cost.setText("previous cost:$"+p.getCost());
-        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+        tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
 
 
 		View line=findViewById(R.id.line_header);
@@ -233,7 +232,7 @@ public class EditPurchase extends ActionBarActivity {
 	}
 
     private void formatDisplayDate(Calendar cal) {
-        tv_date.setText(DateFormatStandard.getDateStr(cal.getTime()));
+        tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
         date = cal.getTimeInMillis();
     }
 

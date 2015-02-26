@@ -1,9 +1,13 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract;
 import uwi.dcit.AgriExpenseTT.models.CountryContract;
@@ -25,7 +29,7 @@ public class DbHelper extends SQLiteOpenHelper{
 
 	public static final int VERSION = 171;
 	public static final String DATABASE_NAME="agriDb";
-	public static final String TAG_NAME = "AgriExpense DB Helper";
+	public static final String TAG_NAME = "AgriExpenseDBHelper";
 	public Context ctx;
 	
 	public DbHelper(Context context) {
@@ -44,7 +48,7 @@ public class DbHelper extends SQLiteOpenHelper{
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
 		Log.d(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
-        //TODO When updating to newest version ensure that purchase has a default date (otherwise program will crash)
+
         //TODO change the purchase from timestamp to date (may not be necessary)
         //TODO Add logic to place the crop name as the cycle name for existing cycle records
 
@@ -68,12 +72,21 @@ public class DbHelper extends SQLiteOpenHelper{
 			
 			Log.d(TAG_NAME, "Running upgrade of crop/plating material lists");
 			this.updateCropList(db);
-		}
+		}else if (oldVersion < 172){
+            db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " ADD COLUMN "+ CycleContract.CycleEntry.CROPCYCLE_NAME + " TEXT");
+            // Place the resource name as the default name of the cycle
+            updateCycleCropName(db);
+            // Place the update date as the date for the previously created resources purchased
+            updatePurchaseRecs(db);
+
+        }
 		
 		Log.d(TAG_NAME, "Completed upgrading the database to version " + VERSION);
 	}
 
-	private void tableColumnModify(SQLiteDatabase db){
+
+
+    private void tableColumnModify(SQLiteDatabase db){
 		// Using Transactions to help ensure some level of security
 		db.beginTransaction();
 		
@@ -484,6 +497,21 @@ public class DbHelper extends SQLiteOpenHelper{
 			DbQuery.insertCounty(db, county[0], county[1]);
 		}
 	}
-	
-	
+
+    private void updatePurchaseRecs(SQLiteDatabase  db){
+        Cursor cursor = db.rawQuery("SELECT * FROPM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null);
+        // Update Existing Dates to the current date
+        while(cursor.moveToNext()){
+            ContentValues cv = new ContentValues();
+            cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,  DateFormatHelper.getDateUnix(new Date()) );
+        }
+    }
+
+    private void updateCycleCropName(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + CycleContract.CycleEntry.TABLE_NAME, null);
+        while(cursor.moveToNext()){
+            ContentValues cv = new ContentValues();
+            cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, cursor.getColumnIndex(CycleContract.CycleEntry.CROPCYCLE_RESOURCE));
+        }
+    }
 }

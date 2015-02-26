@@ -21,17 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
 import uwi.dcit.AgriExpenseTT.Main;
@@ -39,7 +35,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -271,7 +267,7 @@ public class FragmentChoosePurchase extends ListFragment {
 			 header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
 			 det1.setText("Quantity: "+curr.getQty()+" "+curr.getQuantifier());
              det2.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
-             dateTV.setText("Date: " + DateFormatStandard.getDateStr(curr.getDate()));
+             dateTV.setText("Date: " + DateFormatHelper.getDateStr(curr.getDate()));
 			   
 			   
 			 //TODO Set a custom icon based on the type of the resource purchased

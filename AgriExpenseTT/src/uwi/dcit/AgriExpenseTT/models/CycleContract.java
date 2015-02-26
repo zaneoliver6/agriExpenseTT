@@ -10,7 +10,8 @@ public class CycleContract {
 	
 	public static final String SQL_CREATE_CYCLE = "CREATE TABLE IF NOT EXISTS "+CycleEntry.TABLE_NAME+"("
 			+CycleEntry._ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+CycleEntry.CROPCYCLE_CROPID + INT_TYPE + COMMA_SEP 
+			+CycleEntry.CROPCYCLE_CROPID + INT_TYPE + COMMA_SEP
+            +CycleEntry.CROPCYCLE_NAME + TEXT_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_LAND_TYPE + TEXT_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_LAND_AMOUNT + INT_TYPE + COMMA_SEP 
 			+CycleEntry.CROPCYCLE_DATE + INT_TYPE + COMMA_SEP 
@@ -27,7 +28,6 @@ public class CycleContract {
 	
 	public static abstract class CycleEntry implements BaseColumns{
 		public static final String TABLE_NAME="cropCycle";
-//		public static final String CROPCYCLE_ID="id";
 		public static final String CROPCYCLE_CROPID="cropId";
 		public static final String CROPCYCLE_LAND_TYPE="landType";
 		public static final String CROPCYCLE_LAND_AMOUNT="landAmt";
@@ -38,5 +38,6 @@ public class CycleContract {
 		public static final String CROPCYCLE_COSTPER="costPer";
 		public static final String CROPCYCLE_COUNTY="county";
 		public static final String CROPCYCLE_RESOURCE="cropName";
+        public static final String CROPCYCLE_NAME="cyclename";
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class DateFormatStandard {
+public class DateFormatHelper {
 
     public static String getDateStr(Date d){
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy", Locale.UK);
@@ -18,5 +18,10 @@ public class DateFormatStandard {
         return getDateStr(cal.getTime());
     }
 
+    public static long getDateUnix(Date d){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        return cal.getTimeInMillis();
+    }
 
 }

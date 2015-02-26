@@ -33,7 +33,7 @@ import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.DateFormatStandard;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -264,7 +264,7 @@ public class FragmentViewCycles extends ListFragment{
             txt = currCycle.getLandType();
             txt = qty +" "+ txt;
             ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
-            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatStandard.getDateStr(currCycle.getTime()));
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
 
             return row;
 		}
