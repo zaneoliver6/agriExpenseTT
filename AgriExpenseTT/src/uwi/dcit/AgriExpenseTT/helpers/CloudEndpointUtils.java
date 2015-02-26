@@ -40,7 +40,7 @@ public class CloudEndpointUtils {
 	 */
 	// protected static final String LOCAL_APP_ENGINE_SERVER_URL =
 	// "http://localhost:8888/";
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "https://centering-dock-715.appspot.com/";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080/";
 
 	/*
 	 * The root URL of where your DevAppServer is running when it's being

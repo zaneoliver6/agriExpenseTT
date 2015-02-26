@@ -323,8 +323,7 @@ public class CycleEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
-    public void removeCycle(@Named("keyrep") String keyrep,
-                            @Named("namespace") String namespace) {
+    public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
         DatastoreService d = DatastoreServiceFactory.getDatastoreService();
         Key k = KeyFactory.stringToKey(keyrep);

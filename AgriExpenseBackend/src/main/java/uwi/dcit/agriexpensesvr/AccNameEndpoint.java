@@ -18,8 +18,7 @@ import javax.persistence.EntityManager;
                 ownerDomain = "agriexpensesvr.dcit.uwi",
                 ownerName = "agriexpensesvr.dcit.uwi",
                 packagePath = ""
-        )
-)
+        ))
 public class AccNameEndpoint {
 
     private static final Logger logger = Logger.getLogger(AccNameEndpoint.class.getName());

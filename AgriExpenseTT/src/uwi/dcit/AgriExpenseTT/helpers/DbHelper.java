@@ -19,9 +19,7 @@ import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-
-//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
-
+import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbHelper extends SQLiteOpenHelper{
 
