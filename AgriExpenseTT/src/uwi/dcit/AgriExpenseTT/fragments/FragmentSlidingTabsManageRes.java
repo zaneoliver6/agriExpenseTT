@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
+import uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout;
 
 /**
  * Created by Steffan on 24/12/2014.

@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
 
-    <uwi.dcit.AgriExpenseTT.models.SlidingTabLayout
+    <uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout
         android:id="@+id/sliding_tabs_manage_resources"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

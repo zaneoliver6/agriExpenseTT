@@ -17,7 +17,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.AgriExpenseTT.models.SlidingTabLayout;
+import uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout;
 
 public class FragmentSlidingMain extends Fragment {
     protected ArrayList<FragItem> fragments;

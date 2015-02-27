@@ -222,6 +222,7 @@ public class DbQuery {
 			n.setHarvestType(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_HARVEST_TYPE)));
 			n.setCostPer(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_COSTPER)));
 			n.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
+            n.setCycleName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_NAME)));
 			list.add(n);
 		}
 	}

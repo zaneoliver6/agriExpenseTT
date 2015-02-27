@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -46,6 +47,9 @@ public class FragmentViewCycles extends ListFragment{
 	DbHelper dbh;
 	final int req_edit=1;
 	final String className = "ViewCycles";
+
+    private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
+    private int mActivatedPosition = ListView.INVALID_POSITION;
 	
 	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
 	CycleListAdapter cycAdapt;
@@ -54,6 +58,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onActivityCreated(Bundle savedState){
 		super.onActivityCreated(savedState);
 		this.registerForContextMenu(getListView());
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	}
 	
 	@Override
@@ -61,15 +66,14 @@ public class FragmentViewCycles extends ListFragment{
 		super.onCreate(savedInstanceState);
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
 		db	= dbh.getReadableDatabase();
-		
-		try{//when called from hiring labour
-			type = getArguments().getString("type");
-		}catch (Exception e){
-			Log.i(className, "No Type Passed");
-		}
+
+        if (getArguments() != null && getArguments().containsKey("type"))
+            type = getArguments().getString("type");
+//        else Log.i(className, "No Type Passed");
+
 		populateList();
 
-		cycAdapt = new CycleListAdapter(getActivity().getBaseContext(), R.layout.cycle_list_item, cycleList);
+		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
 
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
@@ -90,7 +94,7 @@ public class FragmentViewCycles extends ListFragment{
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+        return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
 	
 	@Override
@@ -125,7 +129,16 @@ public class FragmentViewCycles extends ListFragment{
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		
+        super.onListItemClick(l, v, position, id);
+
+
+        setSelection(position);
+
+        if (this.getListView().getChoiceMode() == ListView.CHOICE_MODE_SINGLE)Log.d("ViewCycles ", "Single Mode Enabled");
+        else if (this.getListView().getChoiceMode() == ListView.CHOICE_MODE_NONE)Log.d("ViewCycles ", "No mode defined");
+
+        Log.d("ViewCycles", "Selected Position: " + this.getListView().getSelectedItemPosition());
+
 		if(type == null){
 			launchCycleUsage(position);
 		}else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
@@ -136,7 +149,36 @@ public class FragmentViewCycles extends ListFragment{
 			editCycleCoption(position);
 		}
 	}
-	
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != ListView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
+        }
+    }
+
+    private void setActivatedPosition(int position) {
+        if (position == ListView.INVALID_POSITION) {
+            getListView().setItemChecked(mActivatedPosition, false);
+        } else {
+            getListView().setItemChecked(position, true);
+        }
+
+        mActivatedPosition = position;
+    }
+
 	public void launchCycleUsage(int position){
 //		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
         Bundle arguments = new Bundle();
@@ -240,6 +282,7 @@ public class FragmentViewCycles extends ListFragment{
 	
 	public class CycleListAdapter extends ArrayAdapter<LocalCycle> {
         Context myContext;
+
         public CycleListAdapter(Context context, int textViewResourceId, ArrayList<LocalCycle> objects) {
 		    super(context, textViewResourceId, objects);
 		    myContext = context;
@@ -248,15 +291,17 @@ public class FragmentViewCycles extends ListFragment{
         @SuppressLint("ViewHolder")
 		@Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = (LayoutInflater)myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = ((Activity)myContext).getLayoutInflater();
             View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
 
             //get the elements of that view and set them accordingly
             LocalCycle currCycle = cycleList.get(position);
-            int cid = currCycle.getCropId();
 
-            String txt=DbQuery.findResourceName(db, dbh, cid);//getting the crop name
+            String txt = (currCycle.getCropName() != null ) ? currCycle.getCropName() : DbQuery.findResourceName(db, dbh, currCycle.getCropId());
+            String cycleName = (currCycle.getCycleName() != null) ? currCycle.getCycleName().toUpperCase() : txt;
+
             ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);
+            ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(("Name: "+ cycleName));
 
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
@@ -266,8 +311,18 @@ public class FragmentViewCycles extends ListFragment{
             ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
             ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
 
+            Log.d("ViewCycle-getView", "selectedposition: " + getSelectedItemPosition() + "position: "+position);
+            if (position == getSelectedItemPosition()){
+                row.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+            }
+
             return row;
 		}
+
+        @Override
+        public int getCount(){
+            return cycleList.size();
+        }
 		  
 		  //register click  
 	 }

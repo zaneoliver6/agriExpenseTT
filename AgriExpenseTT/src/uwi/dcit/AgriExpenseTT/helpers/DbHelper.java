@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract;
@@ -49,9 +50,9 @@ public class DbHelper extends SQLiteOpenHelper{
 		Log.d(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
 
-        //TODO change the purchase from timestamp to date (may not be necessary)
-        //TODO Add logic to place the crop name as the cycle name for existing cycle records
-
+        // TODO change the purchase from timestamp to date (may not be necessary)
+        // TODO Add logic to place the crop name as the cycle name for existing cycle records
+        // TODO Add Date to CycleResource and place timestamp automatically for values
 
 		if (oldVersion < 170){
 			Log.d(TAG_NAME, "version too old to support Removing all tables so far and restart");
@@ -76,15 +77,19 @@ public class DbHelper extends SQLiteOpenHelper{
             db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " ADD COLUMN "+ CycleContract.CycleEntry.CROPCYCLE_NAME + " TEXT");
             // Place the resource name as the default name of the cycle
             updateCycleCropName(db);
+
             // Place the update date as the date for the previously created resources purchased
             updatePurchaseRecs(db);
 
+            // Add Date Column to CycleResource
+            db.execSQL("ALTER TABLE " + CycleResourceContract.CycleResourceEntry.TABLE_NAME + " ADD COLUMN "+ CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED +  " TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+            updateCycleResource(db);
         }
 		
 		Log.d(TAG_NAME, "Completed upgrading the database to version " + VERSION);
+
+        db.close();
 	}
-
-
 
     private void tableColumnModify(SQLiteDatabase db){
 		// Using Transactions to help ensure some level of security
@@ -505,6 +510,7 @@ public class DbHelper extends SQLiteOpenHelper{
             ContentValues cv = new ContentValues();
             cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,  DateFormatHelper.getDateUnix(new Date()) );
         }
+        cursor.close();
     }
 
     private void updateCycleCropName(SQLiteDatabase db) {
@@ -513,5 +519,17 @@ public class DbHelper extends SQLiteOpenHelper{
             ContentValues cv = new ContentValues();
             cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, cursor.getColumnIndex(CycleContract.CycleEntry.CROPCYCLE_RESOURCE));
         }
+        cursor.close();
+    }
+
+    private void updateCycleResource(SQLiteDatabase db){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + CycleResourceContract.CycleResourceEntry.TABLE_NAME , null);
+        while(cursor.moveToNext()){
+            ContentValues cv = new ContentValues();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cv.put(CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED, cal.getTimeInMillis());
+        }
+        cursor.close();
     }
 }

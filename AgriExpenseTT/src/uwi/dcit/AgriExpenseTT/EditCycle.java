@@ -1,8 +1,6 @@
 package uwi.dcit.AgriExpenseTT;
 
 import android.annotation.SuppressLint;
-//import android.app.DatePickerDialog;
-//import android.app.Dialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -32,6 +30,9 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+
+//import android.app.DatePickerDialog;
+//import android.app.Dialog;
 
 public class EditCycle extends ActionBarActivity {
 	Button btn_crop;
@@ -79,9 +80,8 @@ public class EditCycle extends ActionBarActivity {
 	}
 
 	private void initialize() {
-		//get Data
-		//p=getIntent().getExtras().getParcelable("purchase");
-		cycle   = getIntent().getExtras().getParcelable("cycle");
+
+        cycle   = getIntent().getExtras().getParcelable("cycle");
 		crop    = DbQuery.findResourceName(db, dbh, cycle.getCropId());
 		land    = cycle.getLandType();
 		landQty = cycle.getLandQty();
@@ -163,7 +163,7 @@ public class EditCycle extends ActionBarActivity {
 		cv.put(CycleEntry.CROPCYCLE_DATE, date);
         cv.put(CycleEntry.CROPCYCLE_NAME, name);
 
-		Toast.makeText(getApplicationContext(),"Updating "+ crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(),"Updating "+ " "+name+crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
 //
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
 		boolean result = dm.updateCycle(cycle, cv);
