@@ -131,13 +131,13 @@ public class FragmentViewCycles extends ListFragment{
 	public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        setActivatedPosition(position);
+//        setSelection(position);
+//        this.getListView().setSelection(position);
+//        Log.d("ViewCycles", "ListView contains " + getListView().getCount() + "items");
+        Log.d("ViewCycles", "Position selected: " + getListView().getSelectedItemPosition());
 
-        setSelection(position);
-
-        if (this.getListView().getChoiceMode() == ListView.CHOICE_MODE_SINGLE)Log.d("ViewCycles ", "Single Mode Enabled");
-        else if (this.getListView().getChoiceMode() == ListView.CHOICE_MODE_NONE)Log.d("ViewCycles ", "No mode defined");
-
-        Log.d("ViewCycles", "Selected Position: " + this.getListView().getSelectedItemPosition());
+        setActivatedPosition(position);
 
 		if(type == null){
 			launchCycleUsage(position);
@@ -165,6 +165,7 @@ public class FragmentViewCycles extends ListFragment{
         super.onSaveInstanceState(outState);
         if (mActivatedPosition != ListView.INVALID_POSITION) {
             // Serialize and persist the activated item position.
+            Log.d("ViewCycles", "Saving state: " + mActivatedPosition);
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
     }
@@ -173,6 +174,7 @@ public class FragmentViewCycles extends ListFragment{
         if (position == ListView.INVALID_POSITION) {
             getListView().setItemChecked(mActivatedPosition, false);
         } else {
+            Log.d("ViewCycles", "Setting position to: "+position);
             getListView().setItemChecked(position, true);
         }
 
@@ -182,7 +184,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void launchCycleUsage(int position){
 //		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
         Bundle arguments = new Bundle();
-		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
+//		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
 		arguments.putParcelable("cycleMain",cycleList.get(position));
 		Fragment newFrag= new FragmentCycleUseage();
         newFrag.setArguments(arguments);
@@ -311,7 +313,7 @@ public class FragmentViewCycles extends ListFragment{
             ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
             ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
 
-            Log.d("ViewCycle-getView", "selectedposition: " + getSelectedItemPosition() + "position: "+position);
+//            Log.d("ViewCycle-getView", "selectedposition: " + getSelectedItemPosition() + "position: "+position);
             if (position == getSelectedItemPosition()){
                 row.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
             }
