@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
@@ -17,12 +18,13 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
+    protected boolean isLabour = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		String type = getArguments().getString("type");
 		String category = getArguments().getString("category");
 		
-		view = inflater.inflate(R.layout.fragment_empty_purchaselist, container, false);
+		view = inflater.inflate(R.layout.fragment_empty_resourcelist, container, false);
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
 		setupButton(type);
 
@@ -42,6 +44,9 @@ public class FragmentEmpty extends Fragment{
 			}
 		}else if(type.equals("select")){
             desc.setText("Select something to begin operations");
+        }else if (type.equals("labour")){
+            desc.setText("Tap here to add a new labourer");
+            this.isLabour = true;
         }
         // Google Analytics
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
@@ -66,6 +71,14 @@ public class FragmentEmpty extends Fragment{
                     createCycle();
                 }
             });
+        }else if (type.equals("labour")){
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Empty Fragment"," creating a new labourer");
+                    createLabourer();
+                }
+            });
         }else if(type.equals("cycleuse")){
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,6 +90,11 @@ public class FragmentEmpty extends Fragment{
             v.setImageResource(R.drawable.icon_touch);
         }
     }
+
+    private void createLabourer() {
+        startActivity(new Intent(getActivity().getApplicationContext(), HireLabour.class));
+    }
+
     public void createCycle(){
         startActivity(new Intent(getActivity().getApplicationContext(), NewCycle.class));
     }
