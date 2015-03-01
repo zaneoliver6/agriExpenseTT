@@ -43,7 +43,6 @@ import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
-
 public class FragmentChoosePurchase extends ListFragment {
 	PurchaseListAdapter myListAdapter;
 	ArrayList<LocalResourcePurchase> pList;
