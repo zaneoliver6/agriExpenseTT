@@ -66,7 +66,7 @@ public class FragmentPurchaseUse extends Fragment {
 			Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.activity_use_purchase_frag, container, false);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		int pId=Integer.parseInt(getArguments().getString("pId"));
 		int cycleId=Integer.parseInt(getArguments().getString("cycleId"));
 		TypeSpent=Double.parseDouble(getArguments().getString("total"));

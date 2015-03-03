@@ -65,7 +65,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
-		db	= dbh.getReadableDatabase();
+		db	= dbh.getWritableDatabase();
 
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");

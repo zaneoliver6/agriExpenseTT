@@ -50,7 +50,7 @@ public class CloudInterface {
 	TransactionLog tL;
 	public CloudInterface(Context context) {
 		dbh= new DbHelper(context);
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		tL=new TransactionLog(dbh,db,context);
 	}
 	public CloudInterface(Context context,SQLiteDatabase db,DbHelper dbh) {

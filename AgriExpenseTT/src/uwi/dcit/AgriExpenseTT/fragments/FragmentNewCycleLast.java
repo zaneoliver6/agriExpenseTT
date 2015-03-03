@@ -51,7 +51,7 @@ public class FragmentNewCycleLast extends Fragment {
 		final View view = inflater.inflate(R.layout.fragment_newcycle_last, container, false);
 		
 		dbh = new DbHelper(getActivity().getBaseContext());
-		db = dbh.getReadableDatabase();
+		db = dbh.getWritableDatabase();
 		
 		plantMaterial = getArguments().getString(DHelper.cat_plantingMaterial);
 		land = getArguments().getString("land");

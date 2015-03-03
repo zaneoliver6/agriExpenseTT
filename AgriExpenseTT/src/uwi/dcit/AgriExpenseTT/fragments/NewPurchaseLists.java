@@ -39,7 +39,7 @@ public class NewPurchaseLists extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		type=getArguments().getString("type");
 		populateList();
 		Collections.sort(list);

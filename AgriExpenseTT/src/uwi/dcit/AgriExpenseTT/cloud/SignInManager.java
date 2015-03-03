@@ -31,13 +31,13 @@ public class SignInManager {
         this.context = ctx;
         this.activity = activity;
         dbh = new DbHelper(context);
-        db = dbh.getReadableDatabase();
+        db = dbh.getWritableDatabase();
     }
     public SignInManager(Activity activity, Context ctx,String country, String county){
         this.context = ctx;
         this.activity = activity;
         dbh = new DbHelper(context);
-        db = dbh.getReadableDatabase();
+        db = dbh.getWritableDatabase();
         this.country=country;
         this.county=county;
     }

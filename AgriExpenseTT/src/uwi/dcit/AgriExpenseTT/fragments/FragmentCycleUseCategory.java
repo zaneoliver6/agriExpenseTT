@@ -114,7 +114,7 @@ public class FragmentCycleUseCategory extends Fragment {
 	
 	private void calculate() {
 		DbHelper dbh=new DbHelper(getActivity().getBaseContext());
-		SQLiteDatabase db=dbh.getReadableDatabase();
+		SQLiteDatabase db=dbh.getWritableDatabase();
 		//getting aggregate and complex data 
 		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category

@@ -35,7 +35,7 @@ public class FragmentAddData extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		//TextView tv_subMain=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
 		//tv_main.setText("Choose category of resource");
 		populateList();

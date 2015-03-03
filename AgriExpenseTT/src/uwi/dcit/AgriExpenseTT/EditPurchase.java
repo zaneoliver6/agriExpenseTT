@@ -67,7 +67,8 @@ public class EditPurchase extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_purchase);
 		dbh=new DbHelper(this);
-		db=dbh.getReadableDatabase();
+//		db=dbh.getReadableDatabase();
+        db = dbh.getWritableDatabase();
 		initialize();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Purchase");
 		

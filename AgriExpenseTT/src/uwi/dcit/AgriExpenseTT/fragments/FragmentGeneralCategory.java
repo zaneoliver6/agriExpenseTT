@@ -47,7 +47,7 @@ public class FragmentGeneralCategory extends Fragment {
 			Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_general_cat, container, false);
 		dbh=new DbHelper(getActivity());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		calcTotals();
 		setup();
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("General Category Fragment");

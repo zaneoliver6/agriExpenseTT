@@ -49,7 +49,7 @@ public class SalesCost extends ActionBarActivity {
 		//Bundle b=getIntent().getExtras().getBundle("cyc");
 		currCycle=getIntent().getParcelableExtra("cycle");
 		dbh=new DbHelper(this);
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
 		setup();
 
@@ -118,7 +118,7 @@ public class SalesCost extends ActionBarActivity {
 			ContentValues cv=new ContentValues();
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, sellp);
 			DbHelper dbh=new DbHelper(SalesCost.this);
-			SQLiteDatabase db=dbh.getReadableDatabase();
+			SQLiteDatabase db=dbh.getWritableDatabase();
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
 			currCycle.setCostPer(sellp);
 			currCycle.setHarvestAmt(amtHarvest);

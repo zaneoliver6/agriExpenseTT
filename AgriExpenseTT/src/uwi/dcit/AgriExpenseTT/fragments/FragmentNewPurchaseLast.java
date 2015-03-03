@@ -78,7 +78,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 		}
 
 		dbh = new DbHelper(getActivity().getBaseContext());
-		db = dbh.getReadableDatabase();
+		db = dbh.getWritableDatabase();
         resId = DbQuery.getNameResourceId(db, dbh, resource);
 
         NewPurchaseClickListener c = new NewPurchaseClickListener(this.getActivity());

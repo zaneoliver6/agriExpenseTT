@@ -30,7 +30,7 @@ public class FragmentViewResources extends ListFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		dm = new DataManager(getActivity(), db, dbh);
 		populateList();
 		Collections.sort(rList);

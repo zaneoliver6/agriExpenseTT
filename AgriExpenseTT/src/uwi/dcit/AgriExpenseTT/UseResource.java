@@ -60,7 +60,7 @@ public class UseResource extends ActionBarActivity {
 	
 	private void start(LocalCycle cycle, String type) {
 		DbHelper dbh=new DbHelper(this);
-		SQLiteDatabase db=dbh.getReadableDatabase();
+		SQLiteDatabase db=dbh.getWritableDatabase();
 		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pList, type, null, false);
 		db.close();

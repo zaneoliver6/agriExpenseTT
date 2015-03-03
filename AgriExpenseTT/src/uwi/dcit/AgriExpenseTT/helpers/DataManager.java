@@ -29,7 +29,8 @@ public class DataManager {
 	UpAcc acc;
 	public DataManager(Context context){
 		dbh= new DbHelper(context);
-		db=dbh.getReadableDatabase();
+//		db=dbh.getReadableDatabase();
+        db = dbh.getWritableDatabase();
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);

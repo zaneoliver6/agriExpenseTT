@@ -34,7 +34,7 @@ public class HireLabourLists extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		type=getArguments().getString("type");
 		populateList();
 		ArrayAdapter<String> listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);

@@ -41,7 +41,7 @@ public class FragmentSelectLocation extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh = new DbHelper(this.getActivity().getBaseContext());
-		db = dbh.getReadableDatabase();
+		db = dbh.getWritableDatabase();
 		
 		type = this.getArguments().getString("type");
 		if (this.getArguments().containsKey("country"))

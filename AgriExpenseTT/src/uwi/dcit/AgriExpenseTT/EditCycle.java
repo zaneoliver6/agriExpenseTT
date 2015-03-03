@@ -64,7 +64,8 @@ public class EditCycle extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_cycle);
 		dbh = new DbHelper(this);
-		db= dbh.getReadableDatabase();
+//		db= dbh.getReadableDatabase();
+        db = dbh.getWritableDatabase();
 		initialize();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Cycle");
         View v=findViewById(R.id.contEditCycle);

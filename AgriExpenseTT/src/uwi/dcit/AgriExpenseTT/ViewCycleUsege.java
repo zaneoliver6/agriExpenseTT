@@ -38,7 +38,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 		type=getIntent().getStringExtra("type");
 		int cycleId=Integer.parseInt(getIntent().getStringExtra("id"));
 		dbh=new DbHelper(this);
-		db=dbh.getReadableDatabase();
+		db=dbh.getWritableDatabase();
 		
 		pList=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pList, type, null,true);

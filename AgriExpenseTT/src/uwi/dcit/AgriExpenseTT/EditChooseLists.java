@@ -109,7 +109,8 @@ public class EditChooseLists extends ActionBarActivity {
 
 	private void initial() {
 		dbh=new DbHelper(EditChooseLists.this);
-		db=dbh.getReadableDatabase();
+//		db=dbh.getReadableDatabase();
+        db=dbh.getWritableDatabase();
 		list=new ArrayList<String>();
 		lv=(ListView)findViewById(android.R.id.list);
 		Bundle data=getIntent().getExtras();

@@ -66,7 +66,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		super.onCreate(savedInstanceState);
 		
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
-		db	= dbh.getReadableDatabase();
+		db	= dbh.getWritableDatabase();
 		dm	= new DataManager(getActivity(), db, dbh);
 		
 		try{//when called by ManageResources we dont need any particular cycle

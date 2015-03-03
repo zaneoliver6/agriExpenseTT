@@ -47,7 +47,7 @@ public class ReportHelper {
 	
 	public ReportHelper(Activity act){
 		dbh = new DbHelper(act.getBaseContext());
-		db = dbh.getReadableDatabase();
+		db = dbh.getWritableDatabase();
 		activity = act;
 	}
 	
