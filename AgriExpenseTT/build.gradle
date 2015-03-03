@@ -8,12 +8,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:multidex:1.0.1'
+//    compile 'de.hdodenhof:circleimageview:1.2.2'
     compile project(path: ':AgriExpenseBackend', configuration: 'android-endpoints')
 }
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 9
@@ -42,9 +43,9 @@ android {
             proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
         }
         debug {
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
 }

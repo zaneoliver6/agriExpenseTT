@@ -5,11 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/icon_pitem_next"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:adjustViewBounds="false"
+            android:src="@drawable/money_doller1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="4"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_weight="4">
 
         <TextView
             android:id="@+id/tv_pItem_header"
@@ -21,7 +37,7 @@
             android:layout_marginBottom="@dimen/lable_item_details_bottom_margin"
             android:layout_marginLeft="@dimen/lable_item_details_left_margin"
             android:layout_marginTop="7dp"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_list_head"
             android:text="TextView"
              />
 		<View
@@ -39,7 +55,7 @@
             android:layout_marginBottom="@dimen/lable_item_details_bottom_margin"
             android:layout_marginLeft="@dimen/lable_item_details_left_margin"
             android:text="TextView"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_size_list" />
 
         <TextView
             android:id="@+id/tv_pitem_det2"
@@ -49,7 +65,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="14dp"
             android:text="TextView"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_size_list" />
 
         <TextView
             android:id="@+id/tv_pitem_date"
@@ -59,26 +75,9 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="14dp"
             android:text="TextView"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_size_list" />
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/icon_pitem_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="false"
-            android:maxHeight="128dp"
-            android:maxWidth="128dp"
-            android:src="@drawable/money_doller1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="4dp"
-            android:layout_marginRight="5dp" />
-
-    </FrameLayout>
 
 </LinearLayout>

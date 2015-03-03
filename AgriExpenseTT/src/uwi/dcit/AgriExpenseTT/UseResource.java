@@ -2,10 +2,12 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -99,20 +101,23 @@ public class UseResource extends ActionBarActivity {
 			.beginTransaction()
 			.add(R.id.useExpenseFrag,listFrag)
 			.commit();
-		
-		View line=findViewById(R.id.line_header_useRes);
-		String category=getIntent().getStringExtra("type");
-		if(category.equals(DHelper.cat_plantingMaterial)){
-			line.setBackgroundResource(R.color.colourPM);
-		}else if(category.equals(DHelper.cat_fertilizer)){
-			line.setBackgroundResource(R.color.colourFer);
-		}else if(category.equals(DHelper.cat_soilAmendment)){
-			line.setBackgroundResource(R.color.colourSoil);
-		}else if(category.equals(DHelper.cat_chemical)){
-			line.setBackgroundResource(R.color.colourChem);
-		}else if(category.equals(DHelper.cat_other)){
-			line.setBackgroundResource(R.color.colourOther);
-		}
+
+		ActionBar bar = getSupportActionBar();
+
+        String category=getIntent().getStringExtra("type");
+        if(category.equals(DHelper.cat_plantingMaterial)){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourPM)));
+        }else if(category.equals(DHelper.cat_fertilizer)){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourFer)));
+        }else if(category.equals(DHelper.cat_soilAmendment)){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourSoil)));
+        }else if(category.equals(DHelper.cat_chemical)){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
+        }else if(category.equals(DHelper.cat_other)){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
+        }else if (category.equals((DHelper.cat_labour))){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourLabour)));
+        }
 	}
 	@Override
 	public void onBackPressed(){

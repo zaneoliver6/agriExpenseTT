@@ -137,8 +137,6 @@ public class FragmentViewCycles extends ListFragment{
 //        Log.d("ViewCycles", "ListView contains " + getListView().getCount() + "items");
         Log.d("ViewCycles", "Position selected: " + getListView().getSelectedItemPosition());
 
-        setActivatedPosition(position);
-
 		if(type == null){
 			launchCycleUsage(position);
 		}else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
@@ -196,8 +194,8 @@ public class FragmentViewCycles extends ListFragment{
         }
         if(getActivity() instanceof NavigationControl) {
             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
-            ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
-                ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
+                ||(((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass()))
+                    ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
             else
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
         }

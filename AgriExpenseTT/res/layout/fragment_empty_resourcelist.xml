@@ -21,8 +21,8 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
-        android:textSize="20sp"
-         android:textColor="#cccccc"
+        android:textSize="@dimen/text_size_helpscreen"
+         android:textColor="@color/secondary_text"
         android:text="Sorry you haven't purchased anything to use" />
 
 </LinearLayout>

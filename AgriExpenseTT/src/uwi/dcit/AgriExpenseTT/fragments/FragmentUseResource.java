@@ -1,9 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,24 +27,26 @@ public class FragmentUseResource extends Fragment{
     double total;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_use_resource, container, false);
-        cycle=getArguments().getParcelable("cycle");
-        type=getArguments().getString("type");
-        total=Double.parseDouble(getArguments().getString("total"));
+        cycle = getArguments().getParcelable("cycle");
+        type  = getArguments().getString("type");
+        total = Double.parseDouble(getArguments().getString("total"));
+
         setup();
         return view;
     }
 
     private void setup() {
         SQLiteDatabase db=new DbHelper(getActivity().getApplicationContext()).getReadableDatabase();
+
         if(!DbQuery.resourceExist(db)){
             Fragment fragment	= new FragmentEmpty();
             Bundle parameter 	= new Bundle();
             parameter.putString("type","purchase");
             parameter.putString("category", type);
             fragment.setArguments(parameter);
+
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.useExpenseFrag, fragment)
@@ -51,30 +56,37 @@ public class FragmentUseResource extends Fragment{
         }
     }
     private void initialFrag() {
-        Bundle pass=new Bundle();
+        Bundle pass = new Bundle();
         pass.putParcelable("cycle",cycle);
         pass.putString("det",type);
         pass.putString("total",""+total);
-        ListFragment listfrag	= new FragmentChoosePurchase();
-        listfrag.setArguments(pass);
+        ListFragment listFrag = new FragmentChoosePurchase();
+        listFrag.setArguments(pass);
 
        getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.useExpenseFrag,listfrag)
+                .add(R.id.useExpenseFrag,listFrag)
                 .commit();
 
-        View line=view.findViewById(R.id.line_header_useRes);
-        String category=getArguments().getString("type");
+        String category = getArguments().getString("type");
+
+        ActionBar bar = null;
+        if (this.getActivity() instanceof ActionBarActivity){
+            bar = ((ActionBarActivity)this.getActivity()).getSupportActionBar();
+        }
+
         if(category.equals(DHelper.cat_plantingMaterial)){
-            line.setBackgroundResource(R.color.colourPM);
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourPM)));
         }else if(category.equals(DHelper.cat_fertilizer)){
-            line.setBackgroundResource(R.color.colourFer);
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourFer)));
         }else if(category.equals(DHelper.cat_soilAmendment)){
-            line.setBackgroundResource(R.color.colourSoil);
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourSoil)));
         }else if(category.equals(DHelper.cat_chemical)){
-            line.setBackgroundResource(R.color.colourChem);
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
         }else if(category.equals(DHelper.cat_other)){
-            line.setBackgroundResource(R.color.colourOther);
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
+        }else if (category.equals((DHelper.cat_labour))){
+            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourLabour)));
         }
     }
 }

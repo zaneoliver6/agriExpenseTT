@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,18 +45,26 @@ public class FragmentCycleUseCategory extends Fragment {
 	LocalCycle currCycle;
 	Double catTotal=0.0;
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_cycleuse_category_card, container, false);
 		initialSetup();
 		calculate();
 		setupClick();
 		//cycleId or cycleObject
 		//category
+
+        //set color of action bar
+        if (this.getActivity() instanceof ActionBarActivity){
+            ((ActionBarActivity)this.getActivity())
+                    .getSupportActionBar()
+                    .setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
+        }
+
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
 		return view;
 	}
-	
+
+
 
 	private void initialSetup() {
 		//getting views

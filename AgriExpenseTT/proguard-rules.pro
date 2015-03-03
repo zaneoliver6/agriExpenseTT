@@ -31,9 +31,3 @@
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
-
-# -dontwarn javax.jdo.**
-# -dontwarn java.awt.**
-# -dontwarn javax.swing.**
-# -dontwarn javax.**
-# -dontwarn org.apache.commons.**

@@ -12,6 +12,10 @@
     <dimen name="home_btn_height">60dp</dimen>
     <dimen name="home_btn_magrin">20dp</dimen>
 
+    <dimen name="text_size_list">13sp</dimen>
+    <dimen name="text_size_list_head">16sp</dimen>
+    <dimen name="text_size_helpscreen">20sp</dimen>
+
     <dimen name="navigation_drawer_width">280dp</dimen>
 
     <dimen name="list_reuse_description">17sp</dimen>

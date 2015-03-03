@@ -30,8 +30,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
     }
 
     public void setupNavDrawer(){
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         if (mNavigationDrawerFragment != null)
             mNavigationDrawerFragment.setUp( R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }

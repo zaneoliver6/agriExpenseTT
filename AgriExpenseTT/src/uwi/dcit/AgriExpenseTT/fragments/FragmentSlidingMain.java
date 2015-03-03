@@ -26,7 +26,7 @@ public class FragmentSlidingMain extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(false);
-        fragments=new ArrayList<FragItem>();
+        fragments=new ArrayList<>();
         populateList();
 
         //Google Analytics

@@ -6,6 +6,8 @@
  	<color name="colourFer">#800431B4</color>
  	<color name="colourSoil">#8061380B</color>
  	<color name="colourOther">#80E60000</color>
+    <color name="colourLabour">#80D7DF01</color>
+
 
     <!-- Generated using http://www.materialpalette.com/light-green/grey-->
     <color name="primary_dark">#689F38</color>

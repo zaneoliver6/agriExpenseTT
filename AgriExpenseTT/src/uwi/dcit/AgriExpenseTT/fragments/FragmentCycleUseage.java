@@ -19,8 +19,7 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 public class FragmentCycleUseage extends Fragment {
     View view;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.i("recreating fragment","before anything");
         view = inflater.inflate(R.layout.activity_cycle_useage_redesign, container, false);
         setup();
@@ -75,19 +74,15 @@ public class FragmentCycleUseage extends Fragment {
         otherArguments.putString("category", DHelper.cat_other);
         catOther.setArguments(otherArguments);
 
-        FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-        Log.i("fragment Cycle Useage","right before the adding");
-        if(view.findViewById(R.id.cat_general_frag)==null)
-            Log.i("fragment Cycle Useage","the container does not exist");
-        else
-            Log.i("fragment Cycle Useage","the container exists");
-        ft.add(R.id.cat_general_frag, catGeneral);
-        ft.add(R.id.cat_plantMaterial_frag, catPlantMaterial);
-        ft.add(R.id.cat_fertilizer_frag, catFertilizer);
-        ft.add(R.id.cat_soilAmendment_frag, catSoilAmendment);
-        ft.add(R.id.cat_chemical_frag, catChemical);
-        ft.add(R.id.cat_labour_frag, catLabour);
-        ft.add(R.id.cat_other_frag, catOther);
-        ft.commit();
+        getChildFragmentManager()
+            .beginTransaction()
+            .add(R.id.cat_general_frag, catGeneral)
+            .add(R.id.cat_plantMaterial_frag, catPlantMaterial)
+            .add(R.id.cat_fertilizer_frag, catFertilizer)
+            .add(R.id.cat_soilAmendment_frag, catSoilAmendment)
+            .add(R.id.cat_chemical_frag, catChemical)
+            .add(R.id.cat_labour_frag, catLabour)
+            .add(R.id.cat_other_frag, catOther)
+            .commit();
     }
 }
