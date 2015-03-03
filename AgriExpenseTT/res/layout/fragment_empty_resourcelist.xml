@@ -19,10 +19,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/text_size_helpscreen"
          android:textColor="@color/secondary_text"
-        android:text="Sorry you haven't purchased anything to use" />
+        android:text="@string/empty_fragment_msg"
+        android:textAlignment="center"/>
 
 </LinearLayout>

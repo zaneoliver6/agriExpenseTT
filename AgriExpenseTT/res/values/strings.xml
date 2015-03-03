@@ -135,4 +135,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="cancel">Cancel</string>
     <string name="hint_new_cycle_name">Enter Cycle Name</string>
     <string name="txt_new_cycle_name">Crop Cycle Name</string>
+    <string name="empty_fragment_msg">Sorry you haven\'t purchased anything to use</string>
 </resources>

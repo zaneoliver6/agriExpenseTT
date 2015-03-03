@@ -528,12 +528,24 @@ public class DbQuery {
     }
     public static boolean resourceExist(SQLiteDatabase db){
         String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
+        boolean res = false;
         Cursor c=db.rawQuery(code,null);
         if(c.moveToFirst()) {
-            return c.getInt(0) > 0;
+            res = c.getInt(0) > 0;
         }
-        return false;
+        c.close();
+        return res;
     }
 
+    public static boolean resourceExist(SQLiteDatabase db, String type){
+        String code = "select COUNT(*) FROM " + ResourcePurchaseEntry.TABLE_NAME + " where " + ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE +" = '"+type+"' and "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
+        boolean res = false;
+        Cursor c=db.rawQuery(code,null);
+        if(c.moveToFirst()) {
+            res = c.getInt(0) > 0;
+        }
+        c.close();
+        return res;
+    }
 
 }
