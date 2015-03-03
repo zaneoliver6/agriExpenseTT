@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
 import uwi.dcit.AgriExpenseTT.models.CountryContract.CountryEntry;
@@ -181,8 +182,7 @@ public class DbQuery {
 		return id;
 	}
 	
-	
-	public static void getResources(SQLiteDatabase db, DbHelper dbh, String type,ArrayList<String> list){
+	public static List<String> getResources(SQLiteDatabase db, DbHelper dbh, String type,ArrayList<String> list){
 		String code;
 		if(type!=null)
 			code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry.RESOURCES_TYPE+"='"+type+"';";
@@ -190,25 +190,32 @@ public class DbQuery {
 			code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return;
+			return list;
 		while(cursor.moveToNext()){
 			list.add(cursor.getString(cursor.getColumnIndex("name")));
 		}
 		cursor.close();
+        return list;
 	}
-	public static int getNameResourceId(SQLiteDatabase db,DbHelper dbh,String name){
+
+    public static int getNameResourceId(SQLiteDatabase db,DbHelper dbh,String name){
 		String code="select "+ ResourceContract.ResourceEntry._ID+" from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry.RESOURCES_NAME+"='"+name+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return -1;
 		cursor.moveToFirst();
-		return cursor.getInt(cursor.getColumnIndex(ResourceContract.ResourceEntry._ID));
+        int res = cursor.getInt(cursor.getColumnIndex(ResourceContract.ResourceEntry._ID));
+        cursor.close();
+		return res;
 	}
-	public static void getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalCycle> list){
-		String code="select * from "+CycleEntry.TABLE_NAME+";";
+
+    public static List<LocalCycle> getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalCycle> list){
+		list = new ArrayList<>();
+
+        String code="select * from "+CycleEntry.TABLE_NAME+";";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return;
+			return list;
 		while(cursor.moveToNext()){
 			LocalCycle n=new LocalCycle();
 			n.setId(cursor.getInt(cursor.getColumnIndex(CycleEntry._ID)));
@@ -225,20 +232,27 @@ public class DbQuery {
             n.setCycleName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_NAME)));
 			list.add(n);
 		}
+
+        cursor.close();
+        return list;
 	}
 	
 	public static String findResourceName(SQLiteDatabase db, DbHelper dbh, int id){
 		String code="select name from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry._ID +"="+id+";";
-		Cursor cursor=db.rawQuery(code,null);
+		String res = null;
+        Cursor cursor=db.rawQuery(code,null);
 		if(cursor.getCount()>0){
 			cursor.moveToFirst();
-			return cursor.getString(cursor.getColumnIndex("name"));
+			res = cursor.getString(cursor.getColumnIndex("name"));
 		}
-		return null;
+        cursor.close();
+		return res;
 	}
 	
-	public static void getPurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,String type,String quantifier,boolean allowFinished){
-		String code;
+	public static List<LocalResourcePurchase> getPurchases(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalResourcePurchase> list, String type, String quantifier, boolean allowFinished){
+		list = new ArrayList<>();
+
+        String code;
 		if(type == null)
 			code="select * from "+ResourcePurchaseEntry.TABLE_NAME+";";
 		else
@@ -246,7 +260,7 @@ public class DbQuery {
 
         Cursor cursor = db.rawQuery(code, null);
 		if(cursor == null || cursor.getCount() < 1 )
-			return;
+			return list;
 
         while(cursor.moveToNext()){
 			LocalResourcePurchase m=new LocalResourcePurchase();
@@ -260,14 +274,18 @@ public class DbQuery {
             m.setDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			list.add(m);
 		}
+
+        cursor.close();
+        return list;
 	}
-	public static void getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,int resId){
-		String code;
-		code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "
-		+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+"="+resId+";";
+
+    public static List<LocalResourcePurchase> getResourcePurchases(SQLiteDatabase db, DbHelper dbh,ArrayList<LocalResourcePurchase>list,int resId){
+		if (list == null)list = new ArrayList<>();
+
+        String code = "select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID+"="+resId+";";
 		Cursor cursor =db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return;
+			return list;
 		while(cursor.moveToNext()){
 			LocalResourcePurchase m=new LocalResourcePurchase();
 			m.setpId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseEntry._ID)));
@@ -279,15 +297,18 @@ public class DbQuery {
 			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 			list.add(m);
 		}
+        cursor.close();
+        return list;
 	}
 	
 	public static RPurchase getARPurchase(SQLiteDatabase db, DbHelper dbh,int id){
 		String code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "
 				+ResourcePurchaseEntry._ID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
-			return null;
+		if(cursor.getCount() < 1)return null;
+
 		cursor.moveToFirst();
+
 		RPurchase purchase=new RPurchase();
 		purchase.setPId(id);
 		purchase.setResourceId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID)));
@@ -297,17 +318,22 @@ public class DbQuery {
 		purchase.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 		purchase.setType(cursor.getString(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE)));
 		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
+
+        cursor.close();
 		return purchase;
 	}
-	public static void getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<LocalCycleUse> list,String type){
+
+    public static List<LocalCycleUse> getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<LocalCycleUse> list,String type){
 		String code;
+        if (list == null)list = new ArrayList<>();
+
 		if(type==null)
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+"="+cycleid+";";
 		else
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+"="+cycleid+" and "+CycleResourceEntry.CYCLE_RESOURCE_TYPE+"='"+type+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return;
+			return list;
 		while(cursor.moveToNext()){
 			LocalCycleUse l=new LocalCycleUse();
 			l.setId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)));
@@ -319,8 +345,11 @@ public class DbQuery {
 			l.setQuantifier(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
 			list.add(l);
 		}
+        cursor.close();
+        return list;
 	}
-	public static void getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<LocalCycleUse> list,String type){
+
+    public static List<LocalCycleUse> getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<LocalCycleUse> list,String type){
 		String code;
 		if(type==null)
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID+"="+purchaseId+";";
@@ -328,7 +357,7 @@ public class DbQuery {
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID+"="+purchaseId+" and "+CycleResourceEntry.CYCLE_RESOURCE_TYPE+"='"+type+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return;
+			return list;
 		while(cursor.moveToNext()){
 			LocalCycleUse l=new LocalCycleUse();
 			l.setId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)));
@@ -339,6 +368,8 @@ public class DbQuery {
 			l.setUseCost(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)));
 			list.add(l);
 		}
+        cursor.close();
+        return list;
 	}
 	
 	public static CycleUse getACycleUse(SQLiteDatabase db, DbHelper dbh,int id){
@@ -354,16 +385,19 @@ public class DbQuery {
 		c.setAmount(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QTY)));
 		c.setCost(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)));
 		c.setResource(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)));
+
+        cursor.close();
 		return c;
 	}
 	
 	public static int getLast(SQLiteDatabase db, DbHelper dbh, String table){
 		String code="select _id from " + table + "  ORDER BY _id DESC LIMIT 1;";
 		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<0)
-			return -1;
+		if(cursor.getCount() < 0)return -1;
 		cursor.moveToFirst();
-		return cursor.getInt(cursor.getColumnIndex("_id"));
+		int res = cursor.getInt(cursor.getColumnIndex("_id"));
+        cursor.close();
+        return res;
 	}
 	
 	public static int getLastRec(SQLiteDatabase db, DbHelper dbh, String table){
@@ -372,8 +406,11 @@ public class DbQuery {
 		if(cursor.getCount()<0)
 			return -1;
 		cursor.moveToFirst();
-		return cursor.getInt(cursor.getColumnIndex("_id"));
+		int res = cursor.getInt(cursor.getColumnIndex("_id"));
+        cursor.close();
+        return res;
 	}
+
 	public static int insertRedoLog(SQLiteDatabase db, DbHelper dbh, String table, int id, String operation){
 		ContentValues cv= new ContentValues();
 		cv.put(RedoLogEntry.REDO_LOG_TABLE, table);
@@ -382,6 +419,7 @@ public class DbQuery {
 		db.insert(RedoLogEntry.TABLE_NAME, null, cv);
 		return getLast(db,dbh,RedoLogEntry.TABLE_NAME);
 	}
+
 	//can be used for all tables so far
 	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id)throws Exception{
         if(table.equals(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME)){
@@ -397,10 +435,9 @@ public class DbQuery {
         }else{
             throw new Exception("no contract defined for this table");
         }
-
 	}
+
 	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
-		
 		ContentValues cv=new ContentValues();
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC,acc.getAcc());
@@ -408,6 +445,7 @@ public class DbQuery {
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
 		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, null, cv);
 	}
+
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
 		ContentValues cv = new ContentValues();
 		cv.put(CloudKeyEntry.CLOUD_KEY_TABLE, table);
@@ -415,31 +453,36 @@ public class DbQuery {
 		cv.put(CloudKeyEntry.CLOUD_KEY_ROWID, id);
 		db.insert(CloudKeyEntry.TABLE_NAME, null, cv);
 	}
-	public static String getKey(SQLiteDatabase db,DbHelper dbh,String table,int id){
+
+    public static String getKey(SQLiteDatabase db,DbHelper dbh,String table,int id){
 		String code="select * from "+CloudKeyEntry.TABLE_NAME+" where "
 			+CloudKeyEntry.CLOUD_KEY_TABLE+"='"+table+"' and "
 			+CloudKeyEntry.CLOUD_KEY_ROWID+"="+id+";";
-		Cursor cursor=db.rawQuery(code, null);
+		Cursor cursor = db.rawQuery(code, null);
 		if(cursor.getCount()<1){
 			return null;
 		}
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(CloudKeyEntry.CLOUD_KEY));
+		String res =  cursor.getString(cursor.getColumnIndex(CloudKeyEntry.CLOUD_KEY));
+        cursor.close();
+        return res;
 	}
-	public static int getCloudKeyId(SQLiteDatabase db,DbHelper dbh,String table,int id){String code="select * from "+CloudKeyEntry.TABLE_NAME+" where "
+
+    public static int getCloudKeyId(SQLiteDatabase db,DbHelper dbh,String table,int id){String code="select * from "+CloudKeyEntry.TABLE_NAME+" where "
 			+CloudKeyEntry.CLOUD_KEY_TABLE+"='"+table+"' and "
 			+CloudKeyEntry.CLOUD_KEY_ROWID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return -1;
 		cursor.moveToFirst();
-		return cursor.getInt(cursor.getColumnIndex(CloudKeyEntry._ID));
+		int res = cursor.getInt(cursor.getColumnIndex(CloudKeyEntry._ID));
+        cursor.close();
+        return res;
 	}
 	public static Cycle getCycle(SQLiteDatabase db,DbHelper dbh,int id){
 		String code="select * from "+CycleEntry.TABLE_NAME+" where "+CycleEntry._ID+"="+id+";";
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
-			return null;
+		Cursor cursor = db.rawQuery(code, null);
+		if(cursor.getCount() < 1)return null;
 		Cycle c = new Cycle();
 		cursor.moveToFirst();
 		c.setCropId(cursor.getInt(cursor.getColumnIndex(CycleEntry.CROPCYCLE_CROPID)));
@@ -451,6 +494,7 @@ public class DbQuery {
 		c.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_HARVEST_AMT)));
 		c.setCostPer(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_COSTPER)));
 		c.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
+        cursor.close();
 		return c;
 	}
 	
@@ -468,7 +512,9 @@ public class DbQuery {
 			n=cursor.getInt(cursor.getColumnIndex(RedoLogEntry._ID));
 			logIds.add(Integer.valueOf(n));
 		}
+        cursor.close();
 	}
+
 	public static TransLog getLog(SQLiteDatabase db, DbHelper dbh, int rowId) {
 		TransLog t=new TransLog();
 		String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+ TransactionLogEntry._ID +"="+rowId;
@@ -481,15 +527,18 @@ public class DbQuery {
 		t.setTableKind(cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_TABLE)));
 		t.setTransTime(cursor.getLong(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_TRANSTIME)));
 		t.setRowId(cursor.getInt(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_ROWID)));
-		
+		cursor.close();
 		return t;
 	}
-	public static String getAccount(SQLiteDatabase db){
+
+    public static String getAccount(SQLiteDatabase db){
 		String code="select "+ UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC+" from "+
 				UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		cursor.moveToFirst();
-		return cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
+		String res = cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
+        cursor.close();
+        return res;
 	}
 	public static UpAcc getUpAcc(SQLiteDatabase db){
 		String code="select * from " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
@@ -505,7 +554,8 @@ public class DbQuery {
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
-		
+
+        cursor.close();
 		return acc;
 	}
 	public static void updateAccount(SQLiteDatabase db,long time){
@@ -520,12 +570,15 @@ public class DbQuery {
     //checks to see if there are any crop cycles or not
     public static boolean cyclesExist(SQLiteDatabase db){
         String code="select COUNT(*) FROM "+CycleEntry.TABLE_NAME;
+        boolean res = false;
         Cursor c=db.rawQuery(code,null);
-       if(c.moveToFirst()) {
-           return c.getInt(0) > 0;
-       }
-       return false;
+        if(c.moveToFirst()) {
+            res = c.getInt(0) > 0;
+        }
+        c.close();
+        return res;
     }
+
     public static boolean resourceExist(SQLiteDatabase db){
         String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
         boolean res = false;

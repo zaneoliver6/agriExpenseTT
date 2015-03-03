@@ -297,6 +297,7 @@ public class DataManager {
 			int pId=cursor.getInt(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry._ID));
 			deletePurchase(DbQuery.getARPurchase(db, dbh, pId));
 		}
+        cursor.close();
 	}
 	public void insertResource(String name,String type) {
 		ContentValues cv=new ContentValues();

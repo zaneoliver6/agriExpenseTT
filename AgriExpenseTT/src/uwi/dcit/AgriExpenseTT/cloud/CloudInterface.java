@@ -111,6 +111,8 @@ public class CloudInterface {
 					//what should we do in this case !? :s 
 					cursor.moveToLast();//only for updaates we should move to last because the last update would hold the most current data
 					int id=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
@@ -161,9 +163,10 @@ public class CloudInterface {
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"' and "
 					+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='"+TransactionLog.TL_UPDATE+"'";
 					Cursor cursor=db.rawQuery(code, null);
-					
 					cursor.moveToLast();//only for updates explained in cycleUpdate
 					int id=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
@@ -215,6 +218,8 @@ public class CloudInterface {
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
@@ -271,6 +276,8 @@ public class CloudInterface {
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
@@ -322,6 +329,8 @@ public class CloudInterface {
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int id=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
@@ -385,6 +394,8 @@ public class CloudInterface {
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();
@@ -458,9 +469,11 @@ public class CloudInterface {
 					//getting the transaction from the transaction log that matches this operation
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleResourceEntry.TABLE_NAME+
 							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
-					Cursor cursor=db.rawQuery(code, null);
+					Cursor cursor = db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();
@@ -524,9 +537,11 @@ public class CloudInterface {
 					//remove key of cycle that was deleted from cloud
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"'"
 							+ " and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
-					Cursor cursor=db.rawQuery(code, null);
+					Cursor cursor = db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					int Tid = cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+                    cursor.close();
+
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();

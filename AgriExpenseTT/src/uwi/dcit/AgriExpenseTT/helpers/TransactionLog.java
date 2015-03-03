@@ -236,7 +236,7 @@ public class TransactionLog {
         TranslogApi endpointTranslog = builderTranslog.build();
 		
 		String code="select * from "+ CycleContract.CycleEntry.TABLE_NAME;//TODO where something (constraints unknown yet
-		Cursor cursor=db.rawQuery(code, null);
+		Cursor cursor = db.rawQuery(code, null);
 		while(cursor.moveToNext()){
 			Cycle c=new Cycle();
 			c.setId(cursor.getInt(cursor.getColumnIndex(CycleContract.CycleEntry._ID)));
@@ -259,7 +259,7 @@ public class TransactionLog {
 
 
 		code="select * from "+CycleResourceEntry.TABLE_NAME;
-		cursor=db.rawQuery(code, null);
+		cursor = db.rawQuery(code, null);
 		while(cursor.moveToNext()){
 			CycleUse c=new CycleUse();
 			c.setId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)));
@@ -279,7 +279,7 @@ public class TransactionLog {
         cursor.close();
 
 		code="select * from "+ ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME;
-		cursor=db.rawQuery(code, null);
+		cursor = db.rawQuery(code, null);
 		while(cursor.moveToNext()){
 			RPurchase p=new RPurchase();
 			p.setPId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry._ID)));
@@ -303,9 +303,9 @@ public class TransactionLog {
 		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 
 
-		code="select * from "+ TransactionLogContract.TransactionLogEntry.TABLE_NAME;
+		code = "select * from "+ TransactionLogContract.TransactionLogEntry.TABLE_NAME;
 		CloudInterface cloudIF=new CloudInterface(context, db, dbh);
-		cursor=db.rawQuery(code, null);
+		cursor = db.rawQuery(code, null);
 		while(cursor.moveToNext()){
 			TransLog t=new TransLog();
 			t.setId(cursor.getInt(cursor.getColumnIndex(TransactionLogContract.TransactionLogEntry._ID)));
@@ -334,6 +334,7 @@ public class TransactionLog {
 	public void logsUpdateLocal(String namespace,long lastLocalUpdate){
 		new UpdateLocal(namespace,lastLocalUpdate).execute();
 	}
+
 	public class UpdateLocal extends AsyncTask<Void,Void,Void>{
 		String namespace;
 		long lastLocalUpdate;

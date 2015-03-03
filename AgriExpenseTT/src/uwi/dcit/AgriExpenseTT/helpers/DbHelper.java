@@ -74,6 +74,8 @@ public class DbHelper extends SQLiteOpenHelper{
 			Log.d(TAG_NAME, "Running upgrade of crop/plating material lists");
 			this.updateCropList(db);
 		}else if (oldVersion < 172){
+            db.beginTransaction();
+
             db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " ADD COLUMN "+ CycleContract.CycleEntry.CROPCYCLE_NAME + " TEXT");
             // Place the resource name as the default name of the cycle
             updateCycleCropName(db);
@@ -84,6 +86,9 @@ public class DbHelper extends SQLiteOpenHelper{
             // Add Date Column to CycleResource
             db.execSQL("ALTER TABLE " + CycleResourceContract.CycleResourceEntry.TABLE_NAME + " ADD COLUMN "+ CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED +  " TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
             updateCycleResource(db);
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
         }
 		
 		Log.d(TAG_NAME, "Completed upgrading the database to version " + VERSION);
@@ -510,7 +515,7 @@ public class DbHelper extends SQLiteOpenHelper{
             ContentValues cv = new ContentValues();
             cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,  DateFormatHelper.getDateUnix(new Date()) );
         }
-//        cursor.close();
+        cursor.close();
     }
 
     private void updateCycleCropName(SQLiteDatabase db) {
@@ -519,7 +524,7 @@ public class DbHelper extends SQLiteOpenHelper{
             ContentValues cv = new ContentValues();
             cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, cursor.getColumnIndex(CycleContract.CycleEntry.CROPCYCLE_RESOURCE));
         }
-//        cursor.close();
+        cursor.close();
     }
 
     private void updateCycleResource(SQLiteDatabase db){
@@ -530,6 +535,6 @@ public class DbHelper extends SQLiteOpenHelper{
             cal.setTime(new Date());
             cv.put(CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED, cal.getTimeInMillis());
         }
-//        cursor.close();
+        cursor.close();
     }
 }
