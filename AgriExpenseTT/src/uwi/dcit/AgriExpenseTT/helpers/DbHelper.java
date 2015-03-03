@@ -88,7 +88,7 @@ public class DbHelper extends SQLiteOpenHelper{
 		
 		Log.d(TAG_NAME, "Completed upgrading the database to version " + VERSION);
 
-        db.close();
+//        db.close();
 	}
 
     private void tableColumnModify(SQLiteDatabase db){

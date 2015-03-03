@@ -63,7 +63,7 @@ public class UseResource extends ActionBarActivity {
 		SQLiteDatabase db=dbh.getWritableDatabase();
 		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
 		DbQuery.getPurchases(db, dbh, pList, type, null, false);
-		db.close();
+//		db.close();
 		if(pList.isEmpty()){
 			Fragment fragment	= new FragmentEmpty();
 			Bundle parameter 	= new Bundle();
