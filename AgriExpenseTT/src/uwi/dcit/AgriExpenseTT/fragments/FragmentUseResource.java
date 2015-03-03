@@ -44,6 +44,7 @@ public class FragmentUseResource extends Fragment{
             Fragment fragment	= new FragmentEmpty();
             Bundle parameter 	= new Bundle();
             parameter.putString("type","purchase");
+
             parameter.putString("category", type);
             fragment.setArguments(parameter);
 

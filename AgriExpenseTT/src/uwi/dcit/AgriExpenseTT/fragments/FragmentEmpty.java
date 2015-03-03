@@ -36,7 +36,7 @@ public class FragmentEmpty extends Fragment{
 			}
 		}else if(type.equals("cycle")){
 			desc.setText("Tap here to create a new cycle");
-		}else if(type.equals("purchaseuse")){
+		}else if(type.equals("purchase")){
 			if(category == null){
 				desc.setText("Sorry you haven't purchased any of this to use as yet");
 			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
