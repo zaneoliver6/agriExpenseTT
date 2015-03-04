@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -99,7 +100,7 @@ public class FragmentNewPurchaseLast extends Fragment{
         }
 
         NewPurchaseClickListener c = new NewPurchaseClickListener(this.getActivity());
-        ((Button) view.findViewById(R.id.btn_newpurchaselast_done)).setOnClickListener(c);
+        view.findViewById(R.id.btn_newpurchaselast_done).setOnClickListener(c);
         btnDate = (Button)view.findViewById(R.id.btn_newPurchaseLast_date);
         btnDate.setOnClickListener(c);
 
@@ -164,11 +165,11 @@ public class FragmentNewPurchaseLast extends Fragment{
                 if(unixDate == 0){
                     formatDisplayDate(null);
                 }
-				int res = -1;
+				int res;
 				DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);
 				try{
 					currC=getArguments().getParcelable("cycle");
-				}catch (Exception e){}
+				}catch (Exception e){ e.printStackTrace();}
 				//this is for when labour is 'purchased'/hired for a single cycle
 				if(category.equals(DHelper.cat_labour) && currC != null){
 
@@ -220,6 +221,7 @@ public class FragmentNewPurchaseLast extends Fragment{
     @SuppressLint("ValidFragment")
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();

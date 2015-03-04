@@ -43,9 +43,11 @@ public class Main extends BaseActivity {
     }
 
     private void setupPort() {
+        Fragment frag = new FragmentSlidingMain();
+
         getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.navContentLeft,new FragmentSlidingMain())
+            .replace(R.id.navContentLeft,frag)
             .commit();
     }
 
