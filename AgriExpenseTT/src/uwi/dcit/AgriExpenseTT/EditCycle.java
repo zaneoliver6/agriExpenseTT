@@ -80,6 +80,11 @@ public class EditCycle extends ActionBarActivity {
         });
 	}
 
+    @Override
+    protected void onDestroy(){
+        db.close(); //Close database when activity closes
+    }
+
 	private void initialize() {
 
         cycle   = getIntent().getExtras().getParcelable("cycle");
@@ -159,21 +164,20 @@ public class EditCycle extends ActionBarActivity {
 
 		ContentValues cv = new ContentValues();
 		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
+        cv.put(CycleEntry.CROPCYCLE_RESOURCE, crop);
 		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE,land);
 		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
 		cv.put(CycleEntry.CROPCYCLE_DATE, date);
         cv.put(CycleEntry.CROPCYCLE_NAME, name);
 
 		Toast.makeText(getApplicationContext(),"Updating "+ " "+name+crop+" "+land+" "+landQty+" "+date, Toast.LENGTH_SHORT).show();
-//
+
 		DataManager dm=new DataManager(EditCycle.this, db, dbh);
 		boolean result = dm.updateCycle(cycle, cv);
 
         if (result) Toast.makeText(getApplicationContext(), "Cycle was successfully Updated", Toast.LENGTH_SHORT).show();
         else Toast.makeText(getApplicationContext(), "Cycle was not updated", Toast.LENGTH_SHORT).show();
-//
-//		Intent i=new Intent();
-//		setResult(1,i);
+
 		finish();
 	}
 	

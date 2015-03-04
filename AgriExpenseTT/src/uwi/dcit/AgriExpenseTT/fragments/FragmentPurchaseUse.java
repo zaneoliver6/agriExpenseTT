@@ -106,10 +106,10 @@ public class FragmentPurchaseUse extends Fragment {
 		Button dne=(Button)view.findViewById(R.id.btn_usePurchase_done);
 		label();
 		
-		Click clic=new Click();
-		calc.setOnClickListener(clic);
-		dne.setOnClickListener(clic);
-		btn_typeUse.setOnClickListener(clic);
+		Click click=new Click();
+		calc.setOnClickListener(click);
+		dne.setOnClickListener(click);
+		btn_typeUse.setOnClickListener(click);
 		
 	}
 	//sets labels to match data
