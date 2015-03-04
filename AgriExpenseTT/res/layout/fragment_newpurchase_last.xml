@@ -5,103 +5,89 @@
     android:layout_height="match_parent"
     android:background="#ffffff" >
             
-	  <LinearLayout
-	      android:layout_width="match_parent"
-	      android:layout_height="wrap_content"
-	      android:orientation="vertical"  >
-	
-	   <TextView
-	       android:id="@+id/tv_newPurchase_error"
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-	       android:layout_marginLeft="20dp"
-	       android:layout_marginRight="20dp"
-	       android:layout_marginTop="10dp"
-	       android:text="@string/txt_new_purchase_quantity"
-	       android:textColor="#ff0000"
-	       android:textSize="14sp"
-	       android:visibility="gone" />
-	
-	   <TextView
-	       android:id="@+id/tv_mainNew_header"
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/label_dataentry_margin"
-	       android:text="@string/txt_new_purchase_quantity"
-	       android:textColor="@color/primary_text"
-	       android:textSize="17sp"
-           android:layout_gravity="center_horizontal" />
-	
-	   <EditText
-	       android:id="@+id/et_newPurchaselast_qty"
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_marginLeft="20dp"
-	       android:layout_marginRight="20dp"
-	       android:layout_marginTop="@dimen/label_dataentry_margin"
-	       android:ems="10"
-	       android:hint="@string/hint_new_purchase_quantity"
-	       android:inputType="numberDecimal"
-           android:layout_marginBottom="@dimen/label_dataentry_margin">
-	       <requestFocus />
-	   </EditText>
-	
-	   <TextView
-	       android:id="@+id/tv_cycUseItem_sub1_2"
-	       android:layout_width="wrap_content"
-	       android:layout_height="wrap_content"
-           android:text="@string/txt_new_purchase_cost"
-	       android:textColor="@color/primary_text"
-	       android:textSize="17sp"
-           android:layout_gravity="center_horizontal"
-           android:layout_marginTop="@dimen/label_dataentry_margin" />
-	
-	   <EditText
-	       android:id="@+id/et_newPurchaselast_cost"
-	       android:layout_width="match_parent"
-	       android:layout_height="wrap_content"
-	       android:layout_marginLeft="20dp"
-	       android:layout_marginRight="20dp"
-	       android:layout_marginTop="@dimen/label_dataentry_margin"
-	       android:hint="@string/hint_new_purchase_cost"
-	       android:ems="10"
-	       android:inputType="numberDecimal"
-           android:layout_marginBottom="@dimen/label_dataentry_margin" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"  >
 
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical" >
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/label_dataentry_margin">
 
-              <TextView
-                  android:id="@+id/date_select_textv"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:layout_marginTop="@dimen/label_dataentry_margin"
-                  android:text="@string/txt_new_cycle_date"
-                  android:textColor="@color/primary_text"
-                  android:textSize="17sp"
-                  android:layout_gravity="center_horizontal" />
+		   	<EditText
+				android:id="@+id/et_newPurchaselast_qty"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"
+				android:layout_marginTop="@dimen/label_dataentry_margin"
+				android:ems="10"
+				android:hint="@string/txt_new_purchase_quantity"
+				android:inputType="numberDecimal"
+				android:layout_marginBottom="@dimen/helper_text_padding"
+				android:layout_gravity="center_horizontal">
+				<requestFocus />
+		   </EditText>
 
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content" >
+            <TextView
+				android:id="@+id/tv_mainNew_header"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/hint_new_purchase_quantity"
+				android:textColor="@color/helper_text_color"
+				android:textSize="@dimen/helper_text_size"
+				android:alpha="@dimen/helper_text_alpha"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/label_dataentry_margin">
+		
+			<EditText
+				android:id="@+id/et_newPurchaselast_cost"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"
+				android:hint="@string/txt_new_purchase_cost"
+				android:ems="10"
+				android:inputType="numberDecimal" 
+				android:layout_marginBottom="@dimen/helper_text_padding"
+				android:layout_gravity="center_horizontal" />
 
-                  <Button
-                      android:id="@+id/btn_newPurchaseLast_date"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginRight="20dp"
-                      android:layout_marginTop="@dimen/label_dataentry_margin"
-                      android:background="@drawable/btn_custom"
-                      android:text="@string/btn_new_cycle_date"
-                      android:layout_marginBottom="@dimen/label_dataentry_margin" />
+			<TextView
+				android:id="@+id/tv_cycUseItem_sub1_2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/hint_new_purchase_cost"
+				android:textColor="@color/helper_text_color"
+				android:textSize="@dimen/helper_text_size"
+				android:alpha="@dimen/helper_text_alpha"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"/>
+		</LinearLayout>
 
-              </LinearLayout>
-          </LinearLayout>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginBottom="@dimen/label_dataentry_margin" >
+
+			<Button
+				android:id="@+id/btn_newPurchaseLast_date"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_marginRight="20dp"
+				android:background="@drawable/btn_custom"
+				android:text="@string/btn_new_cycle_date"/>
+		</LinearLayout>
 
 	   <Button
 	       android:id="@+id/btn_newpurchaselast_done"
@@ -109,7 +95,7 @@
 	       android:layout_height="wrap_content"
 	       android:layout_marginLeft="20dp"
 	       android:layout_marginRight="20dp"
-	       android:layout_marginTop="30dp"
+	       android:layout_marginTop="20dp"
 	       android:background="@drawable/btn_custom"
 	       android:text="@string/btn_new_purchase_save" />
 	</LinearLayout>

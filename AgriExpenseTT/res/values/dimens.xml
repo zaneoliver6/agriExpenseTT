@@ -16,6 +16,10 @@
     <dimen name="text_size_list_head">16sp</dimen>
     <dimen name="text_size_helpscreen">20sp</dimen>
 
+    <dimen name="helper_text_size">12sp</dimen>
+    <item name="helper_text_alpha" type="dimen" format="float">0.38</item>
+    <dimen name="helper_text_padding">1sp</dimen>
+
     <dimen name="navigation_drawer_width">280dp</dimen>
 
     <dimen name="list_reuse_description">17sp</dimen>
