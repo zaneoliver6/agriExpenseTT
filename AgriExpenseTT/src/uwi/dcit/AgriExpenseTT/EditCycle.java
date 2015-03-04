@@ -31,24 +31,18 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-//import android.app.DatePickerDialog;
-//import android.app.Dialog;
-
 public class EditCycle extends ActionBarActivity {
-	Button btn_crop;
-	Button btn_landType;
 	EditText et_landQty;
-	Button btn_date;
-	
+
 	TextView tv_crop;
 	TextView tv_landType;
 	TextView tv_landQty;
 	TextView tv_date;
 	
-	final int REQ_CROP=1;
-	String crop=null;
-	final int REQ_LANDTYPE=2;
-	String land=null;
+	final int REQ_CROP = 1;
+	String crop = null;
+	final int REQ_LANDTYPE = 2;
+	String land = null;
 	double landQty;
 	long date;
 	
