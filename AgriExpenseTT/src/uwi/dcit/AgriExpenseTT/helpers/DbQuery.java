@@ -210,7 +210,7 @@ public class DbQuery {
 	}
 
     public static List<LocalCycle> getCycles(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalCycle> list){
-		list = new ArrayList<>();
+		if (list == null)list = new ArrayList<>();
 
         String code="select * from "+CycleEntry.TABLE_NAME+";";
 		Cursor cursor=db.rawQuery(code, null);
@@ -250,7 +250,7 @@ public class DbQuery {
 	}
 	
 	public static List<LocalResourcePurchase> getPurchases(SQLiteDatabase db, DbHelper dbh, ArrayList<LocalResourcePurchase> list, String type, String quantifier, boolean allowFinished){
-		list = new ArrayList<>();
+		if (list == null)list = new ArrayList<>();
 
         String code;
 		if(type == null)

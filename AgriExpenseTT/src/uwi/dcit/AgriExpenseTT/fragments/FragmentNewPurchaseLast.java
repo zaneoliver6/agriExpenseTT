@@ -6,7 +6,9 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,8 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -39,10 +40,12 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
 public class FragmentNewPurchaseLast extends Fragment{
     private EditText et_qty;
 	private EditText et_cost;
-	private TextView error;
+	private TextView helper_qty;
     private Button btnDate;
 
 	private String category;
@@ -53,39 +56,21 @@ public class FragmentNewPurchaseLast extends Fragment{
 	private SQLiteDatabase db;
 	private DbHelper dbh;
     private long unixDate;
+    private TextView helper_cost;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newpurchase_last, container, false);
 
-		//curr=savedInstanceState.getParcelable("details");
-		et_qty=(EditText) view.findViewById(R.id.et_newPurchaselast_qty);
-		et_cost=(EditText) view.findViewById(R.id.et_newPurchaselast_cost);
-		error=(TextView) view.findViewById(R.id.tv_newPurchase_error);
-
-
 		category=getArguments().getString("category");
 		resource=getArguments().getString("resource");
 		quantifier=getArguments().getString("quantifier");
 
-
-		if(category.equals(DHelper.cat_labour)){
-			et_qty.setHint("Number of "+quantifier+"'s "+resource+" is going to work"); //TODO Review wording for labour
-			et_cost.setHint("Cost of all "+quantifier+"'s "+resource+" will work for");
-		}else{
-			et_qty.setHint("Number/quantity of "+resource+" "+quantifier+"s");
-			et_cost.setHint("Cost of all "+resource+" "+quantifier+"s");
-		}
-
-		dbh = new DbHelper(getActivity().getBaseContext());
-		db = dbh.getWritableDatabase();
+        dbh = new DbHelper(getActivity().getBaseContext());
+        db = dbh.getWritableDatabase();
         resId = DbQuery.getNameResourceId(db, dbh, resource);
 
-        NewPurchaseClickListener c = new NewPurchaseClickListener(this.getActivity());
-        ((Button) view.findViewById(R.id.btn_newpurchaselast_done)).setOnClickListener(c);
-        btnDate = (Button)view.findViewById(R.id.btn_newPurchaseLast_date);
-        btnDate.setOnClickListener(c);
-
+        setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
 
         view.setOnTouchListener(
@@ -97,11 +82,30 @@ public class FragmentNewPurchaseLast extends Fragment{
                 }
             }
         );
-
-        formatDisplayDate(null);
-
 		return view;
 	}
+
+    private void setDetails(View view){
+        et_qty  = (EditText) view.findViewById(R.id.et_newPurchaselast_qty);
+        et_cost = (EditText) view.findViewById(R.id.et_newPurchaselast_cost);
+        helper_qty = (TextView) view.findViewById(R.id.tv_mainNew_header);
+        helper_cost = (TextView) view.findViewById(R.id.tv_cycUseItem_sub1_2);
+
+        if(category.equals(DHelper.cat_labour)){
+            helper_qty.setText("Number of " + quantifier + "'s " + resource + " is going to work"); //TODO Review wording for labour
+            helper_cost.setText("Cost of all " + quantifier + "'s " + resource + " will work for");
+        }else{
+            helper_qty.setText("Number/quantity of " + resource + " " + quantifier + "s");
+            helper_cost.setText("Cost of all " + resource + " " + quantifier + "s");
+        }
+
+        NewPurchaseClickListener c = new NewPurchaseClickListener(this.getActivity());
+        view.findViewById(R.id.btn_newpurchaselast_done).setOnClickListener(c);
+        btnDate = (Button)view.findViewById(R.id.btn_newPurchaseLast_date);
+        btnDate.setOnClickListener(c);
+
+        formatDisplayDate(null);
+    }
 
     private String formatDisplayDate(Calendar calendar) {
         String strDate;
@@ -139,29 +143,38 @@ public class FragmentNewPurchaseLast extends Fragment{
 			else if(v.getId() == R.id.btn_newpurchaselast_done){
 				double qty,cost;
 				if( ((et_qty.getText().toString()) == null)||((et_qty.getText().toString()).equals(""))  ){
-					error.setVisibility(View.VISIBLE);
-					error.setText("Enter Quantity");
+
+					helper_qty.setText("Enter Quantity Purchased");
+                    helper_qty.setTextColor(getResources().getColor(R.color.helper_text_error));
+                    et_qty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 					return;
 				}else{
 					qty=Double.parseDouble(et_qty.getText().toString());
+                    et_qty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+
 				}
 				if( (et_cost.getText().toString() == null) || ((et_cost.getText().toString()).equals("")) ){
-					error.setVisibility(View.VISIBLE);
-					error.setText("Enter cost");
+                    helper_cost.setText("Enter cost");
+                    helper_cost.setTextColor(getResources().getColor(R.color.helper_text_error));
+                    et_cost.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 					return;
 				}else{
 					cost=Double.parseDouble(et_cost.getText().toString());
+                    et_cost.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
 				}
-				
+                if(unixDate == 0){
+                    formatDisplayDate(null);
+                }
+				int res;
 				DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);
 				try{
 					currC=getArguments().getParcelable("cycle");
-				}catch (Exception e){}
+				}catch (Exception e){ e.printStackTrace();}
 				//this is for when labour is 'purchased'/hired for a single cycle
 				if(category.equals(DHelper.cat_labour) && currC != null){
 
 					//insert purchase
-					dm.insertPurchase(resId, quantifier, qty, category, cost);
+					res = dm.insertPurchase(resId, quantifier, qty, category, cost);
 					int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
 					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
@@ -187,12 +200,20 @@ public class FragmentNewPurchaseLast extends Fragment{
 						}
 					}
 //					dm.insertPurchase(resId, quantifier, qty, category, cost);
-                    dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
+                    res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
 				}
+
+                if (res != -1)Toast.makeText(getActivity(), "Purchase Successfully Saved", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getActivity(), "Unable to save Purchase", Toast.LENGTH_SHORT).show();
+
 				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);
                 Intent n=new Intent(getActivity(),Main.class);
+                Bundle args = new Bundle();
+                args.putString("type", "cycle");
+                n.putExtras(args);
+
+                startActivity(n);
                 new IntentLauncher().run();
-                getActivity().startActivity(n);
 			}
 		}
 		
@@ -200,6 +221,7 @@ public class FragmentNewPurchaseLast extends Fragment{
     @SuppressLint("ValidFragment")
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();

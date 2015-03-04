@@ -58,7 +58,7 @@ public class DataManager {
 		//update database last updated time
 	}
 
-    public void insertCycle(int cropId, String name, String landType, double landQty,long time){
+    public int insertCycle(int cropId, String name, String landType, double landQty,long time){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
         if(acc!=null){
@@ -70,11 +70,11 @@ public class DataManager {
                 c.insertCycleC();
             }
         }
-        //update database last updated time
+        return id;
     }
 
 
-	public void insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
+	public int insertPurchase( int resourceId, String quantifier, double qty,String type,double cost){
 		//insert into database
 		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
 
@@ -87,9 +87,10 @@ public class DataManager {
 				c.insertPurchase();
 			}
 		}
+        return id;
 	}
 
-    public void insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
+    public int insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
         int id = DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, time, tL);
 
         if(acc!=null){
@@ -101,6 +102,7 @@ public class DataManager {
                 c.insertPurchase();
             }
         }
+        return id;
     }
 	
 	

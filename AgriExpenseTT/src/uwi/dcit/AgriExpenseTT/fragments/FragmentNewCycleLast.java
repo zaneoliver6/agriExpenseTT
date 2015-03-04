@@ -5,11 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -54,9 +54,11 @@ public class FragmentNewCycleLast extends Fragment {
 		db = dbh.getWritableDatabase();
 		
 		plantMaterial = getArguments().getString(DHelper.cat_plantingMaterial);
+        plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
+
 		land = getArguments().getString("land");
-		Log.i(Main.APP_NAME, "Retrieved: "+plantMaterial+" "+land+" to be saved");
-		setDetails(view);
+
+        setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 
         view.setOnTouchListener(
@@ -73,20 +75,18 @@ public class FragmentNewCycleLast extends Fragment {
 	}
 	
 	private void setDetails(View view) {
+
         TextView landLbl = (TextView) view.findViewById(R.id.tv_newCyclelast_landQty);
-		et_landQty=(EditText)view.findViewById(R.id.et_newCycleLast_landqty);
+        landLbl.setText("Enter " + land + "s planted");
+
+		et_landQty   = (EditText)view.findViewById(R.id.et_newCycleLast_landqty);
         et_CycleName = (EditText)view.findViewById(R.id.et_newCycleLast_name);
         et_CycleName.setText(plantMaterial);
-
-		error=(TextView)view.findViewById(R.id.tv_newCycle_error);
+		error = (TextView)view.findViewById(R.id.tv_newCyclelast_landQty);
 		
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
 		btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);
 
-		landLbl.setText("Enter number of " + land + "s");//TODO revise wording and use string xml
-		
-		plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
-		
 		NewCycleClickListener c = new NewCycleClickListener(getActivity());
 		btnDate.setOnClickListener(c);
 		btnDone.setOnClickListener(c);
@@ -128,28 +128,36 @@ public class FragmentNewCycleLast extends Fragment {
 
                 if(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals("")){
                     Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
-                    error.setVisibility(View.VISIBLE);
                     error.setText("Enter the Land Quantity");
+                    error.setTextColor(getResources().getColor(R.color.helper_text_error));
+                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
                     return;
+                }else{
+                    error.setText(getResources().getText(R.string.hint_new_cycle_land_quantity));
+                    error.setTextColor(getResources().getColor(R.color.helper_text_color));
+                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
                 }
                 if (et_CycleName.getText().toString().equals("")){
                     et_CycleName.setText(plantMaterial);
                 }
+
                 if(unixDate == 0){
-                    Toast.makeText(getActivity().getBaseContext(),"Select a date", Toast.LENGTH_SHORT).show();
-                    error.setVisibility(View.VISIBLE);
-                    error.setText("Select date to start crop cycle");
-                }else{
-
-
-                    DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-//                    dm.insertCycle(plantMaterialId, land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
-                    dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
-
-                    new IntentLauncher().run();
-                    Intent i=new Intent(getActivity(),Main.class);
-                    startActivity(i);
+                    formatDisplayDate(null);
                 }
+
+                DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+                int res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+
+                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
+
+                Bundle args = new Bundle();
+                args.putString("type", "cycle");
+                Intent i=new Intent(getActivity(),Main.class);
+                i.putExtras(args);
+                startActivity(i);
+                new IntentLauncher().run();
+
             }
         }
     }
@@ -174,7 +182,6 @@ public class FragmentNewCycleLast extends Fragment {
             formatDisplayDate(cal);
         }
     }
-
     private class IntentLauncher extends Thread{
         @Override
         public void run(){getActivity().finish();}

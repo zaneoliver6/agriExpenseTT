@@ -81,6 +81,7 @@ public class FragmentViewCycles extends ListFragment{
 	
 	public void populateList() {
 		DbQuery.getCycles(db, dbh, cycleList);
+
 		//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
 		Collections.sort(cycleList, new Comparator<LocalCycle>(){
 			@Override
