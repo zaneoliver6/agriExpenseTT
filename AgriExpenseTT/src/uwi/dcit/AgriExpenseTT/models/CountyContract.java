@@ -179,6 +179,6 @@ public class    CountyContract {
 	public static abstract class CountyEntry implements BaseColumns{
 		public static final String TABLE_NAME = "counties";
 		public static final String COLUMN_NAME_COUNTRY = "country";
-		public static final String COLUMN_NAME_COUNTY = "county";
+		public static final String COLUMN_NAME_COUNTY = "countyTerm";
 	}
 }

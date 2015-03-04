@@ -31,37 +31,36 @@ import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 import uwi.dcit.agriexpensesvr.upAccApi.UpAccApi;
 import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
-//import uwi.dcit.agriexpensett.cycleApi.CycleApi;
-//import uwi.dcit.agriexpensett.cycleApi.model.Cycle;
-
-//import com.dcit.agriexpensett.cycleUseApi.CycleUseApi;
-//import com.dcit.agriexpensett.cycleUseApi.model.CycleUse;
-//import com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi;
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-//import com.dcit.agriexpensett.translogApi.TranslogApi;
-//import com.dcit.agriexpensett.translogApi.model.TransLog;
-//import com.dcit.agriexpensett.upAccApi.UpAccApi;
-//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 
 public class CloudInterface {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	TransactionLog tL;
+
 	public CloudInterface(Context context) {
 		dbh= new DbHelper(context);
 		db=dbh.getWritableDatabase();
 		tL=new TransactionLog(dbh,db,context);
 	}
+
 	public CloudInterface(Context context,SQLiteDatabase db,DbHelper dbh) {
-		this.dbh= dbh;
-		this.db=db;
-		tL=new TransactionLog(dbh,db,context);
+		this.dbh = dbh;
+		this.db = db;
+		tL = new TransactionLog(dbh,db,context);
 	}
-	public void updateCycleC(){
-		new updateCycle().execute();
+
+	public void updateCycle(){
+		new CycleUpdater().execute();
 	}
-	public class updateCycle extends AsyncTask<Void,Void,Void>{
+    public void updatePurchase(){
+        new PurchaseUpdater().execute();
+    }
+    public void insertCycle(){
+        new InsertCycle().execute();
+    }
+
+    private class CycleUpdater extends AsyncTask<Void,Void,Void>{
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -122,10 +121,8 @@ public class CloudInterface {
 		}
 		
 	}
-	public void updatePurchaseC(){
-		new updatePurchase().execute();
-	}
-	public class updatePurchase extends AsyncTask<Void,Void,Void>{
+
+	private class PurchaseUpdater extends AsyncTask<Void,Void,Void>{
 
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -176,27 +173,34 @@ public class CloudInterface {
 		}
 		
 	}
-	public void insertCycleC(){
-		new InsertCycle().execute();
-	}
-	public class InsertCycle extends AsyncTask<Void, Object, Object>{
+
+
+    public class InsertCycle extends AsyncTask<Void, Object, Object>{
 		
 		@Override
 		protected Cycle doInBackground(Void... params) {
 			CycleApi.Builder builder = new CycleApi.Builder(
-			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-			         null);         
+                    AndroidHttp.newCompatibleTransport(),
+                    new JacksonFactory(),
+                    null);
+
 			builder = CloudEndpointUtils.updateBuilder(builder);
 			CycleApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
+
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
+
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
+
 			while(logI.hasNext()){
-				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-				Cycle c=DbQuery.getCycle(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccount(db));//uses the account rep as the namespace
+				int logId=logI.next(),
+                        rowId=rowI.next();              // The current primary key of CROP CYCLE Table
+
+                Cycle c = DbQuery.getCycle(db, dbh, rowId);
+				c.setAccount(DbQuery.getAccount(db));   // Uses the account rep as the namespace
+
 				try{
 					c=endpoint.insertCycle(c).execute();
 				}catch(Exception e){
@@ -656,6 +660,7 @@ public class CloudInterface {
 		}
 		
 	}
+
 	public UpAcc getUpAcc(String namespace){
         UpAccApi.Builder builder = new UpAccApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -665,17 +670,19 @@ public class CloudInterface {
 		UpAcc acc;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();
-		}catch (IOException e) {e.printStackTrace();
+		}catch (IOException e) {
+            e.printStackTrace();
 			return null;
 		}
 		return acc;
 	}
+
 	public void flushToCloud(){
-		insertCycleC();
+		insertCycle();
 		insertPurchase();
 		insertCycleUseC();
-		updateCycleC();
-		updatePurchaseC();
+		updateCycle();
+		updatePurchase();
 		deletePurchase();
 		deleteCycle();
 	}

@@ -33,7 +33,7 @@ public class CountryContract {
 		{"St Lucia","parish"},
 		{"St Vincent and the Grenadines", "parish"},
 		{"Suriname", "district"},
-		{"Trinidad and Tobago","county"},
+		{"Trinidad and Tobago","countyTerm"},
 		{"Turks & Caicos Islands", "island"}
 	};
 	

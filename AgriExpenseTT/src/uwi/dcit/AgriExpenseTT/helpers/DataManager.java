@@ -52,7 +52,7 @@ public class DataManager {
 			//try insert into cloud
 			if(acc.getSignedIn()==1){
 				CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				c.insertCycleC();
+				c.insertCycle();
 			}
 		}
 		//update database last updated time
@@ -67,7 +67,7 @@ public class DataManager {
             //try insert into cloud
             if(acc.getSignedIn()==1){
                 CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-                c.insertCycleC();
+                c.insertCycle();
             }
         }
         return id;
@@ -264,7 +264,7 @@ public class DataManager {
 			//record in transaction log
 			if(acc.getSignedIn()==1){
 				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				cloud.updatePurchaseC();
+				cloud.updatePurchase();
 			}
 		}
 	}
@@ -278,7 +278,7 @@ public class DataManager {
 			//record in transaction log
 			if(acc.getSignedIn()==1){
 				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				cloud.updateCycleC();
+				cloud.updateCycle();
 			}
 		}
         return (result != -1);

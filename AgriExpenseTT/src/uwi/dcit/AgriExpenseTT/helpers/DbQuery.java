@@ -499,15 +499,19 @@ public class DbQuery {
 	}
 	
 	//pass in the operation and the table you want to get the records to redo
-	public static void getRedo(SQLiteDatabase db,DbHelper dbh,ArrayList<Integer> rowIds,ArrayList<Integer> logIds,String operation,String Rtable){
-		String code="select * from "+RedoLogEntry.TABLE_NAME+" where "
-				+RedoLogEntry.REDO_LOG_OPERATION+"= '"+operation+"' and "
-				+RedoLogEntry.REDO_LOG_TABLE+"= '"+Rtable+"';";
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount()<1)
+	public static void getRedo(SQLiteDatabase db,DbHelper dbh,ArrayList<Integer> rowIds,ArrayList<Integer> logIds,String operation,String rTable){
+
+        String code="select * from "+RedoLogEntry.TABLE_NAME+" where "
+				+RedoLogEntry.REDO_LOG_OPERATION+" = '"+operation+"' and "
+				+RedoLogEntry.REDO_LOG_TABLE+"= '"+rTable+"';";
+
+        Cursor cursor = db.rawQuery(code, null);
+
+        if(cursor.getCount() < 1)
 			return;
+
 		while(cursor.moveToNext()){
-			int n=cursor.getInt(cursor.getColumnIndex(RedoLogEntry.REDO_LOG_ROW_ID));
+			int n = cursor.getInt(cursor.getColumnIndex(RedoLogEntry.REDO_LOG_ROW_ID));
 			rowIds.add(Integer.valueOf(n));
 			n=cursor.getInt(cursor.getColumnIndex(RedoLogEntry._ID));
 			logIds.add(Integer.valueOf(n));

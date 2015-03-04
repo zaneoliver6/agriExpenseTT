@@ -7,12 +7,18 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.GoogleAuthUtil;
 
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
@@ -27,62 +33,37 @@ public class SignInManager {
 	DbHelper dbh;
 	Activity activity;
 	private String county,country;
+    private final String TAG_NAME = "SignInManager";
+
     public SignInManager(Activity activity, Context ctx){
         this.context = ctx;
         this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
     }
-    public SignInManager(Activity activity, Context ctx,String country, String county){
-        this.context = ctx;
-        this.activity = activity;
-        dbh = new DbHelper(context);
-        db = dbh.getWritableDatabase();
-        this.country=country;
-        this.county=county;
-    }
 
-	
-	public SignInManager(SQLiteDatabase db,DbHelper dbh,Activity activity,Context ctx){
-		this.context = ctx;
-		this.db = db;
-		this.dbh = dbh;
-		this.activity = activity;
-	}
-	
 	public void signIn(){
+        Log.d(TAG_NAME, "Attempting to Log in");
 		UpAcc acc = isExisting(); 								// Check if Account is already created
-		if(acc == null)accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
-		else{													// account exists already so we can sign in OR out
-			Log.d("SignIn Manager", "Account Exists");
-			if(acc.getSignedIn() == 1){							// we're already signed in so lets sign out
-				Log.d("SignIn Manager", "Account Signed in Attempting to sign out");
-				// updates the database that we signed out
-				ContentValues cv = new ContentValues();	
-				cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);
-				db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1",null);
-			}else{												// if we're signed out then we need to sign in 
-				Log.d("SignIn Manager", "Account previously created attempting to signin with namespace: "+acc.getAcc());
-				initialSignIn(acc.getAcc());					// Initiate Sign-in process
-			}
-		}
+		if(acc == null) accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
+		else startSync(acc.getAcc());						    // Account exists already so we can Initiate Sign-in process
 	}
 	
 	public boolean signOut(){
-		Log.d("SignIn Manager", "Account is logged in, attempting to sign out");
+		Log.d(TAG_NAME, "Account is logged in, attempting to sign out");
 		ContentValues cv = new ContentValues();	
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 0);
 		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID + "=1",null);
 		return true;
 	}
 	
-	private void initialSignIn(final String namespace){
+	private void startSync(final String namespace){
 		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
 	}
 	
 	public void accountSetUp(){
-        //todo
-		ArrayList<String> deviceAccounts = getAccounts();		
+        Log.d(TAG_NAME, "");
+		ArrayList<String> deviceAccounts = getAccounts();
 		if(deviceAccounts.isEmpty()){
 			handleNoAccounts();
 			return;
@@ -91,55 +72,53 @@ public class SignInManager {
 		final CharSequence[] items = new CharSequence[deviceAccounts.size()]; 
 		int i=0;
 		
-		for(String k : deviceAccounts){
-//			items[i]=deviceAccounts.get(i++); 
-			items[i++] = k; //TODO Ensure that this works as expected
-			Log.d("SignIn Manager", "k => "+ k +", get => "+ deviceAccounts.get(i - 1));
+		for(String account : deviceAccounts){
+			items[i++] = account;
 		}
+
 		//Display List to user for choosing account
 	    (new AlertDialog.Builder(context))
 	    	.setTitle("Select Account")
 	    	.setItems(items, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
-		            initialSignIn(convertString2Namespace((items[item].toString()))); //convert choice to name space and attempt to upload
+                    String namespace = convertString2Namespace(items[item].toString());
+		            if (namespace != null)startSync(namespace); //convert choice to name space and attempt to upload
+                    else signInReturn(false, "Unable to create Account with the backup system");
 		        }
-		    })
-		    .show();
+		    }).show();
 	}
 	
 	public void signInReturn(boolean success,String message){
-//		if(success){
-//			((Main)activity).toggleSignIn();
-//			Toast.makeText(activity.getBaseContext(), "Sign-in Successfully Completed", Toast.LENGTH_SHORT).show();
-//		}else{
-//			if(message==null||message.equals(""))
-//				Toast.makeText(activity, "The sign-in process was not successful. Please try again", Toast.LENGTH_SHORT).show();
-//			else
-//				Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
-//		}
+		if(success){
+			Toast.makeText(activity.getBaseContext(), "Sign-in Successfully Completed", Toast.LENGTH_SHORT).show();
+		}else{
+			if(message == null) Toast.makeText(activity, "The sign-in process was not successful. Please try again", Toast.LENGTH_SHORT).show();
+			else Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+		}
 	}
 	
 	//--------------------------------------------------Helper stuff
 	private void handleNoAccounts(){		
-//		(new AlertDialog.Builder(context))
-//			.setTitle("No Accounts Available")
-//			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
-//			.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-//				public void onClick(DialogInterface dialog, int item) {
-//					context.startActivity(new Intent(context,MainMenu.class));
-//				}
-//			})
-//			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
-//				public void onClick(DialogInterface dialog, int item) {
-//					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
-//				}
-//			})
-//			.show();
+		(new AlertDialog.Builder(context))
+			.setTitle("No Accounts Available")
+			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
+			.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					context.startActivity(new Intent(context, Main.class));
+				}
+			})
+			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int item) {
+					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
+				}
+			})
+			.show();
 	}
 	
 	private ArrayList<String> getAccounts(){
 		ArrayList<String> accountList = new ArrayList<>();
-		Account[] accounts = AccountManager.get(context).getAccounts();
+		Account[] accounts = AccountManager.get(context).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+
 		for(Account a:accounts){
 		  accountList.add(a.name);
 		}
@@ -147,26 +126,19 @@ public class SignInManager {
 	}
 	
 	private String convertString2Namespace(String str){
-		int len = str.length();
-		String newStr = "_";
-		for(int i = 0; i < len; i++){
-			if(isChar(str.charAt(i))) //TODO Why only characters?
-				newStr += str.charAt(i);
-			else if(str.charAt(i) == '@')
-				break;
-		}
-		return newStr;
+        // Using the Android built in SimpleSplitter to delimit string
+        TextUtils.SimpleStringSplitter splitter = new TextUtils.SimpleStringSplitter('@');
+        splitter.setString(str);
+        if (splitter.hasNext())     //If it contains an @ then its a valid email address
+             return "_" + splitter.next(); //concatenate and return the address (address highly likely to be unique)
+        else return null;           // Return null if not valid
 	}
-	
-	private boolean isChar(char c){
-        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-    }
-	
+
 	public UpAcc isExisting(){
-		UpAcc acc = DbQuery.getUpAcc(db); //Attempts to retrieve the Account from the database Record
-		if(acc.getAcc() == null || acc.getAcc().equals(""))return null; //The information returned will be null if no record exists
-		Log.d("SignIn Manager","Account already Created ... Returning existing Account");
-		return acc; //Return the Account if received.
+		UpAcc acc = DbQuery.getUpAcc(db);   // Attempts to retrieve the Account from the database Record
+		if(acc.getAcc() == null || acc.getAcc().equals(""))
+            return null;                    // The information returned will be null if no record exists
+		return acc;                         // Return the Account if received.
 	}
 	
 	public boolean isSignedIn(){
@@ -174,17 +146,19 @@ public class SignInManager {
         return account != null && (account.getSignedIn() == 1);
     }
 	
-	public SignInManager getSignin(){
+	public SignInManager getSigninObject(){
 		return this;
 	}
 	
 	//Create an Asynchronous Task to create new thread to handle this process
-	class SetupSignInTask extends AsyncTask<Void, Void, UpAcc> {
+	private class SetupSignInTask extends AsyncTask<Void, Void, UpAcc> {
+
 		private String namespace;
 		
 		public SetupSignInTask(String namespace){
 			this.namespace=namespace;
 		}
+
 		@Override
 		protected UpAcc doInBackground(Void... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
@@ -193,12 +167,15 @@ public class SignInManager {
 
 		@Override
 		protected void onPostExecute(UpAcc cloudAcc) {
-			Sync sync=new Sync(db, dbh, context,getSignin());
-			sync.start(namespace, cloudAcc);
-			super.onPostExecute(cloudAcc);
+			if (cloudAcc != null) {
+                Sync sync = new Sync(db, dbh, context, getSigninObject());
+                sync.start(namespace, cloudAcc);
+            }
+            super.onPostExecute(cloudAcc);
 		}
 		
 	}
+
     public String getCounty() {
         return county;
     }

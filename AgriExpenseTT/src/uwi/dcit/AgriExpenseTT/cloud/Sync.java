@@ -148,6 +148,7 @@ public class Sync {
         AlertDialog alert1 = builder1.create();
         alert1.show();
 	}
+
 	private class Confirm implements DialogInterface.OnClickListener{
 		long lastLocalUpdated,lastCloudUpdated;
 		String namespace;

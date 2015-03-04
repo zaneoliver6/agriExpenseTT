@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import uwi.dcit.AgriExpenseTT.models.CountyContract;
 public class FragmentSelectLocation extends ListFragment {
 	protected String type;
 	protected String country;
-	protected String county;
+	protected String countyTerm;
 	
 	protected ArrayList<String> list;
 	protected SQLiteDatabase db;
@@ -42,14 +41,18 @@ public class FragmentSelectLocation extends ListFragment {
 		super.onCreate(savedInstanceState);
 		dbh = new DbHelper(this.getActivity().getBaseContext());
 		db = dbh.getWritableDatabase();
-		
-		type = this.getArguments().getString("type");
+
+        if (this.getArguments().containsKey("type"))
+		    type = this.getArguments().getString("type");
+
 		if (this.getArguments().containsKey("country"))
 			this.country = this.getArguments().getString("country");
+
 		if(this.getArguments().containsKey("county"))
-			this.county = this.getArguments().getString("county");
+			this.countyTerm = this.getArguments().getString("county");
 		
-		populateList();		
+		populateList();
+
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Select Location Fragment");
@@ -58,47 +61,39 @@ public class FragmentSelectLocation extends ListFragment {
 	
 		
 	private void populateList() {		
-		list = new ArrayList<String>();
-        //country selection
-		if (type.equals(DHelper.location_country)){
-            DbQuery.getCountries(db,list);
-        //county selection
-		}else if (type.equals(DHelper.location_county)){
-            county=null;
+		list = new ArrayList<>();
 
-            Log.d("FragmentSelectLocation",country);
+		if (type.equals(DHelper.location_country)){     // Country selection
+            DbQuery.getCountries(db,list);
+		}else if (type.equals(DHelper.location_county)){ // County selection
+
+            countyTerm = null;
             for(String[] s : CountryContract.countries){
-                Log.d("FragmentSelectLocation",s[0]+"-"+country);
                 if(s[0].equals(country)){
-                    county=s[1];
-                    Log.d("FragmentSelectLocation",s[1]);
+                    countyTerm =s[1];
                     break;
                 }
             }
 
             for(String[] s : CountyContract.counties){
                 if(s[0].equals(country)){
-                    Log.d("FragmentSelectLocation",s[0]+" "+s[1]);
                     list.add(s[1]);
                 }
             }
 		}
-		
 		Collections.sort(list);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-		//returns the inflated layout which contains the listview
-		view= inflater.inflate(R.layout.list_reuse, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		view = inflater.inflate(R.layout.list_reuse, container, false);
 
 		tv_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
 //		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 
         if (type.equals(DHelper.location_county)) {
 
-            tv_main.setText("Select the " + county + " you belong to");
+            tv_main.setText("Select the " + countyTerm + " you belong to");
         }else {
             tv_main.setText("Select the country you belong to");
         }
@@ -128,8 +123,8 @@ public class FragmentSelectLocation extends ListFragment {
 			
 			Intent i=new Intent();
 			
-			county = list.get(position);
-			i.putExtra("county", county );
+			countyTerm = list.get(position);
+			i.putExtra("county", countyTerm);
 			i.putExtra("country", this.country);
 			
 			
