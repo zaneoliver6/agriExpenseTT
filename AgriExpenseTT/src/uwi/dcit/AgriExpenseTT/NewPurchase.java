@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,7 @@ import uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class NewPurchase extends ActionBarActivity {
+public class NewPurchase extends BaseActivity {
 	TextView sub_head;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +24,7 @@ public class NewPurchase extends ActionBarActivity {
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupUI();
 		setupInitialFrag();
+//        setupNavDrawer();
 
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");

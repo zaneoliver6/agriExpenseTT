@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,12 +13,14 @@ import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
-public class NewCycle extends ActionBarActivity {
+public class NewCycle extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle_redesigned);
 		setupInitialFrag();
+//        setupNavDrawer();
+
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Cycle");
 	}
