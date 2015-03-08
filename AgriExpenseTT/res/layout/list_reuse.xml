@@ -20,7 +20,8 @@
                     android:text="Creating new crop cycle"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/list_reuse_description"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="5dp" />
 
             <EditText
                 android:id="@+id/et_listReuse_search"
@@ -28,7 +29,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Search " >
+                android:hint="Search "
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp">
                 <requestFocus />
             </EditText>
 
@@ -39,7 +42,9 @@
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
         </ListView>
 
 </LinearLayout>

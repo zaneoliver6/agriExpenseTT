@@ -1,304 +1,120 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/containerR"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#d3d3d3"
     android:orientation="vertical"
     tools:context="uwi.dcit.AgriExpenseTT.CycleUseage"
     tools:ignore="MergeRootFrame" >
+            
+    <!--<FrameLayout
+        android:layout_height="250dp"
+        android:layout_width="match_parent"
+        android:background="#ffffff"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" >
 
-        
+        <ImageView
+            android:id="@+id/icon_purchaseType_mainR"
+            android:layout_width="370dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/general_image_placeholder_text"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_default1" />
+    </FrameLayout>
+-->
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:fillViewport="true"
+         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginBottom="10dp"
             android:orientation="vertical" >
-            <FrameLayout
-                android:layout_height="250dp" 
-                android:background="#ffffff"
-                android:layout_width="300dp"
-                android:layout_gravity="center_horizontal"
+
+             <FrameLayout
+                android:id="@+id/cat_general_frag"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                >
-                <ImageView
-                    android:id="@+id/icon_purchaseType_main"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:layout_marginLeft="20dp"
+                 android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/cat_plantMaterial_frag"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/cat_fertilizer_frag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/cat_soilAmendment_frag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/cat_chemical_frag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/cat_labour_frag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/cat_other_frag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
             </FrameLayout>
 
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:fillViewport="true"
-			 >
-
-            <LinearLayout
-                android:layout_width="340dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-            	
-            	android:layout_marginBottom="10dp"
-                android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="270dp"
-                    
-                    android:background="#ffffff"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:id="@+id/tv_cycle_menuplantMaterial"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_width="wrap_content"
-            			android:layout_height="wrap_content"
-			            android:textColor="#999999"
-			            android:textStyle="bold"
-			            android:layout_gravity="fill"
-			            android:textSize="20sp"
-                        android:text="TextView" />
-					<View
-    					android:layout_width="280dp"
-   	 					android:layout_height="1dp"
-    					android:background="@android:color/darker_gray"/>
-                    <TextView
-                        android:id="@+id/tv_cycle_mplantMaterial_det1"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-                    <TextView
-                        android:id="@+id/tv_cycle_mplantMaterial_det2"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-                    <Button
-                        android:id="@+id/btn_Cycle_plantMaterial1"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#4ddedede"
-                        android:text="Planting material Useage" />
-					<Button
-                        android:id="@+id/btn_Cycle_plantMaterial2"
-                        android:layout_marginTop="0dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#4ddedede"
-                        android:text="Use more planting materials" />
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:id="@+id/tv_cycle_menuFertilizer"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_width="wrap_content"
-            			android:layout_height="wrap_content"
-			            android:textColor="#999999"
-			            android:textStyle="bold"
-			            android:layout_gravity="fill"
-			            android:textSize="20sp"
-                        android:text="TextView" />
-					<View
-    					android:layout_width="280dp"
-   	 					android:layout_height="1dp"
-    					android:background="@android:color/darker_gray"/>
-                    <TextView
-                        android:id="@+id/tv_cycle_mFertilizer_det1"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-
-                    <TextView
-                        android:id="@+id/tv_cycle_mFertilizer_det2"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-
-                    <Button
-                        android:id="@+id/btn_Cycle_fertilizer1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginTop="7dp"
-                        android:background="#4ddedede"
-                        android:text="Fertilizer Useage" />
-
-					<Button
-					    android:id="@+id/btn_Cycle_fertilizer2"
-					    android:layout_width="fill_parent"
-					    android:layout_height="wrap_content"
-					    android:layout_marginTop="0dp"
-					    android:background="#4ddedede"
-					    android:text="Use More Fertilizer" />
-
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:id="@+id/tv_cycle_menuSoilAmendment"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_width="wrap_content"
-            			android:layout_height="wrap_content"
-			            android:textColor="#999999"
-			            android:textStyle="bold"
-			            android:layout_gravity="fill"
-			            android:textSize="20sp"
-                        android:text="TextView" />
-					<View
-    					android:layout_width="280dp"
-   	 					android:layout_height="1dp"
-    					android:background="@android:color/darker_gray"/>
-                    <TextView
-                        android:id="@+id/tv_cycle_mSoilAmendment_det1"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-
-                    <TextView
-                        android:id="@+id/tv_cycle_mSoilAmendment_det2"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-
-                    <Button
-                        android:id="@+id/btn_Cycle_SoilAmendment1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginTop="7dp"
-                        android:background="#4ddedede"
-                        android:text="Soil amendment Useage" />
-
-					<Button
-					    android:id="@+id/btn_Cycle_SoilAmendment2"
-					    android:layout_width="fill_parent"
-					    android:layout_height="wrap_content"
-					    android:layout_marginTop="0dp"
-					    android:background="#4ddedede"
-					    android:text="Use more soil amendment" />
-
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="#ffffff"
-                    android:orientation="vertical" >
-                    <TextView
-                        android:id="@+id/tv_cycle_menuChemical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_width="wrap_content"
-            			android:layout_height="wrap_content"
-			            android:textColor="#999999"
-			            android:textStyle="bold"
-			            android:layout_gravity="fill"
-			            android:textSize="20sp"
-                        android:text="TextView" />
-					<View
-    					android:layout_width="280dp"
-   	 					android:layout_height="1dp"
-    					android:background="@android:color/darker_gray"/>
-                    <TextView
-                        android:id="@+id/tv_cycle_mChemical_det1"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-                    <TextView
-                        android:id="@+id/tv_cycle_mChemical_det2"
-                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginTop="7dp"
-                        android:textSize="17sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-	                    android:textColor="#cccccc"
-                        android:text="TextView" />
-
-                    <Button
-                        android:id="@+id/btn_Cycle_chemical1"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginTop="7dp"
-                        android:background="#4ddedede"
-                        android:text="Chemical Useage" />
-
-					<Button
-					    android:id="@+id/btn_Cycle_chemical2"
-					    android:layout_width="fill_parent"
-					    android:layout_height="wrap_content"
-					    android:layout_marginTop="0dp"
-					    android:background="#4ddedede"
-					    android:text="Use More Chemicals" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-            
-        </ScrollView>
+    </ScrollView>
 
      
 </RelativeLayout>

@@ -55,13 +55,15 @@ public class FragmentViewResources extends ListFragment{
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		String type=getArguments().getString("type");
 		if(type.equals("delete")){
-			AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-            builder1.setMessage("Are you sure you want to delete");
-            builder1.setCancelable(true);
             @SuppressWarnings("unchecked")
-			Confirm c=new Confirm(position,(ArrayAdapter<String>) l.getAdapter());
-            builder1.setPositiveButton("Yes",c);
-            builder1.setNegativeButton("Nope",c);
+            Confirm c = new Confirm(position,(ArrayAdapter<String>) l.getAdapter());
+
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+            builder1.setMessage("Are you sure you want to delete")
+                    .setCancelable(true)
+                    .setPositiveButton("Delete",c)
+                    .setNegativeButton("Cancel",c);
+
             AlertDialog alert1 = builder1.create();
             alert1.show();
 		}

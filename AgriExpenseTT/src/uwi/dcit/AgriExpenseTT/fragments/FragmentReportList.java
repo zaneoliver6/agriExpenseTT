@@ -89,8 +89,8 @@ public class FragmentReportList extends ListFragment {
 		(new AlertDialog.Builder(getActivity()))
 			.setMessage("Are you sure you want to delete?")
 			.setCancelable(true)        
-			.setPositiveButton("Yes",c)
-			.setNegativeButton("Nope",c)
+			.setPositiveButton("Delete",c)
+			.setNegativeButton("Cancel",c)
 			.create() 
 			.show();
 	}

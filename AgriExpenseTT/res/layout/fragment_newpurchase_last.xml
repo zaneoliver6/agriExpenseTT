@@ -19,24 +19,24 @@
 
 		   	<EditText
 				android:id="@+id/et_newPurchaselast_qty"
+                android:hint="@string/txt_new_purchase_quantity"
+                android:inputType="numberDecimal"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="20dp"
 				android:layout_marginRight="20dp"
 				android:layout_marginTop="@dimen/label_dataentry_margin"
+                android:layout_marginBottom="@dimen/helper_text_padding"
 				android:ems="10"
-				android:hint="@string/txt_new_purchase_quantity"
-				android:inputType="numberDecimal"
-				android:layout_marginBottom="@dimen/helper_text_padding"
-				android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal">
 				<requestFocus />
 		   </EditText>
 
             <TextView
 				android:id="@+id/tv_mainNew_header"
+                android:text="@string/hint_new_purchase_quantity"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="@string/hint_new_purchase_quantity"
 				android:textColor="@color/helper_text_color"
 				android:textSize="@dimen/helper_text_size"
 				android:alpha="@dimen/helper_text_alpha"

@@ -198,6 +198,19 @@ public class DbQuery {
         return list;
 	}
 
+    public static boolean resourceExistByName(SQLiteDatabase db, DbHelper dbh, String name){
+        String code = "SELECT name from " + ResourceContract.ResourceEntry.TABLE_NAME +  " WHERE LOWER(" + ResourceContract.ResourceEntry.RESOURCES_NAME + ") LIKE '%"+name+"%';";
+
+        Cursor cursor = db.rawQuery(code, null);
+        if (cursor.getCount() >= 1){
+            while(cursor.moveToNext()){
+                String res = cursor.getString(cursor.getColumnIndex("name"));
+                if (res.equalsIgnoreCase(name))return true;
+            }
+        }
+        return false;
+    }
+
     public static int getNameResourceId(SQLiteDatabase db,DbHelper dbh,String name){
 		String code="select "+ ResourceContract.ResourceEntry._ID+" from "+ ResourceContract.ResourceEntry.TABLE_NAME+" where "+ ResourceContract.ResourceEntry.RESOURCES_NAME+"='"+name+"';";
 		Cursor cursor=db.rawQuery(code, null);

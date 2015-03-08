@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,7 @@ public class FragmentCycleUseage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         Log.i("recreating fragment","before anything");
-        view = inflater.inflate(R.layout.activity_cycle_useage_redesign, container, false);
+        view = inflater.inflate(R.layout.activity_cycle_useage, container, false);
         setup();
         return view;
     }

@@ -214,8 +214,8 @@ public class FragmentViewCycles extends ListFragment{
 		
         alertBuilder.setMessage("Are you sure you want to delete?")
         			.setCancelable(true)        
-        			.setPositiveButton("Yes",c)
-        			.setNegativeButton("Nope",c)
+        			.setPositiveButton("Delete",c)
+        			.setNegativeButton("Cancel",c)
         			.create() 
         			.show();
 	}

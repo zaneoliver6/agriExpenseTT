@@ -18,7 +18,7 @@ public class CycleUseage extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cycle_useage_redesign);
+		setContentView(R.layout.activity_cycle_useage);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Cycle Usage");
 		int id = 1;
 		setup(id);

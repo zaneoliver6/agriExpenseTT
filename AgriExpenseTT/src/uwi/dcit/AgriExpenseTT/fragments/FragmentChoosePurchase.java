@@ -188,8 +188,8 @@ public class FragmentChoosePurchase extends ListFragment {
 	        builder1.setMessage("Are you sure you want to delete");
 	        builder1.setCancelable(true);
 	        Confirm c=new Confirm(position,(PurchaseListAdapter) l.getAdapter());
-	        builder1.setPositiveButton("Yes",c);
-	        builder1.setNegativeButton("Nope",c);
+	        builder1.setPositiveButton("Delete",c);
+	        builder1.setNegativeButton("Cancel",c);
 	        AlertDialog alert1 = builder1.create();
 	        alert1.show();
 	 }

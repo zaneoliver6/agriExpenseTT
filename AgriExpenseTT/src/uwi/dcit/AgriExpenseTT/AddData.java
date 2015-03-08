@@ -15,7 +15,7 @@ public class AddData extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_new_cycle_redesigned);
+		setContentView(R.layout.activity_new_cycle);
 
         getSupportFragmentManager()
             .beginTransaction()

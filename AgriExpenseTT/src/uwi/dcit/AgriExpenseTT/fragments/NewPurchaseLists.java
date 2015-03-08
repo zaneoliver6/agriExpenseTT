@@ -103,7 +103,7 @@ public class NewPurchaseLists extends ListFragment {
 		if(type.equals("category")) et_main.setText("Select the type of material you are buying");
         else if(type.equals("resource")){
 			String s=getArguments().getString("category");
-			et_main.setText("Select the type "+s+" are buying");
+			et_main.setText("Select the type "+s+"to be purchased");
 		}else if(type.equals("quantifier")){
 			String q=getArguments().getString("resource");
 			et_main.setText("How is the "+q+" being sold by");

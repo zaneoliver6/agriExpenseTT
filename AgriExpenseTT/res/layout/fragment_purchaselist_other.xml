@@ -9,19 +9,23 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#999999"
-        android:textSize="21sp"
-        android:text="Select the thing you would like to purchase" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/list_reuse_description"
+        android:text="Select the resource you would like to purchase"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="5dp" />
 
     <EditText
         android:id="@+id/et_search_other"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:ems="10"
-        android:hint="search" >
+        android:hint="search"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <requestFocus />
     </EditText>
@@ -29,16 +33,19 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
     </ListView>
 
     <Button
         android:id="@+id/btn_purchaseOther_notFound"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_custom"
-        android:text="Resource Not Found" />
+        android:text="Resource Not Found"
+        android:layout_marginRight="20dp" />
 
 </LinearLayout>

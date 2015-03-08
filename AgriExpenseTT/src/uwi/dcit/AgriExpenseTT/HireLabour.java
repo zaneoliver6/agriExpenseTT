@@ -21,7 +21,7 @@ public class HireLabour extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_cycle_redesigned);
+		setContentView(R.layout.activity_new_cycle);
 		setupInitial();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}

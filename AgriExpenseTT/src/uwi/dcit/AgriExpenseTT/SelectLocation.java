@@ -15,7 +15,7 @@ public class SelectLocation extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_cycle_redesigned);
+		setContentView(R.layout.activity_new_cycle);
 //		setupInitialFrag();
 	}
 	
