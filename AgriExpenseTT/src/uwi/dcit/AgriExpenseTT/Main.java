@@ -4,6 +4,8 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,16 +13,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.cocosw.undobar.UndoBarController;
+import com.cocosw.undobar.UndoBarController.UndoBar;
+
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class Main extends BaseActivity {
+public class Main extends BaseActivity implements UndoBarController.UndoListener {
 
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
+    private UndoBar undobar;
 
 
     @Override
@@ -40,6 +48,14 @@ public class Main extends BaseActivity {
         }
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
+
+        final Bundle b = new Bundle();
+        b.putInt("index", 1);
+        undobar = new UndoBarController.UndoBar(this).listener(this);
+        undobar.message("Message Bar Created")
+                .noicon(true)
+                .token(b)
+                .show();
     }
 
     private void setupPort() {
@@ -171,4 +187,9 @@ public class Main extends BaseActivity {
         startActivity(new Intent(getApplicationContext(), NewPurchase.class));
     }
 
+    @Override
+    public void onUndo(@Nullable Parcelable parcelable) {
+        Bundle res = (Bundle)parcelable;
+        Toast.makeText(this, "Received: " + res.getInt("index"), Toast.LENGTH_SHORT).show();
+    }
 }
