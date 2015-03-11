@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.cocosw.undobar.UndoBarController;
 import com.cocosw.undobar.UndoBarController.UndoBar;
 
-
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -49,13 +48,13 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
 
-        final Bundle b = new Bundle();
-        b.putInt("index", 1);
-        undobar = new UndoBarController.UndoBar(this).listener(this);
-        undobar.message("Message Bar Created")
-                .noicon(true)
-                .token(b)
-                .show();
+//        final Bundle b = new Bundle();
+//        b.putInt("index", 1);
+//        undobar = new UndoBarController.UndoBar(this).listener(this);
+//        undobar.message("Message Bar Created")
+//                .noicon(true)
+//                .token(b)
+//                .show();
     }
 
     private void setupPort() {
