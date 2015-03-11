@@ -2,15 +2,13 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 
-public class SelectLocation extends ActionBarActivity {
+public class SelectLocation extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +42,5 @@ public class SelectLocation extends ActionBarActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.select_location, menu);
 		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 }

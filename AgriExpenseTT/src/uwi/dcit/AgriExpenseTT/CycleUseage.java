@@ -1,9 +1,9 @@
 package uwi.dcit.AgriExpenseTT;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,7 +13,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-public class CycleUseage extends ActionBarActivity {
+public class CycleUseage extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +97,7 @@ public class CycleUseage extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplicationContext(),ManageData.class));
 			return true;
 		}else {
             return super.onOptionsItemSelected(item);

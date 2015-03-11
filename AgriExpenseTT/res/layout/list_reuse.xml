@@ -23,7 +23,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="5dp" />
 
-            <EditText
+            <!-- <EditText
                 android:id="@+id/et_listReuse_search"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp">
                 <requestFocus />
-            </EditText>
+            </EditText> -->
 
         </LinearLayout>
 

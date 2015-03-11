@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -12,17 +11,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
-public class EditChooseLists extends ActionBarActivity {
+public class EditChooseLists extends BaseActivity {
 	ArrayList<String> list;
 	ListView lv;
 	
@@ -35,13 +34,13 @@ public class EditChooseLists extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list_reuse);
 		//get list
-		initial();
+		initialize();
 		populateList();
 		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
 		lv.setAdapter(listAdapt);
 		ItemClick c=new ItemClick();
 		lv.setOnItemClickListener(c);
-		TWatch tw=new TWatch(listAdapt);
+//		TWatch tw=new TWatch(listAdapt);
 //		EditText et_search=(EditText)findViewById(R.id.et_listReuse_search);
 //		et_search.addTextChangedListener(tw);
 		//on click events
@@ -52,8 +51,7 @@ public class EditChooseLists extends ActionBarActivity {
 	public class ItemClick implements OnItemClickListener{
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent i=new Intent();
 			i.putExtra("desc",content);
 			i.putExtra("content", list.get(position));
@@ -104,14 +102,16 @@ public class EditChooseLists extends ActionBarActivity {
 			list.add("100's");
 			list.add("5lb Bundle");
 		}
+
+        Collections.sort(list);
 	}
 
 
-	private void initial() {
+	private void initialize() {
 		dbh=new DbHelper(EditChooseLists.this);
 //		db=dbh.getReadableDatabase();
         db=dbh.getWritableDatabase();
-		list=new ArrayList<String>();
+		list=new ArrayList<>();
 		lv=(ListView)findViewById(android.R.id.list);
 		Bundle data=getIntent().getExtras();
 		content=data.getString("desc");
@@ -132,6 +132,7 @@ public class EditChooseLists extends ActionBarActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+            startActivity(new Intent(getApplicationContext(),ManageData.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

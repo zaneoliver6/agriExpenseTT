@@ -9,9 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +29,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-public class EditCycle extends ActionBarActivity {
+public class EditCycle extends BaseActivity {
 	EditText et_landQty;
 
 	TextView tv_crop;
@@ -76,7 +74,8 @@ public class EditCycle extends ActionBarActivity {
 
     @Override
     protected void onDestroy(){
-        db.close(); //Close database when activity closes
+//        db.close(); //Close database when activity closes
+        super.onDestroy();
     }
 
 	private void initialize() {
@@ -180,18 +179,6 @@ public class EditCycle extends ActionBarActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.edit_cycle, menu);
 		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
     private void formatDisplayDate(Calendar cal) {

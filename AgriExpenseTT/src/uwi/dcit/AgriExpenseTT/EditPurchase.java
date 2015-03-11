@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +19,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
 
 import java.util.Calendar;
 
@@ -36,7 +32,9 @@ import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
-public class EditPurchase extends ActionBarActivity {
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
+public class EditPurchase extends BaseActivity {
 	Button btn_res;
 	Button btn_qtfr;
 	EditText et_qty;

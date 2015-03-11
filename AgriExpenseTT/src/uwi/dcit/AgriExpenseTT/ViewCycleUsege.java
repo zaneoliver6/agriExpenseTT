@@ -3,9 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -22,7 +20,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
-public class ViewCycleUsege extends ActionBarActivity {
+public class ViewCycleUsege extends BaseActivity {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	ArrayList<LocalCycleUse> list;
@@ -56,17 +54,7 @@ public class ViewCycleUsege extends ActionBarActivity {
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+
 	public class CycUseAdpt extends ArrayAdapter<LocalCycleUse>{
 
 		public CycUseAdpt(Context context, int resource,List<LocalCycleUse> objects) {

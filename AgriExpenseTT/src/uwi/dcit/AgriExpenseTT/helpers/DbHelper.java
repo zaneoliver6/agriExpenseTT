@@ -40,6 +40,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+        Log.i(TAG_NAME, "Creating AgriExpense DB for first time");
 		createDb(db);
 		populate(db, new TransactionLog(this,db,ctx));
 	}
@@ -47,7 +48,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
-		Log.d(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
+		Log.i(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
 
         // TODO change the purchase from timestamp to date (may not be necessary)

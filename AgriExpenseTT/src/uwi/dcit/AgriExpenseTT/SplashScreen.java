@@ -24,7 +24,7 @@ public class SplashScreen extends Activity {
                     if (!PrefUtils.dbExist(c)) PrefUtils.setDbExist(c, true);
                     else sleep(2*1000); // Just to show the splash screen for 2 seconds
 
-                    startActivity(new Intent(getBaseContext(), Main.class)); // Start the Main 
+                    startActivity(new Intent(getBaseContext(), Main.class)); // Start the Main
                 }catch(Exception e){e.printStackTrace(); }
                 finish();
             }

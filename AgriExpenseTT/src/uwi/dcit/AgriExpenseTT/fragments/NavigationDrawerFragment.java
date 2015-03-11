@@ -106,8 +106,6 @@ public class NavigationDrawerFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ListView)v.findViewById(R.id.nav_menu_list);
 
-//        mDrawerListView = (ListView)inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -115,13 +113,8 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        if(getActionBar()==null)
-            Log.i("Nav draw","null");
-        else
-            Log.i("Nav draw", "not null");
-
-        mDrawerListView.setAdapter(new MenuArrayAdapter(
-                getActionBar().getThemedContext(),R.layout.menu_item,options));
+        if (getActionBar() != null)
+            mDrawerListView.setAdapter(new MenuArrayAdapter(getActionBar().getThemedContext(),R.layout.menu_item,options));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return v;
     }
@@ -161,25 +154,12 @@ public class NavigationDrawerFragment extends Fragment {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
 
-        // set a custom shadow that overlays the main content when the drawer opens
-       /* if(R.drawable.drawer_shadow==null)
-            Log*/
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the navigation drawer and the action bar app icon.
-//        mDrawerToggle = new ActionBarDrawerToggle(
-//                getActivity(),                    /* host Activity */
-//                mDrawerLayout,                    /* DrawerLayout object */
-//                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-//                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-//                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
-//        ) {
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),
