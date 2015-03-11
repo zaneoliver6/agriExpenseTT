@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,8 +24,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -40,6 +39,8 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
 public class FragmentPurchaseUse extends Fragment {
 	private View view;
 	private SQLiteDatabase db;
@@ -47,109 +48,123 @@ public class FragmentPurchaseUse extends Fragment {
 	private LocalCycle c = null;
 	private RPurchase p;
 	
-	private double useAmount=0;//the amount you are going to use
-	private double calcost=0.0,TypeSpent=0.0;
-	private double amtRem,amtPur;
+	private double useAmount= 0.0, //the amount you are going to use
+	                calCost = 0.0,
+                    typeSpent = 0.0,
+	                amtRem  = 0.0,
+                    amtPur  = 0.0;
+
 	private String quantifier;
 	
-	private TextView d_buttom1;
-	private TextView d_buttom2;
-	private TextView d_buttom3;
-	private TextView d_top;
+	private TextView section1;
+	private TextView section2;
+	private TextView section3;
+	private TextView description;
 	private EditText et_amt;
 	
 	private Button btn_typeUse;
-//	private String typeUse;
+    private TextView amt_hint;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+    @Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.activity_use_purchase_frag, container, false);
-		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getWritableDatabase();
-		int pId=Integer.parseInt(getArguments().getString("pId"));
-		int cycleId=Integer.parseInt(getArguments().getString("cycleId"));
-		TypeSpent=Double.parseDouble(getArguments().getString("total"));
+
+		dbh = new DbHelper(this.getActivity().getBaseContext());
+		db = dbh.getWritableDatabase();
+
+		int pId = Integer.parseInt(getArguments().getString("pId"));
+		int cycleId = Integer.parseInt(getArguments().getString("cycleId"));
+		typeSpent = Double.parseDouble(getArguments().getString("total"));
+
 		setDetails(pId,cycleId);
+
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
 		return view;
 	}
 	
 	private void setDetails(int pId,int cycleId) {
-		p= DbQuery.getARPurchase(db, dbh, pId);
-		c=getArguments().getParcelable("cycleMain");
+		p = DbQuery.getARPurchase(db, dbh, pId);
+		c = getArguments().getParcelable("cycleMain");
+
         Log.i("Fragment Purchase",c.getCropName());
         Log.i("Fragment Purchase",p.getQuantifier());
-		amtRem=p.getQtyRemaining();amtPur=p.getQty();quantifier=p.getQuantifier();
-		btn_typeUse=(Button)view.findViewById(R.id.btn_UsePurchase_useType);
+
+		amtRem = p.getQtyRemaining();
+        amtPur = p.getQty();
+        quantifier = p.getQuantifier();
+
+		btn_typeUse = (Button)view.findViewById(R.id.btn_UsePurchase_useType);
 		btn_typeUse.setText(quantifier);
 		
-		TextView h_main=(TextView)view.findViewById(R.id.tv_usePurchase_header1);
-		TextView h_sub=(TextView)view.findViewById(R.id.tv_usePurchase_header2);
-		d_top=(TextView)view.findViewById(R.id.tv_usePurchase_top_det1);
+
+		description = (TextView)view.findViewById(R.id.tv_usePurchase_top_det1);
 		
-		d_buttom1=(TextView)view.findViewById(R.id.tv_usePurchase_buttom_det1);
-		d_buttom2=(TextView)view.findViewById(R.id.tv_usePurchase_buttom_det2);
-		d_buttom3=(TextView)view.findViewById(R.id.tv_usePurchase_buttom_det3);
-		et_amt=(EditText)view.findViewById(R.id.et_useAmt);
-		
-		//Setting Labels
-		h_main.setText("Currently");
-		h_sub.setText("Use");
-		
-		DecimalFormat df = new DecimalFormat("#.00");   
-		d_buttom1.setText("Using "+useAmount+" "+quantifier+" adds $"+calcost+" to the current crop cycle");
-		d_buttom2.setText("Total spent on "+p.getType()+" becomes $"+Double.valueOf(df.format(TypeSpent))); 
-		d_buttom3.setText("The crop cycle's new total cost becomes $"+Double.valueOf(df.format(c.getTotalSpent())));
-	
+		section1 = (TextView)view.findViewById(R.id.tv_usageDetails_sec1);
+		section2 = (TextView)view.findViewById(R.id.tv_usageDetails_sec2);
+		section3 = (TextView)view.findViewById(R.id.tv_usageDetails_sec3);
+
+		et_amt      = (EditText)view.findViewById(R.id.et_useAmt);
+        amt_hint    = (TextView)view.findViewById((R.id.tv_amnt_hint));
+        amt_hint.setText("Enter the amount of " + quantifier + "s used");
+
 		Button calc=(Button)view.findViewById(R.id.btn_UsePurchase_cal);
 		Button dne=(Button)view.findViewById(R.id.btn_usePurchase_done);
 		label();
 		
-		Click click=new Click();
+		Click click = new Click();
 		calc.setOnClickListener(click);
 		dne.setOnClickListener(click);
 		btn_typeUse.setOnClickListener(click);
-		
 	}
+
 	//sets labels to match data
 	private void label(){
 		DecimalFormat df = new DecimalFormat("#.00"); 
 		String res=DbQuery.findResourceName(db, dbh,p.getResourceId());
-		d_top.setText("Curently this "+res+" has "+quantifier+" "+amtRem+" remaining");
+		description.setText("" + res + " has " + quantifier + " " + amtRem + " remaining");
 		
-		d_buttom1.setText("Using "+useAmount+" "+quantifier+" adds $"+calcost+" to the current crop cycle");
-		d_buttom2.setText("Total spent on "+p.getType()+" becomes $"+(TypeSpent+calcost));
-		d_buttom3.setText("The crop cycle's new total cost becomes $"+Double.valueOf(df.format((c.getTotalSpent()+calcost))));
-	
+		section1.setText("Using " + useAmount + " " + quantifier + " adds $" + calCost + " to the current crop cycle");
+		section2.setText("Total spent on " + p.getType() + " becomes $" + (typeSpent + calCost));
+		section3.setText("The crop cycle's new total cost becomes $" + Double.valueOf(df.format((c.getTotalSpent() + calCost))));
 	}
+
 	private class Click implements OnClickListener{
 
 		@Override
 		public void onClick(View v) {
-			if(v.getId()==R.id.btn_UsePurchase_useType){
-				ArrayList<String> arr=new ArrayList<String>();
+			if(v.getId() == R.id.btn_UsePurchase_useType){
+				ArrayList<String> arr=new ArrayList<>();
 				popArr(arr);
 				showPopup(getActivity(), 0, arr);
 				return;
 			}
 			
 			if(et_amt.getText().toString() == null||et_amt.getText().toString().equals("")){
-				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
+                amt_hint.setText("Enter Amount Purchased");
+                amt_hint.setTextColor(getResources().getColor(R.color.helper_text_error));
+                et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 			}else{
 				useAmount=Double.parseDouble(et_amt.getText().toString());
 				if(useAmount>amtRem){
-					Toast.makeText(getActivity().getBaseContext(), "Not enough "+quantifier+" remaining", Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getActivity().getBaseContext(), "Not enough "+quantifier+" remaining", Toast.LENGTH_SHORT).show();
+                    amt_hint.setText("Not enough " + quantifier + " remaining");
+                    amt_hint.setTextColor(getResources().getColor(R.color.helper_text_error));
+                    et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 					return;
 				}
-				calcost=(useAmount/amtPur)*p.getCost();
-				calcost=Math.round(calcost*100.0)/100.0;
+                et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                amt_hint.setTextColor(getResources().getColor(R.color.helper_text_color));
+
+				calCost =(useAmount/amtPur)*p.getCost();
+				calCost =Math.round(calCost *100.0)/100.0;
+
 				if(v.getId()==R.id.btn_UsePurchase_cal){
-					Toast.makeText(getActivity(), "Total Cost: "+calcost, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Total Cost: "+ calCost, Toast.LENGTH_SHORT).show();
 					label();//resets labels to match data
 				}else if(v.getId()==R.id.btn_usePurchase_done){
 					DataManager dm=new DataManager(getActivity().getBaseContext());
-					dm.insertCycleUse(c.getId(), p.getPId(), useAmount, p.getType(),quantifier,calcost);
+					dm.insertCycleUse(c.getId(), p.getPId(), useAmount, p.getType(),quantifier, calCost);
 					
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
 					Toast.makeText(getActivity(), rem+" Remaining", Toast.LENGTH_SHORT).show();
@@ -161,7 +176,7 @@ public class FragmentPurchaseUse extends Fragment {
 					dm.updatePurchase(p,cv);
 
 					//updating cycle
-					c.setTotalSpent(c.getTotalSpent()+calcost);
+					c.setTotalSpent(c.getTotalSpent()+ calCost);
 					cv=new ContentValues();
 					cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
 					dm.updateCycle(c,cv); 

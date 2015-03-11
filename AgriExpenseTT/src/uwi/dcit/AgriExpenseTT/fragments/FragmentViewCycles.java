@@ -69,7 +69,6 @@ public class FragmentViewCycles extends ListFragment{
 
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
-//        else Log.i(className, "No Type Passed");
 
 		populateList();
 
@@ -181,12 +180,12 @@ public class FragmentViewCycles extends ListFragment{
     }
 
 	public void launchCycleUsage(int position){
-//		Intent activity = new Intent(getActivity(),CycleUseageRedesign.class);
         Bundle arguments = new Bundle();
-//		Log.i(this.className, cycleList.get(position).getCropName() + " Selected");
 		arguments.putParcelable("cycleMain",cycleList.get(position));
+
 		Fragment newFrag= new FragmentCycleUseage();
         newFrag.setArguments(arguments);
+
         boolean isTablet = this.getResources().getBoolean(R.bool.isTablet);
 
         if(!isTablet || this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){

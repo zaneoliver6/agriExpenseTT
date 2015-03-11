@@ -5,46 +5,43 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_frag_mainHead_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Creating new crop cycle"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/list_reuse_description"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="5dp" />
+
+        <EditText
+            android:id="@+id/et_listReuse_search"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:ems="10"
+            android:hint="Search "
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp">
+            <requestFocus />
+        </EditText>
 
-            <TextView
-                android:id="@+id/tv_frag_mainHead_new"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Creating new crop cycle"
-                    android:textColor="@color/secondary_text"
-                    android:textSize="@dimen/list_reuse_description"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="5dp" />
+    </LinearLayout>
 
-            <!-- <EditText
-                android:id="@+id/et_listReuse_search"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Search "
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp">
-                <requestFocus />
-            </EditText> -->
-
-        </LinearLayout>
-
-
-    
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
-        </ListView>
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
+    </ListView>
 
 </LinearLayout>

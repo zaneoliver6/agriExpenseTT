@@ -12,9 +12,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-/**
- * Created by Steffan on 12/01/2015.
- */
+
 public class FragmentCycleUseage extends Fragment {
     View view;
     @Override

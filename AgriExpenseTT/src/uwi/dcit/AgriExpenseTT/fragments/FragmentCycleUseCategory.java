@@ -16,8 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +31,8 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
 
+//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
+
 
 public class FragmentCycleUseCategory extends Fragment {
 	TextView catMain;
@@ -44,6 +44,7 @@ public class FragmentCycleUseCategory extends Fragment {
 	String category;
 	LocalCycle currCycle;
 	Double catTotal=0.0;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_cycleuse_category_card, container, false);
