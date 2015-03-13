@@ -348,14 +348,14 @@ public class DbQuery {
 		if(cursor.getCount()<1)
 			return list;
 		while(cursor.moveToNext()){
-			LocalCycleUse l=new LocalCycleUse();
-			l.setId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)));
-			l.setAmount(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QTY)));
-			l.setCycleid(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID)));
-			l.setPurchaseId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID)));
-			l.setResource(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)));
-			l.setUseCost(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)));
-			l.setQuantifier(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
+            LocalCycleUse l = new LocalCycleUse(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)),
+                    cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID)),
+                    cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID)),
+                    cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QTY)),
+                    cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)),
+                    cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)),
+                    cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
+
 			list.add(l);
 		}
         cursor.close();

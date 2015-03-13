@@ -11,14 +11,18 @@ public class LocalCycleUse {
 	public LocalCycleUse() {
 		super();
 	}
-	public LocalCycleUse(int cycleid, int purchaseId, double amount,String resource) {
-		super();
-		this.cycleid = cycleid;
-		this.purchaseId = purchaseId;
-		this.amount = amount;
-		this.resource=resource;
-	}
-	public String getResource() {
+
+    public LocalCycleUse(int id, int cycleid, int purchaseId, double amount, String resource, double useCost, String quantifier) {
+        this.id = id;
+        this.cycleid = cycleid;
+        this.purchaseId = purchaseId;
+        this.amount = amount;
+        this.resource = resource;
+        this.useCost = useCost;
+        this.quantifier = quantifier;
+    }
+
+    public String getResource() {
 		return resource;
 	}
 	public void setResource(String resource) {
@@ -60,5 +64,10 @@ public class LocalCycleUse {
 	public void setQuantifier(String quantifier) {
 		this.quantifier = quantifier;
 	}
+
+    @Override
+    public String toString(){
+        return "cycleid: " + cycleid + " purchaseid: " + purchaseId + " amount: "+amount + " resource: "+resource +" usecost: "+useCost;
+    }
 	
 }

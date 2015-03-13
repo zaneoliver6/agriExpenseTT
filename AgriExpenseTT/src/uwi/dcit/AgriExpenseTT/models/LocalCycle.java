@@ -117,7 +117,7 @@ public class LocalCycle implements Parcelable{
 
     @Override
 	public String toString() {
-		return "cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+"";
+		return "cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+" cycleName" + cycleName;
 	}
 
 	public LocalCycle(Parcel dest){

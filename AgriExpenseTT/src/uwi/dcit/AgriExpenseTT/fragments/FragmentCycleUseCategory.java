@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,14 +46,14 @@ public class FragmentCycleUseCategory extends Fragment {
 	LocalCycle currCycle;
 	Double catTotal=0.0;
 
+    public static final String TAG = "CycleUseCategory";
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_cycleuse_category_card, container, false);
 		initialSetup();
 		calculate();
 		setupClick();
-		//cycleId or cycleObject
-		//category
 
         //set color of action bar
         if (this.getActivity() instanceof ActionBarActivity){
@@ -75,6 +76,7 @@ public class FragmentCycleUseCategory extends Fragment {
 		btn_useage=(Button)view.findViewById(R.id.btn_Cycle_useage);
 		btn_useMore=(Button)view.findViewById(R.id.btn_Cycle_useMore);
 		View line=view.findViewById(R.id.line);
+
 		//getting data
 		category=getArguments().getString("category");
 		
@@ -107,6 +109,7 @@ public class FragmentCycleUseCategory extends Fragment {
 		}
 		//getArguments().getParcelable("Cycle");
 		currCycle=getArguments().getParcelable("cycle");
+        Log.d(TAG, "Received: " + currCycle.toString() );
 		
 		//default texts
 		catMain.setText(category);
@@ -116,58 +119,64 @@ public class FragmentCycleUseCategory extends Fragment {
 	private void calculate() {
 		DbHelper dbh=new DbHelper(getActivity().getBaseContext());
 		SQLiteDatabase db=dbh.getWritableDatabase();
+
 		//getting aggregate and complex data 
 		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
+
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
-		ArrayList<String> Names=null;
-		double[] Totals=null;
-		if(!(useList.isEmpty())){
-			Names=new ArrayList<String>();
-			Totals=new double[useList.size()];
-			Iterator<LocalCycleUse> itr=useList.iterator();
+		ArrayList<String> names = null;
+		double[] totals = null;
+
+		if(!useList.isEmpty()){
+			names = new ArrayList<>();
+			totals = new double[useList.size()];
+
+			Iterator<LocalCycleUse> itr = useList.iterator();
+
 			while(itr.hasNext()){
-				LocalCycleUse lcu=itr.next();
-				catTotal+=lcu.getUseCost();//stores the total amount of money spent on plantMaterials
+				LocalCycleUse lcu = itr.next();
+                Log.d(TAG, "Processing: " + lcu.toString());
+				catTotal += lcu.getUseCost();//stores the total amount of money spent on plantMaterials
 						
-				RPurchase purchaseUse=DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
-				String name=DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
+				RPurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
+				String name = DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
 						
 				//calculates the total spent on each plantMaterial
-				Iterator<String> i=Names.iterator();//list of plantMaterial names' iterator
+				Iterator<String> i=names.iterator();//list of plantMaterial names' iterator
+
 				int pos=0;//start position for totals corresponding to each name
+
 				boolean found=false;
 				while(i.hasNext()){//goes through the names of the plantMaterials
 					if(name.equals(i.next())){
-						Totals[pos]+=lcu.getUseCost();
+						totals[pos] += lcu.getUseCost();
 						found=true;
 					}else{
 						pos++;
 					}
 				}
 				if(!found){//if we didnt find the name in the list
-					Names.add(name);//add the name to the list
-					Totals[pos]=lcu.getUseCost();//set the corresponding cost
+					names.add(name);//add the name to the list
+					totals[pos]=lcu.getUseCost();//set the corresponding cost
 				}
 			}
 		}
 		//----------------------SETUP SUB CATEGORYS IF ANY
-		DecimalFormat df = new DecimalFormat("#.00"); 
+		DecimalFormat df = new DecimalFormat("#.00");
 		catDet1.setText("$"+Double.valueOf(df.format(catTotal))+" has been spent on "+category+" for this cycle so far");
-		catDet2.setText("No main expense yet");
-		if(Names!=null){
+
+		if(names!=null){
 			int x=0,maxPos=0;
-			Iterator<String> namesItr=Names.iterator();
-			while(namesItr.hasNext()){
-				if(Totals[x]>Totals[maxPos]){
+			Iterator<String> namesItr=names.iterator();
+            Log.d(TAG, "Size of names list: " + names.size() +" size of total array: "+totals.length);
+			while(namesItr.hasNext() && x < totals.length){
+				if(totals[x] > totals[maxPos]){
 					maxPos=x;
 				}
 				x++;
 			}
-			catDet2.setText("The most amount of money was spent on "
-			+Names.get(maxPos)+" which costed $"+Double.valueOf(df.format(Totals[maxPos])));
-		}else{
-			catDet2.setText("No main expense yet");
+			catDet2.setText("The most amount of money was spent on "+names.get(maxPos)+" which costed $"+Double.valueOf(df.format(totals[maxPos])));
 		}
 	}
 	

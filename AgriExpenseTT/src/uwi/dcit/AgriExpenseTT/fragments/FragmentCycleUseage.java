@@ -17,7 +17,6 @@ public class FragmentCycleUseage extends Fragment {
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        Log.i("recreating fragment","before anything");
         view = inflater.inflate(R.layout.activity_cycle_useage, container, false);
         setup();
         return view;
@@ -35,6 +34,7 @@ public class FragmentCycleUseage extends Fragment {
 
         Bundle data = getArguments();
         LocalCycle curr = data.getParcelable("cycleMain");
+        Log.d("CycleUsage", "Received: " + curr.toString());
 
         Bundle generalArguments = new Bundle();
         generalArguments.putString("category","general");

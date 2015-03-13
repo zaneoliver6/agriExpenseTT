@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
-import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -69,16 +68,15 @@ public class FragmentChoosePurchase extends ListFragment {
 		db	= dbh.getWritableDatabase();
 		dm	= new DataManager(getActivity(), db, dbh);
 		
-		try{//when called by ManageResources we dont need any particular cycle
-			curr = getArguments().getParcelable("cycle");
-		}catch(Exception e){ e.printStackTrace(); }
+        if (getArguments() != null){
+            curr = getArguments().getParcelable("cycle");
+            type = getArguments().getString("det");
+        }else{
+            Log.d("ChoosePurchase", "No Arguments Received");
+        }
 		
 		if(curr != null)cycleId = curr.getId();
 
-		try {//for when called by ManageResources the type will be null so we can see all types of purhases
-			type=getArguments().getString("det");
-			Log.i(Main.APP_NAME, "type: "+type);
-		} catch (Exception e) { e.printStackTrace(); }
 		
 		populateList();
 		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);

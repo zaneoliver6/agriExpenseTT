@@ -130,12 +130,7 @@ public class FragmentViewCycles extends ListFragment{
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
         setActivatedPosition(position);
-//        setSelection(position);
-//        this.getListView().setSelection(position);
-//        Log.d("ViewCycles", "ListView contains " + getListView().getCount() + "items");
-        Log.d("ViewCycles", "Position selected: " + getListView().getSelectedItemPosition());
 
 		if(type == null){
 			launchCycleUsage(position);
@@ -182,6 +177,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void launchCycleUsage(int position){
         Bundle arguments = new Bundle();
 		arguments.putParcelable("cycleMain",cycleList.get(position));
+        Log.d("FragmentViewCycles", cycleList.get(position).toString());
 
 		Fragment newFrag= new FragmentCycleUseage();
         newFrag.setArguments(arguments);
