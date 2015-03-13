@@ -86,7 +86,7 @@ public class DbHelper extends SQLiteOpenHelper{
             updatePurchaseRecs(db);
 
             // Add Date Column to CycleResource
-            db.execSQL("ALTER TABLE " + CycleResourceContract.CycleResourceEntry.TABLE_NAME + " ADD COLUMN "+ CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED +  " TIMESTAMP DEFAULT CURRENT_TIMESTAMP");
+            db.execSQL("ALTER TABLE " + CycleResourceContract.CycleResourceEntry.TABLE_NAME + " ADD COLUMN "+ CycleResourceContract.CycleResourceEntry.CYCLE_DATE_USED +  " TIMESTAMP");
             updateCycleResource(db);
 
             db.setTransactionSuccessful();
@@ -508,7 +508,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	}
 
     private void updatePurchaseRecs(SQLiteDatabase  db){
-        Cursor cursor = db.rawQuery("SELECT * FROPM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null);
         // Update Existing Dates to the current date
         while(cursor.moveToNext()){
             ContentValues cv = new ContentValues();
