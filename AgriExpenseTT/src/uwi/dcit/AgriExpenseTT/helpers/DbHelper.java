@@ -538,4 +538,14 @@ public class DbHelper extends SQLiteOpenHelper{
         }
         cursor.close();
     }
+
+    private boolean columnExists(SQLiteDatabase db, String tableName, String columnName){
+        Cursor cursor = db.rawQuery("PRAGMA table_info("+tableName+");", null);
+        while (cursor.moveToNext()){
+            if (cursor.getString(cursor.getColumnIndex("name")).equalsIgnoreCase(columnName)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
