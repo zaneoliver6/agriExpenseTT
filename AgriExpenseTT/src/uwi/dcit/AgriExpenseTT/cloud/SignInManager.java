@@ -151,7 +151,7 @@ public class SignInManager {
 	}
 	
 	//Create an Asynchronous Task to create new thread to handle this process
-	private class SetupSignInTask extends AsyncTask<Void, Void, UpAcc> {
+	private class SetupSignInTask extends AsyncTask<String, Void, UpAcc> {
 
 		private String namespace;
 		
@@ -160,9 +160,14 @@ public class SignInManager {
 		}
 
 		@Override
-		protected UpAcc doInBackground(Void... params) {
+		protected UpAcc doInBackground(String... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-            return cloudIF.getUpAcc(namespace);//returns  UpAcc if there is any to the onPostExecute
+            UpAcc account = cloudIF.getUpAcc(namespace);//returns  UpAcc if there is any to the onPostExecute
+            if (account == null){
+                Log.d(TAG_NAME, "No Account Exists Creating a new Account");
+                cloudIF.insertUpAccC(namespace, 0, country, county);
+            }
+            return null;
 		}
 
 		@Override

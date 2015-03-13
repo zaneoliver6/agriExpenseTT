@@ -3,11 +3,13 @@ package uwi.dcit.agriexpensesvr;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+//https://cloud.google.com/appengine/docs/java/datastore/jpa/overview
+
 public final class EMF {
     private static final EntityManagerFactory emfInstance = Persistence
             .createEntityManagerFactory("transactions-optional");
 
-    public EMF() {
+    private EMF() {
     }
 
     public static EntityManagerFactory get() {

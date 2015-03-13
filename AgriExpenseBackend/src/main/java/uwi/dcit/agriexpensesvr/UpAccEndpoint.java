@@ -85,6 +85,7 @@ public class UpAccEndpoint {
         UpAcc upacc = null;
         try {
             upacc = mgr.find(UpAcc.class, id);
+
             System.out.println("CLOUD-ACCOUNT:" + upacc.toString());
         } catch (Exception e) {
             upacc = null;

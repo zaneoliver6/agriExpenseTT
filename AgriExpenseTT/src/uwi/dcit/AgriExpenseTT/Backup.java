@@ -11,7 +11,7 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
-public class Backup extends ActionBarActivity {
+public class Backup extends BaseActivity {
 
 	public static final int SIGN_IN = 0;
 	public static final int SIGN_UP = 1;
@@ -26,6 +26,7 @@ public class Backup extends ActionBarActivity {
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Backup Screen");
         setContentView(R.layout.activity_backup_data);
         Log.d("Backup Activity", "Selected the Sign Up Option as Account was not previously created");
+
         Bundle arguments = new Bundle();
         arguments.putString("type", DHelper.location_country);
         Fragment fragment = new FragmentSelectLocation();
@@ -34,36 +35,6 @@ public class Backup extends ActionBarActivity {
                 .beginTransaction()
                 .add(R.id.fragment_backup_Container, fragment)
                 .commit();
-		/*Fragment fragment = new FragmentBackupList();
-		
-		Bundle prev_argument = this.getIntent().getExtras();
-		if (prev_argument != null && prev_argument.containsKey("ACTION")){
-			switch ( prev_argument.getInt("ACTION")){
-				case SIGN_IN:
-					Log.d("Backup Activity", "Selected the Sign In Option as Account was already created");
-					signInManager.signIn();
-					break;
-				case SIGN_UP:
-					Log.d("Backup Activity", "Selected the Sign Up Option as Account was not previously created");
-					Bundle arguments = new Bundle();
-					arguments.putString("type", DHelper.location_country);
-					fragment = new FragmentSelectLocation();
-					fragment.setArguments(arguments);
-					break;
-				case VIEW:
-					Log.d("Backup Activity", "Selected the View Option as Account was already created");
-					break;
-				default:
-					Log.d("Backup Activity", "No valid option found, reverting to view");
-			}
-		}
-
-		setContentView(R.layout.activity_backup_data);
-		if (savedInstanceState == null)
-			getSupportFragmentManager()
-				.beginTransaction()
-				.add(R.id.fragment_backup_Container, fragment)
-				.commit();*/
 	}
 
 	@Override

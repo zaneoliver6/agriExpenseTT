@@ -662,17 +662,14 @@ public class CloudInterface {
 	}
 
 	public UpAcc getUpAcc(String namespace){
-        UpAccApi.Builder builder = new UpAccApi.Builder(
-		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-		         null);
+        UpAccApi.Builder builder = new UpAccApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
         UpAccApi endpoint = builder.build();
-		UpAcc acc;
+		UpAcc acc = null;
 		try {
 			acc=endpoint.getUpAcc((long) 1,namespace).execute();
 		}catch (IOException e) {
             e.printStackTrace();
-			return null;
 		}
 		return acc;
 	}

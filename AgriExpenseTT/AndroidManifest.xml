@@ -136,7 +136,8 @@
         <activity
             android:name=".Backup"
             android:label="@string/title_activity_backup_data"
-            android:parentActivityName=".Main" >
+            android:parentActivityName=".Main"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
