@@ -51,7 +51,6 @@ public class DbHelper extends SQLiteOpenHelper{
 		Log.i(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
 
-        // TODO change the purchase from timestamp to date (may not be necessary)
         // TODO Add logic to place the crop name as the cycle name for existing cycle records
         // TODO Add Date to CycleResource and place timestamp automatically for values
 
@@ -59,7 +58,8 @@ public class DbHelper extends SQLiteOpenHelper{
 			Log.d(TAG_NAME, "version too old to support Removing all tables so far and restart");
 			this.dropTables(db);
 			this.onCreate(db);
-		}else if (oldVersion  <= 171) { 
+		}
+        if (oldVersion  <= 171 && !columnExists(db, CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID)) {
 			
 			Log.d(TAG_NAME, "Running Update of table structure");
 			this.tableColumnModify(db);
@@ -74,7 +74,8 @@ public class DbHelper extends SQLiteOpenHelper{
 			
 			Log.d(TAG_NAME, "Running upgrade of crop/plating material lists");
 			this.updateCropList(db);
-		}else if (oldVersion < 172){
+		}
+        if (oldVersion < 172){
             db.beginTransaction();
 
             db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " ADD COLUMN "+ CycleContract.CycleEntry.CROPCYCLE_NAME + " TEXT");
@@ -136,7 +137,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	
 	private void translateData(SQLiteDatabase db){
 		db.execSQL("INSERT INTO " + ResourceContract.ResourceEntry.TABLE_NAME + "(" + ResourceContract.ResourceEntry._ID  + ", name, type)  SELECT _id, name, type FROM  " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
-		db.execSQL("INSERT INTO " + CycleContract.CycleEntry.TABLE_NAME + "(" + CycleContract.CycleEntry._ID +", cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, countyTerm, cropName ) SELECT _id, cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, countyTerm, cropName FROM " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + CycleContract.CycleEntry.TABLE_NAME + "(" + CycleContract.CycleEntry._ID +", cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName ) SELECT _id, cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName FROM " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "(" + ResourcePurchaseContract.ResourcePurchaseEntry._ID  + ", rId, type, quantifier, qty, cost, remaining, date, resource)  SELECT _id, rId, type, quantifier, qty, cost, remaining, date, resource FROM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + CycleResourceEntry.TABLE_NAME + "(" + CycleResourceEntry._ID  + ", pId, type, qty, quantifier, cycleId, useCost) SELECT _id, pId, type, qty, quantifier, cycleId, useCost FROM  " + CycleResourceEntry.TABLE_NAME + "_orig");
 		// db.execSQL("INSERT INTO " + LabourEntry.TABLE_NAME + "(" + LabourEntry._ID  + ", labour, name) SELECT id, labour, name FROM  " + LabourEntry.TABLE_NAME + "_orig");
@@ -144,10 +145,10 @@ public class DbHelper extends SQLiteOpenHelper{
 		db.execSQL("INSERT INTO " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "(" + CloudKeyContract.CloudKeyEntry._ID  + ", key, ctable, rowid ) SELECT _id, key, ctable, rowid  FROM " + CloudKeyContract.CloudKeyEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + RedoLogEntry.TABLE_NAME + "(" + RedoLogEntry._ID  + ", redotable, row_id, operation)  SELECT _id, redotable, row_id, operation FROM " + RedoLogEntry.TABLE_NAME + "_orig");
 		db.execSQL("INSERT INTO " + TransactionLogEntry.TABLE_NAME + "(" + TransactionLogEntry._ID  + ", transtable, rowid, operation, transtime)  SELECT _id, transtable, rowid, operation, transtime FROM  " + TransactionLogEntry.TABLE_NAME + "_orig");
-		db.execSQL("INSERT INTO " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "(" + UpdateAccountContract.UpdateAccountEntry._ID  + ", acc, countyTerm, address, lastUpdated, signedIn, cloudKey)  SELECT _id, acc, countyTerm, address, lastUpdated, signedIn, cloudKey FROM " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
+		db.execSQL("INSERT INTO " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "(" + UpdateAccountContract.UpdateAccountEntry._ID  + ", acc, county, address, lastUpdated, signedIn, cloudKey)  SELECT _id, acc, county, address, lastUpdated, signedIn, cloudKey FROM " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
 	
 		// db.execSQL("INSERT INTO " + CountryEntry.TABLE_NAME + "(" + CountryEntry._ID  + ", country, subdividion) SELECT (id, key, ctable, rowid ) FROM  " + CountryEntry.TABLE_NAME + "_orig");
-		// db.execSQL("INSERT INTO " + CountyEntry.TABLE_NAME + "(" + CountyEntry._ID  + ", countyTerm, country) SELECT (id, countyTerm, country)  FROM  " + CountyEntry.TABLE_NAME + "_orig");
+		// db.execSQL("INSERT INTO " + CountyEntry.TABLE_NAME + "(" + CountyEntry._ID  + ", county, country) SELECT (id, county, country)  FROM  " + CountyEntry.TABLE_NAME + "_orig");
 	}
 
 	private void dropBackups(SQLiteDatabase db){
@@ -434,10 +435,7 @@ public class DbHelper extends SQLiteOpenHelper{
 		DbQuery.insertResource(db, this, DHelper.cat_plantingMaterial, "CARAMBOLA");
 
 		DbQuery.insertResource(db, this, DHelper.cat_plantingMaterial, "PUMPKIN");
-		
-		//TODO
-		// Remove citrus
-		// rename SOYABEAN to SOYABEAN only
+
 	}
 	
 	public void insertDefaultFertilizers(SQLiteDatabase db){
@@ -543,9 +541,11 @@ public class DbHelper extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery("PRAGMA table_info("+tableName+");", null);
         while (cursor.moveToNext()){
             if (cursor.getString(cursor.getColumnIndex("name")).equalsIgnoreCase(columnName)){
+                cursor.close();
                 return true;
             }
         }
+        cursor.close();
         return false;
     }
 }

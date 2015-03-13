@@ -11,7 +11,6 @@ import android.widget.Toast;
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
-import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 
 public abstract class BaseActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks , NavigationControl {
@@ -72,16 +71,18 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
     }
 
     public void backUpData(){
-        Intent i = new Intent(getApplicationContext(), Backup.class);
-        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
-            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
-                return;
-            }
-            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
-            signInManager.signIn();
-        }
+        Toast.makeText(getApplicationContext(), "Backing up data not available at this time. Please check back later", Toast.LENGTH_LONG).show();
+
+//        Intent i = new Intent(getApplicationContext(), Backup.class);
+//        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
+//            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+//                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+//        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
+//            signInManager.signIn();
+//        }
     }
 
     @Override

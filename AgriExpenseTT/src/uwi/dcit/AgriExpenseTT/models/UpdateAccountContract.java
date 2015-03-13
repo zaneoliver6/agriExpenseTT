@@ -27,7 +27,7 @@ public class UpdateAccountContract {
 	public static abstract class UpdateAccountEntry implements BaseColumns{
 		public static final String TABLE_NAME = "updateacc";
 		public static final String UPDATE_ACCOUNT_ACC = "acc";
-		public static final String UPDATE_ACCOUNT_COUNTY = "countyTerm";
+		public static final String UPDATE_ACCOUNT_COUNTY = "county";
 		public static final String UPDATE_ACCOUNT_COUNTRY="country";
 		public static final String UPDATE_ACCOUNT_ADDRESS = "address";
 		public static final String UPDATE_ACCOUNT_UPDATED = "lastUpdated";

@@ -36,7 +36,7 @@ public class CycleContract {
 		public static final String CROPCYCLE_HARVEST_TYPE="hType";
 		public static final String CROPCYCLE_HARVEST_AMT="hAmt";
 		public static final String CROPCYCLE_COSTPER="costPer";
-		public static final String CROPCYCLE_COUNTY="countyTerm";
+		public static final String CROPCYCLE_COUNTY="county";
 		public static final String CROPCYCLE_RESOURCE="cropName";
         public static final String CROPCYCLE_NAME="cyclename";
 	}
