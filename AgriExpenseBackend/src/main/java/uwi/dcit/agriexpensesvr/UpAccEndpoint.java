@@ -18,7 +18,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-@Api(name = "upAccApi", namespace = @ApiNamespace(ownerDomain = "dcit.uwi", ownerName = "dcit.uwi", packagePath = "agriexpensesvr"))
+@Api(name = "upAccApi", namespace = @ApiNamespace(ownerDomain = "agriexpensesvr.dcit.uwi", ownerName = "agriexpensesvr.dcit.uwi", packagePath = ""))
 public class UpAccEndpoint {
 
     /**

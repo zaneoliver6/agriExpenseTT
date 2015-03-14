@@ -14,6 +14,7 @@ repositories {
     mavenCentral();
 }
 
+
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'appengine'
@@ -31,6 +32,7 @@ dependencies {
 }
 
 appengine {
+    httpAddress = "0.0.0.0"
     downloadSdk = true
     appcfg {
         oauth2 = true
