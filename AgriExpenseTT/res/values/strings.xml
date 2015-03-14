@@ -25,7 +25,7 @@
     <string name="title_activity_edit_choose_lists">Edit Choose Lists</string>
     <string name="title_activity_add_data">Add Data</string>
     <string name="title_activity_view_cycle_usege">View Cycle Usage</string>
-    <string name="title_activity_sales_cost">Sales Cost</string>
+    <string name="title_activity_sales_cost">Calculating Sales</string>
     <string name="title_activity_harvest_details">Harvest Details</string>
     <string name="title_activity_select_location">Select Location</string>
     <string name="title_activity_about">About</string>

@@ -9,19 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="uwi.dcit.AgriExpenseTT.SalesCost" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="7dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
-        android:text="Calculating Sales"
-        android:textColor="#999999"
-        android:textSize="25sp" />
-
     <ScrollView
         android:id="@+id/scrollview_salescost"
         android:layout_width="match_parent"
@@ -34,20 +21,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestLbl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Harvest"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <View
                 android:layout_width="280dp"
@@ -56,86 +46,94 @@
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDesc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Would you like to change the harvest details?"
-                android:textColor="#cccccc"
-                android:textSize="17sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="17sp"
+                android:layout_marginRight="20dp" />
 
             
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDetHead"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Harvest Details"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDet1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDet2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_harvestDet3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
             <Button
                 android:id="@+id/btn_salesCost_harvest"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/btn_custom"
-                android:text="Change Harvest" />
+                android:text="Change Harvest"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:background="#ffffff"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/tv_salesCost_saleLbl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Selling Details"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <View
                 android:layout_width="280dp"
@@ -144,74 +142,83 @@
 
             <TextView
                 android:id="@+id/tv_salesCost_saleDesc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Would you like to change how you&apos;re selling the crop"
-                android:textColor="#cccccc"
-                android:textSize="17sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="17sp"
+                android:layout_marginRight="20dp" />
 
           
             <TextView
                 android:id="@+id/tv_salesCost_saleDetHead"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Profit/Loss Details"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_saleDet1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_saleDet2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
 
             <TextView
                 android:id="@+id/tv_salesCost_saleDet3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Crop measurement"
-                android:textColor="#cccccc"
-                android:textSize="16sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="16sp"
+                android:layout_marginRight="20dp" />
             
              <EditText
                   android:id="@+id/et_salsesCost_sell"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:ems="10"
-                  android:inputType="numberDecimal" >
+                  android:inputType="numberDecimal"
+                 android:layout_marginLeft="20dp"
+                 android:layout_marginRight="20dp">
 
                   <requestFocus />
               </EditText>
               <Button
                 android:id="@+id/btn_salesCost_dne"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/btn_custom"
-                android:text="Save" />
+                android:text="Save"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp" />
 
              
             

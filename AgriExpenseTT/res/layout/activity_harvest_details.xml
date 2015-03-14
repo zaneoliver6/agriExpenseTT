@@ -26,16 +26,17 @@
 
             <TextView
                 android:id="@+id/tv_harvestDet_harvestLbl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Measurement"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <View
                 android:layout_width="280dp"
@@ -44,23 +45,26 @@
 
             <TextView
                 android:id="@+id/tv_harvestDet_harvestDesc"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="How do you measure by your harvest, e.g. harvest 40 bags of cassava,20 kg of pumpkin"
-                android:textColor="#cccccc"
-                android:textSize="17sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="17sp"
+                android:layout_marginRight="20dp" />
 
             <Button
                 android:id="@+id/btn_harvestDet_qtfr"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/btn_custom"
-                android:text="Lb" />
+                android:text="Lb"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" />
 
            
         </LinearLayout>
@@ -74,16 +78,17 @@
 
             <TextView
                 android:id="@+id/tv_harvestDet_saleLbl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Amount"
-                android:textColor="#999999"
+                android:textColor="@color/primary_text"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginRight="20dp" />
 
             <View
                 android:layout_width="280dp"
@@ -92,33 +97,38 @@
 
             <TextView
                 android:id="@+id/tv_harvestDet_qty"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="7dp"
                 android:text="Number of lbs you&apos;ve harvested or expect to harvest"
-                android:textColor="#cccccc"
-                android:textSize="17sp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="17sp"
+                android:layout_marginRight="20dp" />
 
             <EditText
                 android:id="@+id/et_harvestDet_qty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberDecimal" >
+                android:inputType="numberDecimal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
                 <requestFocus />
             </EditText>
             
               <Button
                 android:id="@+id/btn_harvestDet_done"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/btn_custom"
-                android:text="Save" />
+                android:text="Save"
+                  android:layout_marginLeft="5dp"
+                  android:layout_marginRight="5dp" />
            
         </LinearLayout>
 		</LinearLayout>

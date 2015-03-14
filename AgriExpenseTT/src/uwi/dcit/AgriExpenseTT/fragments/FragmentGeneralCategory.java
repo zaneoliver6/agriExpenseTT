@@ -86,22 +86,14 @@ public class FragmentGeneralCategory extends Fragment {
 		@Override
 		public void onClick(View v) {
 			if(v.getId()==R.id.btn_general_calculate){
-				IntentLauncher i=new IntentLauncher();
-				i.run();
+                Intent n=new Intent(getActivity(),SalesCost.class);
+                n.putExtra("cycle", currCycle);
+                getActivity().startActivity(n);
+//                getActivity().finish();
 			}
 		}	
 	}
-	private class IntentLauncher extends Thread{
-		@Override
-		public void run(){
-			//Bundle b=new Bundle();
-			//b.putParcelable("cycle",currCycle);
-			Intent n=new Intent(getActivity(),SalesCost.class);
-			n.putExtra("cycle", currCycle);
-			getActivity().startActivity(n);
-			getActivity().finish();
-		}
-	}
+
 	private void calcTotals(){
 		currCycle=getArguments().getParcelable("cycle");
 		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
