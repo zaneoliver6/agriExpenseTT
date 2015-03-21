@@ -22,6 +22,12 @@ public abstract class FragmentSlidingTabs extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments=new ArrayList<>();
+//        populateList();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         populateList();
     }
 

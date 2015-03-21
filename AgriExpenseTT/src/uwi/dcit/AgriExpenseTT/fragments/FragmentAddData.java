@@ -24,66 +24,69 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentAddData extends ListFragment {
 	String type;
-	 ArrayList<String> list;
+	ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	TextView tv_main;
-//	TextView et_search;
 	View view;
 	ArrayAdapter<String> listAdapt;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbh=new DbHelper(this.getActivity().getBaseContext());
-		db=dbh.getWritableDatabase();
-		//TextView tv_subMain=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-		//tv_main.setText("Choose category of resource");
-		populateList();
-		Collections.sort(list);
-		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
-		setListAdapter(listAdapt);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Data Fragment");
+
+        Bundle b = getArguments();
+        if (b != null && b.containsKey("action")){
+            if (b.get("action").equals("create_labour"))
+                startAddData(DHelper.cat_labour);
+        }else {
+            dbh = new DbHelper(this.getActivity().getBaseContext());
+            db = dbh.getWritableDatabase();
+            populateList();
+            Collections.sort(list);
+            listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
+            setListAdapter(listAdapt);
+            GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Data Fragment");
+        }
 	}
 		
 	private void populateList() {
-		list=new ArrayList<String>();
-		//if(type.equals("category")){
-			list.add(DHelper.cat_plantingMaterial);
-			list.add(DHelper.cat_chemical);
-			list.add(DHelper.cat_fertilizer);
-			list.add(DHelper.cat_soilAmendment);
-			list.add(DHelper.cat_labour);
-		//}
+		list=new ArrayList<>();
+        list.add(DHelper.cat_plantingMaterial);
+        list.add(DHelper.cat_chemical);
+        list.add(DHelper.cat_fertilizer);
+        list.add(DHelper.cat_soilAmendment);
+        list.add(DHelper.cat_labour);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		//returns the inflated layout which contains the listview
-		view= inflater.inflate(R.layout.list_reuse, container, false);
+		view = inflater.inflate(R.layout.list_reuse, container, false); //returns the inflated layout which contains the listview
 		tv_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
-		tv_main.setText("Choose category of resource");
+        view.findViewById(R.id.et_listReuse_search).setVisibility(View.INVISIBLE); // Remove the search bar not necessary
+        tv_main.setText("Choose category of resource to be added");
 		return view;
 	}
-		
-	
-		 
-	
-	 @Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			Fragment newFragment = new FragmentAddDataLast();
-			Bundle b=new Bundle();
-			
-			//pass the category to the resource
-			b.putString("type", list.get(position));
-			newFragment.setArguments(b);
-			((AddData)getActivity()).appendSub(" "+list.get(position));
 
-         getFragmentManager()
+    private void startAddData(String option){
+        Fragment newFragment = new FragmentAddDataLast();
+        Bundle b=new Bundle();
+        b.putString("type", option);//pass the category to the resource
+        newFragment.setArguments(b);
+
+        if (getActivity() instanceof AddData)
+            ((AddData)getActivity()).appendSub(" "+option);
+
+        getFragmentManager()
             .beginTransaction()
             .replace(R.id.NewCycleListContainer, newFragment)
-			.commit();
-		}
+            .commit();
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        startAddData(list.get(position));
+    }
 	 
 	 public class TWatch implements TextWatcher{
 		 ArrayAdapter<String> adpt;

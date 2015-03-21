@@ -56,7 +56,9 @@
                     android:id="@+id/tv_amnt_hint"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:textColor="@color/secondary_text" />
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/helper_text_size"
+                    android:alpha="@dimen/helper_text_alpha" />
 
                 <Button
                     android:id="@+id/btn_UsePurchase_useType"

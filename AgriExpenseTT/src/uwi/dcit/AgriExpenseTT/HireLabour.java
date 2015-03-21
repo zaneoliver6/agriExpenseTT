@@ -1,12 +1,14 @@
 package uwi.dcit.AgriExpenseTT;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -20,9 +22,15 @@ public class HireLabour extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle);
-		setupInitial();
+//		setupInitial(); // Commented out because it may run twice based on => http://developer.android.com/reference/android/app/Activity.html
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        setupInitial();
+    }
 
 	private void setupInitial() {
 		ListFragment start = new HireLabourLists();
@@ -31,9 +39,9 @@ public class HireLabour extends BaseActivity {
 		start.setArguments(b);
 
 		getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.NewCycleListContainer, start)
-                .commit();
+            .beginTransaction()
+            .replace(R.id.NewCycleListContainer, start)
+            .commit();
 	}
 	
 	public void replaceSub(String extras){
@@ -49,25 +57,28 @@ public class HireLabour extends BaseActivity {
     }
 	@Override
 	public void onBackPressed(){
-	    FragmentManager fm = getSupportFragmentManager();
-	    if (fm.getBackStackEntryCount() > 0) {
-	        Log.i("MainActivity", "popping backstack");
-	        fm.popBackStack();
+	    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
 	    } else {
-	        Log.i("MainActivity", "nothing on backstack, calling super");
-	        super.onBackPressed();  
+	        super.onBackPressed();
 	    }
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.hire_labour, menu);
 		return true;
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_create_labour) {
+            Bundle b = new Bundle();
+            b.putString("action", "create_labour");
+            Intent i = new Intent(this, AddData.class);
+            i.putExtras(b);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
