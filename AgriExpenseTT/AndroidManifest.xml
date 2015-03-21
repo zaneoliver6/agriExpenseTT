@@ -13,9 +13,9 @@
     <application
         android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
-        android:icon="@drawable/logo_agrinet"
+        android:icon="@drawable/logo_agrinet_icon"
         android:label="@string/app_name"
-        android:logo="@drawable/large_a_logo"
+        android:logo="@drawable/logo_agrinet_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 

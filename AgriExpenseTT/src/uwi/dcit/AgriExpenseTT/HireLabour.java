@@ -25,26 +25,24 @@ public class HireLabour extends BaseActivity {
 	}
 
 	private void setupInitial() {
-		//TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		//tv_main.setText("Hiring Labour");
-		ListFragment start=new HireLabourLists();
-		Bundle b=new Bundle();
+		ListFragment start = new HireLabourLists();
+		Bundle b = new Bundle();
 		b.putString("type","workers");
-		//b.putString(key, value);
 		start.setArguments(b);
-		FragmentManager fm=getSupportFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ft.add(R.id.NewCycleListContainer, start);
-		ft.commit();
+
+		getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.NewCycleListContainer, start)
+                .commit();
 	}
 	
 	public void replaceSub(String extras){
-		TextView sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
+		TextView sub_head = (TextView)findViewById(R.id.tv_mainNew_subheader);
 		sub_head.setText(extras);
 	}
 
     public void hideSoftKeyboard() {
-        if(getCurrentFocus()!=null) {
+        if(getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }

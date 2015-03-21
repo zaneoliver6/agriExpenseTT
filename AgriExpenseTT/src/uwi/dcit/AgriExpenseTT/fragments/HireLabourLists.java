@@ -23,13 +23,15 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class HireLabourLists extends ListFragment {
-	String type;
-	 ArrayList<String> list;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	LocalCycle currC;
-	TextView et_main;
-	View view;
+    
+	protected String type;
+	protected ArrayList<String> list;
+	protected SQLiteDatabase db;
+    protected DbHelper dbh;
+    protected LocalCycle currC;
+    protected TextView et_main;
+    protected View view;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +45,7 @@ public class HireLabourLists extends ListFragment {
 	}
 		
 	private void populateList() {
-		list=new ArrayList<String>();
+		list=new ArrayList<>();
 		if(type.equals("workers")){
 			DbQuery.getResources(db, dbh, DHelper.cat_labour, list);
 		}else if(type.equals("quantifier")){
