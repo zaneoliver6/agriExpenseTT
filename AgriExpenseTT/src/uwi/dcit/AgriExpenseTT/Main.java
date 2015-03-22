@@ -19,7 +19,7 @@ public class Main extends BaseActivity{
 
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
-
+    public final static String TAG = "Main";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,20 @@ public class Main extends BaseActivity{
 
         mTitle = getTitle();
 
+        // Added Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG, "Running On Resume" );
         // Check for orientation to determine which interface to load => if portrait will use leftfrag
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
             setupPort();
         }
-        // Added Google Analytics
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
     }
 
     private void setupPort() {

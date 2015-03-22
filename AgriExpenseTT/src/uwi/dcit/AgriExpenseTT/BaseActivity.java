@@ -43,27 +43,27 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         switch (position){
             case 0:
                 // Home
-                startActivity(new Intent(getApplicationContext(), Main.class));
+                startActivity(new Intent(this, Main.class));
                 break;
             case 1:
                 //new cycle
-                startActivity(new Intent(getApplicationContext(), NewCycle.class));
+                startActivity(new Intent(this, NewCycle.class));
                 break;
             case 2:
                 //new purchase
-                startActivity(new Intent(getApplicationContext(), NewPurchase.class));
+                startActivity(new Intent(this, NewPurchase.class));
                 break;
             case 3:
                 //hire labour
-                startActivity(new Intent(getApplicationContext(), HireLabour.class));
+                startActivity(new Intent(this, HireLabour.class));
                 break;
             case 4:
                 //report manager
-                startActivity(new Intent(getApplicationContext(),ManageReport.class));
+                startActivity(new Intent(this,ManageReport.class));
                 break;
             case 5:
                 // manage data
-                startActivity(new Intent(getApplicationContext(),ManageData.class));
+                startActivity(new Intent(this,ManageData.class));
                 break;
             case 6:
                 backUpData();

@@ -18,19 +18,24 @@ import uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout;
 public abstract class FragmentSlidingTabs extends Fragment {
     protected ArrayList<FragItem> fragments;
     protected ResourcePageAdapter adapter;
+    private boolean configured;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragments=new ArrayList<>();
-//        populateList();
+        populateList();
+        configured = true;
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        populateList();
-        adapter.notifyDataSetChanged();
+        if (!configured){
+            populateList();
+            adapter.notifyDataSetChanged();
+            configured = true;
+        }
     }
 
     public abstract void populateList();
