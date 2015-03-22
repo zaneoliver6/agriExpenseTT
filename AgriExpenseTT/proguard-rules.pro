@@ -31,3 +31,19 @@
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+
+-dontwarn java.awt.**
+-dontwarn sun.misc.Unsafe
+-dontwarn javax.swing.JLabel
+-dontwarn javax.imageio.ImageIO
+-dontwarn javax.imageio.ImageReader
+-dontwarn javax.imageio.stream.ImageInputStream
+-dontwarn javax.imageio.metadata.IIOMetadata
+-dontwarn org.apache.commons.logging.LogFactory
+-dontwarn org.apache.commons.codec.digest.DigestUtils
+
+-optimizations !class/unboxing/enum
+
+# Printing proguard results to better understand what its doing
+-printusage unused.txt
+-printmapping mapping.txt

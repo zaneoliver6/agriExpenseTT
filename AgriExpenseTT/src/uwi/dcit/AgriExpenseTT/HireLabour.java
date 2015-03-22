@@ -3,16 +3,13 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
@@ -27,8 +24,9 @@ public class HireLabour extends BaseActivity {
 	}
 
     @Override
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
+        hideSoftKeyboard();
         setupInitial();
     }
 
@@ -49,31 +47,16 @@ public class HireLabour extends BaseActivity {
 		sub_head.setText(extras);
 	}
 
-    public void hideSoftKeyboard() {
-        if(getCurrentFocus() != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-	@Override
-	public void onBackPressed(){
-	    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-	    } else {
-	        super.onBackPressed();
-	    }
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.hire_labour, menu);
 		return true;
 	}
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_create_labour) {
             Bundle b = new Bundle();
-            b.putString("action", "create_labour");
+            b.putString("action", DHelper.cat_labour);
             Intent i = new Intent(this, AddData.class);
             i.putExtras(b);
             startActivity(i);

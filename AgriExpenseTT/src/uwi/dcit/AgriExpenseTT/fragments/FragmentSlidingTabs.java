@@ -17,6 +17,7 @@ import uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout;
 
 public abstract class FragmentSlidingTabs extends Fragment {
     protected ArrayList<FragItem> fragments;
+    protected ResourcePageAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public abstract class FragmentSlidingTabs extends Fragment {
     public void onResume(){
         super.onResume();
         populateList();
+        adapter.notifyDataSetChanged();
     }
 
     public abstract void populateList();
@@ -41,7 +43,8 @@ public abstract class FragmentSlidingTabs extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
-        mViewPager.setAdapter(new ResourcePageAdapter(getChildFragmentManager()));
+        adapter = new ResourcePageAdapter(getChildFragmentManager());
+        mViewPager.setAdapter(adapter);
 
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
         mSlidingTabLayout.setViewPager(mViewPager);

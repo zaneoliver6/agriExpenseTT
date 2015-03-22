@@ -1,11 +1,10 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.Menu;
-import android.view.inputmethod.InputMethodManager;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.NewCycleLists;
@@ -17,53 +16,48 @@ public class NewCycle extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle);
-		setupInitialFrag();
-//        setupNavDrawer();
-
+//		setupInitial();
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Cycle");
 	}
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setupInitial();
+    }
 	
 	public void replaceSub(String text){
 		((TextView)findViewById(R.id.tv_mainNew_subheader)).setText(text);
 	}
 	
-	private void setupInitialFrag() {
+	private void setupInitial() {
 		Bundle arguments = new Bundle();
 		arguments.putString("type",DHelper.cat_plantingMaterial);
 		
-		ListFragment listfrag = new NewCycleLists();
-		listfrag.setArguments(arguments);
+		ListFragment listFrag = new NewCycleLists();
+		listFrag.setArguments(arguments);
 		
 		this.getSupportFragmentManager()
 			.beginTransaction()
-			.add(R.id.NewCycleListContainer,listfrag)
+			.add(R.id.NewCycleListContainer,listFrag)
 			.commit();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.new_cycle, menu);
 		return true;
 	}
-
-	@Override
-	public void onBackPressed(){
-	    FragmentManager fm = this.getSupportFragmentManager();
-	    if (fm.getBackStackEntryCount() > 0) {
-	        Log.i("MainActivity", "popping backstack");
-	        fm.popBackStack();
-	    } else {
-	        Log.i("MainActivity", "nothing on backstack, calling super");
-	        super.onBackPressed();  
-	    }
-	}
-
-    public void hideSoftKeyboard() {
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_create_cycle) {
+            Bundle b = new Bundle();
+            b.putString("action",DHelper.cat_plantingMaterial);
+            Intent i = new Intent(this, AddData.class);
+            i.putExtras(b);
+            startActivity(i);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

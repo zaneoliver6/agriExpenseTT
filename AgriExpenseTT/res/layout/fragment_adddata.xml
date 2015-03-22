@@ -13,7 +13,9 @@
         android:layout_marginTop="@dimen/label_dataentry_margin"
         android:ems="10"
         android:layout_marginRight="20dp"
-        android:hint="Resource Name">
+        android:hint="Resource Name"
+        android:inputType="textCapWords"
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>

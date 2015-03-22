@@ -37,8 +37,7 @@ public class FragmentAddData extends ListFragment {
 
         Bundle b = getArguments();
         if (b != null && b.containsKey("action")){
-            if (b.get("action").equals("create_labour"))
-                startAddData(DHelper.cat_labour);
+            startAddData(b.getString("action"));
         }else {
             dbh = new DbHelper(this.getActivity().getBaseContext());
             db = dbh.getWritableDatabase();
@@ -89,10 +88,10 @@ public class FragmentAddData extends ListFragment {
     }
 	 
 	 public class TWatch implements TextWatcher{
-		 ArrayAdapter<String> adpt;
-		 public TWatch(ArrayAdapter<String> adpt){
+		 ArrayAdapter<String> adapter;
+		 public TWatch(ArrayAdapter<String> adapter){
 			 super();
-			 this.adpt=adpt;
+			 this.adapter = adapter;
 		 }
 		@Override
 		public void beforeTextChanged(CharSequence s, int start, int count,int after) {
@@ -101,7 +100,7 @@ public class FragmentAddData extends ListFragment {
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before,int count) {
-			adpt.getFilter().filter(s);
+			adapter.getFilter().filter(s);
 			
 		}
 

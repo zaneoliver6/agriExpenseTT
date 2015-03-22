@@ -4,29 +4,21 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
-
-import com.cocosw.undobar.UndoBarController;
-import com.cocosw.undobar.UndoBarController.UndoBar;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class Main extends BaseActivity implements UndoBarController.UndoListener {
+public class Main extends BaseActivity{
 
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
-    private UndoBar undobar;
 
 
     @Override
@@ -46,14 +38,6 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
         }
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
-
-//        final Bundle b = new Bundle();
-//        b.putInt("index", 1);
-//        undobar = new UndoBarController.UndoBar(this).listener(this);
-//        undobar.message("Message Bar Created")
-//                .noicon(true)
-//                .token(b)
-//                .show();
     }
 
     private void setupPort() {
@@ -81,7 +65,6 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
     }
 
     public void restoreActionBar() {
-//        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mTitle);
     }
@@ -89,30 +72,11 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-
-    @Override
-    public void onBackPressed(){
-
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -170,11 +134,5 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
 
     public void openNewPurchase(View view){
         startActivity(new Intent(getApplicationContext(), NewPurchase.class));
-    }
-
-    @Override
-    public void onUndo(@Nullable Parcelable parcelable) {
-        Bundle res = (Bundle)parcelable;
-        Toast.makeText(this, "Received: " + res.getInt("index"), Toast.LENGTH_SHORT).show();
     }
 }

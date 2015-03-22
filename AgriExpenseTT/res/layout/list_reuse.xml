@@ -30,7 +30,9 @@
             android:ems="10"
             android:hint="Search "
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="5dp"
+            android:inputType="textFilter"
+            android:singleLine="true">
             <requestFocus />
         </EditText>
 

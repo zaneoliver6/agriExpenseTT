@@ -10,11 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NotifyHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 
 public class FragmentAddDataLast extends Fragment {
@@ -58,14 +59,13 @@ public class FragmentAddDataLast extends Fragment {
                 }
 				new Thread(new Runnable() {
                     public void run() {
-                        dm.insertResource(et_name.getText().toString(), getArguments().getString("type"));
+                        dm.insertResource(TextHelper.formatUserText(et_name.getText().toString()), getArguments().getString("type"));
                         getActivity().runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(getActivity(),getArguments().getString("type") + " Saved", Toast.LENGTH_SHORT ).show();
+                                NotifyHelper.notify(getActivity(),getArguments().getString("type") + " Saved" );
                                 getActivity().finish();
                             }
                         });
-
                     }
                 }).start();
 

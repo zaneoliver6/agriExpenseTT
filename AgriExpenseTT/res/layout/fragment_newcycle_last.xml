@@ -32,7 +32,8 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="@dimen/label_dataentry_margin"
                     android:ems="10"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
+                    android:singleLine="true"
                     android:layout_marginBottom="@dimen/helper_text_padding"
                     android:layout_gravity="center_horizontal"/>
 
