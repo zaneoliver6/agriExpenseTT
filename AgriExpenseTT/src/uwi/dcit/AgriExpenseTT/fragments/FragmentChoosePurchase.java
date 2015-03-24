@@ -37,7 +37,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
@@ -81,7 +80,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		populateList();
 		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
 	
 	private void populateList() {

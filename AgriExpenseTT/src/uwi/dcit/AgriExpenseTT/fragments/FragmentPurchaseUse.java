@@ -33,7 +33,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
@@ -78,7 +77,7 @@ public class FragmentPurchaseUse extends Fragment {
 
 		setDetails(pId,cycleId);
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Purchase Use Fragment");
 		return view;
 	}
 	

@@ -1,3 +1,6 @@
+# Remove files from github that have sensitive information
+ganalytics.xml
+
 # Operating System Specific Files
 Desktop.ini
 .DS_Store

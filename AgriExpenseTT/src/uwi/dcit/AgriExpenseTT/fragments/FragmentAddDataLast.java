@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NotifyHelper;
 import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
@@ -29,7 +28,7 @@ public class FragmentAddDataLast extends Fragment {
 		dm = new DataManager(getActivity());
 		view = inflater.inflate(R.layout.fragment_adddata, container, false);
 		setup();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Dataset Fragment - Last");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Dataset Fragment - Last");
 		return view;
 	}
 	private void setup() {

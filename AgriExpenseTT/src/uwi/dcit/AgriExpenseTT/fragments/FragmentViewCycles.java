@@ -37,7 +37,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
@@ -75,7 +74,7 @@ public class FragmentViewCycles extends ListFragment{
 		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 	
 	public void populateList() {

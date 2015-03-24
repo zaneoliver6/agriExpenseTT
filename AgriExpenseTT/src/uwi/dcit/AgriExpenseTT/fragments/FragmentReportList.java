@@ -21,7 +21,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 public class FragmentReportList extends ListFragment {
@@ -40,7 +39,7 @@ public class FragmentReportList extends ListFragment {
 		super.onCreate(savedInstanceState);
 		ReportHelper.createReportDirectory();
 		populateList();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Report List Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Report List Fragment");
 	}
 	
 	public void populateList() {

@@ -64,7 +64,7 @@ public class FragmentEmpty extends Fragment{
             this.isLabour = true;
         }
         // Google Analytics
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
 		return view;
 	}
 

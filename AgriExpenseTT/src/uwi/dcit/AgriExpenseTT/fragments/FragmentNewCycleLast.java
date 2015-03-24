@@ -31,7 +31,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentNewCycleLast extends Fragment {
 	String plantMaterial;
@@ -59,7 +58,7 @@ public class FragmentNewCycleLast extends Fragment {
 		land = getArguments().getString("land");
 
         setDetails(view);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 
         view.setOnTouchListener(
             new View.OnTouchListener() {

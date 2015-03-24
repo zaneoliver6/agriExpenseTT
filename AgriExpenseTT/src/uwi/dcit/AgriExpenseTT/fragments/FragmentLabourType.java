@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
 public class FragmentLabourType extends Fragment{
@@ -26,7 +25,7 @@ public class FragmentLabourType extends Fragment{
 		view=inflater.inflate(R.layout.fragment_labour_type, container, false);
 		
 		setDetails();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Labour Type Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Labour Type Fragment");
 		return view;
 	}
 	private void setDetails() {

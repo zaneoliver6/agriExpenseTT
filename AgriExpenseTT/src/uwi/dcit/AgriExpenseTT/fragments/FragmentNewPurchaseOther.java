@@ -4,9 +4,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +17,6 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
 public class FragmentNewPurchaseOther extends Fragment{
@@ -39,7 +35,7 @@ public class FragmentNewPurchaseOther extends Fragment{
 		view=inflater.inflate(R.layout.fragment_other_quanifier, container, false);
 		setup();
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment - Other Category");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment - Other Category");
 
         view.setOnTouchListener(
             new View.OnTouchListener() {
