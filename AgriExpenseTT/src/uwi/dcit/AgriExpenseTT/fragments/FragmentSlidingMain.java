@@ -13,7 +13,7 @@ public class FragmentSlidingMain extends FragmentSlidingTabs {
     public void populateList(){
         SQLiteDatabase db;
         DbHelper dbh = new DbHelper(getActivity().getApplicationContext());
-        db = dbh.getWritableDatabase();
+        db = dbh.getReadableDatabase();
 
         Fragment cycleFrag, resFrag;
         Bundle arguments = new Bundle();
@@ -30,14 +30,16 @@ public class FragmentSlidingMain extends FragmentSlidingTabs {
         if(DbQuery.resourceExist(db)){
             resFrag = new FragmentChoosePurchase();
         }else{
-            resFrag=new FragmentEmpty();
-            arguments	= new Bundle();
+            resFrag = new FragmentEmpty();
+            arguments = new Bundle();
             arguments.putString("type", "purchase");
             resFrag.setArguments(arguments);
         }
 
         fragments.add(new FragItem(cycleFrag, Color.BLUE,"Cycles"));
         fragments.add(new FragItem(resFrag,Color.GREEN,"Purchases"));
+
+        db.close();
     }
 
 }

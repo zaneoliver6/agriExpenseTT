@@ -34,20 +34,18 @@ public class FragmentViewResources extends ListFragment{
 		dm = new DataManager(getActivity(), db, dbh);
 		populateList();
 		Collections.sort(rList);
-		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
+		ArrayAdapter<String> listAdapt=new ArrayAdapter<>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
 		setListAdapter(listAdapt);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
 	}
 	
 	private void populateList() {
-		rList=new ArrayList<String>();
+		rList = new ArrayList<>();
 		DbQuery.getResources(db, dbh, null, rList);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-		//returns the inflated layout which contains the listview
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
 
@@ -71,20 +69,21 @@ public class FragmentViewResources extends ListFragment{
 	private class Confirm implements DialogInterface.OnClickListener{
 		int position;
 		int id;
-		ArrayAdapter<String> adpt;
-		public Confirm(int position,ArrayAdapter<String> adpt){
-			this.id=DbQuery.getNameResourceId(db, dbh, rList.get(position));
-			this.adpt=adpt;
-			this.position=position;
+		ArrayAdapter<String> adapter;
+		public Confirm(int position,ArrayAdapter<String> adapter){
+			this.id = DbQuery.getNameResourceId(db, dbh, rList.get(position));
+			this.adapter = adapter;
+			this.position = position;
 		}
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==DialogInterface.BUTTON_POSITIVE){
 				dm.deleteResource(id);
 				rList.remove(position);
-				adpt.notifyDataSetChanged();
+				adapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Resource deleted", Toast.LENGTH_SHORT).show();
-				dialog.cancel();
+                dialog.dismiss();
+//				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();

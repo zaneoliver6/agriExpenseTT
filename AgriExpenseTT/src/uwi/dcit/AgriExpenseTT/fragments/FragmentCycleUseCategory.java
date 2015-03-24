@@ -86,8 +86,8 @@ public class FragmentCycleUseCategory extends Fragment {
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
 			btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
 		}else if(category.equals(DHelper.cat_other)){
-			btn_useage.setText("useage of"+category);
-			btn_useMore.setText("Add other expense");
+			btn_useage.setText("Usage of Other Expenses");
+			btn_useMore.setText("Use more Other Expense");
 			line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
 			btn_useMore.setBackgroundResource(R.drawable.btn_custom_other);
 		}else{

@@ -42,7 +42,9 @@ public class SalesCost extends BaseActivity {
 	String crop;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	@Override
+    private int res = -1;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sales_cost);
@@ -108,21 +110,41 @@ public class SalesCost extends BaseActivity {
 			}else if(v.getId()==R.id.btn_salesCost_dne){
 				save();
 
-                Intent n=new Intent(SalesCost.this,CycleUseage.class);
-                n.putExtra("cycleMain", currCycle);
-                startActivity(n);
+
+
+//                Intent n=new Intent(SalesCost.this,CycleUseage.class);
+//                n.putExtra("cycleMain", currCycle);
+//                startActivity(n);
 			}
 		}
 
 		private void save() {
-			ContentValues cv=new ContentValues();
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, sellp);
-			DbHelper dbh=new DbHelper(SalesCost.this);
-			SQLiteDatabase db=dbh.getWritableDatabase();
-			int res = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
-            if (res != -1){
-                Toast.makeText(context, "Saved Sale Successfully", Toast.LENGTH_SHORT).show();
-            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, sellp);
+                    final DbHelper dbh = new DbHelper(SalesCost.this);
+                    final SQLiteDatabase db = dbh.getWritableDatabase();
+                    res = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
+                    db.close();
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (res != -1)
+                                Toast.makeText(context, "Saved Sale Successfully", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(context, "Unable to save sale information", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
+            }).start();
+
+
 			currCycle.setCostPer(sellp);
 			currCycle.setHarvestAmt(amtHarvest);
 			currCycle.setHarvestType(qtfr);
