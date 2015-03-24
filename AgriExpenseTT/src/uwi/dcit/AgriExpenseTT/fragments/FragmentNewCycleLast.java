@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -44,6 +43,7 @@ public class FragmentNewCycleLast extends Fragment {
 	TextView error;
     private Button btnDate;
     private EditText et_CycleName;
+    int res = -1;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -144,18 +144,38 @@ public class FragmentNewCycleLast extends Fragment {
                     formatDisplayDate(null);
                 }
 
-                DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-                int res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+                        res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
-                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
+                                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
 
-                Bundle args = new Bundle();
-                args.putString("type", "cycle");
-                Intent i=new Intent(getActivity(),Main.class);
-                i.putExtras(args);
-                startActivity(i);
-                new IntentLauncher().run();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("type", "cycle");
+                                bundle.putInt("cycle", res);
+                                Intent i = new Intent();
+                                i.putExtras(bundle);
+
+                                getActivity().setResult(DHelper.PURCHASE_REQUEST_CODE, i );
+                                getActivity().finish();
+                            }
+                        });
+                    }
+                }).start();
+
+
+//                Bundle args = new Bundle();
+//                args.putString("type", "cycle");
+//                Intent i=new Intent(getActivity(),Main.class);
+//                i.putExtras(args);
+//                startActivity(i);
+//                new IntentLauncher().run();
 
             }
         }

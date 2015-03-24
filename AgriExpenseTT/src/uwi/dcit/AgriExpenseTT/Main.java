@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
@@ -130,14 +129,5 @@ public class Main extends BaseActivity{
                 signInManager.signIn();
             }
         }
-    }
-
-    public void openNewCycle(View view){
-        startActivity(new Intent(getApplicationContext(), NewCycle.class));
-
-    }
-
-    public void openNewPurchase(View view){
-        startActivity(new Intent(getApplicationContext(), NewPurchase.class));
     }
 }

@@ -45,12 +45,12 @@ public class FragmentViewCycles extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	final int req_edit=1;
-	final String className = "ViewCycles";
+//	final String className = "ViewCycles";
 
     private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
 	
-	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
+	ArrayList<LocalCycle> cycleList = new ArrayList<>();
 	CycleListAdapter cycAdapt;
 	
 	@Override
@@ -242,7 +242,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
-		cycleList=new ArrayList<LocalCycle>();
+		cycleList=new ArrayList<>();
 		DbQuery.getCycles(db, dbh, cycleList);
 		cycAdapt.notifyDataSetChanged();
 	}
@@ -267,7 +267,7 @@ public class FragmentViewCycles extends ListFragment{
 				cycleList.remove(position);
 				listAdapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Cycle successfully deleted", Toast.LENGTH_SHORT).show();			
-				dialog.cancel();
+				dialog.dismiss();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();

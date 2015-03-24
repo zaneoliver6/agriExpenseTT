@@ -1,11 +1,9 @@
 package uwi.dcit.AgriExpenseTT;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
@@ -20,11 +18,11 @@ public class CycleUseage extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cycle_useage);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Cycle Usage");
-		int id = 1;
-		setup(id);
+//		int id = 1;
+		setup();
 	}
 
-	private void setup(int id) {
+	private void setup() {
         Fragment catGeneral			= new FragmentGeneralCategory();
         Fragment catPlantMaterial	= new FragmentCycleUseCategory();
         Fragment catFertilizer		= new FragmentCycleUseCategory();
@@ -89,24 +87,5 @@ public class CycleUseage extends BaseActivity {
 		getMenuInflater().inflate(R.menu.cycle_useage_redesign, menu);
 		return true;
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-            startActivity(new Intent(getApplicationContext(),ManageData.class));
-			return true;
-		}else {
-            return super.onOptionsItemSelected(item);
-        }
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	
 
 }
