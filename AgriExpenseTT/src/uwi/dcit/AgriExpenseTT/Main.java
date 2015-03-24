@@ -134,7 +134,7 @@ public class Main extends BaseActivity{
 
     public void openNewCycle(View view){
         startActivity(new Intent(getApplicationContext(), NewCycle.class));
-        
+
     }
 
     public void openNewPurchase(View view){
