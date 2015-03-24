@@ -37,8 +37,6 @@ public class Main extends BaseActivity{
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d(TAG, "Running On Resume" );
-        // Check for orientation to determine which interface to load => if portrait will use leftfrag
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
