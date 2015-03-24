@@ -25,7 +25,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
         super.onCreate(savedInstanceState);
         signInManager = new SignInManager(BaseActivity.this,BaseActivity.this);
         isTablet = this.getResources().getBoolean(R.bool.isTablet);
@@ -43,33 +42,41 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         switch (position){
             case 0:
                 // Home
-                startActivity(new Intent(this, Main.class));
+                if (!(this instanceof Main))
+                    startActivity(new Intent(this, Main.class));
                 break;
             case 1:
                 //new cycle
-                startActivity(new Intent(this, NewCycle.class));
+                if (!(this instanceof NewCycle))
+                    startActivity(new Intent(this, NewCycle.class));
                 break;
             case 2:
                 //new purchase
-                startActivity(new Intent(this, NewPurchase.class));
+                if (!(this instanceof NewPurchase))
+                    startActivity(new Intent(this, NewPurchase.class));
                 break;
             case 3:
                 //hire labour
-                startActivity(new Intent(this, HireLabour.class));
+                if (!(this instanceof HireLabour))
+                    startActivity(new Intent(this, HireLabour.class));
                 break;
             case 4:
                 //report manager
-                startActivity(new Intent(this,ManageReport.class));
+                if (!(this instanceof ManageReport))
+                    startActivity(new Intent(this,ManageReport.class));
                 break;
             case 5:
                 // manage data
-                startActivity(new Intent(this,ManageData.class));
+                if (!(this instanceof ManageData))
+                    startActivity(new Intent(this,ManageData.class));
                 break;
             case 6:
                 backUpData();
                 break;
-
+            default:
+                startActivity(new Intent(this, Main.class));
         }
+//        finish();
     }
 
     public void backUpData(){
