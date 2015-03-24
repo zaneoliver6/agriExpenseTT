@@ -14,7 +14,6 @@ import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
@@ -49,7 +48,7 @@ public class FragmentEmpty extends Fragment{
             this.isLabour = true;
         }
         // Google Analytics
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
 		return view;
 	}
 

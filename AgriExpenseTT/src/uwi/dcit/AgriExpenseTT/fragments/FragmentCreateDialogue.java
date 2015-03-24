@@ -24,7 +24,7 @@ public class FragmentCreateDialogue extends DialogFragment {
                 .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        FragmentCreateDialogue.this.getDialog().cancel();
+                         FragmentCreateDialogue.this.getDialog().cancel();
                     }
                 });
 

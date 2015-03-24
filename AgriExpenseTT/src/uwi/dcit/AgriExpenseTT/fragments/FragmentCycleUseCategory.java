@@ -26,7 +26,6 @@ import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
@@ -62,7 +61,7 @@ public class FragmentCycleUseCategory extends Fragment {
                     .setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
         }
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
 		return view;
 	}
 

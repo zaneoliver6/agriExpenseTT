@@ -19,7 +19,6 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class HireLabourLists extends ListFragment {
@@ -41,7 +40,7 @@ public class HireLabourLists extends ListFragment {
 		populateList();
 		ArrayAdapter<String> listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
 		setListAdapter(listAdapt);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Hire Labour List Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Hire Labour List Fragment");
 	}
 		
 	private void populateList() {

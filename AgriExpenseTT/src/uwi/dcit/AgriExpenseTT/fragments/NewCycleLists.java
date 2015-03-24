@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +23,6 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class NewCycleLists extends ListFragment {
 	String type;
@@ -48,7 +46,7 @@ public class NewCycleLists extends ListFragment {
 		populateList();		
 		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);		
 		setListAdapter(listAdapt);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle List Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle List Fragment");
 	}
 		
 	private void populateList() {

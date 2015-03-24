@@ -21,7 +21,6 @@ import uwi.dcit.AgriExpenseTT.SalesCost;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 
@@ -50,7 +49,7 @@ public class FragmentGeneralCategory extends Fragment {
 		db=dbh.getWritableDatabase();
 		calcTotals();
 		setup();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("General Category Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("General Category Fragment");
 		return view;
 	}
 	
