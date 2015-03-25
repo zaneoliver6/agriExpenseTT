@@ -11,6 +11,7 @@ import android.view.Menu;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
@@ -19,6 +20,8 @@ public class Main extends BaseActivity{
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
     public final static String TAG = "Main";
+
+    private String focus = "cycle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,12 @@ public class Main extends BaseActivity{
     @Override
     protected void onResume(){
         super.onResume();
+        Log.d(TAG, "onResume Method was called");
+        buildScreen();
+    }
+
+    private void buildScreen(){
+        Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -45,6 +54,9 @@ public class Main extends BaseActivity{
 
     private void setupPort() {
         Fragment frag = new FragmentSlidingMain();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        frag.setArguments(bundle);
 
         getSupportFragmentManager()
             .beginTransaction()
@@ -55,6 +67,10 @@ public class Main extends BaseActivity{
     private void setupLand() {
         leftFrag = new FragmentSlidingMain();
         rightFrag = new FragmentEmpty();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        leftFrag.setArguments(bundle);
 
         Bundle arguments=new Bundle();
         arguments.putString("type","select");
@@ -119,15 +135,24 @@ public class Main extends BaseActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == RequestCode_backup) {
-            // Make sure the request was successful
-            if (resultCode == 1) {
-                String country=data.getStringExtra("country");
-                String county=data.getStringExtra("county");
-                Log.d("Main Activity","returned with "+country+" "+county);
-                signInManager.signIn();
-            }
+
+        switch (requestCode){
+            case RequestCode_backup:
+                if (resultCode == 1) {
+                    String country=data.getStringExtra("country");
+                    String county=data.getStringExtra("county");
+                    Log.d("Main Activity","returned with "+country+" "+county);
+                    signInManager.signIn();
+                }
+                break;
+            case DHelper.CYCLE_REQUEST_CODE:
+                focus = "cycle";
+                buildScreen();
+                break;
+            case DHelper.PURCHASE_REQUEST_CODE:
+                focus = "purchase";
+                buildScreen();
+                break;
         }
     }
 }

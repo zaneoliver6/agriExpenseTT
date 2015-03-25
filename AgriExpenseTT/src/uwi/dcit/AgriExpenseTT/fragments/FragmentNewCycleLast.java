@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -72,6 +73,12 @@ public class FragmentNewCycleLast extends Fragment {
 
 		return view;
 	}
+
+    @Override
+    public void onDestroy() {
+        db.close();
+        super.onDestroy();
+    }
 	
 	private void setDetails(View view) {
 
@@ -158,31 +165,23 @@ public class FragmentNewCycleLast extends Fragment {
 
                                 Bundle bundle = new Bundle();
                                 bundle.putString("type", "cycle");
-                                bundle.putInt("cycle", res);
+                                bundle.putInt("id", res);
                                 Intent i = new Intent();
                                 i.putExtras(bundle);
 
-                                getActivity().setResult(DHelper.PURCHASE_REQUEST_CODE, i );
-                                getActivity().finish();
+                                getActivity().setResult(DHelper.CYCLE_REQUEST_CODE, i );
+                                if (!(getActivity() instanceof Main))
+                                    getActivity().finish();
                             }
                         });
                     }
                 }).start();
-
-
-//                Bundle args = new Bundle();
-//                args.putString("type", "cycle");
-//                Intent i=new Intent(getActivity(),Main.class);
-//                i.putExtras(args);
-//                startActivity(i);
-//                new IntentLauncher().run();
-
             }
         }
     }
 
     @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -201,9 +200,4 @@ public class FragmentNewCycleLast extends Fragment {
             formatDisplayDate(cal);
         }
     }
-    private class IntentLauncher extends Thread{
-        @Override
-        public void run(){getActivity().finish();}
-    }
-
 }

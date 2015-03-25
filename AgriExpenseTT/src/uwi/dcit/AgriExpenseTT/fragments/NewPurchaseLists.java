@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,8 +56,7 @@ public class NewPurchaseLists extends ListFragment {
             populateList();
             Collections.sort(list);
             listAdapt.notifyDataSetChanged();
-        }else
-            Log.d(TAG, "List is not null");
+        }
     }
 		
 	private void populateList() {

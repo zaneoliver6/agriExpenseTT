@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -208,12 +209,22 @@ public class FragmentNewPurchaseLast extends Fragment{
                             if (resId != -1)
                                 res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
                         }
+
                         // When completed run in UI thread
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (res != -1)Toast.makeText(getActivity(), "Purchase Successfully Saved", Toast.LENGTH_SHORT).show();
                                 else Toast.makeText(getActivity(), "Unable to save Purchase", Toast.LENGTH_SHORT).show();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("type", "purchase");
+                                bundle.putInt("id", res);
+                                Intent i = new Intent();
+                                i.putExtras(bundle);
+
+                                getActivity().setResult(DHelper.PURCHASE_REQUEST_CODE, i );
+
                                 if (!(getActivity() instanceof Main))
                                     getActivity().finish();
                             }
@@ -221,17 +232,6 @@ public class FragmentNewPurchaseLast extends Fragment{
 
                     }
                 }).start();
-
-
-				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);
-//                Intent n=new Intent(getActivity(),Main.class);
-//                Bundle args = new Bundle();
-//                args.putString("type", "cycle");
-//                n.putExtras(args);
-//
-//                startActivity(n);
-//                new IntentLauncher().run();
-
 			}
 		}
 		
@@ -257,9 +257,4 @@ public class FragmentNewPurchaseLast extends Fragment{
             formatDisplayDate(cal);
         }
     }
-
-    private class IntentLauncher extends Thread{
-		@Override
-		public void run(){getActivity().finish();}
-	}
 }
