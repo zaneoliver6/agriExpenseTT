@@ -9,11 +9,11 @@
         android:id="@+id/et_addData_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="@dimen/label_dataentry_margin"
         android:ems="10"
-        android:layout_marginRight="20dp"
-        android:hint="Resource Name"
+        android:layout_marginRight="10dp"
+        android:hint="@string/resource_name_lbl"
         android:inputType="textCapWords"
         android:singleLine="true">
 
@@ -24,12 +24,12 @@
         android:id="@+id/tv_addData_lbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="@dimen/helper_text_padding"
-        android:text="Enter name of resource "
+        android:text="@string/resource_name_hint"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/helper_text_size"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="10dp" />
 
 
     <Button
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:background="@drawable/btn_custom"
-        android:text="Done"
+        android:text="@string/finished_action"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp" />
 

@@ -105,9 +105,11 @@ public class Main extends BaseActivity{
 
             Class reflectClass = oldFrag.getClass();
             Bundle arguments=oldFrag.getArguments();
+
             try {
                 oldFrag = (Fragment)reflectClass.newInstance();
             } catch (Exception e){e.printStackTrace();}
+
             oldFrag.setArguments(arguments);
             ft.replace(R.id.navContentLeft, oldFrag);
             leftFrag=oldFrag;

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.NotifyHelper;
 import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
@@ -35,7 +36,10 @@ public class FragmentAddDataLast extends Fragment {
 		Button btn_dne=(Button)view.findViewById(R.id.btn_addData_dne);
 		et_name=(EditText)view.findViewById(R.id.et_addData_name);
 		tv_error=(TextView)view.findViewById(R.id.tv_addData_lbl);
-        tv_error.setText("Enter name of "+getArguments().getString("type"));
+        if (getArguments().getString("type").equals(DHelper.cat_labour))
+            tv_error.setText("Enter name of Labourer");
+        else
+            tv_error.setText("Enter name of "+getArguments().getString("type"));
 		Click c=new Click();
 		btn_dne.setOnClickListener(c);
 	}

@@ -136,4 +136,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="empty_fragment_msg">Sorry you haven\'t purchased anything to use</string>
     <string name="menu_item_createNew_planting">Create New Planting Material</string>
     <string name="labour_cycle_choice_desc">Will he/she be working on one cycle (crop) or working on multiple cycles (crops)?</string>
+    <string name="resource_name_lbl">Resource Name</string>
+    <string name="finished_action">Done</string>
+    <string name="resource_name_hint">Enter name of resource</string>
 </resources>

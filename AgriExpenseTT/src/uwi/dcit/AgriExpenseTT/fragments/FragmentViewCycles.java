@@ -189,7 +189,7 @@ public class FragmentViewCycles extends ListFragment{
         }
         if(getActivity() instanceof NavigationControl) {
             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
-                ||(((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass()))
+                || (((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass()))
                     ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
             else
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
@@ -300,13 +300,14 @@ public class FragmentViewCycles extends ListFragment{
 
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
-            double qty=currCycle.getLandQty();
+            double qty = currCycle.getLandQty();
             txt = currCycle.getLandType();
-            txt = qty +" "+ txt;
-            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
-            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
+            txt = qty +" "+ txt + "s";
 
-//            Log.d("ViewCycle-getView", "selectedposition: " + getSelectedItemPosition() + "position: "+position);
+            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
+            ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
+
             if (position == getSelectedItemPosition()){
                 row.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
             }
