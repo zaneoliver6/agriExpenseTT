@@ -178,7 +178,7 @@ public class FragmentViewCycles extends ListFragment{
 		arguments.putParcelable("cycleMain",cycleList.get(position));
         Log.d("FragmentViewCycles", cycleList.get(position).toString());
 
-		Fragment newFrag= new FragmentCycleUseage();
+		Fragment newFrag= new FragmentCycleUsage();
         newFrag.setArguments(arguments);
 
         boolean isTablet = this.getResources().getBoolean(R.bool.isTablet);

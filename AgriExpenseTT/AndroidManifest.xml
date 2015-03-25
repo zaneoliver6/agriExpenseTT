@@ -60,7 +60,7 @@
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
-            android:name=".CycleUseage"
+            android:name=".CycleUsage"
             android:label="@string/title_activity_cycle_useage" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

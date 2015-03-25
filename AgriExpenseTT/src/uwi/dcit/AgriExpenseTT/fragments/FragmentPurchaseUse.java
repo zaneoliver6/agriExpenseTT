@@ -27,7 +27,6 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.CycleUseage;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -37,6 +36,8 @@ import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+
+//import uwi.dcit.AgriExpenseTT.CycleUsage;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -190,18 +191,6 @@ public class FragmentPurchaseUse extends Fragment {
                     getActivity().startActivity(intent);
 				}
 			}
-		}
-	}
-	private class IntentLauncher extends Thread{
-		@Override
-		public void run(){
-			//Bundle b=new Bundle();
-			//b.putParcelable("cycleMain",c);
-			Intent n=new Intent(getActivity(),CycleUseage.class);
-			n.putExtra("cycleMain", c);
-			//n.putExtra("cycleMain",b);
-			getActivity().startActivity(n);
-			getActivity().finish();
 		}
 	}
 	//--------------------------------------------------------------------------------

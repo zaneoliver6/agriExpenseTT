@@ -13,11 +13,11 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 
-public class FragmentCycleUseage extends Fragment {
+public class FragmentCycleUsage extends Fragment {
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_cycle_useage, container, false);
+        view = inflater.inflate(R.layout.activity_cycle_usage, container, false);
         setup();
         return view;
     }

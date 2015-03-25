@@ -200,7 +200,7 @@ public class FragmentCycleUseCategory extends Fragment {
                 startActivity(n);
                 return;
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-                newFrag=new FragmentUseResource();
+                newFrag = new FragmentUseResource();
                 Bundle arguments = new Bundle();
                 arguments.putString("type",category);
                 arguments.putParcelable("cycle", currCycle);
@@ -208,10 +208,11 @@ public class FragmentCycleUseCategory extends Fragment {
                 newFrag.setArguments(arguments);
 			}
 
-            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+            if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
                 return;
             }
+
             if(getActivity() instanceof NavigationControl) {
                 if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
                         || (newFrag != null &&  (((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass())))

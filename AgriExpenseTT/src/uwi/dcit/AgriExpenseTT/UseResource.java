@@ -37,12 +37,12 @@ public class UseResource extends BaseActivity {
 		Bundle b 	= data.getParcelable("cyc");
 		mainCycle	= b.getParcelable("cyc");
 		
-		String stype= getIntent().getStringExtra("type");		
+		String sType= getIntent().getStringExtra("type");
 		String tStr	= getIntent().getStringExtra("total");
 		total		= Double.parseDouble(tStr);
 		
 		setContentView(R.layout.activity_use_resource);
-		start(mainCycle,stype);
+		start(mainCycle,sType);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Use Resources");
         View v=findViewById(R.id.cont_UseResource_main);
         v.setOnTouchListener(new View.OnTouchListener() {
@@ -133,7 +133,7 @@ public class UseResource extends BaseActivity {
 	private class IntentLauncher extends Thread{
 		@Override
 		public void run(){
-			Intent i =new Intent(UseResource.this,CycleUseage.class);
+			Intent i =new Intent(UseResource.this,CycleUsage.class);
 	        i.putExtra("cycleMain", mainCycle);
 			startActivity(i);
 			finish();

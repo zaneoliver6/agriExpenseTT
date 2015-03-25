@@ -5,21 +5,28 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUsage;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-public class CycleUseage extends BaseActivity {
+public class CycleUsage extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cycle_useage);
+//		setContentView(R.layout.activity_cycle_usage);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Cycle Usage");
 //		int id = 1;
-		setup();
+//		setup();
+
+        setContentView(R.layout.activity_view_navigation);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.navContentLeft, new FragmentCycleUsage())
+                .commit();
 	}
 
 	private void setup() {

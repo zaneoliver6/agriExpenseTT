@@ -32,6 +32,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 public class FragmentNewCycleLast extends Fragment {
 	String plantMaterial;
@@ -155,7 +156,7 @@ public class FragmentNewCycleLast extends Fragment {
                     @Override
                     public void run() {
                         DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-                        res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+                        res = dm.insertCycle(plantMaterialId, TextHelper.formatUserText(et_CycleName.getText().toString()) , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

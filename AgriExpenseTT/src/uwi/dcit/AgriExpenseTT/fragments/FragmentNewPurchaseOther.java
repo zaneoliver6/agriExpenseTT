@@ -17,6 +17,7 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 
 public class FragmentNewPurchaseOther extends Fragment{
@@ -100,8 +101,8 @@ public class FragmentNewPurchaseOther extends Fragment{
                 DbHelper dbh = new DbHelper(getActivity().getApplicationContext());
                 SQLiteDatabase db = dbh.getWritableDatabase();
 
-                resource = resource.trim();
-                quantifier = quantifier.trim();
+                resource = TextHelper.formatUserText(resource);
+                quantifier = TextHelper.formatUserText(quantifier);
 
                 if (!DbQuery.resourceExistByName(db, dbh, resource)) { // Resource does not exist
 
