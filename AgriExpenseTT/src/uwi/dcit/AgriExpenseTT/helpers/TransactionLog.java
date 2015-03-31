@@ -26,12 +26,12 @@ import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUseCollection;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchaseCollection;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchaseCollection;
 import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLogCollection;
-import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 
 public class TransactionLog {
@@ -51,128 +51,129 @@ public class TransactionLog {
 		this.db=db;
 		this.context=context;
 	}
-	public boolean pullAllFromCloud(UpAcc cloudAcc){
-		System.out.println("----"+cloudAcc.getAcc());
-		
-		CycleCollection responseCycles;
-		CycleApi.Builder builder = new CycleApi.Builder(
-			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-			         null);         
-		builder = CloudEndpointUtils.updateBuilder(builder);
-        CycleApi endpoint = builder.build();
-		try {
-			responseCycles = endpoint.getAllCycles(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace();
-			return false;}
-		List<Cycle> cycleList=responseCycles.getItems();
-			
-			
-		CycleUseCollection responseCycleUse;
-		CycleUseApi.Builder builderUse = new CycleUseApi.Builder(
-		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),			         null);         
-		builderUse = CloudEndpointUtils.updateBuilder(builderUse);
-        CycleUseApi endpointUse = builderUse.build();
-		try {
-			responseCycleUse = endpointUse.getAllCycleUse(cloudAcc.getAcc()).execute();
-		} catch (IOException e) { e.printStackTrace(); return false; }
 
-        List<CycleUse> cycleUseList=responseCycleUse.getItems();
-		
-		
-		RPurchaseCollection responsePurchase;
-		RPurchaseApi.Builder builderPurchase = new RPurchaseApi.Builder(
-		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-		         null);         
-		builderPurchase = CloudEndpointUtils.updateBuilder(builderPurchase);
-        RPurchaseApi endpointPurchase = builderPurchase.build();
-		try {
-			responsePurchase = endpointPurchase.getAllPurchases(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace();return false;}
-
-		List<RPurchase> purchaseList=responsePurchase.getItems();
-		
-		TransLogCollection responseTranslog;
-		TranslogApi.Builder builderTransLog = new TranslogApi.Builder(
-		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-		         null);         
-		builderTransLog = CloudEndpointUtils.updateBuilder(builderTransLog);
-        TranslogApi endpointTranslog = builderTransLog.build();
-		try {
-			responseTranslog = endpointTranslog.getAllTranslog(cloudAcc.getAcc()).execute();
-		} catch (IOException e) {e.printStackTrace(); return false;}
-
-		List<TransLog> translogList = responseTranslog.getItems();
-		
-		dbh.dropTables(db);
-		dbh.onCreate(db);
-		
-		ContentValues cv;
-		System.out.println("Cycles now");
-		for(Cycle c:cycleList){
-			System.out.println("***");
-			cv=new ContentValues();
-			cv.put(CycleContract.CycleEntry._ID, c.getId());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_AMOUNT, c.getLandQty());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
-			//cv.put(DbHelper.CROPCYCLE_DATE, c.get);
-			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME,c.getKeyrep(), c.getId());
-		}
-		
-		System.out.println("CycleUses now");
-		for(CycleUse c: cycleUseList){
-			System.out.println("***");
-			//try {System.out.println(c.toPrettyString());} catch (IOException e) {e.printStackTrace();}
-			cv=new ContentValues();
-			cv.put(CycleResourceEntry._ID, c.getId());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, c.getPurchaseId());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
-			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.g);
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
-			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
-		}
-
-		System.out.println("Purchases");
-		for(RPurchase p: purchaseList){
-			System.out.println("***");
-			cv=new ContentValues();
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, p.getPId());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, p.getQty());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
-			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
-		}
-		
-		System.out.println("transactions");
-		for(TransLog t:translogList){
-			System.out.println("*** Id:"+t.getId());
-			
-			cv=new ContentValues();
-			cv.put(TransactionLogContract.TransactionLogEntry._ID, t.getId());
-			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TABLE, t.getTableKind());
-			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_ROWID, t.getRowId());
-			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_OPERATION, t.getOperation());
-			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME, t.getTransTime());
-			db.insert(TransactionLogContract.TransactionLogEntry.TABLE_NAME, null, cv);
-			DbQuery.updateAccount(db, t.getTransTime());
-		}
-		cv=new ContentValues();
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, cloudAcc.getAcc());
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
-		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
-		
-		return true;
-		
-	}
+//	public boolean pullAllFromCloud(Account cloudAcc){
+//		System.out.println("----"+cloudAcc.getAcc());
+//
+//		CycleCollection responseCycles;
+//		CycleApi.Builder builder = new CycleApi.Builder(
+//			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//			         null);
+//		builder = CloudEndpointUtils.updateBuilder(builder);
+//        CycleApi endpoint = builder.build();
+//		try {
+//			responseCycles = endpoint.getAllCycles(cloudAcc.getAcc()).execute();
+//		} catch (IOException e) {e.printStackTrace();
+//			return false;}
+//		List<Cycle> cycleList=responseCycles.getItems();
+//
+//
+//		CycleUseCollection responseCycleUse;
+//		CycleUseApi.Builder builderUse = new CycleUseApi.Builder(
+//		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),			         null);
+//		builderUse = CloudEndpointUtils.updateBuilder(builderUse);
+//        CycleUseApi endpointUse = builderUse.build();
+//		try {
+//			responseCycleUse = endpointUse.getAllCycleUse(cloudAcc.getAcc()).execute();
+//		} catch (IOException e) { e.printStackTrace(); return false; }
+//
+//        List<CycleUse> cycleUseList=responseCycleUse.getItems();
+//
+//
+//		RPurchaseCollection responsePurchase;
+//		RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
+//		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//		         null);
+//		buildeResourcePurchase = CloudEndpointUtils.updateBuilder(builderPurchase);
+//        RPurchaseApi endpointPurchase = builderPurchase.build();
+//		try {
+//			responsePurchase = endpointPurchase.getAllPurchases(cloudAcc.getAcc()).execute();
+//		} catch (IOException e) {e.printStackTrace();return false;}
+//
+//		List<RPurchase> purchaseList=responsePurchase.getItems();
+//
+//		TransLogCollection responseTranslog;
+//		TranslogApi.Builder builderTransLog = new TranslogApi.Builder(
+//		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//		         null);
+//		builderTransLog = CloudEndpointUtils.updateBuilder(builderTransLog);
+//        TranslogApi endpointTranslog = builderTransLog.build();
+//		try {
+//			responseTranslog = endpointTranslog.getAllTranslog(cloudAcc.getAcc()).execute();
+//		} catch (IOException e) {e.printStackTrace(); return false;}
+//
+//		List<TransLog> translogList = responseTranslog.getItems();
+//
+//		dbh.dropTables(db);
+//		dbh.onCreate(db);
+//
+//		ContentValues cv;
+//		System.out.println("Cycles now");
+//		for(Cycle c:cycleList){
+//			System.out.println("***");
+//			cv=new ContentValues();
+//			cv.put(CycleContract.CycleEntry._ID, c.getId());
+//			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
+//			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
+//			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_AMOUNT, c.getLandQty());
+//			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+//			//cv.put(DbHelper.CROPCYCLE_DATE, c.get);
+//			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
+//			DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME,c.getKeyrep(), c.getId());
+//		}
+//
+//		System.out.println("CycleUses now");
+//		for(CycleUse c: cycleUseList){
+//			System.out.println("***");
+//			//try {System.out.println(c.toPrettyString());} catch (IOException e) {e.printStackTrace();}
+//			cv=new ContentValues();
+//			cv.put(CycleResourceEntry._ID, c.getId());
+//			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
+//			cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, c.getPurchaseId());
+//			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
+//			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
+//			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.g);
+//			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
+//			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
+//			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
+//		}
+//
+//		System.out.println("Purchases");
+//		for(ResourcePurchase p: purchaseList){
+//			System.out.println("***");
+//			cv=new ContentValues();
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, p.getPId());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, p.getQty());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
+//			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
+//			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
+//			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
+//		}
+//
+//		System.out.println("transactions");
+//		for(TransLog t:translogList){
+//			System.out.println("*** Id:"+t.getId());
+//
+//			cv=new ContentValues();
+//			cv.put(TransactionLogContract.TransactionLogEntry._ID, t.getId());
+//			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TABLE, t.getTableKind());
+//			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_ROWID, t.getRowId());
+//			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_OPERATION, t.getOperation());
+//			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME, t.getTransTime());
+//			db.insert(TransactionLogContract.TransactionLogEntry.TABLE_NAME, null, cv);
+//			DbQuery.updateAccount(db, t.getTransTime());
+//		}
+//		cv=new ContentValues();
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, cloudAcc.getAcc());
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
+//		db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
+//
+//		return true;
+//
+//	}
 	
 	
 	public int insertTransLog(String table,int rowId,String operation){
@@ -184,7 +185,7 @@ public class TransactionLog {
 		cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME, unixTime);
 		db.insert(TransactionLogContract.TransactionLogEntry.TABLE_NAME, null, cv);
 		int row=DbQuery.getLast(db, dbh, TransactionLogContract.TransactionLogEntry.TABLE_NAME);
-		DbQuery.updateAccount(db, unixTime);
+//		DbQuery.updateAccount(db, unixTime);
 		return row;//returns the row number of the record just inserted
 	}
 	//given a time the cloud was last updated will try to update the cloud based on the transactions that happened after that point
@@ -223,11 +224,11 @@ public class TransactionLog {
         CycleUseApi endpointUse = builderUse.build();
 		
 		
-		RPurchaseApi.Builder builderPurchase = new RPurchaseApi.Builder(
+		RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
-		builderPurchase = CloudEndpointUtils.updateBuilder(builderPurchase);
-        RPurchaseApi endpointPurchase = builderPurchase.build();
+		buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
+        RPurchaseApi endpointPurchase = buildeResourcePurchase.build();
 		
 		TranslogApi.Builder builderTranslog = new TranslogApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -281,7 +282,7 @@ public class TransactionLog {
 		code="select * from "+ ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME;
 		cursor = db.rawQuery(code, null);
 		while(cursor.moveToNext()){
-			RPurchase p=new RPurchase();
+			ResourcePurchase p=new ResourcePurchase();
 			p.setPId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry._ID)));
 			p.setResourceId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID)));
 			p.setType(cursor.getString(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE)));
@@ -290,10 +291,10 @@ public class TransactionLog {
 			p.setCost(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST)));
 			p.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex( ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 			p.setAccount(namespace);
-			try {
-				p=endpointPurchase.insertRPurchase(p).execute();
-			} catch (IOException e) {e.printStackTrace();
-				return false;}
+//			try {
+//				p=endpointPurchase.insertRPurchase(p).execute();
+//			} catch (IOException e) {e.printStackTrace();
+//				return false;}
 			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
 		}
 		cursor.close();
@@ -384,7 +385,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			RPurchase p=getPurchase(namespace,t.getKeyrep());
+			ResourcePurchase p=getPurchase(namespace,t.getKeyrep());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -420,7 +421,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+t.getRowId(), null);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			RPurchase p=getPurchase(namespace,t.getKeyrep());
+			ResourcePurchase p=getPurchase(namespace,t.getKeyrep());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -461,18 +462,19 @@ public class TransactionLog {
 		} catch (IOException e) {e.printStackTrace();}
 		return c;
 	}
-	private RPurchase getPurchase(String namespace,String keyrep){
+	private ResourcePurchase getPurchase(String namespace,String keyrep){
 		RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
 		builder = CloudEndpointUtils.updateBuilder(builder);
         RPurchaseApi endpoint = builder.build();
-		RPurchase p = null;
-		try {
-			p=endpoint.getRPurchase(namespace, keyrep).execute();
-		} catch (IOException e) {e.printStackTrace();}
+		ResourcePurchase p = null;
+//		try {
+//			p=endpoint.getRPurchase(namespace, keyrep).execute();
+//		} catch (IOException e) {e.printStackTrace();}
 		return p;
 	}
+
 	private CycleUse getCycleUse(String namespace, String keyrep){
 		CycleUseApi.Builder builder = new CycleUseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -508,11 +510,11 @@ public class TransactionLog {
 			builderUse.build();
 		}
 		if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			RPurchaseApi.Builder builderPurchase = new RPurchaseApi.Builder(
+			RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
-			builderPurchase = CloudEndpointUtils.updateBuilder(builderPurchase);
-			builderPurchase.build();
+			buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
+            buildeResourcePurchase.build();
 			
 		}
 	}
@@ -543,11 +545,11 @@ public class TransactionLog {
 			e.printStackTrace();
 		}
 		
-		RPurchaseApi.Builder builderPurchase = new RPurchaseApi.Builder(
+		RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
-		builderPurchase = CloudEndpointUtils.updateBuilder(builderPurchase);
-        RPurchaseApi endpointPurchase = builderPurchase.build();
+		buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
+        RPurchaseApi endpointPurchase = buildeResourcePurchase.build();
 		try {
 			endpointPurchase.deleteAll(namespace).execute();
 		} catch (IOException e) {

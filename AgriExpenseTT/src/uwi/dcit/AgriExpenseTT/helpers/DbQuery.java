@@ -22,9 +22,9 @@ import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
-import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbQuery {
 	
@@ -314,7 +314,7 @@ public class DbQuery {
         return list;
 	}
 	
-	public static RPurchase getARPurchase(SQLiteDatabase db, DbHelper dbh,int id){
+	public static ResourcePurchase getARPurchase(SQLiteDatabase db, DbHelper dbh,int id){
 		String code="select * from "+ResourcePurchaseEntry.TABLE_NAME+" where "
 				+ResourcePurchaseEntry._ID+"="+id+";";
 		Cursor cursor=db.rawQuery(code, null);
@@ -322,7 +322,7 @@ public class DbQuery {
 
 		cursor.moveToFirst();
 
-		RPurchase purchase=new RPurchase();
+        ResourcePurchase purchase=new ResourcePurchase();
 		purchase.setPId(id);
 		purchase.setResourceId(cursor.getInt(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID)));
 		purchase.setQuantifier(cursor.getString(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER)));
@@ -450,14 +450,14 @@ public class DbQuery {
         }
 	}
 
-	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
-		ContentValues cv=new ContentValues();
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC,acc.getAcc());
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
-		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
-		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, null, cv);
-	}
+//	public static void insertUpAcc(SQLiteDatabase db,UpAcc acc){
+//		ContentValues cv=new ContentValues();
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC,acc.getAcc());
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
+//		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN,acc.getSignedIn());
+//		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, null, cv);
+//	}
 
 	public static void insertCloudKey(SQLiteDatabase db,DbHelper dbh, String table, String k,int id){
 		ContentValues cv = new ContentValues();
@@ -557,32 +557,32 @@ public class DbQuery {
         cursor.close();
         return res;
 	}
-	public static UpAcc getUpAcc(SQLiteDatabase db){
-		String code="select * from " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
-		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount() < 1)return null;  	// No records exist so return null
-		
-		cursor.moveToFirst();					// Only one record should exist (TODO If only one record exist do we need an entire table?)
-		UpAcc acc = new UpAcc();
-		
-		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY)));
-		acc.setAcc(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC)));
-		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
-		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
-		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
-		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
-
-        cursor.close();
-		return acc;
-	}
-	public static void updateAccount(SQLiteDatabase db,long time){
-		UpAcc acc=DbQuery.getUpAcc(db);
-		if(acc.getLastUpdated()<=time){
-			ContentValues cv=new ContentValues();
-			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
-			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
-		}
-	}
+//	public static UpAcc getUpAcc(SQLiteDatabase db){
+//		String code="select * from " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
+//		Cursor cursor=db.rawQuery(code, null);
+//		if(cursor.getCount() < 1)return null;  	// No records exist so return null
+//
+//		cursor.moveToFirst();					// Only one record should exist (TODO If only one record exist do we need an entire table?)
+//		UpAcc acc = new UpAcc();
+//
+//		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY)));
+//		acc.setAcc(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC)));
+//		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
+//		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
+//		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
+//		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
+//
+//        cursor.close();
+//		return acc;
+//	}
+//	public static void updateAccount(SQLiteDatabase db,long time){
+//		UpAcc acc=DbQuery.getUpAcc(db);
+//		if(acc.getLastUpdated()<=time){
+//			ContentValues cv=new ContentValues();
+//			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
+//			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
+//		}
+//	}
 
     //checks to see if there are any crop cycles or not
     public static boolean cyclesExist(SQLiteDatabase db){

@@ -4,7 +4,7 @@ package uwi.dcit.AgriExpenseTT.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 
 
 import java.util.Date;
@@ -102,8 +102,8 @@ public class LocalResourcePurchase implements Parcelable{
 		return "purchaseId:"+pId+" resourceId:"+resourceId+" quantifier:"+quantifier+" qty:"+qty+" cost:"+cost+" remaining:"+qtyRemaining;
 	}
 	
-	public RPurchase toRPurchase(){
-		RPurchase p=new RPurchase();
+	public ResourcePurchase toRPurchase(){
+        ResourcePurchase p=new ResourcePurchase();
 		p.setPId(this.pId);
 		p.setCost(this.cost);
 		p.setQty(this.qty);

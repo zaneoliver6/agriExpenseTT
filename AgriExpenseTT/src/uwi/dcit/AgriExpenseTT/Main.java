@@ -159,7 +159,7 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
                 String country=data.getStringExtra("country");
                 String county=data.getStringExtra("county");
                 Log.d("Main Activity","returned with "+country+" "+county);
-                signInManager.signIn();
+//                signInManager.signIn();
             }
         }
     }

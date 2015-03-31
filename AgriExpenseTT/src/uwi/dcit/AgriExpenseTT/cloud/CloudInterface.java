@@ -26,11 +26,11 @@ import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
-import uwi.dcit.agriexpensesvr.upAccApi.UpAccApi;
-import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensesvr.upAccApi.UpAccApi;
+//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 
 public class CloudInterface {
@@ -138,11 +138,11 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-				RPurchase p=DbQuery.getARPurchase(db, dbh, rowId);
+                ResourcePurchase p=DbQuery.getARPurchase(db, dbh, rowId);
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
 				try{
 					p.setKeyrep(keyrep);
-					p=endpoint.updateRPurchase(p).execute();
+//					p=endpoint.updateRPurchase(p).execute();
 				}catch(Exception e){
 					
 					return null;
@@ -297,7 +297,7 @@ public class CloudInterface {
 	public class InsertPurchase extends AsyncTask<Void, Object, Object>{
 		
 		@Override
-		protected RPurchase doInBackground(Void... params) {
+		protected ResourcePurchase doInBackground(Void... params) {
 			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
@@ -310,13 +310,13 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				RPurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
+                ResourcePurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
 				purchase.setAccount(DbQuery.getAccount(db));
-				try{
-					purchase=endpoint.insertRPurchase(purchase).execute();
-				}catch(Exception e){
-					return null;
-				}
+//				try{
+//					purchase=endpoint.insertRPurchase(purchase).execute();
+//				}catch(Exception e){
+//					return null;
+//				}
 				if(purchase!=null){
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());
@@ -510,7 +510,7 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				RPurchase p=new RPurchase();
+                ResourcePurchase p=new ResourcePurchase();
 				p.setPId(rowId);
 				p.setAccount(DbQuery.getAccount(db));
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
@@ -616,63 +616,63 @@ public class CloudInterface {
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
-			UpAccApi.Builder builder = new UpAccApi.Builder(
-			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-			         null);         
-			builder = CloudEndpointUtils.updateBuilder(builder);
-            UpAccApi endpoint = builder.build();
-			UpAcc acc=new UpAcc();
-			acc.setAcc(namespace);
-			acc.setLastUpdated(time);
-            acc.setCounty(county);
-            acc.setCountry(country);
-			try {
-				acc=endpoint.insertUpAcc(acc).execute();
-				DbQuery.insertUpAcc(db, acc);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+//			UpAccApi.Builder builder = new UpAccApi.Builder(
+//			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//			         null);
+//			builder = CloudEndpointUtils.updateBuilder(builder);
+//            UpAccApi endpoint = builder.build();
+//			UpAcc acc=new UpAcc();
+//			acc.setAcc(namespace);
+//			acc.setLastUpdated(time);
+//            acc.setCounty(county);
+//            acc.setCountry(country);
+//			try {
+//				acc=endpoint.insertUpAcc(acc).execute();
+//				DbQuery.insertUpAcc(db, acc);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
 			return null;
 		}
 		
 	}
 	public void updateUpAccC(Long time){
-		UpAcc acc=DbQuery.getUpAcc(db);
-		acc.setLastUpdated(time);
-		new updateUpAcc().execute(acc);
+//		UpAcc acc=DbQuery.getUpAcc(db);
+//		acc.setLastUpdated(time);
+//		new updateUpAcc().execute(acc);
 	}
-	public class updateUpAcc extends AsyncTask<UpAcc,Void,Void>{
+//	public class updateUpAcc extends AsyncTask<UpAcc,Void,Void>{
+//
+//		@Override
+//		protected Void doInBackground(UpAcc... params) {
+//            UpAccApi.Builder builder = new UpAccApi.Builder(
+//			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+//			         null);
+//			builder = CloudEndpointUtils.updateBuilder(builder);
+//            UpAccApi endpoint = builder.build();
+//			UpAcc acc=params[0];
+//			try {
+//				endpoint.updateUpAcc(acc).execute();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			return null;
+//		}
+//
+//	}
 
-		@Override
-		protected Void doInBackground(UpAcc... params) {
-            UpAccApi.Builder builder = new UpAccApi.Builder(
-			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-			         null);         
-			builder = CloudEndpointUtils.updateBuilder(builder);
-            UpAccApi endpoint = builder.build();
-			UpAcc acc=params[0];
-			try {
-				endpoint.updateUpAcc(acc).execute();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-	}
-
-	public UpAcc getUpAcc(String namespace){
-        UpAccApi.Builder builder = new UpAccApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
-		builder = CloudEndpointUtils.updateBuilder(builder);
-        UpAccApi endpoint = builder.build();
-		UpAcc acc = null;
-		try {
-			acc=endpoint.getUpAcc((long) 1,namespace).execute();
-		}catch (IOException e) {
-            e.printStackTrace();
-		}
-		return acc;
-	}
+//	public UpAcc getUpAcc(String namespace){
+//        UpAccApi.Builder builder = new UpAccApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
+//		builder = CloudEndpointUtils.updateBuilder(builder);
+//        UpAccApi endpoint = builder.build();
+//		UpAcc acc = null;
+//		try {
+//			acc=endpoint.getUpAcc((long) 1,namespace).execute();
+//		}catch (IOException e) {
+//            e.printStackTrace();
+//		}
+//		return acc;
+//	}
 
 	public void flushToCloud(){
 		insertCycle();

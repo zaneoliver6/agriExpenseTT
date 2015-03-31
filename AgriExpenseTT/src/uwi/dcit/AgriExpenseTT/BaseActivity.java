@@ -73,6 +73,13 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     public void backUpData(){
 
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                signInManager.myTests();
+            }
+        })).start();
+
 
 //        Intent i = new Intent(getApplicationContext(), Backup.class);
 //        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user

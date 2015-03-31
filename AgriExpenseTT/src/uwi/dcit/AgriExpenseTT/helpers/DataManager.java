@@ -17,8 +17,8 @@ import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
-import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
+//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 
 public class DataManager {
@@ -26,50 +26,50 @@ public class DataManager {
 	DbHelper dbh;
 	Context context;
 	TransactionLog tL;
-	UpAcc acc;
+//	UpAcc acc;
 	public DataManager(Context context){
 		dbh= new DbHelper(context);
 //		db=dbh.getReadableDatabase();
         db = dbh.getWritableDatabase();
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
-		acc=DbQuery.getUpAcc(db);
+//		acc=DbQuery.getUpAcc(db);
 	}
 	public DataManager(Context context,SQLiteDatabase db,DbHelper dbh){
 		this.dbh= dbh;
 		this.db=db;
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
-		acc=DbQuery.getUpAcc(db);
+//		acc=DbQuery.getUpAcc(db);
 	}
 
 	public void insertCycle(int cropId, String landType, double landQty,long time){
 		//insert into database
 		int id=DbQuery.insertCycle(db, dbh, cropId, landType, landQty,tL,time);
-		if(acc!=null){
-			//insert into transaction table
-			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
-			//try insert into cloud
-			if(acc.getSignedIn()==1){
-				CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				c.insertCycle();
-			}
-		}
+//		if(acc!=null){
+//			//insert into transaction table
+//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
+//			//try insert into cloud
+//			if(acc.getSignedIn()==1){
+//				CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+//				c.insertCycle();
+//			}
+//		}
 		//update database last updated time
 	}
 
     public int insertCycle(int cropId, String name, String landType, double landQty,long time){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
-        if(acc!=null){
-            //insert into transaction table
-            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
-            //try insert into cloud
-            if(acc.getSignedIn()==1){
-                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-                c.insertCycle();
-            }
-        }
+//        if(acc!=null){
+//            //insert into transaction table
+//            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
+//            //try insert into cloud
+//            if(acc.getSignedIn()==1){
+//                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+//                c.insertCycle();
+//            }
+//        }
         return id;
     }
 
@@ -78,30 +78,30 @@ public class DataManager {
 		//insert into database
 		int id=DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, tL);
 
-		if(acc!=null){
-			//insert into redo log table
-			int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
-			//try to insert into cloud
-			if(acc.getSignedIn()==1){
-				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-				c.insertPurchase();
-			}
-		}
+//		if(acc!=null){
+//			//insert into redo log table
+//			int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
+//			//try to insert into cloud
+//			if(acc.getSignedIn()==1){
+//				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+//				c.insertPurchase();
+//			}
+//		}
         return id;
 	}
 
     public int insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
         int id = DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, time, tL);
 
-        if(acc!=null){
-            //insert into redo log table
-            int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
-            //try to insert into cloud
-            if(acc.getSignedIn()==1){
-                CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-                c.insertPurchase();
-            }
-        }
+//        if(acc!=null){
+//            //insert into redo log table
+//            int i=DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
+//            //try to insert into cloud
+//            if(acc.getSignedIn()==1){
+//                CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+//                c.insertPurchase();
+//            }
+//        }
         return id;
     }
 	
@@ -116,69 +116,69 @@ public class DataManager {
 		//finally delete cycleUse (locally)
 		//delete cycleUse in cloud, by recording the delete in the redo log
 		
-		//PURCHASE
-		//updating local Purchase
-		RPurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
-		ContentValues cv=new ContentValues();
-		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
-		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+l.getPurchaseId(), null);
-		//record transaction in log
-		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_DEL);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(),TransactionLog.TL_UPDATE);
-		}
-		//CYCLE
-		//updating local Cycle
-		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
-		cv=new ContentValues();
-		cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
-		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+l.getCycleid(), null);
-		//record transaction in log
-		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-		}
-		//CYCLEUSE
-		//Delete CycleUse
-		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
-        try {
-            DbQuery.deleteRecord(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId());
-        }catch(Exception e){e.printStackTrace();}
-        tL.insertTransLog(CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
-		}
+//		//PURCHASE
+//		//updating local Purchase
+//		RPurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
+//		ContentValues cv=new ContentValues();
+//		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
+//		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+l.getPurchaseId(), null);
+//		//record transaction in log
+//		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_DEL);
+//		if(acc!=null){
+//			//redo log (cloud)
+//			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(),TransactionLog.TL_UPDATE);
+//		}
+//		//CYCLE
+//		//updating local Cycle
+//		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
+//		cv=new ContentValues();
+//		cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
+//		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+l.getCycleid(), null);
+//		//record transaction in log
+//		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+//		if(acc!=null){
+//			//redo log (cloud)
+//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+//		}
+//		//CYCLEUSE
+//		//Delete CycleUse
+//		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
+//        try {
+//            DbQuery.deleteRecord(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId());
+//        }catch(Exception e){e.printStackTrace();}
+//        tL.insertTransLog(CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+//		if(acc!=null){
+//			//redo log (cloud)
+//			DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+//		}
 	}
 	
 	//--------------------------------------READY TO USE (FROM FRONT)
-	public void deletePurchase(RPurchase p){
+	public void deletePurchase(ResourcePurchase p){
 		//get all cycleUse with the purchase's id
 		//delete each one using the deleteCycleUse to remove the cost added to each cycle
 		//delete the purchase (locally)
 		//put the delete in the redo log
 		
 		//getting all the cycleUse
-		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
-		Iterator<LocalCycleUse> itr=list.iterator();
-		while(itr.hasNext()){
-			LocalCycleUse l=itr.next();
-			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
-		}
-		//delete purchase 
-		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);
-		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1){
-				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-				c.deletePurchase();
-			}
-		}
+//		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+//		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
+//		Iterator<LocalCycleUse> itr=list.iterator();
+//		while(itr.hasNext()){
+//			LocalCycleUse l=itr.next();
+//			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+//		}
+//		//delete purchase
+//		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);
+//		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
+//		if(acc!=null){
+//			//redo log (cloud)
+//			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
+//			if(acc.getSignedIn()==1){
+//				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+//				c.deletePurchase();
+//			}
+//		}
 	}
 	
 	//-----------------------------------READY TO USE (FROM FRONT)
@@ -188,27 +188,27 @@ public class DataManager {
 		//delete the cycle Locally
 		//insert into redo log (cloud)
 
-		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
-		Iterator<LocalCycleUse> itr=list.iterator();
-		while(itr.hasNext()){
-			LocalCycleUse l=itr.next();
-			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
-		}
-		//delete cycle
-		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
-        try {
-            DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId());
-        }catch (Exception e){e.printStackTrace();}
-        tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-		if(acc!=null){
-			//insert into redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1){
-				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-				cloud.deleteCycle();
-			}
-		}
+//		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+//		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
+//		Iterator<LocalCycleUse> itr=list.iterator();
+//		while(itr.hasNext()){
+//			LocalCycleUse l=itr.next();
+//			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+//		}
+//		//delete cycle
+//		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
+//        try {
+//            DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId());
+//        }catch (Exception e){e.printStackTrace();}
+//        tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
+//		if(acc!=null){
+//			//insert into redo log (cloud)
+//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
+//			if(acc.getSignedIn()==1){
+//				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+//				cloud.deleteCycle();
+//			}
+//		}
 	}
 	//---------------------- READY TO USE [WITHOUT INCLUSION OF RESOURCES TABLE]
 	public void deleteResource(int rId){
@@ -242,45 +242,45 @@ public class DataManager {
 	
 	public void insertCycleUse(int cycleId, int resPurchaseId, double qty,String type,String quantifier,double useCost){
 		
-		//insert into database
-		int id=DbQuery.insertResourceUse(db, dbh, cycleId, type, resPurchaseId, qty,quantifier,useCost, tL);
-		//insert into redo log table
-		DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, id, "ins");
-		//try to insert into cloud
-		if(acc!=null && acc.getSignedIn()==1){
-			CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-			c.insertCycleUseC();
-		}
+//		//insert into database
+//		int id=DbQuery.insertResourceUse(db, dbh, cycleId, type, resPurchaseId, qty,quantifier,useCost, tL);
+//		//insert into redo log table
+//		DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, id, "ins");
+//		//try to insert into cloud
+//		if(acc!=null && acc.getSignedIn()==1){
+//			CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+//			c.insertCycleUseC();
+//		}
 	}
 	
 	
-	public void updatePurchase(RPurchase p,ContentValues cv){
+	public void updatePurchase(ResourcePurchase p,ContentValues cv){
 		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(),null);
 		//update the cloud
-		TransactionLog tl=new TransactionLog(dbh, db,context);
-		tl.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_UPDATE);
-		if(acc!=null){
-			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
-			//record in transaction log
-			if(acc.getSignedIn()==1){
-				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				cloud.updatePurchase();
-			}
-		}
+//		TransactionLog tl=new TransactionLog(dbh, db,context);
+//		tl.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_UPDATE);
+//		if(acc!=null){
+//			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
+//			//record in transaction log
+//			if(acc.getSignedIn()==1){
+//				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+//				cloud.updatePurchase();
+//			}
+//		}
 	}
 	public boolean updateCycle(LocalCycle c, ContentValues cv){
 		int result = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+c.getId(), null);
 		//update the cloud
 		TransactionLog tl = new TransactionLog(dbh, db,context);
 		tl.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(),TransactionLog.TL_UPDATE);
-		if(acc!=null){
-			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
-			//record in transaction log
-			if(acc.getSignedIn()==1){
-				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-				cloud.updateCycle();
-			}
-		}
+//		if(acc!=null){
+//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
+//			//record in transaction log
+//			if(acc.getSignedIn()==1){
+//				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+//				cloud.updateCycle();
+//			}
+//		}
         return (result != -1);
 	}
 	

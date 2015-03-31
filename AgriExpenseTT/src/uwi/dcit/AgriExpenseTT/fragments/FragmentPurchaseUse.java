@@ -37,7 +37,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -46,7 +46,7 @@ public class FragmentPurchaseUse extends Fragment {
 	private SQLiteDatabase db;
 	private DbHelper dbh;
 	private LocalCycle c = null;
-	private RPurchase p;
+	private ResourcePurchase p;
 	
 	private double useAmount= 0.0, //the amount you are going to use
 	                calCost = 0.0,

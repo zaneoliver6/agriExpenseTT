@@ -38,7 +38,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -176,7 +176,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 					//insert purchase
 					res = dm.insertPurchase(resId, quantifier, qty, category, cost);
 					int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
-					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
+                    ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
 					//use all of the qty of that purchase in the given cycle
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());

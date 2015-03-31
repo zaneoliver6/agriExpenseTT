@@ -31,7 +31,7 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 //import org.apache.poi.hssf.util.CellRangeAddress;
@@ -187,7 +187,7 @@ public class ReportHelper {
 		for( LocalCycleUse lcu:useList){
 			 rowNum++;int c=0;
 			 HSSFRow row=useSheet.createRow(rowNum);
-			 RPurchase p=DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
+            ResourcePurchase p=DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
 			 
 			 HSSFCell resCell=row.createCell(c++);
 			 //resCell.setCellType(Cell.CELL_TYPE_STRING);

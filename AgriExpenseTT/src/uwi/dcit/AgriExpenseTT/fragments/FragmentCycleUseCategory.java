@@ -30,7 +30,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -138,8 +138,8 @@ public class FragmentCycleUseCategory extends Fragment {
 				LocalCycleUse lcu = itr.next();
                 Log.d(TAG, "Processing: " + lcu.toString());
 				catTotal += lcu.getUseCost();//stores the total amount of money spent on plantMaterials
-						
-				RPurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
+
+                ResourcePurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
 				String name = DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
 						
 				//calculates the total spent on each plantMaterial
