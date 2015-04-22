@@ -10,6 +10,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 
 public class FragmentSlidingTabsEdit extends FragmentSlidingTabs{
 
+    @Override
     public void populateList(){
         SQLiteDatabase db;
         DbHelper dbh=new DbHelper(getActivity().getApplicationContext());

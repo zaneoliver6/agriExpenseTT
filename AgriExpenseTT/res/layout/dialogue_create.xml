@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/mainmenu_cycle_triangle"
         android:text="@string/menu_item_newCycle"
-        android:onClick="openNewCycle"
         android:id="@+id/btn_dialogue_createCycle"
         android:gravity="center"
         android:layout_marginLeft="5dp"
@@ -23,9 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/mainmenu_shopping_cart"
-
         android:text="@string/menu_item_newPurchase"
-        android:onClick="openNewPurchase"
         android:id="@+id/btn_dialogue_createPurchase"
         android:gravity="center"
         android:layout_marginLeft="5dp"

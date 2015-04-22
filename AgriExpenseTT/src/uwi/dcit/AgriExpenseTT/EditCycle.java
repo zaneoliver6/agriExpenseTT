@@ -26,6 +26,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
@@ -114,13 +115,11 @@ public class EditCycle extends BaseActivity {
 			return;
 		}
 		if(requestCode==REQ_CROP){
-			crop=data.getExtras().getString("content");
-			TextView t=(TextView)findViewById(R.id.tv_editcycle_cropVal);
-			t.setText(crop);
+			crop = data.getExtras().getString("content");
+            ((TextView)findViewById(R.id.tv_editcycle_cropVal)).setText(crop);
 		}else if(requestCode==REQ_LANDTYPE){
-			land=data.getExtras().getString("content");
-			TextView t=(TextView)findViewById(R.id.tv_editcycle_landVal);
-			t.setText(land);
+			land = data.getExtras().getString("content");
+            ((TextView)findViewById(R.id.tv_editcycle_landVal)).setText(land);
 		}
 	}
 
@@ -153,7 +152,7 @@ public class EditCycle extends BaseActivity {
 		if(et_landQty.getText().toString() != null && !et_landQty.getText().toString().equals("")){
 			landQty = Double.parseDouble(et_landQty.getText().toString());
 		}
-        name = et_name.getText().toString();
+        name = TextHelper.formatUserText(et_name.getText().toString());
 
 		ContentValues cv = new ContentValues();
 		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));

@@ -4,30 +4,24 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Toast;
-
-import com.cocosw.undobar.UndoBarController;
-import com.cocosw.undobar.UndoBarController.UndoBar;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
-public class Main extends BaseActivity implements UndoBarController.UndoListener {
+public class Main extends BaseActivity{
 
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
-    private UndoBar undobar;
+    public final static String TAG = "Main";
 
+    private String focus = "cycle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +32,31 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
 
         mTitle = getTitle();
 
-        // Check for orientation to determine which interface to load => if portrait will use leftfrag
+        // Added Google Analytics
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume Method was called");
+        buildScreen();
+    }
+
+    private void buildScreen(){
+        Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
             setupPort();
         }
-        // Added Google Analytics
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
-
-//        final Bundle b = new Bundle();
-//        b.putInt("index", 1);
-//        undobar = new UndoBarController.UndoBar(this).listener(this);
-//        undobar.message("Message Bar Created")
-//                .noicon(true)
-//                .token(b)
-//                .show();
     }
 
     private void setupPort() {
         Fragment frag = new FragmentSlidingMain();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        frag.setArguments(bundle);
 
         getSupportFragmentManager()
             .beginTransaction()
@@ -68,6 +67,10 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
     private void setupLand() {
         leftFrag = new FragmentSlidingMain();
         rightFrag = new FragmentEmpty();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        leftFrag.setArguments(bundle);
 
         Bundle arguments=new Bundle();
         arguments.putString("type","select");
@@ -81,7 +84,6 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
     }
 
     public void restoreActionBar() {
-//        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(mTitle);
     }
@@ -89,30 +91,11 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-
-    @Override
-    public void onBackPressed(){
-
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -122,9 +105,11 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
 
             Class reflectClass = oldFrag.getClass();
             Bundle arguments=oldFrag.getArguments();
+
             try {
                 oldFrag = (Fragment)reflectClass.newInstance();
             } catch (Exception e){e.printStackTrace();}
+
             oldFrag.setArguments(arguments);
             ft.replace(R.id.navContentLeft, oldFrag);
             leftFrag=oldFrag;
@@ -152,29 +137,24 @@ public class Main extends BaseActivity implements UndoBarController.UndoListener
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == RequestCode_backup) {
-            // Make sure the request was successful
-            if (resultCode == 1) {
-                String country=data.getStringExtra("country");
-                String county=data.getStringExtra("county");
-                Log.d("Main Activity","returned with "+country+" "+county);
-//                signInManager.signIn();
-            }
+
+        switch (requestCode){
+            case RequestCode_backup:
+                if (resultCode == 1) {
+                    String country=data.getStringExtra("country");
+                    String county=data.getStringExtra("county");
+                    Log.d("Main Activity","returned with "+country+" "+county);
+//                    signInManager.signIn();
+                }
+                break;
+            case DHelper.CYCLE_REQUEST_CODE:
+                focus = "cycle";
+                buildScreen();
+                break;
+            case DHelper.PURCHASE_REQUEST_CODE:
+                focus = "purchase";
+                buildScreen();
+                break;
         }
-    }
-
-    public void openNewCycle(View view){
-        startActivity(new Intent(getApplicationContext(), NewCycle.class));
-    }
-
-    public void openNewPurchase(View view){
-        startActivity(new Intent(getApplicationContext(), NewPurchase.class));
-    }
-
-    @Override
-    public void onUndo(@Nullable Parcelable parcelable) {
-        Bundle res = (Bundle)parcelable;
-        Toast.makeText(this, "Received: " + res.getInt("index"), Toast.LENGTH_SHORT).show();
     }
 }

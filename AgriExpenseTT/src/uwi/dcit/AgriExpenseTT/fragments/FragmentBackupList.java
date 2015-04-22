@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentBackupList  extends ListFragment {
 
@@ -23,7 +22,7 @@ public class FragmentBackupList  extends ListFragment {
 		// We need to use a different list item layout for devices older than Honeycomb
 		int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 		this.setListAdapter(new ArrayAdapter<String>(this.getActivity(), layout, menu));
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Backup List Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Backup List Fragment");
 	}
 	
 	public void updateHeading(){

@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -11,18 +12,22 @@ public class AddData extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_new_cycle);
+        setContentView(R.layout.activity_new_cycle);
+        Fragment fragment = new FragmentAddData();
+        // Pass any incoming configuration options to the fragment
+        if (getIntent().getExtras() != null)
+            fragment.setArguments(getIntent().getExtras());
 
         getSupportFragmentManager()
-            .beginTransaction()
-            .add(R.id.NewCycleListContainer, new FragmentAddData())
-            .commit();
+                .beginTransaction()
+                .replace(R.id.NewCycleListContainer, fragment)
+                .commit();
 
         // Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Add Data");
-	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

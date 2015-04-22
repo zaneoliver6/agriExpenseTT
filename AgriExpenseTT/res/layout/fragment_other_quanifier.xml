@@ -26,7 +26,8 @@
                 android:layout_marginBottom="@dimen/helper_text_padding"
                 android:ems="10"
                 android:layout_gravity="center_horizontal"
-                android:inputType="textNoSuggestions"
+                android:inputType="textCapWords"
+                android:singleLine="true"
                 android:hint="Name">
 
                 <requestFocus />
@@ -60,7 +61,8 @@
                 android:layout_marginBottom="@dimen/helper_text_padding"
                 android:ems="10"
                 android:layout_gravity="center_horizontal"
-                android:inputType="textNoSuggestions"
+                android:inputType="textCapWords"
+                android:singleLine="true"
                 android:hint="Measurement" />
 
             <TextView

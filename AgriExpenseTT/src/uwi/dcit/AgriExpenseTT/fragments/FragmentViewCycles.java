@@ -37,7 +37,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
@@ -46,12 +45,12 @@ public class FragmentViewCycles extends ListFragment{
 	SQLiteDatabase db;
 	DbHelper dbh;
 	final int req_edit=1;
-	final String className = "ViewCycles";
+//	final String className = "ViewCycles";
 
     private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
 	
-	ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
+	ArrayList<LocalCycle> cycleList = new ArrayList<>();
 	CycleListAdapter cycAdapt;
 	
 	@Override
@@ -75,7 +74,7 @@ public class FragmentViewCycles extends ListFragment{
 		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 	
 	public void populateList() {
@@ -179,7 +178,7 @@ public class FragmentViewCycles extends ListFragment{
 		arguments.putParcelable("cycleMain",cycleList.get(position));
         Log.d("FragmentViewCycles", cycleList.get(position).toString());
 
-		Fragment newFrag= new FragmentCycleUseage();
+		Fragment newFrag= new FragmentCycleUsage();
         newFrag.setArguments(arguments);
 
         boolean isTablet = this.getResources().getBoolean(R.bool.isTablet);
@@ -190,7 +189,7 @@ public class FragmentViewCycles extends ListFragment{
         }
         if(getActivity() instanceof NavigationControl) {
             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
-                ||(((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass()))
+                || (((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass()))
                     ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
             else
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
@@ -243,7 +242,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
-		cycleList=new ArrayList<LocalCycle>();
+		cycleList=new ArrayList<>();
 		DbQuery.getCycles(db, dbh, cycleList);
 		cycAdapt.notifyDataSetChanged();
 	}
@@ -268,7 +267,7 @@ public class FragmentViewCycles extends ListFragment{
 				cycleList.remove(position);
 				listAdapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Cycle successfully deleted", Toast.LENGTH_SHORT).show();			
-				dialog.cancel();
+				dialog.dismiss();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();
@@ -301,13 +300,14 @@ public class FragmentViewCycles extends ListFragment{
 
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
-            double qty=currCycle.getLandQty();
+            double qty = currCycle.getLandQty();
             txt = currCycle.getLandType();
-            txt = qty +" "+ txt;
-            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
-            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Date Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
+            txt = qty +" "+ txt + "s";
 
-//            Log.d("ViewCycle-getView", "selectedposition: " + getSelectedItemPosition() + "position: "+position);
+            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
+            ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
+
             if (position == getSelectedItemPosition()){
                 row.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
             }

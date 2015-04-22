@@ -32,7 +32,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 public class FragmentNewCycleLast extends Fragment {
 	String plantMaterial;
@@ -45,6 +45,7 @@ public class FragmentNewCycleLast extends Fragment {
 	TextView error;
     private Button btnDate;
     private EditText et_CycleName;
+    int res = -1;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class FragmentNewCycleLast extends Fragment {
 		land = getArguments().getString("land");
 
         setDetails(view);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
 
         view.setOnTouchListener(
             new View.OnTouchListener() {
@@ -73,6 +74,12 @@ public class FragmentNewCycleLast extends Fragment {
 
 		return view;
 	}
+
+    @Override
+    public void onDestroy() {
+        db.close();
+        super.onDestroy();
+    }
 	
 	private void setDetails(View view) {
 
@@ -145,25 +152,37 @@ public class FragmentNewCycleLast extends Fragment {
                     formatDisplayDate(null);
                 }
 
-                DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-                int res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+                        res = dm.insertCycle(plantMaterialId, TextHelper.formatUserText(et_CycleName.getText().toString()) , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
-                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
+                                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
 
-                Bundle args = new Bundle();
-                args.putString("type", "cycle");
-                Intent i=new Intent(getActivity(),Main.class);
-                i.putExtras(args);
-                startActivity(i);
-                new IntentLauncher().run();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("type", "cycle");
+                                bundle.putInt("id", res);
+                                Intent i = new Intent();
+                                i.putExtras(bundle);
 
+                                getActivity().setResult(DHelper.CYCLE_REQUEST_CODE, i );
+                                if (!(getActivity() instanceof Main))
+                                    getActivity().finish();
+                            }
+                        });
+                    }
+                }).start();
             }
         }
     }
 
     @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -182,9 +201,4 @@ public class FragmentNewCycleLast extends Fragment {
             formatDisplayDate(cal);
         }
     }
-    private class IntentLauncher extends Thread{
-        @Override
-        public void run(){getActivity().finish();}
-    }
-
 }

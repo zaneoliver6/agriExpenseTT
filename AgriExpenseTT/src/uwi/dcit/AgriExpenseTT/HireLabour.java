@@ -1,16 +1,15 @@
 package uwi.dcit.AgriExpenseTT;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.Menu;
-import android.view.inputmethod.InputMethodManager;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 
@@ -20,56 +19,49 @@ public class HireLabour extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle);
-		setupInitial();
+//		setupInitial(); // Commented out because it may run twice based on => http://developer.android.com/reference/android/app/Activity.html
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        hideSoftKeyboard();
+        setupInitial();
+    }
+
 	private void setupInitial() {
-		//TextView tv_main=(TextView)findViewById(R.id.tv_mainNew_header);
-		//tv_main.setText("Hiring Labour");
-		ListFragment start=new HireLabourLists();
-		Bundle b=new Bundle();
+		ListFragment start = new HireLabourLists();
+		Bundle b = new Bundle();
 		b.putString("type","workers");
-		//b.putString(key, value);
 		start.setArguments(b);
-		FragmentManager fm=getSupportFragmentManager();
-		FragmentTransaction ft=fm.beginTransaction();
-		ft.add(R.id.NewCycleListContainer, start);
-		ft.commit();
+
+		getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.NewCycleListContainer, start)
+            .commit();
 	}
 	
 	public void replaceSub(String extras){
-		TextView sub_head=(TextView)findViewById(R.id.tv_mainNew_subheader);
+		TextView sub_head = (TextView)findViewById(R.id.tv_mainNew_subheader);
 		sub_head.setText(extras);
 	}
 
-    public void hideSoftKeyboard() {
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-    }
-	@Override
-	public void onBackPressed(){
-	    FragmentManager fm = getSupportFragmentManager();
-	    if (fm.getBackStackEntryCount() > 0) {
-	        Log.i("MainActivity", "popping backstack");
-	        fm.popBackStack();
-	    } else {
-	        Log.i("MainActivity", "nothing on backstack, calling super");
-	        super.onBackPressed();  
-	    }
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.hire_labour, menu);
 		return true;
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_create_labour) {
+            Bundle b = new Bundle();
+            b.putString("action", DHelper.cat_labour);
+            Intent i = new Intent(this, AddData.class);
+            i.putExtras(b);
+            startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

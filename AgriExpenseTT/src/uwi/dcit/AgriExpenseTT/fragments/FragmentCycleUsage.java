@@ -1,30 +1,28 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory;
+import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-public class CycleUseage extends BaseActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cycle_useage);
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Cycle Usage");
-		int id = 1;
-		setup(id);
-	}
+public class FragmentCycleUsage extends Fragment {
+    View view;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_cycle_usage, container, false);
+        setup();
+        return view;
+    }
 
-	private void setup(int id) {
+    private void setup() {
         Fragment catGeneral			= new FragmentGeneralCategory();
         Fragment catPlantMaterial	= new FragmentCycleUseCategory();
         Fragment catFertilizer		= new FragmentCycleUseCategory();
@@ -34,8 +32,9 @@ public class CycleUseage extends BaseActivity {
         Fragment catOther 			= new FragmentCycleUseCategory();
 
 
-        Bundle data = getIntent().getExtras();
+        Bundle data = getArguments();
         LocalCycle curr = data.getParcelable("cycleMain");
+        Log.d("CycleUsage", "Received: " + curr.toString());
 
         Bundle generalArguments = new Bundle();
         generalArguments.putString("category","general");
@@ -72,41 +71,15 @@ public class CycleUseage extends BaseActivity {
         otherArguments.putString("category", DHelper.cat_other);
         catOther.setArguments(otherArguments);
 
-        android.support.v4.app.FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.cat_general_frag, catGeneral);
-        ft.add(R.id.cat_plantMaterial_frag, catPlantMaterial);
-        ft.add(R.id.cat_fertilizer_frag, catFertilizer);
-        ft.add(R.id.cat_soilAmendment_frag, catSoilAmendment);
-        ft.add(R.id.cat_chemical_frag, catChemical);
-        ft.add(R.id.cat_labour_frag, catLabour);
-        ft.add(R.id.cat_other_frag, catOther);
-        ft.commit();
+        getChildFragmentManager()
+            .beginTransaction()
+            .add(R.id.cat_general_frag, catGeneral)
+            .add(R.id.cat_plantMaterial_frag, catPlantMaterial)
+            .add(R.id.cat_fertilizer_frag, catFertilizer)
+            .add(R.id.cat_soilAmendment_frag, catSoilAmendment)
+            .add(R.id.cat_chemical_frag, catChemical)
+            .add(R.id.cat_labour_frag, catLabour)
+            .add(R.id.cat_other_frag, catOther)
+            .commit();
     }
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.cycle_useage_redesign, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-            startActivity(new Intent(getApplicationContext(),ManageData.class));
-			return true;
-		}else {
-            return super.onOptionsItemSelected(item);
-        }
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	
-
 }

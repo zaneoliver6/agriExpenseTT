@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.NotifyHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 
 public class FragmentAddDataLast extends Fragment {
@@ -20,37 +23,55 @@ public class FragmentAddDataLast extends Fragment {
 	View view;
 	EditText et_name;
 	TextView tv_error;
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		dm=new DataManager(getActivity());
-		view=inflater.inflate(R.layout.fragment_adddata, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		dm = new DataManager(getActivity());
+		view = inflater.inflate(R.layout.fragment_adddata, container, false);
 		setup();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Dataset Fragment - Last");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Dataset Fragment - Last");
 		return view;
 	}
 	private void setup() {
 		Button btn_dne=(Button)view.findViewById(R.id.btn_addData_dne);
 		et_name=(EditText)view.findViewById(R.id.et_addData_name);
-		tv_error=(TextView)view.findViewById(R.id.tv_addData_error);
+		tv_error=(TextView)view.findViewById(R.id.tv_addData_lbl);
+        if (getArguments().getString("type").equals(DHelper.cat_labour))
+            tv_error.setText("Enter name of Labourer");
+        else
+            tv_error.setText("Enter name of "+getArguments().getString("type"));
 		Click c=new Click();
 		btn_dne.setOnClickListener(c);
-		
-		
 	}
+
 	public class Click implements OnClickListener{
 
 		@Override
 		public void onClick(View v) {
 			if(v.getId()==R.id.btn_addData_dne){
-				String name=et_name.getText().toString();
-				if(name == null||name.equals("")){
+				String name = et_name.getText().toString();
+				if(name == null || name.equals("")){
 					tv_error.setText("Please enter name of "+getArguments().getString("type"));
-					tv_error.setVisibility(View.VISIBLE);
+                    tv_error.setTextColor(getResources().getColor(R.color.helper_text_error));
+                    et_name.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 					return;
-				}
-				dm.insertResource(name,getArguments().getString("type"));
-				getActivity().finish();
+				}else{
+                    tv_error.setText("Enter name of "+getArguments().getString("type"));
+                    tv_error.setTextColor(getResources().getColor(R.color.helper_text_color));
+                    et_name.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                }
+				new Thread(new Runnable() {
+                    public void run() {
+                        dm.insertResource(TextHelper.formatUserText(et_name.getText().toString()), getArguments().getString("type"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            public void run() {
+                                NotifyHelper.notify(getActivity(),getArguments().getString("type") + " Saved" );
+                                getActivity().finish();
+                            }
+                        });
+                    }
+                }).start();
+
 			}
 		}
 		

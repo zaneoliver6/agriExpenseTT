@@ -8,6 +8,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:6.5.87'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.cocosw:undobar:1.+@aar'
+    compile 'org.apache.commons:commons-lang3:3.3.2'
     compile project(path: ':AgriExpenseBackend', configuration: 'android-endpoints')
 }
 
@@ -39,12 +40,12 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFiles  getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
 //            minifyEnabled true
 //            shrinkResources true
-//            proguardFiles 'proguard-rules.pro', 'proguard-google-api-client.txt', 'proguard-project.txt', getDefaultProguardFile('proguard-android-optimize.txt')
+//            proguardFiles  getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }

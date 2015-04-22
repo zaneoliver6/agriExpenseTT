@@ -35,6 +35,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
@@ -57,6 +58,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 	private DbHelper dbh;
     private long unixDate;
     private TextView helper_cost;
+    private int res;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -141,7 +143,7 @@ public class FragmentNewPurchaseLast extends Fragment{
             }
 
 			else if(v.getId() == R.id.btn_newpurchaselast_done){
-				double qty,cost;
+				final double qty,cost;
 				if( ((et_qty.getText().toString()) == null)||((et_qty.getText().toString()).equals(""))  ){
 
 					helper_qty.setText("Enter Quantity Purchased");
@@ -165,55 +167,71 @@ public class FragmentNewPurchaseLast extends Fragment{
                 if(unixDate == 0){
                     formatDisplayDate(null);
                 }
-				int res;
-				DataManager dm=new DataManager(getActivity().getBaseContext(),db,dbh);
-				try{
-					currC=getArguments().getParcelable("cycle");
-				}catch (Exception e){ e.printStackTrace();}
-				//this is for when labour is 'purchased'/hired for a single cycle
-				if(category.equals(DHelper.cat_labour) && currC != null){
 
-					//insert purchase
-					res = dm.insertPurchase(resId, quantifier, qty, category, cost);
-					int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
-                    ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
+                res = -1;
 
-					//use all of the qty of that purchase in the given cycle
-					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
-					//update purchase
-					p.setQtyRemaining(p.getQtyRemaining() - qty);
-					ContentValues cv=new ContentValues();
-					cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
-					dm.updatePurchase(p,cv);
+                        DataManager dm = new DataManager(getActivity().getBaseContext(),db,dbh);
 
-					//update cycle
-					currC.setTotalSpent(currC.getTotalSpent()+cost);
-					cv=new ContentValues();
-					cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
-					dm.updateCycle(currC,cv);
+                        try{ currC=getArguments().getParcelable("cycle"); }
+                        catch (Exception e){ e.printStackTrace();}
 
-				}else{
-					if(category.equals(DHelper.cat_other)){//if its the other category
-						if(resId==-1){//and the resource does not exist
-							resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, resource);//then insert it !
-						}
-					}
-//					dm.insertPurchase(resId, quantifier, qty, category, cost);
-                    res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
-				}
+                        //this is for when labour is 'purchased'/hired for a single cycle
+                        if(category.equals(DHelper.cat_labour) && currC != null){
 
-                if (res != -1)Toast.makeText(getActivity(), "Purchase Successfully Saved", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(getActivity(), "Unable to save Purchase", Toast.LENGTH_SHORT).show();
+                            //insert purchase
+                            res = dm.insertPurchase(resId, quantifier, qty, category, cost);
+                            int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
+                            ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
-				//dm.insertPurchase(resourceId, quantifier, qty, type, cost);
-                Intent n=new Intent(getActivity(),Main.class);
-                Bundle args = new Bundle();
-                args.putString("type", "cycle");
-                n.putExtras(args);
+                            //use all of the qty of that purchase in the given cycle
+                            dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
 
-                startActivity(n);
-                new IntentLauncher().run();
+                            //update purchase
+                            p.setQtyRemaining(p.getQtyRemaining() - qty);
+                            ContentValues cv=new ContentValues();
+                            cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+                            dm.updatePurchase(p,cv);
+
+                            //update cycle
+                            currC.setTotalSpent(currC.getTotalSpent()+cost);
+                            cv=new ContentValues();
+                            cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
+                            dm.updateCycle(currC,cv);
+
+                        }else{
+                            if(category.equals(DHelper.cat_other))//if its the other category
+                                if(resId==-1)//and the resource does not exist
+                                    resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, TextHelper.formatUserText(resource));//then insert it !
+                            if (resId != -1)
+                                res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
+                        }
+
+                        // When completed run in UI thread
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (res != -1)Toast.makeText(getActivity(), "Purchase Successfully Saved", Toast.LENGTH_SHORT).show();
+                                else Toast.makeText(getActivity(), "Unable to save Purchase", Toast.LENGTH_SHORT).show();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("type", "purchase");
+                                bundle.putInt("id", res);
+                                Intent i = new Intent();
+                                i.putExtras(bundle);
+
+                                getActivity().setResult(DHelper.PURCHASE_REQUEST_CODE, i );
+
+                                if (!(getActivity() instanceof Main))
+                                    getActivity().finish();
+                            }
+                        });
+
+                    }
+                }).start();
 			}
 		}
 		
@@ -239,9 +257,4 @@ public class FragmentNewPurchaseLast extends Fragment{
             formatDisplayDate(cal);
         }
     }
-
-    private class IntentLauncher extends Thread{
-		@Override
-		public void run(){getActivity().finish();}
-	}
 }

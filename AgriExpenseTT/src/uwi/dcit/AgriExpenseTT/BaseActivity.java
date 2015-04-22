@@ -3,9 +3,11 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
@@ -24,7 +26,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
         super.onCreate(savedInstanceState);
         signInManager = new SignInManager(BaseActivity.this,BaseActivity.this);
         isTablet = this.getResources().getBoolean(R.bool.isTablet);
@@ -42,33 +43,41 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         switch (position){
             case 0:
                 // Home
-                startActivity(new Intent(getApplicationContext(), Main.class));
+                if (!(this instanceof Main))
+                    startActivity(new Intent(this, Main.class));
                 break;
             case 1:
                 //new cycle
-                startActivity(new Intent(getApplicationContext(), NewCycle.class));
+                if (!(this instanceof NewCycle))
+                    startActivity(new Intent(this, NewCycle.class));
                 break;
             case 2:
                 //new purchase
-                startActivity(new Intent(getApplicationContext(), NewPurchase.class));
+                if (!(this instanceof NewPurchase))
+                    startActivity(new Intent(this, NewPurchase.class));
                 break;
             case 3:
                 //hire labour
-                startActivity(new Intent(getApplicationContext(), HireLabour.class));
+                if (!(this instanceof HireLabour))
+                    startActivity(new Intent(this, HireLabour.class));
                 break;
             case 4:
                 //report manager
-                startActivity(new Intent(getApplicationContext(),ManageReport.class));
+                if (!(this instanceof ManageReport))
+                    startActivity(new Intent(this,ManageReport.class));
                 break;
             case 5:
                 // manage data
-                startActivity(new Intent(getApplicationContext(),ManageData.class));
+                if (!(this instanceof ManageData))
+                    startActivity(new Intent(this,ManageData.class));
                 break;
             case 6:
                 backUpData();
                 break;
-
+            default:
+                startActivity(new Intent(this, Main.class));
         }
+//        finish();
     }
 
     public void backUpData(){
@@ -135,17 +144,27 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (item.getItemId() == R.id.action_settings) {
             startActivity(new Intent(getApplicationContext(),ManageData.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

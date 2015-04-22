@@ -1,7 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="uwi.dcit.AgriExpenseTT.NewCycle" >
+    tools:context="uwi.dcit.AgriExpenseTT.NewPurchase" >
+
+    <item
+        android:id="@+id/action_create_purchase"
+        android:title="@string/menu_item_createNew_planting"
+        android:icon="@drawable/ic_action_add"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/action_settings"

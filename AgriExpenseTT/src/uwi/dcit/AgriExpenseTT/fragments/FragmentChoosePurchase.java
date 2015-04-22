@@ -37,7 +37,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
@@ -81,7 +80,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		populateList();
 		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
 	
 	private void populateList() {
@@ -103,7 +102,7 @@ public class FragmentChoosePurchase extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
-		//returns the inflated layout which contains the listview
+		//returns the inflated layout which contains the list view
 		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
 	}
 		
@@ -162,14 +161,13 @@ public class FragmentChoosePurchase extends ListFragment {
 		 
 		 Fragment newFrag=new FragmentPurchaseUse();
 		 newFrag.setArguments(arguments);
-         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT
-                 || ((NavigationControl) getActivity()).getRightFrag()==null){
+
+         if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT || ((NavigationControl) getActivity()).getRightFrag()==null){
              ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
              return;
          }
          if(getActivity() instanceof NavigationControl) {
-             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
-                     ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
+             if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty  ||(((NavigationControl) getActivity()).getRightFrag().getClass()==newFrag.getClass()))
                  ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
              else
                  ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
@@ -258,12 +256,14 @@ public class FragmentChoosePurchase extends ListFragment {
 			 TextView header=(TextView)row.findViewById(R.id.tv_pItem_header);
 			 TextView det1=(TextView)row.findViewById(R.id.tv_pitem_det1);
 			 TextView det2=(TextView)row.findViewById(R.id.tv_pitem_det2);
+             TextView det3=(TextView)row.findViewById(R.id.tv_pitem_det3);
              TextView dateTV = (TextView)row.findViewById(R.id.tv_pitem_date);
 
 			   //int pId=Integer.parseInt(ids[position]);		
 			 header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
-			 det1.setText("Quantity: "+curr.getQty()+" "+curr.getQuantifier());
-             det2.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
+			 det1.setText("Purchased: "+curr.getQty()+" "+curr.getQuantifier());
+             det2.setText("Remaining: "+curr.getQtyRemaining()+" "+curr.getQuantifier());
+             det3.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
              dateTV.setText("Date: " + DateFormatHelper.getDateStr(curr.getDate()));
 			   
 			   

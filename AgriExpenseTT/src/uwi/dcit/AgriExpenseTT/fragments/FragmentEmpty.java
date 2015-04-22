@@ -14,7 +14,7 @@ import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
@@ -28,7 +28,21 @@ public class FragmentEmpty extends Fragment{
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
 		setupButton(type);
 
-		if(type.equals("purchase")){
+
+        switch (type){
+            case "purchase":
+                break;
+            case "cycle":
+                break;
+            case "select":
+                break;
+            case "labour":
+                break;
+            default:
+                break;
+        }
+
+        if(type.equals("purchase")){
 			if(category == null){
 				desc.setText("Tap here to create a new purchase");
 			}else{
@@ -49,7 +63,7 @@ public class FragmentEmpty extends Fragment{
             this.isLabour = true;
         }
         // Google Analytics
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Empty Screen Loaded");
 		return view;
 	}
 
@@ -92,13 +106,13 @@ public class FragmentEmpty extends Fragment{
     }
 
     private void createLabourer() {
-        startActivity(new Intent(getActivity().getApplicationContext(), HireLabour.class));
+        getActivity().startActivityForResult(new Intent(getActivity(), HireLabour.class), DHelper.PURCHASE_REQUEST_CODE);
     }
 
     public void createCycle(){
-        startActivity(new Intent(getActivity().getApplicationContext(), NewCycle.class));
+        getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
     }
     public void createPurchase(){
-        startActivity(new Intent(getActivity().getApplicationContext(), NewPurchase.class));
+        getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewPurchase.class), DHelper.PURCHASE_REQUEST_CODE);
     }
 }

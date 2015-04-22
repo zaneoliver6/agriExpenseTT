@@ -92,6 +92,13 @@ public class AccountEndpoint {
         return account;
     }
 
+    public CollectionResponse <Account> listAccounts(@Nullable @Named("cursor") String cursorString, @Nullable @Named("limit") Integer limit) {
+        EntityManager mgr = getEntityManager();
+
+        return null;
+    }
+
+
 //    @ApiMethod(name = "insertAccount", httpMethod = HttpMethod.POST)
 //    public Account insertAccount(Account account) {
 //        NamespaceManager.set(account.getAccount());

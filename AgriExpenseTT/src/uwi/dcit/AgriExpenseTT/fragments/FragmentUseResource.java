@@ -17,9 +17,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-/**
- * Created by Steffan on 12/01/2015.
- */
 public class FragmentUseResource extends Fragment{
     View view;
     LocalCycle cycle;

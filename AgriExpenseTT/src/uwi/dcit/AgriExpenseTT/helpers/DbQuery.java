@@ -199,6 +199,7 @@ public class DbQuery {
 	}
 
     public static boolean resourceExistByName(SQLiteDatabase db, DbHelper dbh, String name){
+        name = name.toLowerCase();
         String code = "SELECT name from " + ResourceContract.ResourceEntry.TABLE_NAME +  " WHERE LOWER(" + ResourceContract.ResourceEntry.RESOURCES_NAME + ") LIKE '%"+name+"%';";
 
         Cursor cursor = db.rawQuery(code, null);

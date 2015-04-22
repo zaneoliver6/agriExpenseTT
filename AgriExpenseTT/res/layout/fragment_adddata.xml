@@ -5,46 +5,41 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_addData_lbl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Enter name of resource "
-        android:textColor="#cccccc"
-        android:textSize="17sp" />
-
     <EditText
         android:id="@+id/et_addData_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:ems="10" >
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/label_dataentry_margin"
+        android:ems="10"
+        android:layout_marginRight="10dp"
+        android:hint="@string/resource_name_lbl"
+        android:inputType="textCapWords"
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
-    
-     <TextView
-        android:id="@+id/tv_addData_error"
+
+    <TextView
+        android:id="@+id/tv_addData_lbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Enter name of resource "
-       android:textColor="#FF0000"
-        android:textSize="14sp"
-        android:visibility="gone" />
-    
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="@dimen/helper_text_padding"
+        android:text="@string/resource_name_hint"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/helper_text_size"
+        android:layout_marginRight="10dp" />
+
 
     <Button
         android:id="@+id/btn_addData_dne"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/btn_custom"
-        android:text="Done" />
+        android:text="@string/finished_action"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp" />
 
 </LinearLayout>
