@@ -156,7 +156,6 @@ android.support.v4.app.DialogFragment:
     private static final java.lang.String SAVED_BACK_STACK_ID
     113:120:public void setStyle(int,int)
     151:156:public int show(android.support.v4.app.FragmentTransaction,java.lang.String)
-    166:167:public void dismiss()
     176:177:public void dismissAllowingStateLoss()
     224:226:public void setCancelable(boolean)
     232:232:public boolean isCancelable()
@@ -3487,70 +3486,6 @@ com.cocosw.undobar.UndoBarStyle:
     public static final int DEFAULT_DURATION
     54:56:public UndoBarStyle(int,int,int,long)
     67:69:public com.cocosw.undobar.UndoBarStyle setAnim(android.view.animation.Animation,android.view.animation.Animation)
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$Builder
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$DeleteAll
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$GetAllCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$GetCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$InsertCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$ListCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$RemoveCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApi$UpdateCycleUse
-com.dcit.agriexpensett.cycleUseApi.CycleUseApiRequest
-com.dcit.agriexpensett.cycleUseApi.CycleUseApiRequestInitializer
-com.dcit.agriexpensett.cycleUseApi.CycleUseApiScopes
-com.dcit.agriexpensett.cycleUseApi.model.CollectionResponseCycleUse
-com.dcit.agriexpensett.cycleUseApi.model.CycleUse
-com.dcit.agriexpensett.cycleUseApi.model.CycleUseCollection
-com.dcit.agriexpensett.cycleUseApi.model.Key
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$Builder
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$DeleteAll
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$DeletePurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$FetchAllPurchases
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$GetAllPurchases
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$GetRPurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$InsertRPurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$ListRPurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$RemoveRPurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApi$UpdateRPurchase
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApiRequest
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApiRequestInitializer
-com.dcit.agriexpensett.rPurchaseApi.RPurchaseApiScopes
-com.dcit.agriexpensett.rPurchaseApi.model.CollectionResponseRPurchase
-com.dcit.agriexpensett.rPurchaseApi.model.Key
-com.dcit.agriexpensett.rPurchaseApi.model.RPurchase
-com.dcit.agriexpensett.rPurchaseApi.model.RPurchaseCollection
-com.dcit.agriexpensett.translogApi.TranslogApi
-com.dcit.agriexpensett.translogApi.TranslogApi$Builder
-com.dcit.agriexpensett.translogApi.TranslogApi$DeleteAll
-com.dcit.agriexpensett.translogApi.TranslogApi$GetAllTranslog
-com.dcit.agriexpensett.translogApi.TranslogApi$GetTransLog
-com.dcit.agriexpensett.translogApi.TranslogApi$InsertTransLog
-com.dcit.agriexpensett.translogApi.TranslogApi$ListTransLog
-com.dcit.agriexpensett.translogApi.TranslogApi$Logs
-com.dcit.agriexpensett.translogApi.TranslogApi$RemoveTransLog
-com.dcit.agriexpensett.translogApi.TranslogApi$UpdateTransLog
-com.dcit.agriexpensett.translogApi.TranslogApiRequest
-com.dcit.agriexpensett.translogApi.TranslogApiRequestInitializer
-com.dcit.agriexpensett.translogApi.TranslogApiScopes
-com.dcit.agriexpensett.translogApi.model.CollectionResponseTransLog
-com.dcit.agriexpensett.translogApi.model.Key
-com.dcit.agriexpensett.translogApi.model.TransLog
-com.dcit.agriexpensett.translogApi.model.TransLogCollection
-com.dcit.agriexpensett.upAccApi.UpAccApi
-com.dcit.agriexpensett.upAccApi.UpAccApi$Builder
-com.dcit.agriexpensett.upAccApi.UpAccApi$GetUpAcc
-com.dcit.agriexpensett.upAccApi.UpAccApi$InsertUpAcc
-com.dcit.agriexpensett.upAccApi.UpAccApi$ListUpAcc
-com.dcit.agriexpensett.upAccApi.UpAccApi$RemoveUpAcc
-com.dcit.agriexpensett.upAccApi.UpAccApi$UpdateUpAcc
-com.dcit.agriexpensett.upAccApi.UpAccApiRequest
-com.dcit.agriexpensett.upAccApi.UpAccApiRequestInitializer
-com.dcit.agriexpensett.upAccApi.UpAccApiScopes
-com.dcit.agriexpensett.upAccApi.model.CollectionResponseUpAcc
-com.dcit.agriexpensett.upAccApi.model.Key
-com.dcit.agriexpensett.upAccApi.model.UpAcc
 com.fasterxml.jackson.core.Base64Variant
 com.fasterxml.jackson.core.Base64Variants
 com.fasterxml.jackson.core.FormatSchema
@@ -4285,27 +4220,19 @@ com.google.android.gms.ads.search.SearchAdRequest$Builder
 com.google.android.gms.ads.search.SearchAdView
 com.google.android.gms.analytics.CampaignTrackingReceiver
 com.google.android.gms.analytics.CampaignTrackingService
-com.google.android.gms.analytics.ExceptionParser
-com.google.android.gms.analytics.ExceptionReporter
+com.google.android.gms.analytics.ExceptionReporter:
+    public com.google.android.gms.analytics.ExceptionParser getExceptionParser()
+    public void setExceptionParser(com.google.android.gms.analytics.ExceptionParser)
 com.google.android.gms.analytics.GoogleAnalytics:
-    public void enableAutoActivityReports(android.app.Application)
     public void reportActivityStart(android.app.Activity)
-    void g(android.app.Activity)
     public void reportActivityStop(android.app.Activity)
-    void h(android.app.Activity)
-    public com.google.android.gms.analytics.Tracker newTracker(int)
-    void a(com.google.android.gms.analytics.GoogleAnalytics$a)
-    void b(com.google.android.gms.analytics.GoogleAnalytics$a)
+    public com.google.android.gms.analytics.Tracker newTracker(java.lang.String)
     public void setAppOptOut(boolean)
     public void setLogger(com.google.android.gms.analytics.Logger)
     public void setLocalDispatchPeriod(int)
-    void dY()
-com.google.android.gms.analytics.GoogleAnalytics$a
-com.google.android.gms.analytics.GoogleAnalytics$b
 com.google.android.gms.analytics.HitBuilders:
     public HitBuilders()
 com.google.android.gms.analytics.HitBuilders$EventBuilder
-com.google.android.gms.analytics.HitBuilders$ExceptionBuilder
 com.google.android.gms.analytics.HitBuilders$HitBuilder:
     public com.google.android.gms.analytics.HitBuilders$HitBuilder setNewSession()
     public com.google.android.gms.analytics.HitBuilders$HitBuilder setNonInteraction(boolean)
@@ -4327,17 +4254,7 @@ com.google.android.gms.analytics.HitBuilders$TransactionBuilder
 com.google.android.gms.analytics.Logger:
     public abstract void error(java.lang.Exception)
 com.google.android.gms.analytics.Logger$LogLevel
-com.google.android.gms.analytics.StandardExceptionParser
 com.google.android.gms.analytics.Tracker:
-    private boolean Ck
-    private com.google.android.gms.analytics.am Cm
-    private com.google.android.gms.analytics.ExceptionReporter Cn
-    void a(com.google.android.gms.analytics.am)
-    public void enableExceptionReporting(boolean)
-    public void setSessionTimeout(long)
-    long fn()
-    public void enableAutoActivityTracking(boolean)
-    boolean fo()
     public java.lang.String get(java.lang.String)
     public void setSampleRate(double)
     public void setUseSecure(boolean)
@@ -4357,28 +4274,10 @@ com.google.android.gms.analytics.Tracker:
     public void setAppInstallerId(java.lang.String)
     public void setAppVersion(java.lang.String)
     public void setAnonymizeIp(boolean)
-    public void setCampaignParamsOnNextHit(android.net.Uri)
-    static synthetic com.google.android.gms.analytics.Tracker$a b(com.google.android.gms.analytics.Tracker)
-    static synthetic com.google.android.gms.analytics.am c(com.google.android.gms.analytics.Tracker)
-com.google.android.gms.analytics.Tracker$a:
-    private long Cs
-    public void setSessionTimeout(long)
-    public long fn()
-    public void enableAutoActivityTracking(boolean)
-    public boolean fo()
-    private void fq()
-    public void i(android.app.Activity)
-    public void j(android.app.Activity)
-    boolean fr()
 com.google.android.gms.analytics.ai:
     public boolean ac(java.lang.String)
 com.google.android.gms.analytics.ak:
     public abstract void dQ()
-com.google.android.gms.analytics.al
-com.google.android.gms.analytics.al$a
-com.google.android.gms.analytics.am
-com.google.android.gms.analytics.an:
-    static java.lang.String E(boolean)
 com.google.android.gms.analytics.ecommerce.Product:
     void put(java.lang.String,java.lang.String)
     public com.google.android.gms.analytics.ecommerce.Product setId(java.lang.String)
@@ -4424,7 +4323,6 @@ com.google.android.gms.analytics.ecommerce.Promotion:
     public com.google.android.gms.analytics.ecommerce.Promotion setPosition(java.lang.String)
 com.google.android.gms.analytics.f:
     public abstract void dQ()
-    public abstract void dY()
 com.google.android.gms.analytics.g:
     public boolean ac(java.lang.String)
 com.google.android.gms.analytics.k:
@@ -4438,7 +4336,6 @@ com.google.android.gms.analytics.s:
     public static java.lang.String F(int)
 com.google.android.gms.analytics.x:
     public void dQ()
-    public void dY()
 com.google.android.gms.analytics.x$a
 com.google.android.gms.appindexing.Action
 com.google.android.gms.appindexing.Action$1
@@ -11163,7 +11060,241 @@ javax.annotation.meta.TypeQualifierValidator
 javax.annotation.meta.When
 org.apache.commons.lang3.AnnotationUtils
 org.apache.commons.lang3.AnnotationUtils$1
-org.apache.commons.lang3.ArrayUtils
+org.apache.commons.lang3.ArrayUtils:
+    public static final int INDEX_NOT_FOUND
+    138:139:public ArrayUtils()
+    159:159:public static java.lang.String toString(java.lang.Object)
+    175:178:public static java.lang.String toString(java.lang.Object,java.lang.String)
+    190:190:public static int hashCode(java.lang.Object)
+    207:207:public static boolean isEquals(java.lang.Object,java.lang.Object)
+    238:261:public static java.util.Map toMap(java.lang.Object[])
+    304:304:public static varargs java.lang.Object[] toArray(java.lang.Object[])
+    323:326:public static java.lang.Object[] clone(java.lang.Object[])
+    339:342:public static long[] clone(long[])
+    355:358:public static int[] clone(int[])
+    371:374:public static short[] clone(short[])
+    387:390:public static char[] clone(char[])
+    403:406:public static byte[] clone(byte[])
+    419:422:public static double[] clone(double[])
+    435:438:public static float[] clone(float[])
+    451:454:public static boolean[] clone(boolean[])
+    473:476:public static java.lang.Object[] nullToEmpty(java.lang.Object[])
+    493:496:public static java.lang.Class[] nullToEmpty(java.lang.Class[])
+    513:516:public static java.lang.String[] nullToEmpty(java.lang.String[])
+    533:536:public static long[] nullToEmpty(long[])
+    553:556:public static int[] nullToEmpty(int[])
+    573:576:public static short[] nullToEmpty(short[])
+    593:596:public static char[] nullToEmpty(char[])
+    613:616:public static byte[] nullToEmpty(byte[])
+    633:636:public static double[] nullToEmpty(double[])
+    653:656:public static float[] nullToEmpty(float[])
+    673:676:public static boolean[] nullToEmpty(boolean[])
+    693:696:public static java.lang.Long[] nullToEmpty(java.lang.Long[])
+    713:716:public static java.lang.Integer[] nullToEmpty(java.lang.Integer[])
+    733:736:public static java.lang.Short[] nullToEmpty(java.lang.Short[])
+    753:756:public static java.lang.Character[] nullToEmpty(java.lang.Character[])
+    773:776:public static java.lang.Byte[] nullToEmpty(java.lang.Byte[])
+    793:796:public static java.lang.Double[] nullToEmpty(java.lang.Double[])
+    813:816:public static java.lang.Float[] nullToEmpty(java.lang.Float[])
+    833:836:public static java.lang.Boolean[] nullToEmpty(java.lang.Boolean[])
+    871:891:public static java.lang.Object[] subarray(java.lang.Object[],int,int)
+    915:931:public static long[] subarray(long[],int,int)
+    955:971:public static int[] subarray(int[],int,int)
+    995:1011:public static short[] subarray(short[],int,int)
+    1035:1051:public static char[] subarray(char[],int,int)
+    1075:1091:public static byte[] subarray(byte[],int,int)
+    1115:1131:public static double[] subarray(double[],int,int)
+    1155:1171:public static float[] subarray(float[],int,int)
+    1195:1211:public static boolean[] subarray(boolean[],int,int)
+    1228:1233:public static boolean isSameLength(java.lang.Object[],java.lang.Object[])
+    1246:1251:public static boolean isSameLength(long[],long[])
+    1264:1269:public static boolean isSameLength(int[],int[])
+    1282:1287:public static boolean isSameLength(short[],short[])
+    1300:1305:public static boolean isSameLength(char[],char[])
+    1318:1323:public static boolean isSameLength(byte[],byte[])
+    1336:1341:public static boolean isSameLength(double[],double[])
+    1354:1359:public static boolean isSameLength(float[],float[])
+    1372:1377:public static boolean isSameLength(boolean[],boolean[])
+    1402:1405:public static int getLength(java.lang.Object)
+    1418:1421:public static boolean isSameType(java.lang.Object,java.lang.Object)
+    1436:1440:public static void reverse(java.lang.Object[])
+    1450:1454:public static void reverse(long[])
+    1464:1468:public static void reverse(int[])
+    1478:1482:public static void reverse(short[])
+    1492:1496:public static void reverse(char[])
+    1506:1510:public static void reverse(byte[])
+    1520:1524:public static void reverse(double[])
+    1534:1538:public static void reverse(float[])
+    1548:1552:public static void reverse(boolean[])
+    1574:1587:public static void reverse(boolean[],int,int)
+    1609:1622:public static void reverse(byte[],int,int)
+    1644:1657:public static void reverse(char[],int,int)
+    1679:1692:public static void reverse(double[],int,int)
+    1714:1727:public static void reverse(float[],int,int)
+    1749:1762:public static void reverse(int[],int,int)
+    1784:1797:public static void reverse(long[],int,int)
+    1819:1832:public static void reverse(java.lang.Object[],int,int)
+    1854:1867:public static void reverse(short[],int,int)
+    1885:1885:public static int indexOf(java.lang.Object[],java.lang.Object)
+    1903:1922:public static int indexOf(java.lang.Object[],java.lang.Object,int)
+    1936:1936:public static int lastIndexOf(java.lang.Object[],java.lang.Object)
+    1954:1975:public static int lastIndexOf(java.lang.Object[],java.lang.Object,int)
+    1988:1988:public static boolean contains(java.lang.Object[],java.lang.Object)
+    2004:2004:public static int indexOf(long[],long)
+    2022:2033:public static int indexOf(long[],long,int)
+    2047:2047:public static int lastIndexOf(long[],long)
+    2065:2078:public static int lastIndexOf(long[],long,int)
+    2091:2091:public static boolean contains(long[],long)
+    2107:2107:public static int indexOf(int[],int)
+    2125:2136:public static int indexOf(int[],int,int)
+    2150:2150:public static int lastIndexOf(int[],int)
+    2168:2181:public static int lastIndexOf(int[],int,int)
+    2194:2194:public static boolean contains(int[],int)
+    2210:2210:public static int indexOf(short[],short)
+    2228:2239:public static int indexOf(short[],short,int)
+    2253:2253:public static int lastIndexOf(short[],short)
+    2271:2284:public static int lastIndexOf(short[],short,int)
+    2297:2297:public static boolean contains(short[],short)
+    2314:2314:public static int indexOf(char[],char)
+    2333:2344:public static int indexOf(char[],char,int)
+    2359:2359:public static int lastIndexOf(char[],char)
+    2378:2391:public static int lastIndexOf(char[],char,int)
+    2405:2405:public static boolean contains(char[],char)
+    2421:2421:public static int indexOf(byte[],byte)
+    2439:2450:public static int indexOf(byte[],byte,int)
+    2464:2464:public static int lastIndexOf(byte[],byte)
+    2482:2495:public static int lastIndexOf(byte[],byte,int)
+    2508:2508:public static boolean contains(byte[],byte)
+    2524:2524:public static int indexOf(double[],double)
+    2541:2541:public static int indexOf(double[],double,double)
+    2559:2570:public static int indexOf(double[],double,int)
+    2591:2604:public static int indexOf(double[],double,int,double)
+    2618:2618:public static int lastIndexOf(double[],double)
+    2635:2635:public static int lastIndexOf(double[],double,double)
+    2653:2666:public static int lastIndexOf(double[],double,int)
+    2687:2702:public static int lastIndexOf(double[],double,int,double)
+    2715:2715:public static boolean contains(double[],double)
+    2732:2732:public static boolean contains(double[],double,double)
+    2748:2748:public static int indexOf(float[],float)
+    2766:2777:public static int indexOf(float[],float,int)
+    2791:2791:public static int lastIndexOf(float[],float)
+    2809:2822:public static int lastIndexOf(float[],float,int)
+    2835:2835:public static boolean contains(float[],float)
+    2851:2851:public static int indexOf(boolean[],boolean)
+    2870:2881:public static int indexOf(boolean[],boolean,int)
+    2896:2896:public static int lastIndexOf(boolean[],boolean)
+    2914:2927:public static int lastIndexOf(boolean[],boolean,int)
+    2940:2940:public static boolean contains(boolean[],boolean)
+    2958:2967:public static char[] toPrimitive(java.lang.Character[])
+    2980:2990:public static char[] toPrimitive(java.lang.Character[],char)
+    3002:3011:public static java.lang.Character[] toObject(char[])
+    3026:3035:public static long[] toPrimitive(java.lang.Long[])
+    3048:3058:public static long[] toPrimitive(java.lang.Long[],long)
+    3070:3079:public static java.lang.Long[] toObject(long[])
+    3094:3103:public static int[] toPrimitive(java.lang.Integer[])
+    3116:3126:public static int[] toPrimitive(java.lang.Integer[],int)
+    3138:3147:public static java.lang.Integer[] toObject(int[])
+    3162:3171:public static short[] toPrimitive(java.lang.Short[])
+    3184:3194:public static short[] toPrimitive(java.lang.Short[],short)
+    3206:3215:public static java.lang.Short[] toObject(short[])
+    3230:3239:public static byte[] toPrimitive(java.lang.Byte[])
+    3252:3262:public static byte[] toPrimitive(java.lang.Byte[],byte)
+    3274:3283:public static java.lang.Byte[] toObject(byte[])
+    3298:3307:public static double[] toPrimitive(java.lang.Double[])
+    3320:3330:public static double[] toPrimitive(java.lang.Double[],double)
+    3342:3351:public static java.lang.Double[] toObject(double[])
+    3366:3375:public static float[] toPrimitive(java.lang.Float[])
+    3388:3398:public static float[] toPrimitive(java.lang.Float[],float)
+    3410:3419:public static java.lang.Float[] toObject(float[])
+    3434:3443:public static boolean[] toPrimitive(java.lang.Boolean[])
+    3456:3466:public static boolean[] toPrimitive(java.lang.Boolean[],boolean)
+    3478:3487:public static java.lang.Boolean[] toObject(boolean[])
+    3499:3499:public static boolean isEmpty(java.lang.Object[])
+    3510:3510:public static boolean isEmpty(long[])
+    3521:3521:public static boolean isEmpty(int[])
+    3532:3532:public static boolean isEmpty(short[])
+    3543:3543:public static boolean isEmpty(char[])
+    3554:3554:public static boolean isEmpty(byte[])
+    3565:3565:public static boolean isEmpty(double[])
+    3576:3576:public static boolean isEmpty(float[])
+    3587:3587:public static boolean isEmpty(boolean[])
+    3600:3600:public static boolean isNotEmpty(java.lang.Object[])
+    3611:3611:public static boolean isNotEmpty(long[])
+    3622:3622:public static boolean isNotEmpty(int[])
+    3633:3633:public static boolean isNotEmpty(short[])
+    3644:3644:public static boolean isNotEmpty(char[])
+    3655:3655:public static boolean isNotEmpty(byte[])
+    3666:3666:public static boolean isNotEmpty(double[])
+    3677:3677:public static boolean isNotEmpty(float[])
+    3688:3688:public static boolean isNotEmpty(boolean[])
+    3716:3742:public static varargs java.lang.Object[] addAll(java.lang.Object[],java.lang.Object[])
+    3763:3771:public static varargs boolean[] addAll(boolean[],boolean[])
+    3792:3800:public static varargs char[] addAll(char[],char[])
+    3821:3829:public static varargs byte[] addAll(byte[],byte[])
+    3850:3858:public static varargs short[] addAll(short[],short[])
+    3879:3887:public static varargs int[] addAll(int[],int[])
+    3908:3916:public static varargs long[] addAll(long[],long[])
+    3937:3945:public static varargs float[] addAll(float[],float[])
+    3966:3974:public static varargs double[] addAll(double[],double[])
+    4008:4019:public static java.lang.Object[] add(java.lang.Object[],java.lang.Object)
+    4044:4046:public static boolean[] add(boolean[],boolean)
+    4071:4073:public static byte[] add(byte[],byte)
+    4098:4100:public static char[] add(char[],char)
+    4125:4127:public static double[] add(double[],double)
+    4152:4154:public static float[] add(float[],float)
+    4179:4181:public static int[] add(int[],int)
+    4206:4208:public static long[] add(long[],long)
+    4233:4235:public static short[] add(short[],short)
+    4248:4254:private static java.lang.Object copyArrayGrow1(java.lang.Object,java.lang.Class)
+    4287:4297:public static java.lang.Object[] add(java.lang.Object[],int,java.lang.Object)
+    4327:4327:public static boolean[] add(boolean[],int,boolean)
+    4359:4359:public static char[] add(char[],int,char)
+    4390:4390:public static byte[] add(byte[],int,byte)
+    4421:4421:public static short[] add(short[],int,short)
+    4452:4452:public static int[] add(int[],int,int)
+    4483:4483:public static long[] add(long[],int,long)
+    4514:4514:public static float[] add(float[],int,float)
+    4545:4545:public static double[] add(double[],int,double)
+    4560:4578:private static java.lang.Object add(java.lang.Object,int,java.lang.Object,java.lang.Class)
+    4612:4612:public static java.lang.Object[] remove(java.lang.Object[],int)
+    4642:4646:public static java.lang.Object[] removeElement(java.lang.Object[],java.lang.Object)
+    4678:4678:public static boolean[] remove(boolean[],int)
+    4707:4711:public static boolean[] removeElement(boolean[],boolean)
+    4743:4743:public static byte[] remove(byte[],int)
+    4772:4776:public static byte[] removeElement(byte[],byte)
+    4808:4808:public static char[] remove(char[],int)
+    4837:4841:public static char[] removeElement(char[],char)
+    4873:4873:public static double[] remove(double[],int)
+    4902:4906:public static double[] removeElement(double[],double)
+    4938:4938:public static float[] remove(float[],int)
+    4967:4971:public static float[] removeElement(float[],float)
+    5003:5003:public static int[] remove(int[],int)
+    5032:5036:public static int[] removeElement(int[],int)
+    5068:5068:public static long[] remove(long[],int)
+    5097:5101:public static long[] removeElement(long[],long)
+    5133:5133:public static short[] remove(short[],int)
+    5162:5166:public static short[] removeElement(short[],short)
+    5191:5202:private static java.lang.Object remove(java.lang.Object,int)
+    5233:5233:public static varargs java.lang.Object[] removeAll(java.lang.Object[],int[])
+    5265:5292:public static varargs java.lang.Object[] removeElements(java.lang.Object[],java.lang.Object[])
+    5325:5325:public static varargs byte[] removeAll(byte[],int[])
+    5356:5381:public static varargs byte[] removeElements(byte[],byte[])
+    5414:5414:public static varargs short[] removeAll(short[],int[])
+    5445:5470:public static varargs short[] removeElements(short[],short[])
+    5503:5503:public static varargs int[] removeAll(int[],int[])
+    5534:5559:public static varargs int[] removeElements(int[],int[])
+    5592:5592:public static varargs char[] removeAll(char[],int[])
+    5623:5648:public static varargs char[] removeElements(char[],char[])
+    5681:5681:public static varargs long[] removeAll(long[],int[])
+    5712:5737:public static varargs long[] removeElements(long[],long[])
+    5770:5770:public static varargs float[] removeAll(float[],int[])
+    5801:5826:public static varargs float[] removeElements(float[],float[])
+    5859:5859:public static varargs double[] removeAll(double[],int[])
+    5890:5915:public static varargs double[] removeElements(double[],double[])
+    5944:5944:public static varargs boolean[] removeAll(boolean[],int[])
+    5975:6000:public static varargs boolean[] removeElements(boolean[],boolean[])
+    6012:6050:static varargs java.lang.Object removeAll(java.lang.Object,int[])
+    6063:6088:static java.lang.Object removeAll(java.lang.Object,java.util.BitSet)
 org.apache.commons.lang3.BitField
 org.apache.commons.lang3.BooleanUtils
 org.apache.commons.lang3.CharEncoding
@@ -11271,10 +11402,8 @@ org.apache.commons.lang3.StringUtils:
     2450:2450:public static java.lang.String substringBetween(java.lang.String,java.lang.String)
     2481:2491:public static java.lang.String substringBetween(java.lang.String,java.lang.String,java.lang.String)
     2517:2544:public static java.lang.String[] substringsBetween(java.lang.String,java.lang.String,java.lang.String)
-    2575:2575:public static java.lang.String[] split(java.lang.String)
     2603:2603:public static java.lang.String[] split(java.lang.String,char)
     2632:2632:public static java.lang.String[] split(java.lang.String,java.lang.String)
-    2666:2666:public static java.lang.String[] split(java.lang.String,java.lang.String,int)
     2693:2693:public static java.lang.String[] splitByWholeSeparator(java.lang.String,java.lang.String)
     2724:2724:public static java.lang.String[] splitByWholeSeparator(java.lang.String,java.lang.String,int)
     2753:2753:public static java.lang.String[] splitByWholeSeparatorPreserveAllTokens(java.lang.String,java.lang.String)
@@ -11285,7 +11414,6 @@ org.apache.commons.lang3.StringUtils:
     2949:2977:private static java.lang.String[] splitWorker(java.lang.String,char,boolean)
     3014:3014:public static java.lang.String[] splitPreserveAllTokens(java.lang.String,java.lang.String)
     3054:3054:public static java.lang.String[] splitPreserveAllTokens(java.lang.String,java.lang.String,int)
-    3076:3153:private static java.lang.String[] splitWorker(java.lang.String,java.lang.String,int,boolean)
     3176:3176:public static java.lang.String[] splitByCharacterType(java.lang.String)
     3204:3204:public static java.lang.String[] splitByCharacterTypeCamelCase(java.lang.String)
     3222:3250:private static java.lang.String[] splitByCharacterType(java.lang.String,boolean)
@@ -11306,8 +11434,6 @@ org.apache.commons.lang3.StringUtils:
     3809:3823:public static java.lang.String join(char[],char,int,int)
     3858:3872:public static java.lang.String join(double[],char,int,int)
     3907:3921:public static java.lang.String join(float[],char,int,int)
-    3949:3952:public static java.lang.String join(java.lang.Object[],java.lang.String)
-    3991:4015:public static java.lang.String join(java.lang.Object[],java.lang.String,int,int)
     4035:4062:public static java.lang.String join(java.util.Iterator,char)
     4081:4109:public static java.lang.String join(java.util.Iterator,java.lang.String)
     4127:4130:public static java.lang.String join(java.lang.Iterable,char)
@@ -16376,6 +16502,7 @@ uwi.dcit.AgriExpenseTT.BuildConfig
 uwi.dcit.AgriExpenseTT.EditChooseLists$TWatch
 uwi.dcit.AgriExpenseTT.Main:
     public static final java.lang.String APP_NAME
+    public static final java.lang.String TAG
 uwi.dcit.AgriExpenseTT.R
 uwi.dcit.AgriExpenseTT.R$anim
 uwi.dcit.AgriExpenseTT.R$array
@@ -16392,11 +16519,10 @@ uwi.dcit.AgriExpenseTT.R$raw
 uwi.dcit.AgriExpenseTT.R$string
 uwi.dcit.AgriExpenseTT.R$style
 uwi.dcit.AgriExpenseTT.R$styleable
+uwi.dcit.AgriExpenseTT.R$xml
 uwi.dcit.AgriExpenseTT.SelectLocation:
     21:23:public void replaceSub(int,int)
     26:38:public void setupInitialFrag()
-uwi.dcit.AgriExpenseTT.UseResource:
-    87:87:public double getTotal()
 uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils:
     protected static final boolean LOCAL_ANDROID_RUN
     protected static final java.lang.String LOCAL_APP_ENGINE_SERVER_URL
@@ -16423,16 +16549,11 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentBackupList
 uwi.dcit.AgriExpenseTT.fragments.FragmentBackupList$1
 uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory:
     public static final java.lang.String TAG
-uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory:
-    android.widget.TextView totalLbl
-uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse$IntentLauncher
 uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles:
     private static final java.lang.String STATE_ACTIVATED_POSITION
 uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment:
     private static final java.lang.String STATE_SELECTED_POSITION
     private static final java.lang.String PREF_USER_LEARNED_DRAWER
-uwi.dcit.AgriExpenseTT.fragments.NewCycleLists:
-    int cycleId
 uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists:
     int cycleId
 uwi.dcit.AgriExpenseTT.fragments.help.HelpIntroFragment:
@@ -16454,11 +16575,12 @@ uwi.dcit.AgriExpenseTT.helpers.DbQuery:
     90:102:public static int insertResourceUse(android.database.sqlite.SQLiteDatabase,uwi.dcit.AgriExpenseTT.helpers.DbHelper,int,java.lang.String,int,double,java.lang.String,double,long,uwi.dcit.AgriExpenseTT.helpers.TransactionLog)
     106:119:public static int insertCycle(android.database.sqlite.SQLiteDatabase,uwi.dcit.AgriExpenseTT.helpers.DbHelper,int,java.lang.String,double,uwi.dcit.AgriExpenseTT.helpers.TransactionLog,long)
     148:148:public static int insertCountry(android.database.sqlite.SQLiteDatabase,java.lang.String)
-    417:424:public static int getLastRec(android.database.sqlite.SQLiteDatabase,uwi.dcit.AgriExpenseTT.helpers.DbHelper,java.lang.String)
+    418:425:public static int getLastRec(android.database.sqlite.SQLiteDatabase,uwi.dcit.AgriExpenseTT.helpers.DbHelper,java.lang.String)
 uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper:
     public static final java.lang.String APP_TRACKER
-    33:33:public com.google.android.gms.analytics.Tracker getTracker()
-    37:43:public void sendUserEvent(java.lang.String,java.lang.String)
+    private static final java.lang.String TAG
+    39:39:public com.google.android.gms.analytics.Tracker getTracker()
+    43:51:public void sendUserEvent(java.lang.String,java.lang.String)
 uwi.dcit.AgriExpenseTT.helpers.HelpTopics:
     3:3:public HelpTopics()
 uwi.dcit.AgriExpenseTT.helpers.MenuHelper:
@@ -16476,7 +16598,7 @@ uwi.dcit.AgriExpenseTT.helpers.ReportHelper:
     public static final java.lang.String folderLocation
     public static final java.lang.String defaultName
 uwi.dcit.AgriExpenseTT.helpers.TextHelper:
-    5:5:public TextHelper()
+    6:6:public TextHelper()
 uwi.dcit.AgriExpenseTT.helpers.TransactionLog:
     public static final java.lang.String TL_INS
     public static final java.lang.String TL_DEL
@@ -16514,7 +16636,6 @@ uwi.dcit.AgriExpenseTT.models.LocalCycleUse:
 uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase:
     28:36:public LocalResourcePurchase(int,int,java.lang.String,double,double,double,java.lang.String)
     38:47:public LocalResourcePurchase(int,int,java.lang.String,double,double,double,java.lang.String,long)
-    80:80:public double getQtyRemaining()
 uwi.dcit.AgriExpenseTT.models.RedoLogContract
 uwi.dcit.AgriExpenseTT.models.RedoLogContract$RedoLogEntry
 uwi.dcit.AgriExpenseTT.models.ResourceContract
@@ -17047,6 +17168,7 @@ uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApiRequest:
 uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApiRequestInitializer
 uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApiScopes
 uwi.dcit.agriexpensesvr.rPurchaseApi.model.CollectionResponseRPurchase
+uwi.dcit.agriexpensesvr.rPurchaseApi.model.CollectionResponseResourcePurchase
 uwi.dcit.agriexpensesvr.rPurchaseApi.model.Key
 uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase:
     private uwi.dcit.agriexpensesvr.rPurchaseApi.model.Key key
@@ -17055,6 +17177,8 @@ uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase:
     156:157:public uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase setKey(uwi.dcit.agriexpensesvr.rPurchaseApi.model.Key)
 uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchaseCollection:
     51:52:public uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchaseCollection setItems(java.util.List)
+uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase
+uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchaseCollection
 uwi.dcit.agriexpensesvr.translogApi.TranslogApi:
     public static final java.lang.String DEFAULT_ROOT_URL
     public static final java.lang.String DEFAULT_SERVICE_PATH
@@ -17311,28 +17435,3 @@ uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc:
     131:131:public java.lang.String getCounty()
     146:146:public uwi.dcit.agriexpensesvr.upAccApi.model.Key getKey()
     153:154:public uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc setKey(uwi.dcit.agriexpensesvr.upAccApi.model.Key)
-uwi.dcit.agriexpensett.cycleApi.CycleApi
-uwi.dcit.agriexpensett.cycleApi.CycleApi$Builder
-uwi.dcit.agriexpensett.cycleApi.CycleApi$DeleteAll
-uwi.dcit.agriexpensett.cycleApi.CycleApi$FetchAllCycles
-uwi.dcit.agriexpensett.cycleApi.CycleApi$GetAllCycles
-uwi.dcit.agriexpensett.cycleApi.CycleApi$GetCycle
-uwi.dcit.agriexpensett.cycleApi.CycleApi$GetMatchingCycles
-uwi.dcit.agriexpensett.cycleApi.CycleApi$InsertCycle
-uwi.dcit.agriexpensett.cycleApi.CycleApi$ListCycle
-uwi.dcit.agriexpensett.cycleApi.CycleApi$RemoveCycle
-uwi.dcit.agriexpensett.cycleApi.CycleApi$UpdateCycle
-uwi.dcit.agriexpensett.cycleApi.CycleApiRequest
-uwi.dcit.agriexpensett.cycleApi.CycleApiRequestInitializer
-uwi.dcit.agriexpensett.cycleApi.CycleApiScopes
-uwi.dcit.agriexpensett.cycleApi.model.CollectionResponseCycle
-uwi.dcit.agriexpensett.cycleApi.model.Cycle
-uwi.dcit.agriexpensett.cycleApi.model.CycleCollection
-uwi.dcit.agriexpensett.cycleApi.model.Key
-uwi.dcit.agriexpensett.myTestApi.MyTestApi
-uwi.dcit.agriexpensett.myTestApi.MyTestApi$Builder
-uwi.dcit.agriexpensett.myTestApi.MyTestApi$SayHi
-uwi.dcit.agriexpensett.myTestApi.MyTestApiRequest
-uwi.dcit.agriexpensett.myTestApi.MyTestApiRequestInitializer
-uwi.dcit.agriexpensett.myTestApi.MyTestApiScopes
-uwi.dcit.agriexpensett.myTestApi.model.MyBean

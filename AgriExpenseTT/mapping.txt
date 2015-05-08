@@ -168,6 +168,7 @@ android.support.v4.app.DialogFragment -> android.support.v4.app.j:
     boolean mDismissed -> h
     boolean mShownByMe -> i
     void show(android.support.v4.app.FragmentManager,java.lang.String) -> a
+    void dismissInternal(boolean) -> a
     void onAttach(android.app.Activity) -> a
     void onDetach() -> a
     void onCreate(android.os.Bundle) -> a
@@ -246,9 +247,9 @@ android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
     android.support.v4.app.FragmentManager getChildFragmentManager() -> g
     boolean isAdded() -> h
     void onHiddenChanged$1385ff() -> i
-    void setRetainInstance(boolean) -> a
-    void setMenuVisibility(boolean) -> b
-    void setUserVisibleHint(boolean) -> c
+    void setRetainInstance(boolean) -> b
+    void setMenuVisibility(boolean) -> c
+    void setUserVisibleHint(boolean) -> d
     void startActivity(android.content.Intent) -> a
     void startActivityForResult$7a9ca511(android.content.Intent) -> b
     void onActivityResult(int,int,android.content.Intent) -> a
@@ -266,17 +267,17 @@ android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
     void onStop() -> d
     void onLowMemory() -> onLowMemory
     void onDestroyView() -> e
+    void onDestroy() -> l
     void onDetach() -> a
     void onCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> a
-    void onDestroyOptionsMenu() -> l
+    void onDestroyOptionsMenu() -> m
     boolean onOptionsItemSelected(android.view.MenuItem) -> a
     void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
     boolean onContextItemSelected(android.view.MenuItem) -> b
-    void instantiateChildFragmentManager() -> m
+    void instantiateChildFragmentManager() -> n
     android.view.View performCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> b
     void performSaveInstanceState(android.os.Bundle) -> f
-    void performReallyStop() -> n
-    void performDestroy() -> o
+    void performReallyStop() -> o
 android.support.v4.app.Fragment$1 -> android.support.v4.app.k:
     android.support.v4.app.Fragment this$0 -> a
     android.view.View findViewById(int) -> a
@@ -7377,27 +7378,50 @@ com.google.android.gms.ads.identifier.AdvertisingIdClient$a -> com.google.androi
     boolean lw -> b
     void disconnect() -> a
     void run() -> run
-com.google.android.gms.analytics.GoogleAnalytics -> com.google.android.gms.b.a:
-    boolean Bm -> e
+com.google.android.gms.analytics.ExceptionParser -> com.google.android.gms.b.a:
+    java.lang.String getDescription(java.lang.String,java.lang.Throwable) -> a
+com.google.android.gms.analytics.ExceptionReporter -> com.google.android.gms.b.b:
+    java.lang.Thread$UncaughtExceptionHandler yN -> a
+    com.google.android.gms.analytics.Tracker yO -> b
+    android.content.Context mContext -> c
+    com.google.android.gms.analytics.ExceptionParser yP -> d
+    com.google.android.gms.analytics.GoogleAnalytics yQ -> e
+    void uncaughtException(java.lang.Thread,java.lang.Throwable) -> uncaughtException
+com.google.android.gms.analytics.GoogleAnalytics -> com.google.android.gms.b.c:
+    boolean Bm -> i
     boolean yt -> a
-    com.google.android.gms.analytics.f yV -> f
-    com.google.android.gms.analytics.aj Bn -> b
-    android.content.Context mContext -> g
-    java.lang.Boolean Bo -> c
-    com.google.android.gms.analytics.Logger Bp -> d
-    java.lang.String yb -> h
-    java.lang.String ya -> i
-    java.util.Set Bq -> j
-    boolean Br -> k
+    com.google.android.gms.analytics.f yV -> b
+    com.google.android.gms.analytics.aj Bn -> c
+    android.content.Context mContext -> d
+    java.lang.Boolean Bo -> e
+    com.google.android.gms.analytics.Logger Bp -> f
+    java.lang.String yb -> j
+    java.lang.String ya -> k
+    java.util.Set Bq -> g
+    boolean Br -> h
     com.google.android.gms.analytics.GoogleAnalytics Bs -> l
     com.google.android.gms.analytics.GoogleAnalytics getInstance(android.content.Context) -> a
     com.google.android.gms.analytics.GoogleAnalytics eY() -> a
-    com.google.android.gms.analytics.Tracker newTracker(java.lang.String) -> a
+    com.google.android.gms.analytics.Tracker newTracker$3d0a47ee() -> b
     void u(java.util.Map) -> a
-com.google.android.gms.analytics.HitBuilders -> com.google.android.gms.b.b:
-com.google.android.gms.analytics.HitBuilders$AppViewBuilder -> com.google.android.gms.b.c:
+com.google.android.gms.analytics.GoogleAnalytics$a -> com.google.android.gms.b.d:
+    void i(android.app.Activity) -> a
+    void j$63a22f9() -> a
+com.google.android.gms.analytics.GoogleAnalytics$b -> com.google.android.gms.b.e:
+    com.google.android.gms.analytics.GoogleAnalytics Bt -> a
+    void onActivityStarted(android.app.Activity) -> onActivityStarted
+    void onActivityStopped(android.app.Activity) -> onActivityStopped
+    void onActivityCreated(android.app.Activity,android.os.Bundle) -> onActivityCreated
+    void onActivityDestroyed(android.app.Activity) -> onActivityDestroyed
+    void onActivityPaused(android.app.Activity) -> onActivityPaused
+    void onActivityResumed(android.app.Activity) -> onActivityResumed
+    void onActivitySaveInstanceState(android.app.Activity,android.os.Bundle) -> onActivitySaveInstanceState
+com.google.android.gms.analytics.HitBuilders -> com.google.android.gms.b.f:
+com.google.android.gms.analytics.HitBuilders$AppViewBuilder -> com.google.android.gms.b.g:
     java.util.Map build() -> a
-com.google.android.gms.analytics.HitBuilders$HitBuilder -> com.google.android.gms.b.d:
+com.google.android.gms.analytics.HitBuilders$ExceptionBuilder -> com.google.android.gms.b.h:
+    java.util.Map build() -> a
+com.google.android.gms.analytics.HitBuilders$HitBuilder -> com.google.android.gms.b.i:
     java.util.Map BA -> e
     com.google.android.gms.analytics.ecommerce.ProductAction BB -> a
     java.util.Map BC -> b
@@ -7405,35 +7429,48 @@ com.google.android.gms.analytics.HitBuilders$HitBuilder -> com.google.android.gm
     java.util.List BE -> d
     com.google.android.gms.analytics.HitBuilders$HitBuilder set(java.lang.String,java.lang.String) -> a
     java.util.Map build() -> a
-com.google.android.gms.analytics.Logger -> com.google.android.gms.b.e:
+com.google.android.gms.analytics.Logger -> com.google.android.gms.b.j:
     void verbose(java.lang.String) -> a
     void info(java.lang.String) -> b
     void warn(java.lang.String) -> c
     void error(java.lang.String) -> d
     void setLogLevel(int) -> a
     int getLogLevel() -> a
-com.google.android.gms.analytics.Tracker -> com.google.android.gms.b.f:
-    com.google.android.gms.analytics.TrackerHandler Ce -> a
-    android.content.Context mContext -> f
-    java.util.Map rd -> b
-    java.util.Map Cf -> c
-    com.google.android.gms.analytics.ah Cg -> d
-    com.google.android.gms.analytics.k Ch -> g
-    com.google.android.gms.analytics.ai Ci -> h
-    com.google.android.gms.analytics.g Cj -> i
-    com.google.android.gms.analytics.Tracker$a Cl -> e
+com.google.android.gms.analytics.StandardExceptionParser -> com.google.android.gms.b.k:
+    java.util.TreeSet Cd -> a
+    void setIncludedPackages(android.content.Context,java.util.Collection) -> a
+    java.lang.Throwable getCause(java.lang.Throwable) -> a
+    java.lang.String getDescription(java.lang.String,java.lang.Throwable) -> a
+com.google.android.gms.analytics.Tracker -> com.google.android.gms.b.l:
+    com.google.android.gms.analytics.TrackerHandler Ce -> g
+    android.content.Context mContext -> a
+    java.util.Map rd -> h
+    java.util.Map Cf -> b
+    com.google.android.gms.analytics.ah Cg -> i
+    com.google.android.gms.analytics.k Ch -> j
+    com.google.android.gms.analytics.ai Ci -> k
+    com.google.android.gms.analytics.g Cj -> l
+    boolean Ck -> c
+    com.google.android.gms.analytics.Tracker$a Cl -> d
+    com.google.android.gms.analytics.am Cm -> e
+    com.google.android.gms.analytics.ExceptionReporter Cn -> f
+    void send(java.util.Map) -> a
     void set(java.lang.String,java.lang.String) -> a
     void enableAdvertisingIdCollection(boolean) -> a
-com.google.android.gms.analytics.Tracker$a -> com.google.android.gms.b.g:
-    boolean Co -> c
-    int Cp -> d
-    long Cq -> e
-    boolean Cr -> a
-    com.google.android.gms.internal.ld wb -> f
-    com.google.android.gms.analytics.Tracker Ct -> b
-com.google.android.gms.analytics.TrackerHandler -> com.google.android.gms.b.h:
+com.google.android.gms.analytics.Tracker$a -> com.google.android.gms.b.m:
+    boolean Co -> a
+    int Cp -> e
+    long Cq -> b
+    boolean Cr -> c
+    long Cs -> f
+    com.google.android.gms.internal.ld wb -> g
+    com.google.android.gms.analytics.Tracker Ct -> d
+    void fq() -> b
+    void i(android.app.Activity) -> a
+    void j$63a22f9() -> a
+com.google.android.gms.analytics.TrackerHandler -> com.google.android.gms.b.n:
     void u(java.util.Map) -> a
-com.google.android.gms.analytics.a -> com.google.android.gms.b.i:
+com.google.android.gms.analytics.a -> com.google.android.gms.b.o:
     java.lang.Object xO -> a
     com.google.android.gms.analytics.a xP -> b
     com.google.android.gms.ads.identifier.AdvertisingIdClient$Info xQ -> c
@@ -7449,23 +7486,23 @@ com.google.android.gms.analytics.a -> com.google.android.gms.b.i:
     java.lang.String aa(java.lang.String) -> b
     boolean ab(java.lang.String) -> c
     java.lang.String x(android.content.Context) -> b
-com.google.android.gms.analytics.aa -> com.google.android.gms.b.j:
+com.google.android.gms.analytics.aa -> com.google.android.gms.b.p:
     java.lang.String ya -> a
     java.lang.String yb -> b
     java.lang.String Bj -> c
     int Bk -> d
     int Bl -> e
-com.google.android.gms.analytics.ab -> com.google.android.gms.b.k:
+com.google.android.gms.analytics.ab -> com.google.android.gms.b.q:
     java.lang.String Bu -> a
     long Bv -> b
     long Bw -> c
     java.lang.String Bx -> f
     java.lang.String By -> d
     java.lang.String Bz -> e
-com.google.android.gms.analytics.ac -> com.google.android.gms.b.l:
+com.google.android.gms.analytics.ac -> com.google.android.gms.b.r:
     java.lang.String a(com.google.android.gms.analytics.ab,long) -> a
     java.lang.String encode(java.lang.String) -> a
-com.google.android.gms.analytics.ad -> com.google.android.gms.b.m:
+com.google.android.gms.analytics.ad -> com.google.android.gms.b.s:
     long BF -> a
     int BG -> b
     double BH -> c
@@ -7473,7 +7510,7 @@ com.google.android.gms.analytics.ad -> com.google.android.gms.b.m:
     java.lang.Object BJ -> e
     java.lang.String BK -> f
     boolean fe() -> a
-com.google.android.gms.analytics.ae -> com.google.android.gms.b.n:
+com.google.android.gms.analytics.ae -> com.google.android.gms.b.t:
     com.google.android.gms.analytics.GoogleAnalytics BL -> a
     boolean BM -> b
     com.google.android.gms.analytics.Logger BN -> c
@@ -7483,14 +7520,14 @@ com.google.android.gms.analytics.ae -> com.google.android.gms.b.n:
     void W(java.lang.String) -> d
     boolean ff() -> a
     com.google.android.gms.analytics.Logger getLogger() -> b
-com.google.android.gms.analytics.af -> com.google.android.gms.b.o:
+com.google.android.gms.analytics.af -> com.google.android.gms.b.u:
     java.util.Map BO -> a
     java.util.Map BP -> b
     boolean BQ -> c
     java.lang.String BR -> d
     void g(java.lang.String,java.lang.String) -> a
     void e(java.lang.String,int) -> a
-com.google.android.gms.analytics.ag -> com.google.android.gms.b.p:
+com.google.android.gms.analytics.ag -> com.google.android.gms.b.v:
     java.lang.String BS -> a
     com.google.android.gms.analytics.ag$a BT -> b
     com.google.android.gms.analytics.r BU -> c
@@ -7520,7 +7557,7 @@ com.google.android.gms.analytics.ag -> com.google.android.gms.b.p:
     java.lang.String b(com.google.android.gms.analytics.ag) -> b
     android.content.Context c(com.google.android.gms.analytics.ag) -> c
     java.lang.String fk() -> d
-com.google.android.gms.analytics.ag$a -> com.google.android.gms.b.q:
+com.google.android.gms.analytics.ag$a -> com.google.android.gms.b.w:
     boolean BZ -> b
     long Ca -> c
     com.google.android.gms.analytics.ag Cb -> a
@@ -7529,41 +7566,58 @@ com.google.android.gms.analytics.ag$a -> com.google.android.gms.b.q:
     void onOpen(android.database.sqlite.SQLiteDatabase) -> onOpen
     void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
     void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
-com.google.android.gms.analytics.ah -> com.google.android.gms.b.r:
+com.google.android.gms.analytics.ah -> com.google.android.gms.b.x:
     boolean fe() -> a
-com.google.android.gms.analytics.ai -> com.google.android.gms.b.s:
+com.google.android.gms.analytics.ai -> com.google.android.gms.b.y:
     com.google.android.gms.analytics.ai Cc -> a
     java.lang.Object xO -> b
     android.content.Context mContext -> c
     void y(android.content.Context) -> a
     com.google.android.gms.analytics.ai fl() -> a
     java.lang.String getValue(java.lang.String) -> a
-com.google.android.gms.analytics.aj -> com.google.android.gms.b.t:
+com.google.android.gms.analytics.aj -> com.google.android.gms.b.z:
     void dispatchLocalHits() -> a
     void setLocalDispatchPeriod(int) -> a
     void C(boolean) -> a
     void ey() -> b
-com.google.android.gms.analytics.ak -> com.google.android.gms.b.u:
+com.google.android.gms.analytics.ak -> com.google.android.gms.b.aa:
     void b(java.util.Map,long,java.lang.String,java.util.List) -> a
     void dW() -> a
     void dispatch() -> b
     void eB() -> c
-com.google.android.gms.analytics.an -> com.google.android.gms.b.v:
+com.google.android.gms.analytics.al -> com.google.android.gms.b.ab:
+com.google.android.gms.analytics.al$a -> com.google.android.gms.b.ac:
+    com.google.android.gms.analytics.am Cu -> a
+    void e(java.lang.String,java.lang.String) -> a
+    void f(java.lang.String,java.lang.String) -> b
+    void e(java.lang.String,boolean) -> a
+    void c(java.lang.String,int) -> a
+    com.google.android.gms.analytics.m er() -> a
+com.google.android.gms.analytics.am -> com.google.android.gms.b.ad:
+    java.lang.String Cv -> a
+    double Cw -> b
+    int Cx -> c
+    int Cy -> d
+    int Cz -> e
+    int CA -> f
+    java.util.Map CB -> g
+com.google.android.gms.analytics.an -> com.google.android.gms.b.ae:
     char[] CC -> a
     java.util.Map an(java.lang.String) -> a
     double a$505d11f3(java.lang.String) -> b
     boolean f$505cbf47(java.lang.String) -> c
+    java.lang.String E$56aeb37f() -> a
     java.lang.String ao(java.lang.String) -> d
     java.lang.String a(java.util.Locale) -> a
     void a(java.util.Map,java.lang.String,java.lang.String) -> a
     void a(java.util.Map,java.lang.String,com.google.android.gms.analytics.q) -> a
     java.security.MessageDigest ap(java.lang.String) -> e
-com.google.android.gms.analytics.b -> com.google.android.gms.b.w:
+com.google.android.gms.analytics.b -> com.google.android.gms.b.af:
     void a(java.util.Map,long,java.lang.String,java.util.List) -> a
     void dQ() -> a
     void connect() -> b
     void disconnect() -> c
-com.google.android.gms.analytics.c -> com.google.android.gms.b.x:
+com.google.android.gms.analytics.c -> com.google.android.gms.b.ag:
     android.content.ServiceConnection xV -> a
     com.google.android.gms.analytics.c$b xW -> b
     com.google.android.gms.analytics.c$c xX -> c
@@ -7574,22 +7628,22 @@ com.google.android.gms.analytics.c -> com.google.android.gms.b.x:
     void a(java.util.Map,long,java.lang.String,java.util.List) -> a
     void dQ() -> a
     com.google.android.gms.internal.hb dR() -> d
-com.google.android.gms.analytics.c$a -> com.google.android.gms.b.y:
+com.google.android.gms.analytics.c$a -> com.google.android.gms.b.ah:
     com.google.android.gms.analytics.c xZ -> a
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
-com.google.android.gms.analytics.c$b -> com.google.android.gms.b.z:
+com.google.android.gms.analytics.c$b -> com.google.android.gms.b.ai:
     void onConnected() -> d
     void onDisconnected() -> e
-com.google.android.gms.analytics.c$c -> com.google.android.gms.b.aa:
+com.google.android.gms.analytics.c$c -> com.google.android.gms.b.aj:
     void a$10b55c15(int) -> a
-com.google.android.gms.analytics.d -> com.google.android.gms.b.ab:
+com.google.android.gms.analytics.d -> com.google.android.gms.b.ak:
     void setDryRun(boolean) -> a
     void a(java.util.Map,long,java.lang.String,java.util.Collection) -> a
     void l$1349ef() -> a
     void dispatch() -> b
     com.google.android.gms.analytics.r dV() -> c
-com.google.android.gms.analytics.e -> com.google.android.gms.b.ac:
+com.google.android.gms.analytics.e -> com.google.android.gms.b.al:
     void B(boolean) -> a
 com.google.android.gms.analytics.ecommerce.Product -> com.google.android.gms.b.a.a:
     java.util.Map CD -> a
@@ -7599,13 +7653,14 @@ com.google.android.gms.analytics.ecommerce.ProductAction -> com.google.android.g
 com.google.android.gms.analytics.ecommerce.Promotion -> com.google.android.gms.b.a.c:
     java.util.Map CD -> a
     java.util.Map aq(java.lang.String) -> a
-com.google.android.gms.analytics.f -> com.google.android.gms.b.ad:
+com.google.android.gms.analytics.f -> com.google.android.gms.b.am:
     void u(java.util.Map) -> a
     void dispatch() -> a
     void dW() -> b
     java.util.concurrent.LinkedBlockingQueue dX() -> c
     java.lang.Thread getThread() -> d
-com.google.android.gms.analytics.g -> com.google.android.gms.b.ae:
+    void dY() -> e
+com.google.android.gms.analytics.g -> com.google.android.gms.b.an:
     java.lang.String ya -> a
     java.lang.String yb -> b
     java.lang.String yc -> c
@@ -7615,7 +7670,7 @@ com.google.android.gms.analytics.g -> com.google.android.gms.b.ae:
     void y(android.content.Context) -> a
     com.google.android.gms.analytics.g dZ() -> a
     java.lang.String getValue(java.lang.String) -> a
-com.google.android.gms.analytics.h -> com.google.android.gms.b.af:
+com.google.android.gms.analytics.h -> com.google.android.gms.b.ao:
     java.lang.String wl -> a
     org.apache.http.client.HttpClient yf -> b
     android.content.Context mContext -> c
@@ -7644,10 +7699,10 @@ com.google.android.gms.analytics.h -> com.google.android.gms.b.af:
     void a(org.apache.http.HttpEntityEnclosingRequest) -> a
     java.net.URL a(com.google.android.gms.analytics.ab) -> a
     void setDryRun(boolean) -> a
-com.google.android.gms.analytics.h$1 -> com.google.android.gms.b.ag:
+com.google.android.gms.analytics.h$1 -> com.google.android.gms.b.ap:
     int[] yu -> a
     int[] yv -> b
-com.google.android.gms.analytics.i -> com.google.android.gms.b.ah:
+com.google.android.gms.analytics.i -> com.google.android.gms.b.aq:
     com.google.android.gms.analytics.i yw -> a
     com.google.android.gms.analytics.i yx -> b
     com.google.android.gms.analytics.i yy -> c
@@ -7657,14 +7712,14 @@ com.google.android.gms.analytics.i -> com.google.android.gms.b.ah:
     com.google.android.gms.analytics.i[] yC -> g
     com.google.android.gms.analytics.i[] values() -> values
     com.google.android.gms.analytics.i valueOf(java.lang.String) -> valueOf
-com.google.android.gms.analytics.j -> com.google.android.gms.b.ai:
+com.google.android.gms.analytics.j -> com.google.android.gms.b.ar:
     java.util.Set yo -> a
     java.lang.String eg() -> a
     java.lang.String eh() -> b
     com.google.android.gms.analytics.i ei() -> c
     com.google.android.gms.analytics.l ej() -> d
     java.util.Set ek() -> e
-com.google.android.gms.analytics.k -> com.google.android.gms.b.aj:
+com.google.android.gms.analytics.k -> com.google.android.gms.b.as:
     com.google.android.gms.analytics.k yD -> a
     java.lang.Object xO -> b
     android.content.Context mContext -> c
@@ -7682,33 +7737,34 @@ com.google.android.gms.analytics.k -> com.google.android.gms.b.aj:
     java.lang.Object a(com.google.android.gms.analytics.k) -> a
     java.lang.String a(com.google.android.gms.analytics.k,java.lang.String) -> a
     boolean a$5d71556c(com.google.android.gms.analytics.k) -> b
-com.google.android.gms.analytics.k$1 -> com.google.android.gms.b.ak:
+com.google.android.gms.analytics.k$1 -> com.google.android.gms.b.at:
     com.google.android.gms.analytics.k yH -> a
     void run() -> run
-com.google.android.gms.analytics.l -> com.google.android.gms.b.al:
+com.google.android.gms.analytics.l -> com.google.android.gms.b.au:
     com.google.android.gms.analytics.l yI -> a
     com.google.android.gms.analytics.l yJ -> b
     com.google.android.gms.analytics.l[] yK -> c
     com.google.android.gms.analytics.l[] values() -> values
     com.google.android.gms.analytics.l valueOf(java.lang.String) -> valueOf
-com.google.android.gms.analytics.m -> com.google.android.gms.b.am:
-com.google.android.gms.analytics.n -> com.google.android.gms.b.an:
+com.google.android.gms.analytics.m -> com.google.android.gms.b.av:
+com.google.android.gms.analytics.n -> com.google.android.gms.b.aw:
     android.content.Context mContext -> a
     com.google.android.gms.analytics.n$a yL -> b
     com.google.android.gms.analytics.m x(int) -> a
     com.google.android.gms.analytics.m a(android.content.res.XmlResourceParser) -> a
-com.google.android.gms.analytics.n$a -> com.google.android.gms.b.ao:
-    void f(java.lang.String,java.lang.String) -> a
+com.google.android.gms.analytics.n$a -> com.google.android.gms.b.ax:
+    void e(java.lang.String,java.lang.String) -> a
+    void f(java.lang.String,java.lang.String) -> b
     void e(java.lang.String,boolean) -> a
     void c(java.lang.String,int) -> a
     com.google.android.gms.analytics.m er() -> a
-com.google.android.gms.analytics.o -> com.google.android.gms.b.ap:
+com.google.android.gms.analytics.o -> com.google.android.gms.b.ay:
     java.lang.String eg() -> a
     java.lang.String eh() -> b
     com.google.android.gms.analytics.i ei() -> c
     com.google.android.gms.analytics.l ej() -> d
     java.util.Set ek() -> e
-com.google.android.gms.analytics.p -> com.google.android.gms.b.aq:
+com.google.android.gms.analytics.p -> com.google.android.gms.b.az:
     int yM -> a
     void verbose(java.lang.String) -> a
     void info(java.lang.String) -> b
@@ -7717,22 +7773,22 @@ com.google.android.gms.analytics.p -> com.google.android.gms.b.aq:
     void setLogLevel(int) -> a
     int getLogLevel() -> a
     java.lang.String af(java.lang.String) -> e
-com.google.android.gms.analytics.q -> com.google.android.gms.b.ar:
+com.google.android.gms.analytics.q -> com.google.android.gms.b.ba:
     java.lang.String getValue(java.lang.String) -> a
-com.google.android.gms.analytics.r -> com.google.android.gms.b.as:
+com.google.android.gms.analytics.r -> com.google.android.gms.b.bb:
     int a(java.util.List,com.google.android.gms.analytics.af,boolean) -> a
     boolean ea() -> a
     void setDryRun(boolean) -> a
     void ad(java.lang.String) -> a
-com.google.android.gms.analytics.s -> com.google.android.gms.b.at:
+com.google.android.gms.analytics.s -> com.google.android.gms.b.bc:
     java.lang.String d(java.lang.String,int) -> a
-com.google.android.gms.analytics.t -> com.google.android.gms.b.au:
+com.google.android.gms.analytics.t -> com.google.android.gms.b.bd:
     int version() -> a
-com.google.android.gms.analytics.u -> com.google.android.gms.b.av:
+com.google.android.gms.analytics.u -> com.google.android.gms.b.be:
     java.lang.String yR -> a
     com.google.android.gms.analytics.aj yS -> b
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.google.android.gms.analytics.v -> com.google.android.gms.b.aw:
+com.google.android.gms.analytics.v -> com.google.android.gms.b.bf:
     java.lang.Object yT -> a
     android.content.Context mContext -> b
     com.google.android.gms.analytics.d yU -> c
@@ -7762,13 +7818,13 @@ com.google.android.gms.analytics.v -> com.google.android.gms.b.aw:
     int b(com.google.android.gms.analytics.v) -> b
     boolean c(com.google.android.gms.analytics.v) -> c
     android.os.Handler d(com.google.android.gms.analytics.v) -> d
-com.google.android.gms.analytics.v$1 -> com.google.android.gms.b.ax:
+com.google.android.gms.analytics.v$1 -> com.google.android.gms.b.bg:
     com.google.android.gms.analytics.v zg -> a
     void B(boolean) -> a
-com.google.android.gms.analytics.v$2 -> com.google.android.gms.b.ay:
+com.google.android.gms.analytics.v$2 -> com.google.android.gms.b.bh:
     com.google.android.gms.analytics.v zg -> a
     boolean handleMessage(android.os.Message) -> handleMessage
-com.google.android.gms.analytics.w -> com.google.android.gms.b.az:
+com.google.android.gms.analytics.w -> com.google.android.gms.b.bi:
     long zh -> a
     com.google.android.gms.analytics.w$a zi -> b
     com.google.android.gms.analytics.b zj -> g
@@ -7803,12 +7859,12 @@ com.google.android.gms.analytics.w -> com.google.android.gms.b.az:
     void onDisconnected() -> e
     void a$10b55c15(int) -> a
     void eG() -> l
-com.google.android.gms.analytics.w$1 -> com.google.android.gms.b.ba:
+com.google.android.gms.analytics.w$1 -> com.google.android.gms.b.bj:
     com.google.android.gms.analytics.w zv -> a
     void run() -> run
-com.google.android.gms.analytics.w$2 -> com.google.android.gms.b.bb:
+com.google.android.gms.analytics.w$2 -> com.google.android.gms.b.bk:
     int[] zw -> a
-com.google.android.gms.analytics.w$a -> com.google.android.gms.b.bc:
+com.google.android.gms.analytics.w$a -> com.google.android.gms.b.bl:
     com.google.android.gms.analytics.w$a zx -> a
     com.google.android.gms.analytics.w$a zy -> b
     com.google.android.gms.analytics.w$a zz -> c
@@ -7819,22 +7875,22 @@ com.google.android.gms.analytics.w$a -> com.google.android.gms.b.bc:
     com.google.android.gms.analytics.w$a[] zE -> h
     com.google.android.gms.analytics.w$a[] values() -> values
     com.google.android.gms.analytics.w$a valueOf(java.lang.String) -> valueOf
-com.google.android.gms.analytics.w$b -> com.google.android.gms.b.bd:
+com.google.android.gms.analytics.w$b -> com.google.android.gms.b.bm:
     com.google.android.gms.analytics.w zv -> a
     void run() -> run
-com.google.android.gms.analytics.w$c -> com.google.android.gms.b.be:
+com.google.android.gms.analytics.w$c -> com.google.android.gms.b.bn:
     com.google.android.gms.analytics.w zv -> a
     void run() -> run
-com.google.android.gms.analytics.w$d -> com.google.android.gms.b.bf:
+com.google.android.gms.analytics.w$d -> com.google.android.gms.b.bo:
     java.util.Map zF -> a
     long zG -> b
     java.lang.String zH -> c
     java.util.List zI -> d
     java.lang.String toString() -> toString
-com.google.android.gms.analytics.w$e -> com.google.android.gms.b.bg:
+com.google.android.gms.analytics.w$e -> com.google.android.gms.b.bp:
     com.google.android.gms.analytics.w zv -> a
     void run() -> run
-com.google.android.gms.analytics.x -> com.google.android.gms.b.bh:
+com.google.android.gms.analytics.x -> com.google.android.gms.b.bq:
     java.util.concurrent.LinkedBlockingQueue zJ -> a
     boolean zK -> b
     boolean mClosed -> c
@@ -7845,7 +7901,7 @@ com.google.android.gms.analytics.x -> com.google.android.gms.b.bh:
     java.util.concurrent.locks.Lock zO -> h
     java.util.List zP -> i
     com.google.android.gms.analytics.x A(android.content.Context) -> a
-    void init() -> e
+    void init() -> f
     void u(java.util.Map) -> a
     void dispatch() -> a
     void dW() -> b
@@ -7856,22 +7912,23 @@ com.google.android.gms.analytics.x -> com.google.android.gms.b.bh:
     void run() -> run
     java.util.concurrent.LinkedBlockingQueue dX() -> c
     java.lang.Thread getThread() -> d
+    void dY() -> e
     android.content.Context a(com.google.android.gms.analytics.x) -> a
     java.lang.String b(com.google.android.gms.analytics.x) -> b
     java.lang.String a$568be3f7(com.google.android.gms.analytics.x) -> c
     java.util.List c(com.google.android.gms.analytics.x) -> d
     com.google.android.gms.analytics.ak d(com.google.android.gms.analytics.x) -> e
-com.google.android.gms.analytics.x$b -> com.google.android.gms.b.bi:
+com.google.android.gms.analytics.x$b -> com.google.android.gms.b.br:
     com.google.android.gms.analytics.x zQ -> a
     void run() -> run
-com.google.android.gms.analytics.x$c -> com.google.android.gms.b.bj:
+com.google.android.gms.analytics.x$c -> com.google.android.gms.b.bs:
     com.google.android.gms.analytics.x zQ -> a
     void run() -> run
-com.google.android.gms.analytics.x$d -> com.google.android.gms.b.bk:
+com.google.android.gms.analytics.x$d -> com.google.android.gms.b.bt:
     java.util.Map zR -> b
     com.google.android.gms.analytics.x zQ -> a
     void run() -> run
-com.google.android.gms.analytics.y -> com.google.android.gms.b.bl:
+com.google.android.gms.analytics.y -> com.google.android.gms.b.bu:
     java.util.SortedSet zS -> a
     java.lang.StringBuilder zT -> b
     boolean zU -> c
@@ -7881,7 +7938,7 @@ com.google.android.gms.analytics.y -> com.google.android.gms.b.bl:
     void a(com.google.android.gms.analytics.y$a) -> a
     java.lang.String eL() -> b
     java.lang.String eM() -> c
-com.google.android.gms.analytics.y$a -> com.google.android.gms.b.bm:
+com.google.android.gms.analytics.y$a -> com.google.android.gms.b.bv:
     com.google.android.gms.analytics.y$a zW -> a
     com.google.android.gms.analytics.y$a zX -> b
     com.google.android.gms.analytics.y$a zY -> c
@@ -7948,10 +8005,11 @@ com.google.android.gms.analytics.y$a -> com.google.android.gms.b.bm:
     com.google.android.gms.analytics.y$a[] Bh -> al
     com.google.android.gms.analytics.y$a[] values() -> values
     com.google.android.gms.analytics.y$a valueOf(java.lang.String) -> valueOf
-com.google.android.gms.analytics.z -> com.google.android.gms.b.bn:
-com.google.android.gms.analytics.z$a -> com.google.android.gms.b.bo:
+com.google.android.gms.analytics.z -> com.google.android.gms.b.bw:
+com.google.android.gms.analytics.z$a -> com.google.android.gms.b.bx:
     com.google.android.gms.analytics.aa Bi -> a
-    void f(java.lang.String,java.lang.String) -> a
+    void e(java.lang.String,java.lang.String) -> a
+    void f(java.lang.String,java.lang.String) -> b
     void e(java.lang.String,boolean) -> a
     void c(java.lang.String,int) -> a
     com.google.android.gms.analytics.m er() -> a
@@ -16123,9 +16181,31 @@ com.google.api.client.util.escape.UnicodeEscaper -> com.google.a.a.f.a.f:
     int nextEscapeIndex(java.lang.CharSequence,int,int) -> a
     java.lang.String escapeSlow(java.lang.String,int) -> a
     char[] growBuffer(char[],int,int) -> a
-org.apache.commons.lang3.StringUtils -> a.a.a.a.a:
+org.apache.commons.lang3.ArrayUtils -> a.a.a.a.a:
+    java.lang.Object[] EMPTY_OBJECT_ARRAY -> a
+    java.lang.Class[] EMPTY_CLASS_ARRAY -> b
+    java.lang.String[] EMPTY_STRING_ARRAY -> c
+    long[] EMPTY_LONG_ARRAY -> d
+    java.lang.Long[] EMPTY_LONG_OBJECT_ARRAY -> e
+    int[] EMPTY_INT_ARRAY -> f
+    java.lang.Integer[] EMPTY_INTEGER_OBJECT_ARRAY -> g
+    short[] EMPTY_SHORT_ARRAY -> h
+    java.lang.Short[] EMPTY_SHORT_OBJECT_ARRAY -> i
+    byte[] EMPTY_BYTE_ARRAY -> j
+    java.lang.Byte[] EMPTY_BYTE_OBJECT_ARRAY -> k
+    double[] EMPTY_DOUBLE_ARRAY -> l
+    java.lang.Double[] EMPTY_DOUBLE_OBJECT_ARRAY -> m
+    float[] EMPTY_FLOAT_ARRAY -> n
+    java.lang.Float[] EMPTY_FLOAT_OBJECT_ARRAY -> o
+    boolean[] EMPTY_BOOLEAN_ARRAY -> p
+    java.lang.Boolean[] EMPTY_BOOLEAN_OBJECT_ARRAY -> q
+    char[] EMPTY_CHAR_ARRAY -> r
+    java.lang.Character[] EMPTY_CHARACTER_OBJECT_ARRAY -> s
+org.apache.commons.lang3.StringUtils -> a.a.a.a.b:
     java.util.regex.Pattern WHITESPACE_PATTERN -> a
     boolean isEmpty(java.lang.CharSequence) -> a
+    java.lang.String[] split(java.lang.String) -> a
+    java.lang.String join(java.lang.Object[],java.lang.String) -> a
 org.apache.poi.EncryptedDocumentException -> a.a.b.a:
 org.apache.poi.POIDocument -> a.a.b.b:
     org.apache.poi.hpsf.SummaryInformation sInf -> a
@@ -19905,10 +19985,6 @@ uwi.dcit.AgriExpenseTT.BaseActivity -> uwi.dcit.AgriExpenseTT.a:
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     void onBackPressed() -> onBackPressed
     void hideSoftKeyboard() -> j
-uwi.dcit.AgriExpenseTT.CycleUseage -> uwi.dcit.AgriExpenseTT.CycleUseage:
-    void onCreate(android.os.Bundle) -> onCreate
-    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
 uwi.dcit.AgriExpenseTT.DeleteData -> uwi.dcit.AgriExpenseTT.DeleteData:
     void onCreate(android.os.Bundle) -> onCreate
 uwi.dcit.AgriExpenseTT.EditChooseLists -> uwi.dcit.AgriExpenseTT.EditChooseLists:
@@ -20027,13 +20103,14 @@ uwi.dcit.AgriExpenseTT.HireLabour -> uwi.dcit.AgriExpenseTT.HireLabour:
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
 uwi.dcit.AgriExpenseTT.Main -> uwi.dcit.AgriExpenseTT.Main:
     java.lang.CharSequence mTitle -> n
+    java.lang.String focus -> u
     void onCreate(android.os.Bundle) -> onCreate
+    void onResume() -> onResume
+    void buildScreen() -> k
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     void navigate(android.support.v4.app.Fragment,android.support.v4.app.Fragment) -> a
     void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    void openNewCycle(android.view.View) -> openNewCycle
-    void openNewPurchase(android.view.View) -> openNewPurchase
 uwi.dcit.AgriExpenseTT.ManageData -> uwi.dcit.AgriExpenseTT.ManageData:
     void onCreate(android.os.Bundle) -> onCreate
     void openDataEdit(android.view.View) -> openDataEdit
@@ -20083,14 +20160,23 @@ uwi.dcit.AgriExpenseTT.SalesCost -> uwi.dcit.AgriExpenseTT.SalesCost:
     java.lang.String crop -> H
     android.database.sqlite.SQLiteDatabase db -> I
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> J
+    int res -> L
     void onCreate(android.os.Bundle) -> onCreate
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    int access$002(uwi.dcit.AgriExpenseTT.SalesCost,int) -> a
+    int access$000(uwi.dcit.AgriExpenseTT.SalesCost) -> a
 uwi.dcit.AgriExpenseTT.SalesCost$Click -> uwi.dcit.AgriExpenseTT.l:
     android.content.Context context -> a
     uwi.dcit.AgriExpenseTT.SalesCost this$0 -> b
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.SalesCost$TWatch -> uwi.dcit.AgriExpenseTT.m:
+uwi.dcit.AgriExpenseTT.SalesCost$Click$1 -> uwi.dcit.AgriExpenseTT.m:
+    uwi.dcit.AgriExpenseTT.SalesCost$Click this$1 -> a
+    void run() -> run
+uwi.dcit.AgriExpenseTT.SalesCost$Click$1$1 -> uwi.dcit.AgriExpenseTT.n:
+    uwi.dcit.AgriExpenseTT.SalesCost$Click$1 this$2 -> a
+    void run() -> run
+uwi.dcit.AgriExpenseTT.SalesCost$TWatch -> uwi.dcit.AgriExpenseTT.o:
     uwi.dcit.AgriExpenseTT.SalesCost this$0 -> a
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
@@ -20100,23 +20186,9 @@ uwi.dcit.AgriExpenseTT.SelectLocation -> uwi.dcit.AgriExpenseTT.SelectLocation:
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
 uwi.dcit.AgriExpenseTT.SplashScreen -> uwi.dcit.AgriExpenseTT.SplashScreen:
     void onCreate(android.os.Bundle) -> onCreate
-uwi.dcit.AgriExpenseTT.SplashScreen$1 -> uwi.dcit.AgriExpenseTT.n:
+uwi.dcit.AgriExpenseTT.SplashScreen$1 -> uwi.dcit.AgriExpenseTT.p:
     android.content.Context val$c -> a
     uwi.dcit.AgriExpenseTT.SplashScreen this$0 -> b
-    void run() -> run
-uwi.dcit.AgriExpenseTT.UseResource -> uwi.dcit.AgriExpenseTT.UseResource:
-    java.lang.Double total -> n
-    uwi.dcit.AgriExpenseTT.models.LocalCycle mainCycle -> u
-    void onCreate(android.os.Bundle) -> onCreate
-    void hideSoftKeyboard() -> j
-    void onBackPressed() -> onBackPressed
-    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
-    uwi.dcit.AgriExpenseTT.models.LocalCycle access$100(uwi.dcit.AgriExpenseTT.UseResource) -> a
-uwi.dcit.AgriExpenseTT.UseResource$1 -> uwi.dcit.AgriExpenseTT.o:
-    uwi.dcit.AgriExpenseTT.UseResource this$0 -> a
-    boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.UseResource$IntentLauncher -> uwi.dcit.AgriExpenseTT.p:
-    uwi.dcit.AgriExpenseTT.UseResource this$0 -> a
     void run() -> run
 uwi.dcit.AgriExpenseTT.ViewCycleUsege -> uwi.dcit.AgriExpenseTT.ViewCycleUsege:
     android.database.sqlite.SQLiteDatabase db -> n
@@ -20315,8 +20387,17 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue -> uwi.dcit.AgriExpenseT
     android.app.Dialog onCreateDialog$5709b310() -> b
 uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue$1 -> uwi.dcit.AgriExpenseTT.fragments.k:
     uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue this$0 -> a
+    void onClick(android.view.View) -> onClick
+uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue$2 -> uwi.dcit.AgriExpenseTT.fragments.l:
+    uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue this$0 -> a
+    void onClick(android.view.View) -> onClick
+uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue$3 -> uwi.dcit.AgriExpenseTT.fragments.m:
+    uwi.dcit.AgriExpenseTT.fragments.FragmentCreateDialogue this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory -> uwi.dcit.AgriExpenseTT.fragments.l:
+uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUsage -> uwi.dcit.AgriExpenseTT.fragments.n:
+    android.view.View view -> a
+    android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
+uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory -> uwi.dcit.AgriExpenseTT.fragments.o:
     android.widget.TextView catMain -> a
     android.widget.TextView catDet1 -> b
     android.widget.TextView catDet2 -> c
@@ -20328,59 +20409,57 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory -> uwi.dcit.AgriExpens
     java.lang.Double catTotal -> i
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void calculate() -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory$Click -> uwi.dcit.AgriExpenseTT.fragments.m:
+uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory$Click -> uwi.dcit.AgriExpenseTT.fragments.p:
     uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseCategory this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentCycleUseage -> uwi.dcit.AgriExpenseTT.fragments.n:
-    android.view.View view -> a
-    android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty -> uwi.dcit.AgriExpenseTT.fragments.o:
+uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty -> uwi.dcit.AgriExpenseTT.fragments.q:
     android.view.View view -> a
     boolean isLabour -> b
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void access$000(uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$1 -> uwi.dcit.AgriExpenseTT.fragments.p:
+uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$1 -> uwi.dcit.AgriExpenseTT.fragments.r:
     uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$2 -> uwi.dcit.AgriExpenseTT.fragments.q:
+uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$2 -> uwi.dcit.AgriExpenseTT.fragments.s:
     uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$3 -> uwi.dcit.AgriExpenseTT.fragments.r:
+uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$3 -> uwi.dcit.AgriExpenseTT.fragments.t:
     uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$4 -> uwi.dcit.AgriExpenseTT.fragments.s:
+uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty$4 -> uwi.dcit.AgriExpenseTT.fragments.u:
     uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory -> uwi.dcit.AgriExpenseTT.fragments.t:
-    android.widget.TextView cat_pm -> a
-    android.widget.TextView cat_fer -> b
-    android.widget.TextView cat_soilam -> c
-    android.widget.TextView cat_chem -> d
-    android.widget.TextView cat_labr -> e
-    android.widget.TextView cat_other -> f
-    android.widget.TextView statement1 -> g
-    android.database.sqlite.SQLiteDatabase db -> h
-    uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> i
-    double pm -> aj
-    double fer -> ak
-    double soilam -> al
-    double chem -> am
-    double labr -> an
-    double other -> ao
-    android.view.View view -> ap
-    uwi.dcit.AgriExpenseTT.models.LocalCycle currCycle -> aq
+uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory -> uwi.dcit.AgriExpenseTT.fragments.v:
+    android.widget.TextView totalLbl -> a
+    android.widget.TextView cat_pm -> b
+    android.widget.TextView cat_fer -> c
+    android.widget.TextView cat_soil_amend -> d
+    android.widget.TextView cat_chem -> e
+    android.widget.TextView cat_labour -> f
+    android.widget.TextView cat_other -> g
+    android.widget.TextView statement1 -> h
+    android.database.sqlite.SQLiteDatabase db -> i
+    uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> aj
+    double pm -> ak
+    double fer -> al
+    double soilam -> am
+    double chem -> an
+    double labr -> ao
+    double other -> ap
+    android.view.View view -> aq
+    uwi.dcit.AgriExpenseTT.models.LocalCycle currCycle -> ar
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     double getTotal(java.util.ArrayList) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory$Click -> uwi.dcit.AgriExpenseTT.fragments.u:
+uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory$1 -> uwi.dcit.AgriExpenseTT.fragments.w:
     uwi.dcit.AgriExpenseTT.fragments.FragmentGeneralCategory this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentLabourType -> uwi.dcit.AgriExpenseTT.fragments.v:
+uwi.dcit.AgriExpenseTT.fragments.FragmentLabourType -> uwi.dcit.AgriExpenseTT.fragments.x:
     android.view.View view -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentLabourType$Click -> uwi.dcit.AgriExpenseTT.fragments.w:
+uwi.dcit.AgriExpenseTT.fragments.FragmentLabourType$Click -> uwi.dcit.AgriExpenseTT.fragments.y:
     uwi.dcit.AgriExpenseTT.fragments.FragmentLabourType this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast -> uwi.dcit.AgriExpenseTT.fragments.x:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast -> uwi.dcit.AgriExpenseTT.fragments.z:
     java.lang.String plantMaterial -> a
     java.lang.String land -> b
     int plantMaterialId -> c
@@ -20389,26 +20468,31 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast -> uwi.dcit.AgriExpenseTT.
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> f
     android.widget.EditText et_landQty -> g
     android.widget.TextView error -> h
-    android.widget.Button btnDate -> i
-    android.widget.EditText et_CycleName -> aj
+    android.widget.Button btnDate -> aj
+    android.widget.EditText et_CycleName -> ak
+    int res -> i
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
+    void onDestroy() -> l
     java.lang.String formatDisplayDate(java.util.Calendar) -> a
     android.widget.EditText access$000(uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$1 -> uwi.dcit.AgriExpenseTT.fragments.y:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$1 -> uwi.dcit.AgriExpenseTT.fragments.aa:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$DatePickerFragment -> uwi.dcit.AgriExpenseTT.fragments.z:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$DatePickerFragment -> uwi.dcit.AgriExpenseTT.fragments.ab:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast this$0 -> aj
     android.app.Dialog onCreateDialog$5709b310() -> b
     void onDateSet(android.widget.DatePicker,int,int,int) -> onDateSet
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$IntentLauncher -> uwi.dcit.AgriExpenseTT.fragments.aa:
-    uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast this$0 -> a
-    void run() -> run
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener -> uwi.dcit.AgriExpenseTT.fragments.ab:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener -> uwi.dcit.AgriExpenseTT.fragments.ac:
     android.support.v4.app.FragmentActivity activity -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast this$0 -> b
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast -> uwi.dcit.AgriExpenseTT.fragments.ac:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener$1 -> uwi.dcit.AgriExpenseTT.fragments.ad:
+    uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener this$1 -> a
+    void run() -> run
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener$1$1 -> uwi.dcit.AgriExpenseTT.fragments.ae:
+    uwi.dcit.AgriExpenseTT.fragments.FragmentNewCycleLast$NewCycleClickListener$1 this$2 -> a
+    void run() -> run
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast -> uwi.dcit.AgriExpenseTT.fragments.af:
     android.widget.EditText et_qty -> a
     android.widget.EditText et_cost -> b
     android.widget.TextView helper_qty -> c
@@ -20422,6 +20506,7 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast -> uwi.dcit.AgriExpense
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> ak
     long unixDate -> al
     android.widget.TextView helper_cost -> am
+    int res -> an
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     java.lang.String formatDisplayDate(java.util.Calendar) -> a
     android.widget.EditText access$000(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> a
@@ -20430,30 +20515,37 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast -> uwi.dcit.AgriExpense
     android.widget.TextView access$300(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> d
     long access$400(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> e
     java.lang.String access$500$384bf9f5(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> f
-    android.database.sqlite.SQLiteDatabase access$600(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> g
-    uwi.dcit.AgriExpenseTT.helpers.DbHelper access$700(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> h
-    uwi.dcit.AgriExpenseTT.models.LocalCycle access$802(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast,uwi.dcit.AgriExpenseTT.models.LocalCycle) -> a
-    java.lang.String access$900(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> i
-    uwi.dcit.AgriExpenseTT.models.LocalCycle access$800(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> j
-    int access$1000(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> k
-    java.lang.String access$1100(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> l
-    int access$1002(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast,int) -> a
-    java.lang.String access$1200(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> m
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$1 -> uwi.dcit.AgriExpenseTT.fragments.ad:
+    int access$602(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast,int) -> a
+    android.database.sqlite.SQLiteDatabase access$700(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> g
+    uwi.dcit.AgriExpenseTT.helpers.DbHelper access$800(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> h
+    uwi.dcit.AgriExpenseTT.models.LocalCycle access$902(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast,uwi.dcit.AgriExpenseTT.models.LocalCycle) -> a
+    java.lang.String access$1000(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> i
+    uwi.dcit.AgriExpenseTT.models.LocalCycle access$900(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> j
+    int access$1100(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> k
+    java.lang.String access$1200(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> l
+    int access$1102(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast,int) -> b
+    java.lang.String access$1300(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> m
+    int access$600(uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast) -> n
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$1 -> uwi.dcit.AgriExpenseTT.fragments.ag:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$DatePickerFragment -> uwi.dcit.AgriExpenseTT.fragments.ae:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$DatePickerFragment -> uwi.dcit.AgriExpenseTT.fragments.ah:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast this$0 -> aj
     android.app.Dialog onCreateDialog$5709b310() -> b
     void onDateSet(android.widget.DatePicker,int,int,int) -> onDateSet
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$IntentLauncher -> uwi.dcit.AgriExpenseTT.fragments.af:
-    uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast this$0 -> a
-    void run() -> run
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener -> uwi.dcit.AgriExpenseTT.fragments.ag:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener -> uwi.dcit.AgriExpenseTT.fragments.ai:
     android.support.v4.app.FragmentActivity activity -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast this$0 -> b
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther -> uwi.dcit.AgriExpenseTT.fragments.ah:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener$1 -> uwi.dcit.AgriExpenseTT.fragments.aj:
+    double val$qty -> a
+    double val$cost -> b
+    uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener this$1 -> c
+    void run() -> run
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener$1$1 -> uwi.dcit.AgriExpenseTT.fragments.ak:
+    uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseLast$NewPurchaseClickListener$1 this$2 -> a
+    void run() -> run
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther -> uwi.dcit.AgriExpenseTT.fragments.al:
     android.widget.EditText et_res -> a
     android.widget.EditText et_qtfr -> b
     android.widget.Button btn_dne -> c
@@ -20463,13 +20555,13 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther -> uwi.dcit.AgriExpens
     java.lang.String resource -> g
     java.lang.String quantifier -> h
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther$1 -> uwi.dcit.AgriExpenseTT.fragments.ai:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther$1 -> uwi.dcit.AgriExpenseTT.fragments.am:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther$Click -> uwi.dcit.AgriExpenseTT.fragments.aj:
+uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther$Click -> uwi.dcit.AgriExpenseTT.fragments.an:
     uwi.dcit.AgriExpenseTT.fragments.FragmentNewPurchaseOther this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList -> uwi.dcit.AgriExpenseTT.fragments.ak:
+uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList -> uwi.dcit.AgriExpenseTT.fragments.ao:
     android.database.sqlite.SQLiteDatabase db -> i
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> aj
     java.util.ArrayList list -> ak
@@ -20479,19 +20571,19 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList -> uwi.dcit.AgriExpen
     void onCreate(android.os.Bundle) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$1 -> uwi.dcit.AgriExpenseTT.fragments.al:
+uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$1 -> uwi.dcit.AgriExpenseTT.fragments.ap:
     uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$Click -> uwi.dcit.AgriExpenseTT.fragments.am:
+uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$Click -> uwi.dcit.AgriExpenseTT.fragments.aq:
     uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$TWatch -> uwi.dcit.AgriExpenseTT.fragments.an:
+uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList$TWatch -> uwi.dcit.AgriExpenseTT.fragments.ar:
     android.widget.ArrayAdapter adpt -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentOtherResourceList this$0 -> b
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse -> uwi.dcit.AgriExpenseTT.fragments.ao:
+uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse -> uwi.dcit.AgriExpenseTT.fragments.as:
     android.view.View view -> a
     android.database.sqlite.SQLiteDatabase db -> b
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> c
@@ -20533,13 +20625,13 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse -> uwi.dcit.AgriExpenseTT.f
     double access$902(uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse,double) -> d
     java.lang.String access$702(uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse,java.lang.String) -> a
     android.widget.PopupWindow access$1500(uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse) -> l
-uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse$1 -> uwi.dcit.AgriExpenseTT.fragments.ap:
+uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse$1 -> uwi.dcit.AgriExpenseTT.fragments.at:
     uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse$Click -> uwi.dcit.AgriExpenseTT.fragments.aq:
+uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse$Click -> uwi.dcit.AgriExpenseTT.fragments.au:
     uwi.dcit.AgriExpenseTT.fragments.FragmentPurchaseUse this$0 -> a
     void onClick(android.view.View) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentReportList -> uwi.dcit.AgriExpenseTT.fragments.ar:
+uwi.dcit.AgriExpenseTT.fragments.FragmentReportList -> uwi.dcit.AgriExpenseTT.fragments.av:
     java.util.ArrayList list -> aj
     java.io.File[] files -> i
     void onActivityCreated(android.os.Bundle) -> c
@@ -20549,11 +20641,11 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentReportList -> uwi.dcit.AgriExpenseTT.fr
     boolean onContextItemSelected(android.view.MenuItem) -> b
     void viewReport(int) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentReportList$DeleteConfirmator -> uwi.dcit.AgriExpenseTT.fragments.as:
+uwi.dcit.AgriExpenseTT.fragments.FragmentReportList$DeleteConfirmator -> uwi.dcit.AgriExpenseTT.fragments.aw:
     int position -> b
     uwi.dcit.AgriExpenseTT.fragments.FragmentReportList this$0 -> a
     void onClick(android.content.DialogInterface,int) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation -> uwi.dcit.AgriExpenseTT.fragments.at:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation -> uwi.dcit.AgriExpenseTT.fragments.ax:
     java.lang.String type -> i
     java.lang.String country -> aj
     java.lang.String countyTerm -> ak
@@ -20566,49 +20658,49 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation -> uwi.dcit.AgriExpenseT
     void onCreate(android.os.Bundle) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete -> uwi.dcit.AgriExpenseTT.fragments.au:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingDelete -> uwi.dcit.AgriExpenseTT.fragments.ay:
     void populateList() -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain -> uwi.dcit.AgriExpenseTT.fragments.av:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain -> uwi.dcit.AgriExpenseTT.fragments.az:
     void populateList() -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs -> uwi.dcit.AgriExpenseTT.fragments.aw:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs -> uwi.dcit.AgriExpenseTT.fragments.ba:
     java.util.ArrayList fragments -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$ResourcePageAdapter adapter -> b
+    boolean configured -> c
     void onCreate(android.os.Bundle) -> a
     void onResume() -> k
     void populateList() -> b
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void onViewCreated(android.view.View,android.os.Bundle) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$1 -> uwi.dcit.AgriExpenseTT.fragments.ax:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$1 -> uwi.dcit.AgriExpenseTT.fragments.bb:
     uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs this$0 -> a
     int getIndicatorColor(int) -> a
     int getDividerColor(int) -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$FragItem -> uwi.dcit.AgriExpenseTT.fragments.ay:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$FragItem -> uwi.dcit.AgriExpenseTT.fragments.bc:
     android.support.v4.app.Fragment frag -> a
     int colour -> b
     java.lang.String title -> c
     uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs this$0 -> d
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$ResourcePageAdapter -> uwi.dcit.AgriExpenseTT.fragments.az:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs$ResourcePageAdapter -> uwi.dcit.AgriExpenseTT.fragments.bd:
     uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabs this$0 -> b
     android.support.v4.app.Fragment getItem(int) -> a
     int getCount() -> b
     java.lang.CharSequence getPageTitle(int) -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabsEdit -> uwi.dcit.AgriExpenseTT.fragments.ba:
+uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingTabsEdit -> uwi.dcit.AgriExpenseTT.fragments.be:
     void populateList() -> b
-uwi.dcit.AgriExpenseTT.fragments.FragmentUseResource -> uwi.dcit.AgriExpenseTT.fragments.bb:
+uwi.dcit.AgriExpenseTT.fragments.FragmentUseResource -> uwi.dcit.AgriExpenseTT.fragments.bf:
     android.view.View view -> a
     uwi.dcit.AgriExpenseTT.models.LocalCycle cycle -> b
     java.lang.String type -> c
     double total -> d
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles -> uwi.dcit.AgriExpenseTT.fragments.bc:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles -> uwi.dcit.AgriExpenseTT.fragments.bg:
     java.lang.String type -> i
     android.database.sqlite.SQLiteDatabase db -> aj
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> ak
     int req_edit -> al
-    java.lang.String className -> am
-    int mActivatedPosition -> ap
-    java.util.ArrayList cycleList -> an
-    uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$CycleListAdapter cycAdapt -> ao
+    int mActivatedPosition -> ao
+    java.util.ArrayList cycleList -> am
+    uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$CycleListAdapter cycAdapt -> an
     void onActivityCreated(android.os.Bundle) -> c
     void onCreate(android.os.Bundle) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
@@ -20622,20 +20714,20 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles -> uwi.dcit.AgriExpenseTT.fr
     void editCycleCoption(int) -> c
     void deletCycleOption(android.widget.ListView,int) -> a
     void onActivityResult(int,int,android.content.Intent) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$1 -> uwi.dcit.AgriExpenseTT.fragments.bd:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$1 -> uwi.dcit.AgriExpenseTT.fragments.bh:
     uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles this$0 -> a
     int compare(java.lang.Object,java.lang.Object) -> compare
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$CycleListAdapter -> uwi.dcit.AgriExpenseTT.fragments.be:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$CycleListAdapter -> uwi.dcit.AgriExpenseTT.fragments.bi:
     android.content.Context myContext -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles this$0 -> b
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
     int getCount() -> getCount
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$DeleteConfirmator -> uwi.dcit.AgriExpenseTT.fragments.bf:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$DeleteConfirmator -> uwi.dcit.AgriExpenseTT.fragments.bj:
     int position -> a
     uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles$CycleListAdapter listAdapter -> b
     uwi.dcit.AgriExpenseTT.fragments.FragmentViewCycles this$0 -> c
     void onClick(android.content.DialogInterface,int) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources -> uwi.dcit.AgriExpenseTT.fragments.bg:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources -> uwi.dcit.AgriExpenseTT.fragments.bk:
     android.database.sqlite.SQLiteDatabase db -> i
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> aj
     java.util.ArrayList rList -> ak
@@ -20643,13 +20735,13 @@ uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources -> uwi.dcit.AgriExpenseTT
     void onCreate(android.os.Bundle) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources$Confirm -> uwi.dcit.AgriExpenseTT.fragments.bh:
+uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources$Confirm -> uwi.dcit.AgriExpenseTT.fragments.bl:
     int position -> a
     int id -> b
-    android.widget.ArrayAdapter adpt -> c
+    android.widget.ArrayAdapter adapter -> c
     uwi.dcit.AgriExpenseTT.fragments.FragmentViewResources this$0 -> d
     void onClick(android.content.DialogInterface,int) -> onClick
-uwi.dcit.AgriExpenseTT.fragments.HireLabourLists -> uwi.dcit.AgriExpenseTT.fragments.bi:
+uwi.dcit.AgriExpenseTT.fragments.HireLabourLists -> uwi.dcit.AgriExpenseTT.fragments.bm:
     java.lang.String type -> i
     java.util.ArrayList list -> aj
     android.database.sqlite.SQLiteDatabase db -> ak
@@ -20686,22 +20778,22 @@ uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment -> uwi.dcit.AgriExpens
     boolean access$100(uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment) -> a
     boolean access$102$46e0513e(uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment) -> b
     android.support.v7.app.ActionBarDrawerToggle access$200(uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment) -> c
-uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$1 -> uwi.dcit.AgriExpenseTT.fragments.bj:
+uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$1 -> uwi.dcit.AgriExpenseTT.fragments.bn:
     uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$2 -> uwi.dcit.AgriExpenseTT.fragments.bk:
+uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$2 -> uwi.dcit.AgriExpenseTT.fragments.bo:
     uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment this$0 -> e
     void onDrawerClosed(android.view.View) -> b
     void onDrawerOpened(android.view.View) -> a
-uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$3 -> uwi.dcit.AgriExpenseTT.fragments.bl:
+uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$3 -> uwi.dcit.AgriExpenseTT.fragments.bp:
     uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment this$0 -> a
     void run() -> run
-uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$MenuArrayAdapter -> uwi.dcit.AgriExpenseTT.fragments.bm:
+uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$MenuArrayAdapter -> uwi.dcit.AgriExpenseTT.fragments.bq:
     uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$NavigationDrawerCallbacks -> uwi.dcit.AgriExpenseTT.fragments.bn:
+uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment$NavigationDrawerCallbacks -> uwi.dcit.AgriExpenseTT.fragments.br:
     void onNavigationDrawerItemSelected(int) -> a
-uwi.dcit.AgriExpenseTT.fragments.NewCycleLists -> uwi.dcit.AgriExpenseTT.fragments.bo:
+uwi.dcit.AgriExpenseTT.fragments.NewCycleLists -> uwi.dcit.AgriExpenseTT.fragments.bs:
     java.lang.String type -> i
     java.util.ArrayList list -> aj
     android.database.sqlite.SQLiteDatabase db -> ak
@@ -20712,30 +20804,34 @@ uwi.dcit.AgriExpenseTT.fragments.NewCycleLists -> uwi.dcit.AgriExpenseTT.fragmen
     android.view.View view -> ap
     void onCreate(android.os.Bundle) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
+    void onDestroy() -> l
     void updateSub(java.lang.String) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.NewCycleLists$1 -> uwi.dcit.AgriExpenseTT.fragments.bp:
+uwi.dcit.AgriExpenseTT.fragments.NewCycleLists$1 -> uwi.dcit.AgriExpenseTT.fragments.bt:
     uwi.dcit.AgriExpenseTT.fragments.NewCycleLists this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.NewCycleLists$TWatch -> uwi.dcit.AgriExpenseTT.fragments.bq:
-    android.widget.ArrayAdapter adpt -> a
+uwi.dcit.AgriExpenseTT.fragments.NewCycleLists$TWatch -> uwi.dcit.AgriExpenseTT.fragments.bu:
+    android.widget.ArrayAdapter adapter -> a
     uwi.dcit.AgriExpenseTT.fragments.NewCycleLists this$0 -> b
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
     void afterTextChanged(android.text.Editable) -> afterTextChanged
-uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists -> uwi.dcit.AgriExpenseTT.fragments.br:
+uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists -> uwi.dcit.AgriExpenseTT.fragments.bv:
     java.lang.String type -> i
     java.util.ArrayList list -> aj
     android.database.sqlite.SQLiteDatabase db -> ak
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> al
     android.widget.ArrayAdapter listAdapt -> am
+    java.lang.String TAG -> an
     void onCreate(android.os.Bundle) -> a
+    void onResume() -> k
+    void populateList() -> q
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
     void onListItemClick(android.widget.ListView,android.view.View,int,long) -> a
-uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists$1 -> uwi.dcit.AgriExpenseTT.fragments.bs:
+uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists$1 -> uwi.dcit.AgriExpenseTT.fragments.bw:
     uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists this$0 -> a
     boolean onTouch(android.view.View,android.view.MotionEvent) -> onTouch
-uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists$TWatch -> uwi.dcit.AgriExpenseTT.fragments.bt:
+uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists$TWatch -> uwi.dcit.AgriExpenseTT.fragments.bx:
     android.widget.ArrayAdapter adpt -> a
     uwi.dcit.AgriExpenseTT.fragments.NewPurchaseLists this$0 -> b
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
@@ -20846,7 +20942,9 @@ uwi.dcit.AgriExpenseTT.helpers.ReportHelper -> uwi.dcit.AgriExpenseTT.helpers.j:
     void writeExcel$6d35220a(java.io.File,java.lang.String) -> a
     int writeCategories(java.lang.String,java.io.File,org.apache.poi.hssf.usermodel.HSSFWorkbook,org.apache.poi.hssf.usermodel.HSSFSheet,int,int) -> a
     int writeCategory(java.lang.String,int,org.apache.poi.hssf.usermodel.HSSFSheet,int,org.apache.poi.hssf.usermodel.HSSFCellStyle) -> a
-uwi.dcit.AgriExpenseTT.helpers.TransactionLog -> uwi.dcit.AgriExpenseTT.helpers.k:
+uwi.dcit.AgriExpenseTT.helpers.TextHelper -> uwi.dcit.AgriExpenseTT.helpers.k:
+    java.lang.String formatUserText(java.lang.String) -> a
+uwi.dcit.AgriExpenseTT.helpers.TransactionLog -> uwi.dcit.AgriExpenseTT.helpers.l:
     android.database.sqlite.SQLiteDatabase db -> a
     uwi.dcit.AgriExpenseTT.helpers.DbHelper dbh -> b
     android.content.Context context -> c
@@ -20857,7 +20955,7 @@ uwi.dcit.AgriExpenseTT.helpers.TransactionLog -> uwi.dcit.AgriExpenseTT.helpers.
     uwi.dcit.agriexpensesvr.cycleApi.model.Cycle getCycle(java.lang.String,java.lang.String) -> a
     uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase getPurchase(java.lang.String,java.lang.String) -> b
     uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse getCycleUse(java.lang.String,java.lang.String) -> c
-uwi.dcit.AgriExpenseTT.helpers.TransactionLog$UpdateLocal -> uwi.dcit.AgriExpenseTT.helpers.l:
+uwi.dcit.AgriExpenseTT.helpers.TransactionLog$UpdateLocal -> uwi.dcit.AgriExpenseTT.helpers.m:
     java.lang.String namespace -> a
     long lastLocalUpdate -> b
     uwi.dcit.AgriExpenseTT.helpers.TransactionLog this$0 -> c
