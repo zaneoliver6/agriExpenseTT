@@ -100,7 +100,7 @@ public class Account {
     public String toString(){
         StringBuilder stb = new StringBuilder();
         stb.append("Name: ").append(account);
-        if (key != null)stb.append("Key: ").append(key);
+        if (key != null)stb.append(" Key: ").append(key);
         if (lastUpdated != -1)stb.append("Updated Time in Millis: ").append(lastUpdated);
         return stb.toString();
     }
