@@ -1,36 +1,12 @@
 package uwi.dcit.AgriExpenseTT.cloud;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
-import uwi.dcit.agriexpensesvr.myTestApi.MyTestApi;
-import uwi.dcit.agriexpensesvr.myTestApi.model.MyBean;
-//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
-
-//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 
 public class SignInManager {
@@ -48,12 +24,20 @@ public class SignInManager {
         db = dbh.getWritableDatabase();
     }
 
-//	public void signIn(){
-//        Log.d(TAG_NAME, "Attempting to Log in");
-//		UpAcc acc = isExisting(); 								// Check if Account is already created
-//		if(acc == null) accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
-//		else startSync(acc.getAcc());						    // Account exists already so we can Initiate Sign-in process
-//	}
+	public void signIn(){
+        Log.d(TAG_NAME, "Attempting to Log in");
+
+		UpAcc acc = isExisting(); 								// Check if Account is already created
+		if(acc == null) accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
+		else startSync(acc.getAcc());						    // Account exists already so we can Initiate Sign-in process
+	}
+
+    public UpAcc isExisting(){
+        UpAcc acc = DbQuery.getUpAcc(db);   // Attempts to retrieve the Account from the database Record
+        if(acc.getAcc() == null || acc.getAcc().equals(""))
+            return null;                    // The information returned will be null if no record exists
+        return acc;                         // Return the Account if received.
+    }
 //
 //	public boolean signOut(){
 //		Log.d(TAG_NAME, "Account is logged in, attempting to sign out");
@@ -68,25 +52,25 @@ public class SignInManager {
 //	}
 //
 //
-    public void myTests() {
-        MyTestApi.Builder builder = new MyTestApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
-        builder = CloudEndpointUtils.updateBuilder(builder);
-        MyTestApi api = builder.build();
-
-        AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
-        accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
-        AccountApi accountApi = accountBuilder.build();
-        try {
-            MyBean bean = api.sayHi("Hi").execute();
-            System.out.println(bean.getData());
-
-            uwi.dcit.agriexpensesvr.accountApi.model.Account acc = accountApi.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
-            System.out.println(acc.toString());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void myTests() {
+//        MyTestApi.Builder builder = new MyTestApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
+//        builder = CloudEndpointUtils.updateBuilder(builder);
+//        MyTestApi api = builder.build();
+//
+//        AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
+//        accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
+//        AccountApi accountApi = accountBuilder.build();
+//        try {
+//            MyBean bean = api.sayHi("Hi").execute();
+//            System.out.println(bean.getData());
+//
+//            uwi.dcit.agriexpensesvr.accountApi.model.Account acc = accountApi.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
+//            System.out.println(acc.toString());
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 //
 //	public void accountSetUp(){
 //        Log.d(TAG_NAME, "");
@@ -161,12 +145,7 @@ public class SignInManager {
 //        else return null;           // Return null if not valid
 //	}
 //
-//	public UpAcc isExisting(){
-//		UpAcc acc = DbQuery.getUpAcc(db);   // Attempts to retrieve the Account from the database Record
-//		if(acc.getAcc() == null || acc.getAcc().equals(""))
-//            return null;                    // The information returned will be null if no record exists
-//		return acc;                         // Return the Account if received.
-//	}
+
 //
 //	public boolean isSignedIn(){
 //		UpAcc account = this.isExisting();
