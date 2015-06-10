@@ -275,18 +275,22 @@ public class CycleEndpoint {
             if (containsCycle(cycle)) {
                 throw new EntityExistsException("Object already exists");
             }
-            mgr.persist(cycle);
+            else {
+                // using account to store
+                // the string rep of the
+                // key
+                cycle.setKeyrep(KeyFactory.keyToString(k));
+                cycle.setAccount(KeyFactory.keyToString(k));
+                mgr.getTransaction().begin();
+                mgr.persist(cycle);
+                mgr.getTransaction().commit();
+            }
         } catch (Exception e) {
             return null;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        cycle.setKeyrep(KeyFactory.keyToString(k));
-        cycle.setAccount(KeyFactory.keyToString(k)); // using account to store
-        // the string rep of the
-        // key
         return cycle;
-
     }
 
     /**
@@ -310,7 +314,7 @@ public class CycleEndpoint {
             }
             mgr.persist(cycle);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return cycle;
     }
@@ -344,7 +348,7 @@ public class CycleEndpoint {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
