@@ -280,7 +280,8 @@ public class TransLogEndpoint {
     }
 
     private static EntityManager getEntityManager() {
-        return EMF.get().createEntityManager();
+        //return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

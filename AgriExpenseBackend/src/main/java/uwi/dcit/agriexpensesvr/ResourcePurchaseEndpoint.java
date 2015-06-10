@@ -324,7 +324,8 @@ public class ResourcePurchaseEndpoint {
     }
 
     private static EntityManager getEntityManager() {
-        return EMF.get().createEntityManager();
+        //return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

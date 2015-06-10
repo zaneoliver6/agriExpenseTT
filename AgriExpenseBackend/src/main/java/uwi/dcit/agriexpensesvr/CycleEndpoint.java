@@ -350,7 +350,8 @@ public class CycleEndpoint {
     }
 
     private static EntityManager getEntityManager() {
-        return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        //return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

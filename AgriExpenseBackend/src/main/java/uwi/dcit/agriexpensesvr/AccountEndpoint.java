@@ -26,7 +26,8 @@ import javax.persistence.EntityManager;
 public class AccountEndpoint {
 
     private static EntityManager getEntityManager() {
-        return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
+        //return EMF.get().createEntityManager();
     }
 
     /**
@@ -59,7 +60,7 @@ public class AccountEndpoint {
                 account = null; // Return null to indicate failed attempt at creating an account
             }
             finally {
-                em.close();
+                //em.close();
             }
         }else{
             System.out.println("Account Previously Exists");
@@ -81,28 +82,36 @@ public class AccountEndpoint {
         Account account = em.find(Account.class, KeyFactory.createKey("Account", namespace));
         if (account == null)System.out.println("Unable to Find account associated with namespace:"+namespace);
         else System.out.println("Found: " + account);
-        em.close();
+        //em.close();
         return account;
     }
 
     /**
      * Use to update information that exist within the database for the user
-     * @param account
+     * @param accountUpdate
      * @return
      */
     @ApiMethod(name="updateAccount", httpMethod = HttpMethod.PUT)
-    public Account update(Account account){
-        NamespaceManager.set(account.getAccount());
+    public Account update(Account accountUpdate){
+        NamespaceManager.set(accountUpdate.getAccount());
         EntityManager em = getEntityManager();
+        Account account = em.find(Account.class, KeyFactory.createKey("Account", accountUpdate.getAccount()));
         if (!containsAccount(account, em))
             throw new EntityNotFoundException("Account with namespace: " + account.getAccount() +" does not exist");
         else{
+            if(accountUpdate.getAddress()!=null)
+                account.setAddress(accountUpdate.getAddress());
+            if(accountUpdate.getCountry()!=null)
+                account.setCountry(accountUpdate.getCountry());
+            if(accountUpdate.getCounty()!=null)
+                account.setCounty(accountUpdate.getCounty());
             em.getTransaction().begin();
             em.persist(account);
             em.getTransaction().commit();
+            return account;
         }
-        em.close();
-        return account;
+        //em.close();
+        //return accountUpdate;
     }
 
     @ApiMethod(name="removeAccount", httpMethod = HttpMethod.DELETE)
@@ -113,7 +122,7 @@ public class AccountEndpoint {
         em.getTransaction().begin();
         em.remove(account);
         em.getTransaction().commit();
-        em.close();
+        //em.close();
     }
 
     private boolean containsAccount(Account account, EntityManager em) {
