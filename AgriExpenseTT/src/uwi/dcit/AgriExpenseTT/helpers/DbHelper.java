@@ -247,7 +247,7 @@ public class DbHelper extends SQLiteOpenHelper{
 //		UpAcc acc = new UpAcc();
 //		acc.setSignedIn(0);
 //		acc.setLastUpdated(System.currentTimeMillis() / 1000L);
-//		DbQuery.insertUpAcc(db, acc);
+//		DbQuery.insertAccountTask(db, acc);
 		
 		insertDefaultCrops(db);
 		insertDefaultFertilizers(db);

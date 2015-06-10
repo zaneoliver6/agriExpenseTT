@@ -20254,7 +20254,7 @@ uwi.dcit.AgriExpenseTT.cloud.CloudInterface$PurchaseUpdater -> uwi.dcit.AgriExpe
     uwi.dcit.AgriExpenseTT.cloud.CloudInterface this$0 -> a
     java.lang.Void doInBackground$10299ca() -> a
     java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-uwi.dcit.AgriExpenseTT.cloud.CloudInterface$insertUpAcc -> uwi.dcit.AgriExpenseTT.a.l:
+uwi.dcit.AgriExpenseTT.cloud.CloudInterface$insertAccountTask -> uwi.dcit.AgriExpenseTT.a.l:
     java.lang.String namespace -> a
     long time -> b
     java.lang.String country -> c

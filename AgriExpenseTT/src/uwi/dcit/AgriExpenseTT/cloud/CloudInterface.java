@@ -21,6 +21,8 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
+import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
+import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
@@ -29,8 +31,8 @@ import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
 import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
-//import uwi.dcit.agriexpensesvr.upAccApi.UpAccApi;
-//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensesvr.AccountApi.AccountApi;
+//import uwi.dcit.agriexpensesvr.AccountApi.model.UpAcc;
 
 
 public class CloudInterface {
@@ -599,16 +601,16 @@ public class CloudInterface {
 		}
 		
 	}
-	public void insertUpAccC(String namespace,long time,String country, String county){
+	public void insertAccount(String namespace, long time, String country, String county){
 		if(time==-1)
 			time=System.currentTimeMillis()/1000L;
-		new insertUpAcc(namespace,time,country,county).execute();
+		new insertAccountTask(namespace,time,country,county).execute();
 	}
-	public class insertUpAcc extends AsyncTask<Void,Void,Void>{
+	public class insertAccountTask extends AsyncTask<Void,Void,Void>{
 		String namespace;
 		long time;
         String country,county;
-		public insertUpAcc(String namespace,long time,String country,String county){
+		public insertAccountTask(String namespace, long time, String country, String county){
 			this.namespace=namespace;
 			this.time=time;
             this.country=country;
@@ -616,19 +618,19 @@ public class CloudInterface {
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
-//			UpAccApi.Builder builder = new UpAccApi.Builder(
+//			AccountApi.Builder builder = new AccountApi.Builder(
 //			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 //			         null);
 //			builder = CloudEndpointUtils.updateBuilder(builder);
-//            UpAccApi endpoint = builder.build();
+//            AccountApi endpoint = builder.build();
 //			UpAcc acc=new UpAcc();
 //			acc.setAcc(namespace);
 //			acc.setLastUpdated(time);
 //            acc.setCounty(county);
 //            acc.setCountry(country);
 //			try {
-//				acc=endpoint.insertUpAcc(acc).execute();
-//				DbQuery.insertUpAcc(db, acc);
+//				acc=endpoint.insertAccountTask(acc).execute();
+//				DbQuery.insertAccountTask(db, acc);
 //			} catch (IOException e) {
 //				e.printStackTrace();
 //			}
@@ -637,42 +639,43 @@ public class CloudInterface {
 		
 	}
 	public void updateUpAccC(Long time){
-//		UpAcc acc=DbQuery.getUpAcc(db);
-//		acc.setLastUpdated(time);
-//		new updateUpAcc().execute(acc);
+		Account acc=DbQuery.getUpAcc(db);
+		acc.setLastUpdated(time);
+		new updateUpAcc().execute(acc);
 	}
-//	public class updateUpAcc extends AsyncTask<UpAcc,Void,Void>{
-//
-//		@Override
-//		protected Void doInBackground(UpAcc... params) {
-//            UpAccApi.Builder builder = new UpAccApi.Builder(
-//			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-//			         null);
-//			builder = CloudEndpointUtils.updateBuilder(builder);
-//            UpAccApi endpoint = builder.build();
-//			UpAcc acc=params[0];
-//			try {
-//				endpoint.updateUpAcc(acc).execute();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			return null;
-//		}
-//
-//	}
+	public class updateUpAcc extends AsyncTask<Account,Void,Void>{
 
-//	public UpAcc getUpAcc(String namespace){
-//        UpAccApi.Builder builder = new UpAccApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
-//		builder = CloudEndpointUtils.updateBuilder(builder);
-//        UpAccApi endpoint = builder.build();
-//		UpAcc acc = null;
-//		try {
-//			acc=endpoint.getUpAcc((long) 1,namespace).execute();
-//		}catch (IOException e) {
-//            e.printStackTrace();
-//		}
-//		return acc;
-//	}
+		@Override
+		protected Void doInBackground(Account... params) {
+            AccountApi.Builder builder = new AccountApi.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);
+			builder = CloudEndpointUtils.updateBuilder(builder);
+            AccountApi endpoint = builder.build();
+			Account acc=params[0];
+			try {
+				endpoint.updateAccount(acc).execute();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+	}
+
+	public Account getAccount(String namespace){
+        AccountApi.Builder builder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+        AccountApi endpoint = builder.build();
+		Account acc = null;
+		try {
+			acc=endpoint.getAccount(namespace).execute();
+//			acc=endpoint.getAccount((long) 1,namespace).execute();
+		}catch (IOException e) {
+            e.printStackTrace();
+		}
+		return acc;
+	}
 
 	public void flushToCloud(){
 		insertCycle();
