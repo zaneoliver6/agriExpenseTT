@@ -342,26 +342,17 @@ public class CycleEndpoint {
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
     public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-//        Key k = KeyFactory.stringToKey(keyrep);
-//        try {
-//            d.delete(k);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+        //DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+        Key k = KeyFactory.stringToKey(keyrep);
         EntityManager mgr = getEntityManager();
-        Cycle cycleToDelete = getCycle(namespace,keyrep);
-        if(cycleToDelete!=null){
-//            mgr.getTransaction().begin();
-            try {
-                mgr.remove(cycleToDelete);
-                mgr.flush();
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-//            mgr.getTransaction().commit();
+        try {
+//            d.delete(k);
+            Cycle findCycle = mgr.find(Cycle.class,k);
+            mgr.getTransaction().begin();
+            mgr.remove(findCycle);
+            mgr.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
