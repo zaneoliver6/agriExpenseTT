@@ -25,9 +25,9 @@ import uwi.dcit.agriexpensesvr.cycleApi.model.CycleCollection;
 import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUseCollection;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchaseCollection;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.ResourcePurchaseApi;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchaseCollection;
 import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLogCollection;
@@ -224,11 +224,11 @@ public class TransactionLog {
         CycleUseApi endpointUse = builderUse.build();
 		
 		
-		RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
+		ResourcePurchaseApi.Builder buildeResourcePurchase = new ResourcePurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
 		buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
-        RPurchaseApi endpointPurchase = buildeResourcePurchase.build();
+        ResourcePurchaseApi endpointPurchase = buildeResourcePurchase.build();
 		
 		TranslogApi.Builder builderTranslog = new TranslogApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -463,11 +463,11 @@ public class TransactionLog {
 		return c;
 	}
 	private ResourcePurchase getPurchase(String namespace,String keyrep){
-		RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
+		ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
 		builder = CloudEndpointUtils.updateBuilder(builder);
-        RPurchaseApi endpoint = builder.build();
+        ResourcePurchaseApi endpoint = builder.build();
 		ResourcePurchase p = null;
 //		try {
 //			p=endpoint.getRPurchase(namespace, keyrep).execute();
@@ -510,7 +510,7 @@ public class TransactionLog {
 			builderUse.build();
 		}
 		if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
+			ResourcePurchaseApi.Builder buildeResourcePurchase = new ResourcePurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
@@ -545,11 +545,11 @@ public class TransactionLog {
 			e.printStackTrace();
 		}
 		
-		RPurchaseApi.Builder buildeResourcePurchase = new RPurchaseApi.Builder(
+		ResourcePurchaseApi.Builder buildeResourcePurchase = new ResourcePurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
 		buildeResourcePurchase = CloudEndpointUtils.updateBuilder(buildeResourcePurchase);
-        RPurchaseApi endpointPurchase = buildeResourcePurchase.build();
+        ResourcePurchaseApi endpointPurchase = buildeResourcePurchase.build();
 		try {
 			endpointPurchase.deleteAll(namespace).execute();
 		} catch (IOException e) {

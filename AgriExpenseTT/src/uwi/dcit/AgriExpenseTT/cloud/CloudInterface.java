@@ -27,8 +27,8 @@ import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.CycleUseApi;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.RPurchaseApi;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.ResourcePurchaseApi;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.TranslogApi;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 //import uwi.dcit.agriexpensesvr.AccountApi.AccountApi;
@@ -128,11 +128,11 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
+			ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-			RPurchaseApi endpoint = builder.build();
+			ResourcePurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
@@ -300,11 +300,11 @@ public class CloudInterface {
 		
 		@Override
 		protected ResourcePurchase doInBackground(Void... params) {
-			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
+			ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-            RPurchaseApi endpoint = builder.build();
+            ResourcePurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
@@ -498,11 +498,11 @@ public class CloudInterface {
 
 		@Override
 		protected Object doInBackground(Void... params) {
-			RPurchaseApi.Builder builder = new RPurchaseApi.Builder(
+			ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
-            RPurchaseApi endpoint = builder.build();
+            ResourcePurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 

@@ -4,7 +4,7 @@ package uwi.dcit.AgriExpenseTT.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 
 import java.util.Date;

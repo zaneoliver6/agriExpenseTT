@@ -27,7 +27,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
-@Api(name = "rPurchaseApi",
+@Api(name = "resourcePurchaseApi",
         version = "v1",
         namespace = @ApiNamespace(
                 ownerDomain = "agriexpensesvr.dcit.uwi",

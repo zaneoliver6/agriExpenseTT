@@ -24,7 +24,7 @@ import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
 //import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 //import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
