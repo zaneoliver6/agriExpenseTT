@@ -77,7 +77,7 @@ public class ResourcePurchaseEndpoint {
             for (ResourcePurchase obj : execute)
                 ;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
 
         return CollectionResponse.<ResourcePurchase> builder().setItems(execute)
@@ -107,7 +107,7 @@ public class ResourcePurchaseEndpoint {
             }
         }
         mgr = getEntityManager();
-        query = mgr.createQuery("SELECT FROM RPurchase AS RPurchase");
+        query = mgr.createQuery("SELECT FROM ResourcePurchase AS ResourcePurchase");
 
         // Set each namespace then return all results under that given namespace
 
@@ -130,7 +130,7 @@ public class ResourcePurchaseEndpoint {
         DatastoreService datastore = DatastoreServiceFactory
                 .getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
-                "RPurchase");
+                "ResourcePurchase");
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
@@ -162,7 +162,7 @@ public class ResourcePurchaseEndpoint {
         DatastoreService datastore = DatastoreServiceFactory
                 .getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
-                "RPurchase");
+                "ResourcePurchase");
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
@@ -192,7 +192,7 @@ public class ResourcePurchaseEndpoint {
         try {
             rpurchase = mgr.find(ResourcePurchase.class, k);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         System.out.println("---000---");
         return rpurchase;
@@ -228,7 +228,7 @@ public class ResourcePurchaseEndpoint {
     public ResourcePurchase insertRPurchase(ResourcePurchase rpurchase) {
         // TODO
         NamespaceManager.set(rpurchase.getAccount());
-        Key k = KeyFactory.createKey("RPurchase", rpurchase.getpId());
+        Key k = KeyFactory.createKey("ResourcePurchase", rpurchase.getpId());
         rpurchase.setKey(k);
         rpurchase.setKeyrep(KeyFactory.keyToString(k));
         EntityManager mgr = getEntityManager();
@@ -237,12 +237,16 @@ public class ResourcePurchaseEndpoint {
             if (containsRPurchase(rpurchase)) {
                 throw new EntityExistsException("Object already exists");
             }
-            mgr.persist(rpurchase);
+            else{
+                rpurchase.setKeyrep(KeyFactory.keyToString(k));
+                rpurchase.setAccount(KeyFactory.keyToString(k));
+                mgr.getTransaction().begin();
+                mgr.persist(rpurchase);
+                mgr.getTransaction().commit();
+            }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        rpurchase.setKeyrep(KeyFactory.keyToString(k));
-        rpurchase.setAccount(KeyFactory.keyToString(k));
         return rpurchase;
     }
 
@@ -251,25 +255,36 @@ public class ResourcePurchaseEndpoint {
      * not exist in the datastore, an exception is thrown. It uses HTTP PUT
      * method.
      *
-     * @param rpurchase
+     * @param-rpurchase
      *            the entity to be updated.
      * @return The updated entity.
      */
     @ApiMethod(name = "updateRPurchase")
-    public ResourcePurchase updateRPurchase(ResourcePurchase rpurchase) {
-        NamespaceManager.set(rpurchase.getAccount());
-        Key k = KeyFactory.stringToKey(rpurchase.getKeyrep());
-        rpurchase.setKey(k);
+    public ResourcePurchase updateRPurchase(ResourcePurchase rPurchase) {
+        NamespaceManager.set(rPurchase.getAccount());
+        Key k = KeyFactory.stringToKey(rPurchase.getKeyrep());
+        rPurchase.setKey(k);
+        ResourcePurchase currentRPurchase = getRPurchase(rPurchase.getAccount(),rPurchase.getKeyrep());
         EntityManager mgr = getEntityManager();
         try {
-            if (!containsRPurchase(rpurchase)) {
+            if (!containsRPurchase(rPurchase)) {
                 throw new EntityNotFoundException("Object does not exist");
             }
-            mgr.persist(rpurchase);
+            else{
+                if(rPurchase.getQtyRemaining()!=0)
+                    currentRPurchase.setQtyRemaining(rPurchase.getQtyRemaining());
+                if(rPurchase.getQuantifier()!=null)
+                    currentRPurchase.setQuantifier(rPurchase.getQuantifier());
+                if(rPurchase.getType()!=null)
+                    currentRPurchase.setType(rPurchase.getType());
+                mgr.getTransaction().begin();
+                mgr.persist(currentRPurchase);
+                mgr.getTransaction().commit();
+            }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        return rpurchase;
+        return currentRPurchase;
     }
 
     /**
@@ -318,7 +333,7 @@ public class ResourcePurchaseEndpoint {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
