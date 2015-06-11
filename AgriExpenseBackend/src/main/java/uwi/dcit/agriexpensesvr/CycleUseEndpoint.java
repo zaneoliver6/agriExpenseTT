@@ -187,14 +187,16 @@ public class CycleUseEndpoint {
             if (containsCycleUse(cycleuse)) {
                 throw new EntityExistsException("Object already exists");
             }
+            cycleuse.setKeyrep(KeyFactory.keyToString(k));
+            cycleuse.setAccount(KeyFactory.keyToString(k));// using account to store
+            // the string rep of the
+            // key
+            mgr.getTransaction().begin();
             mgr.persist(cycleuse);
+            mgr.getTransaction().commit();
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        cycleuse.setKeyrep(KeyFactory.keyToString(k));
-        cycleuse.setAccount(KeyFactory.keyToString(k));// using account to store
-        // the string rep of the
-        // key
         return cycleuse;
     }
 
@@ -216,7 +218,7 @@ public class CycleUseEndpoint {
             }
             mgr.persist(cycleuse);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return cycleuse;
     }
@@ -250,7 +252,7 @@ public class CycleUseEndpoint {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }

@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.annotation.Resource;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -299,29 +300,44 @@ public class ResourcePurchaseEndpoint {
                                 @Named("namespace") String namespace) {
         System.out.println("1111111111111");
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
-        try {
-            d.delete(k);
-        } catch (Exception e) {
-            e.printStackTrace();
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+      Key k = KeyFactory.stringToKey(keyrep);
+//        try {
+//            d.delete(k);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        EntityManager mgr = getEntityManager();
+        ResourcePurchase rpFind = mgr.find(ResourcePurchase.class,k);
+        if(rpFind!=null){
+            try {
+                mgr.getTransaction().begin();
+                mgr.remove(rpFind);
+                mgr.getTransaction().commit();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("Resource Purchase Does Not Exist!");
         }
     }
 
-    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
-    public void deletePurchase(@Named("keyrep") String keyrep,
-                               @Named("namespace") String namespace) {
-        System.out.println("1111111111111");
-        NamespaceManager.set(namespace);
-        Key k = KeyFactory.stringToKey(keyrep);
-        EntityManager mgr = getEntityManager();
-        ResourcePurchase purchase = mgr.find(ResourcePurchase.class, k);
-        try {
-            mgr.remove(purchase);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
+//    public void deletePurchase(@Named("keyrep") String keyrep,
+//                               @Named("namespace") String namespace) {
+//        System.out.println("1111111111111");
+//        NamespaceManager.set(namespace);
+//        Key k = KeyFactory.stringToKey(keyrep);
+//        EntityManager mgr = getEntityManager();
+//        ResourcePurchase purchase = mgr.find(ResourcePurchase.class, k);
+//        try {
+//            mgr.remove(purchase);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private boolean containsRPurchase(ResourcePurchase rpurchase) {
         NamespaceManager.set(rpurchase.getAccount());
@@ -342,5 +358,4 @@ public class ResourcePurchaseEndpoint {
         //return EMF.get().createEntityManager();
         return EMF.getManagerInstance();
     }
-
 }

@@ -48,14 +48,15 @@ public class SignInManager {
 
 	public void signIn(){
         Log.d(TAG_NAME, "Attempting to Log in");
-
 		Account acc = isExisting(); 								// Check if Account is already created
-		if(acc == null) accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
-		else startSync(acc.getAccount());						    // Account exists already so we can Initiate Sign-in process
+		if(acc == null)
+			accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
+		else
+			startSync(acc.getAccount());						    // Account exists already so we can Initiate Sign-in process
 	}
 
     public Account isExisting(){
-//        Account acc = DbQuery.getAccount(db);   // Attempts to retrieve the Account from the database Record
+//        Account acc = DbQuery.getAccount(db);// Attempts to retrieve the Account from the database Record
 //        if(acc.getAccount() == null || acc.getAccount().equals(""))
 //            return null;                    // The information returned will be null if no record exists
 //        return acc;                         // Return the Account if received.
@@ -71,7 +72,7 @@ public class SignInManager {
 	}
 
 	private void startSync(final String namespace){
-//		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
+		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
 	}
 
     public void myTests() {
@@ -97,10 +98,10 @@ public class SignInManager {
 	public void accountSetUp(){
         Log.d(TAG_NAME, "");
 		ArrayList<String> deviceAccounts = getAccounts();
-        
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		if(deviceAccounts.isEmpty()){
 			handleNoAccounts();
-			return;
+			//return;
 		}
 
 		final CharSequence[] items = new CharSequence[deviceAccounts.size()];
@@ -191,8 +192,8 @@ public class SignInManager {
 		@Override
 		protected Account doInBackground(String... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-//            Account account = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
-            Account account = null;
+            Account account = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
+            //Account account = null;
             if (account == null){
                 Log.d(TAG_NAME, "No Account Exists Creating a new Account");
                 cloudIF.insertAccount(namespace, 0, country, county);
