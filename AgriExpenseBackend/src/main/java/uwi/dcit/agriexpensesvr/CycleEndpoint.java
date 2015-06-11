@@ -308,15 +308,28 @@ public class CycleEndpoint {
         Key k = KeyFactory.stringToKey(cycle.getKeyrep());
         cycle.setKey(k);
         EntityManager mgr = getEntityManager();
+        Cycle c = null;
         try {
-            if (!containsCycle(cycle)) {
-                throw new EntityNotFoundException("Object does not exist");
-            }
-            mgr.persist(cycle);
-        } finally {
+            c = mgr.find(Cycle.class, k);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
 //            mgr.close();
         }
-        return cycle;
+        if(c!=null){
+            if(cycle.getHarvestAmt()!=0)
+                c.setHarvestAmt(cycle.getHarvestAmt());
+            if(cycle.getHarvestType()!=null)
+                c.setHarvestType(cycle.getHarvestType());
+            if(cycle.getTotalSpent()!=0)
+                c.setTotalSpent(cycle.getTotalSpent());
+            mgr.getTransaction().begin();
+            mgr.persist(c);
+            mgr.getTransaction().commit();
+        }
+        return c;
     }
 
     /**
@@ -329,12 +342,26 @@ public class CycleEndpoint {
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
     public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
-        try {
-            d.delete(k);
-        } catch (Exception e) {
-            e.printStackTrace();
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.stringToKey(keyrep);
+//        try {
+//            d.delete(k);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        EntityManager mgr = getEntityManager();
+        Cycle cycleToDelete = getCycle(namespace,keyrep);
+        if(cycleToDelete!=null){
+//            mgr.getTransaction().begin();
+            try {
+                mgr.remove(cycleToDelete);
+                mgr.flush();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+//            mgr.getTransaction().commit();
         }
     }
 
