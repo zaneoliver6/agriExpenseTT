@@ -79,7 +79,7 @@ public class TransLogEndpoint {
             for (TransLog obj : execute)
                 ;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
 
         return CollectionResponse.<TransLog> builder().setItems(execute)
@@ -183,7 +183,7 @@ public class TransLogEndpoint {
         try {
             translog = mgr.find(TransLog.class, id);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return translog;
     }
@@ -212,7 +212,7 @@ public class TransLogEndpoint {
             System.out.println("persist");
             mgr.persist(translog);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return translog;
     }
@@ -235,7 +235,7 @@ public class TransLogEndpoint {
             }
             mgr.persist(translog);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return translog;
     }
@@ -274,7 +274,7 @@ public class TransLogEndpoint {
         } catch (Exception e) {
             contains = false;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }

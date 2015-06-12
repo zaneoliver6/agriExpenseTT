@@ -205,22 +205,38 @@ public class CycleUseEndpoint {
      * not exist in the datastore, an exception is thrown. It uses HTTP PUT
      * method.
      *
-     * @param cycleuse
+     * @param cycleUse
      *            the entity to be updated.
      * @return The updated entity.
      */
     @ApiMethod(name = "updateCycleUse")
-    public CycleUse updateCycleUse(CycleUse cycleuse) {
+    public CycleUse updateCycleUse(CycleUse cycleUse){
         EntityManager mgr = getEntityManager();
+        Key k = KeyFactory.stringToKey(cycleUse.getKeyrep());
+        CycleUse findCycleUse = null;
+        mgr.find(CycleUse.class,k);
         try {
-            if (!containsCycleUse(cycleuse)) {
+            findCycleUse=mgr.find(CycleUse.class,k);
+            if (findCycleUse==null) {
                 throw new EntityNotFoundException("Object does not exist");
             }
-            mgr.persist(cycleuse);
-        } finally {
+            else{
+                if(cycleUse.getResource()!=null)
+                    findCycleUse.setResource(cycleUse.getResource());
+                if(cycleUse.getAmount()!=0)
+                    findCycleUse.setAmount(cycleUse.getAmount());
+                mgr.getTransaction().begin();
+                mgr.persist(findCycleUse);
+                mgr.getTransaction().commit();
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
 //            mgr.close();
         }
-        return cycleuse;
+        return findCycleUse;
     }
 
     /**
@@ -233,11 +249,22 @@ public class CycleUseEndpoint {
     @ApiMethod(name = "removeCycleUse", httpMethod = HttpMethod.DELETE)
     public void removeCycleUse(@Named("keyrep") String keyrep,  @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
         Key k = KeyFactory.stringToKey(keyrep);
-        try {
-            d.delete(k);
-        } catch (Exception e) {
+//        try {
+//            d.delete(k);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        EntityManager mgr = getEntityManager();
+        CycleUse findCycleUse=mgr.find(CycleUse.class,k);
+        try{
+            mgr.getTransaction().begin();
+            mgr.remove(findCycleUse);
+            mgr.getTransaction().commit();
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }
