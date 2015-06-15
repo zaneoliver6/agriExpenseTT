@@ -89,6 +89,7 @@ public class SignInManager {
 
             uwi.dcit.agriexpensesvr.accountApi.model.Account acc = accountApi.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
             System.out.println(acc.toString());
+			//Log.i("myTests",acc.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
