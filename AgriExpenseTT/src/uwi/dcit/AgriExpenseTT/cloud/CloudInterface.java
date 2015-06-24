@@ -633,7 +633,7 @@ public class CloudInterface {
 				Log.i("myTestToInsertttttt","Name:"+namespace+"Country:"+country+"County:"+county);
 				endpoint.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
 //				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
-				DbQuery.insertAccountTask(db,dbh,acc);
+//				DbQuery.insertAccountTask(db,dbh,acc);
 			} catch (IOException e) {
 
 		e.printStackTrace();
