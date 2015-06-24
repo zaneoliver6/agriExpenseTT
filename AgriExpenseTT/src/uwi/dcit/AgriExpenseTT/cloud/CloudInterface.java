@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -66,7 +67,6 @@ public class CloudInterface {
 
 		@Override
 		protected Void doInBackground(Void... params) {
-
             CycleApi.Builder builder = new CycleApi.Builder(
 			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 			         null);         
@@ -197,11 +197,12 @@ public class CloudInterface {
 			Iterator<Integer> rowI=rowIds.iterator();
 
 			while(logI.hasNext()){
+
 				int logId=logI.next(),
                         rowId=rowI.next();              // The current primary key of CROP CYCLE Table
 
                 Cycle c = DbQuery.getCycle(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccount(db));   // Uses the account rep as the namespace
+				c.setAccount(DbQuery.getAccountName(db));   // Uses the account rep as the namespace
 
 				try{
 					c=endpoint.insertCycle(c).execute();
@@ -259,7 +260,7 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				CycleUse c=DbQuery.getACycleUse(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccount(db));
+				c.setAccount(DbQuery.getAccountName(db));
 				
 				try{
 					c=endpoint.insertCycleUse(c).execute();
@@ -313,7 +314,7 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
                 ResourcePurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
-				purchase.setAccount(DbQuery.getAccount(db));
+				purchase.setAccount(DbQuery.getAccountName(db));
 //				try{
 //					purchase=endpoint.insertRPurchase(purchase).execute();
 //				}catch(Exception e){
@@ -370,7 +371,7 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
 				Cycle c=new Cycle();
 				c.setId(rowId);
-				c.setAccount(DbQuery.getAccount(db));
+				c.setAccount(DbQuery.getAccountName(db));
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, rowId);
 				if(keyrep != null){//was never inserted :o
 					try{
@@ -448,7 +449,7 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
 				CycleUse c=new CycleUse();
 				c.setId(rowId);
-				c.setAccount(DbQuery.getAccount(db));
+				c.setAccount(DbQuery.getAccountName(db));
 				String keyrep=DbQuery.getKey(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 				c.setKeyrep(keyrep);
 				if(keyrep == null){
@@ -514,7 +515,7 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
                 ResourcePurchase p=new ResourcePurchase();
 				p.setPId(rowId);
-				p.setAccount(DbQuery.getAccount(db));
+				p.setAccount(DbQuery.getAccountName(db));
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
 				p.setKeyrep(keyrep);
 				if(keyrep!=null){
@@ -584,7 +585,7 @@ public class CloudInterface {
 				String k=DbQuery.getKey(db, dbh, t.getTableKind(), t.getRowId());//gets the key for the related object in the cloud
 				t.setKeyrep(k);//stores the keyrep for its relating object
 				
-				t.setAccount(DbQuery.getAccount(db));
+				t.setAccount(DbQuery.getAccountName(db));
 				try{
 					t=endpoint.insertTransLog(t).execute();
 					updateUpAccC(t.getTransTime());
@@ -618,25 +619,27 @@ public class CloudInterface {
 		}
 		@Override
 		protected Void doInBackground(Void... params) {
-//			AccountApi.Builder builder = new AccountApi.Builder(
-//			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-//			         null);
-//			builder = CloudEndpointUtils.updateBuilder(builder);
-//            AccountApi endpoint = builder.build();
-//			UpAcc acc=new UpAcc();
-//			acc.setAcc(namespace);
-//			acc.setLastUpdated(time);
-//            acc.setCounty(county);
-//            acc.setCountry(country);
-//			try {
-//				acc=endpoint.insertAccountTask(acc).execute();
-//				DbQuery.insertAccountTask(db, acc);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-			return null;
-		}
-		
+			AccountApi.Builder builder = new AccountApi.Builder(
+			         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+			         null);
+			builder = CloudEndpointUtils.updateBuilder(builder);
+            AccountApi endpoint = builder.build();
+			Account acc=new Account();
+			acc.setAccount(namespace);
+			acc.setLastUpdated(time);
+            acc.setCounty(county);
+            acc.setCountry(country);
+			try {
+				Log.i("myTestToInsertttttt","Name:"+namespace+"Country:"+country+"County:"+county);
+				endpoint.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
+//				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
+				DbQuery.insertAccountTask(db,dbh,acc);
+			} catch (IOException e) {
+
+		e.printStackTrace();
+	}
+	return null;
+}
 	}
 	public void updateUpAccC(Long time){
 		Account acc=DbQuery.getUpAcc(db);

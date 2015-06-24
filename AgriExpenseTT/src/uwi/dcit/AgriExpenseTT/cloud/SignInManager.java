@@ -29,6 +29,8 @@ import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.myTestApi.MyTestApi;
 import uwi.dcit.agriexpensesvr.myTestApi.model.MyBean;
 
+import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 
 
 public class SignInManager {
@@ -56,11 +58,16 @@ public class SignInManager {
 	}
 
     public Account isExisting(){
-//        Account acc = DbQuery.getAccount(db);// Attempts to retrieve the Account from the database Record
+        Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record
+		if(acc!=null)
+			Log.i("myTestGET ACCOUNT","Got an account!");
+		else
+			Log.i("myTest GET ACCOUNT","Did no get any account!");
 //        if(acc.getAccount() == null || acc.getAccount().equals(""))
-//            return null;                    // The information returned will be null if no record exists
-//        return acc;                         // Return the Account if received.
-        return null;
+		if(acc==null)
+            return null;                    // The information returned will be null if no record exists
+        return acc;                         // Return the Account if received.
+//        return null;
     }
 
 	public boolean signOut(){
@@ -83,13 +90,29 @@ public class SignInManager {
         AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
         accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
         AccountApi accountApi = accountBuilder.build();
+
+		CycleApi.Builder cycleBuilder = new CycleApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
+		cycleBuilder = CloudEndpointUtils.updateBuilder(cycleBuilder);
+		CycleApi cycleApi = cycleBuilder.build();
+
         try {
             MyBean bean = api.sayHi("Hi").execute();
             System.out.println(bean.getData());
 
             uwi.dcit.agriexpensesvr.accountApi.model.Account acc = accountApi.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
             System.out.println(acc.toString());
-			//Log.i("myTests",acc.toString());
+
+			Cycle c = new Cycle();
+			c.setId(78);
+			c.setAccount("kyle.e.defreitas");
+			c.setCounty("George");
+			c.setLandType("Bed");
+			c.setCropName("Corn");
+			c.setTotalSpent(90.00);
+			uwi.dcit.agriexpensesvr.cycleApi.model.Cycle cyc = cycleApi.insertCycle(c).execute();
+			System.out.println(c.toString());
+
+			Log.i("myTest",c.toString());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -197,7 +220,7 @@ public class SignInManager {
             //Account account = null;
             if (account == null){
                 Log.d(TAG_NAME, "No Account Exists Creating a new Account");
-                cloudIF.insertAccount(namespace, 0, country, county);
+                cloudIF.insertAccount(namespace, 0, "Trinidad-Test", county);
             }
             return null;
 		}

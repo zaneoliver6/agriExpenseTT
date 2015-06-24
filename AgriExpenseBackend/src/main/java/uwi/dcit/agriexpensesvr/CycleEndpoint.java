@@ -285,9 +285,11 @@ public class CycleEndpoint {
                 mgr.persist(cycle);
                 mgr.getTransaction().commit();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             return null;
-        } finally {
+        }
+        finally {
 //            mgr.close();
         }
         return cycle;

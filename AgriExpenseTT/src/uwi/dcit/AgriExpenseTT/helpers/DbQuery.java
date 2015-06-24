@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.helpers;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
@@ -103,6 +105,19 @@ public class DbQuery {
         tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
         return rowId;
     }
+
+	public static void insertAccountTask(SQLiteDatabase db, DbHelper dbh, Account acc){
+
+		ContentValues cv=new ContentValues();
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, acc.getAccount());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, acc.getCounty());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS, acc.getAddress());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTRY, acc.getCountry());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, acc.getSignedIn());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, acc.getKeyrep());
+		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
+		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME,null,cv);
+	}
 	
 	public static int insertCycle(SQLiteDatabase db, DbHelper dbh,int cropId, String landType, double landQty,TransactionLog tl,long time){
 		ContentValues cv=new ContentValues();
@@ -551,20 +566,41 @@ public class DbQuery {
 		return t;
 	}
 
-    public static String getAccount(SQLiteDatabase db){
+	public static String getAccountName(SQLiteDatabase db){
 		String code="select "+ UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC+" from "+
 				UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
 		cursor.moveToFirst();
+
 		String res = cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
+		cursor.close();
+		return res;
+	}
+
+    public static Account getAccount(SQLiteDatabase db){
+		String code="select "+ UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC+" from "+
+				UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
+		Cursor cursor=db.rawQuery(code, null);
+		cursor.moveToFirst();
+		Account acc = new Account();
+
+		acc.setKeyrep(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY)));
+		acc.setAccount(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC)));
+		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
+		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
+		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
+		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
+//		String res = cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
         cursor.close();
-        return res;
+		Log.i("findAccountTest", "Name of Account! ->>"+acc.getAccount());
+        return acc;
 	}
 
 	public static Account getUpAcc(SQLiteDatabase db){
 		String code="select * from " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME;
 		Cursor cursor=db.rawQuery(code, null);
-		if(cursor.getCount() < 1)return null;  	// No records exist so return null
+		if(cursor.getCount() < 1)
+			return null;  	// No records exist so return null
 
 		cursor.moveToFirst();					// Only one record should exist (TODO If only one record exist do we need an entire table?)
 		Account acc = new Account();
@@ -575,7 +611,7 @@ public class DbQuery {
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
-
+		Log.i("findAccountTest", "Name of Account! ->>"+acc.getAccount());
         cursor.close();
 		return acc;
 	}

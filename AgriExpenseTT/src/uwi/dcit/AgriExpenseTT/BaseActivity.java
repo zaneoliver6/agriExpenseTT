@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
                 //new purchase
                 if (!(this instanceof NewPurchase))
                     startActivity(new Intent(this, NewPurchase.class));
+
                 break;
             case 3:
                 //hire labour
@@ -73,6 +75,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
                 break;
             case 6:
                 backUpData();
+
                 break;
             default:
                 startActivity(new Intent(this, Main.class));
@@ -82,24 +85,36 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     public void backUpData(){
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                signInManager.myTests();
-            }
-        })).start();
+//        (new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                signInManager.myTests();
+//            }
+//        })).start();
 
-
-        Intent i = new Intent(getApplicationContext(), Backup.class);
-        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
-            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
-                return;
+        if(this.signInManager.isExisting()==null){
+            Log.i("backupDataTest","No Accounts Exist!");
+            if(NetworkHelper.isNetworkAvailable(this)==true){
+                Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
+                signInManager.signIn();
             }
-            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
+        }
+        else{
+            Log.i("backupDataTest","Signing in!");
             signInManager.signIn();
         }
+
+//        Intent i = new Intent(getApplicationContext(), Backup.class);
+//        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
+//            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+//                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+//        }
+//        else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
+//            signInManager.signIn();
+//        }
     }
 
     @Override
