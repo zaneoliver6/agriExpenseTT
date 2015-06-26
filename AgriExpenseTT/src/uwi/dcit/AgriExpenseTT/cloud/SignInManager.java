@@ -46,6 +46,9 @@ public class SignInManager {
         this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
+		this.country="Trinidad";
+		this.county="St. George";
+
     }
 
 	public void signIn(){
@@ -220,15 +223,19 @@ public class SignInManager {
             //Account account = null;
             if (account == null){
                 Log.d(TAG_NAME, "No Account Exists Creating a new Account");
-                cloudIF.insertAccount(namespace, 0, "Trinidad-Test", county);
+				//Should be able to obtain the country and area selection from the user.
+                cloudIF.insertAccount(namespace, 0, country, county);
             }
             return null;
 		}
 
 		@Override
 		protected void onPostExecute(Account cloudAcc) {
+			cloudAcc = isExisting();
+			Log.i("Check Sync Call","Reached Here at all! Account:"+cloudAcc);
 			if (cloudAcc != null) {
                 Sync sync = new Sync(db, dbh, context, getSigninObject());
+				Log.i("Check Sync Call","Reached Here!");
                 sync.start(namespace, cloudAcc);
             }
             super.onPostExecute(cloudAcc);

@@ -91,8 +91,9 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 //                signInManager.myTests();
 //            }
 //        })).start();
-
         if(this.signInManager.isExisting()==null){
+            Intent i = new Intent(getApplicationContext(), Backup.class);
+            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
             Log.i("backupDataTest","No Accounts Exist!");
             if(NetworkHelper.isNetworkAvailable(this)==true){
                 Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
@@ -110,7 +111,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 //                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
 //                return;
 //            }
-//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+//           startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
 //        }
 //        else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
 //            signInManager.signIn();

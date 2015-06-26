@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -35,6 +36,7 @@ public class Sync {
 	}
 	public void start(String namespace,Account cloudAcc){
         Account localAcc = DbQuery.getUpAcc(db);
+		Log.i("SYNC TEST ->>>>>", "Account Retrieved Was:"+localAcc);
 		this.cloudAccount = cloudAcc;
 		//both exist
 		if(cloudAcc!=null){

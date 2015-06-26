@@ -28,7 +28,7 @@ public class CloudEndpointUtils {
 	//To ensure proper connection between backend and application, obtain the IPv4 Address
 	//and set the LOCAL_APP_ENGINE_SERVER_URL to this address.
 	public static final boolean LOCAL_ANDROID_RUN = true;
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.4.44:8080";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.22.189:8080";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://192.168.1.145:8080/";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.2.2:8080/";
 	protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
