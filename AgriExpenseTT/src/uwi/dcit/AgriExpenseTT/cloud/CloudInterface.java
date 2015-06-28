@@ -144,7 +144,7 @@ public class CloudInterface {
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
 				try{
 					p.setKeyrep(keyrep);
-//					p=endpoint.updateRPurchase(p).execute();
+					p=endpoint.updateRPurchase(p).execute();
 				}catch(Exception e){
 					
 					return null;
@@ -315,11 +315,11 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
                 ResourcePurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
 				purchase.setAccount(DbQuery.getAccountName(db));
-//				try{
-//					purchase=endpoint.insertRPurchase(purchase).execute();
-//				}catch(Exception e){
-//					return null;
-//				}
+				try{
+					purchase=endpoint.insertRPurchase(purchase).execute();
+				}catch(Exception e){
+					return null;
+				}
 				if(purchase!=null){
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());

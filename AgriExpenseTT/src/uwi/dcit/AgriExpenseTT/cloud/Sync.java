@@ -36,7 +36,6 @@ public class Sync {
 	}
 	public void start(String namespace,Account cloudAcc){
         Account localAcc = DbQuery.getUpAcc(db);
-		Log.i("SYNC TEST ->>>>>", "Account Retrieved Was:"+localAcc);
 		this.cloudAccount = cloudAcc;
 		//both exist
 		if(cloudAcc!=null){

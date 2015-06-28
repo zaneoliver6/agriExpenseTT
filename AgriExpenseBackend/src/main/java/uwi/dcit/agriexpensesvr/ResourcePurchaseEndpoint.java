@@ -56,7 +56,7 @@ public class ResourcePurchaseEndpoint {
 
         try {
             mgr = getEntityManager();
-            Query query = mgr.createQuery("select from RPurchase as RPurchase");
+            Query query = mgr.createQuery("select from ResourcePurchase as ResourcePurchase");
             if (cursorString != null && cursorString != "") {
                 cursor = Cursor.fromWebSafeString(cursorString);
                 query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
