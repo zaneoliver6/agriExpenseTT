@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -209,6 +210,7 @@ public class TransactionLog {
         cursor.close();
 		CloudInterface c=new CloudInterface(context, db, dbh);
 		c.flushToCloud();
+		//After we update the cloud, the local data as well as the cloud data are in sync!
 	}
 	public boolean createCloud(String namespace){
 		
@@ -409,6 +411,7 @@ public class TransactionLog {
 	public void logUpdateLocal(TransLog t,String namespace){
 		ContentValues cv=new ContentValues();
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
+			Log.d("CHECKKK", "KeyRep:"+t.getKeyrep());
 			Cycle c=getCycle(namespace,t.getKeyrep());
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());

@@ -209,7 +209,8 @@ public class TransLogEndpoint {
         EntityManager mgr = getEntityManager();
         Key k = KeyFactory.createKey("TransLog", transLog.getId());
         transLog.setKey(k);
-        transLog.setKeyrep(Integer.toString(transLog.getId()));
+//        transLog.setKeyrep(Integer.toString(transLog.getId()));
+        transLog.setKeyrep(KeyFactory.keyToString(k));
         System.out.println("okieee");
         try {
             if (containsTransLog(transLog)) {

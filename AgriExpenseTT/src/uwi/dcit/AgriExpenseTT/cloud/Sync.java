@@ -8,14 +8,22 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+
+import java.io.IOException;
+
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
+import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 //import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 //import com.dcit.agriexpensett.upAccApi.model.UpAcc;
+
 
 public class Sync {
     private Account cloudAccount;
@@ -34,16 +42,19 @@ public class Sync {
 		this.signin=signin;
 		tL=new TransactionLog(dbh, db,context);
 	}
-	public void start(String namespace,Account cloudAcc){
-        Account localAcc = DbQuery.getUpAcc(db);
-		this.cloudAccount = cloudAcc;
+	public void start(String namespace,Account cloudAccount){
+        Account localAccount = DbQuery.getUpAcc(db);
+
+
 		//both exist
-		if(cloudAcc!=null){
-			long localUpdate= localAcc.getLastUpdated();
-			long cloudUpdate=cloudAcc.getLastUpdated();
-			if(localUpdate>=cloudUpdate){//local more recent than cloud
+		if(localAccount!=null &&cloudAccount !=null){
+			long localUpdate= localAccount.getLastUpdated();
+			long cloudUpdate=cloudAccount.getLastUpdated();
+			Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
+
+			if(localUpdate>cloudUpdate){//local more recent than cloud
 				//the local does not have an account which means it has never been synced
-				if(localAcc.getAccount()==null || localAcc.getAccount().equals("")){
+				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
 					/*there is no local account, the user must decide
 					 * if he's gonna use the datastore or if he's going to overwrite it*/
 					confirmSync(localUpdate,cloudUpdate,namespace);
@@ -55,13 +66,12 @@ public class Sync {
 					 */
 
 					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateCloudOpt);
-
 				}
 
 
 			}else if(cloudUpdate>localUpdate){//Cloud is more updated
 				//the local does not have an account which means it has never been synced
-				if(localAcc.getAccount()==null || localAcc.getAccount().equals("")){
+				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
 					/*there is no local account, the user must decide
 					 * if he's gonna use the datastore or if he's going to overwrite it*/
 					confirmSync(localUpdate,cloudUpdate,namespace);
@@ -76,13 +86,18 @@ public class Sync {
 				}
 
 			}
+			else if(cloudUpdate==localUpdate){
+				//Do Nothing Since Both Are The Same
+				Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
+			}
 			ContentValues cv=new ContentValues();
-			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, cloudAcc.getKeyrep());
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, localAccount.getKeyrep());
 		//only local exist
 		}else{
 
 			new SyncExec(tL, namespace, 0, 0).execute(Option.createCloudNewOpt);
 		//only cloud exist
+			//create local account
 		}
 	}
 	public class SyncExec extends AsyncTask<Option,Void,Boolean>{

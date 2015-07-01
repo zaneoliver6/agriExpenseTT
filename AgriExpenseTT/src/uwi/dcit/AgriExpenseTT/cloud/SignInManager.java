@@ -61,7 +61,7 @@ public class SignInManager {
 	}
 
     public Account isExisting(){
-        Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record
+        Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
 		if(acc!=null)
 			Log.i("myTestGET ACCOUNT","Got an account!");
 		else
@@ -221,19 +221,26 @@ public class SignInManager {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
             Account account = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
             //Account account = null;
+			//Does an account exist in the cloud? - No - Then we create a new account in the app.
             if (account == null){
-                Log.d(TAG_NAME, "No Account Exists Creating a new Account");
+                Log.d(TAG_NAME, "No Account Exists in neither app or cloud ... Creating a new Account");
 				//Should be able to obtain the country and area selection from the user.
                 cloudIF.insertAccount(namespace, 0, country, county);
             }
-            return null;
+			//If an account exists in the cloud but does not in the app itself, we create one in the app.
+			if(isExisting()==null && account!=null){
+				Log.d(TAG_NAME, "No Account Exists in app but does exist in cloud ... Creating a new Account");
+				cloudIF.insertAccount(namespace, 0, country, county);
+			}
+			Log.d(TAG_NAME, "Timee:"+System.currentTimeMillis()/1000L);
+			return account;
 		}
 
 		@Override
 		protected void onPostExecute(Account cloudAcc) {
-			cloudAcc = isExisting();
+			Account localAccount = isExisting();
 			Log.i("Check Sync Call","Reached Here at all! Account:"+cloudAcc);
-			if (cloudAcc != null) {
+			if (localAccount != null) {
                 Sync sync = new Sync(db, dbh, context, getSigninObject());
 				Log.i("Check Sync Call","Reached Here!");
                 sync.start(namespace, cloudAcc);

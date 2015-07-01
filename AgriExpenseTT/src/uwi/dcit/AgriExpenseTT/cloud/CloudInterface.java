@@ -634,6 +634,7 @@ public class CloudInterface {
 				endpoint.getOrInsertAccount(namespace, "SVG", "St George's").execute();
 //				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
 				DbQuery.insertAccountTask(db,dbh,acc);
+
 			} catch (IOException e) {
 		e.printStackTrace();
 	}
