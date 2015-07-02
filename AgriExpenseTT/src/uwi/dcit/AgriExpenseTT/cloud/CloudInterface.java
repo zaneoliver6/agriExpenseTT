@@ -206,6 +206,7 @@ public class CloudInterface {
 
 				try{
 					c=endpoint.insertCycle(c).execute();
+
 				}catch(Exception e){
 					
 					return null;
@@ -230,6 +231,10 @@ public class CloudInterface {
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
+					//When we have finished inserting a cycle, we would like to record the timestamp of the change made to the local database.
+					//This would be reflected in the lastUpdated variable.
+					DbQuery.updateAccount(db,System.currentTimeMillis()/1000L);
+
 				}
 			}
 			return null;
@@ -635,9 +640,10 @@ public class CloudInterface {
 //				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
 				DbQuery.insertAccountTask(db,dbh,acc);
 
-			} catch (IOException e) {
-		e.printStackTrace();
-	}
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 	return null;
 }
 	}

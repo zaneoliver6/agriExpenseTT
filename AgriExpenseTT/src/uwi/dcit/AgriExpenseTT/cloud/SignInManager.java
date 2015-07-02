@@ -219,21 +219,17 @@ public class SignInManager {
 		@Override
 		protected Account doInBackground(String... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-            Account account = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
-            //Account account = null;
-			//Does an account exist in the cloud? - No - Then we create a new account in the app.
-            if (account == null){
+            Account cloudAccount = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
+			Account localAccount = isExisting();
+			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
+			//cloud and local account is created.
+            if (cloudAccount == null || localAccount==null){
                 Log.d(TAG_NAME, "No Account Exists in neither app or cloud ... Creating a new Account");
 				//Should be able to obtain the country and area selection from the user.
                 cloudIF.insertAccount(namespace, 0, country, county);
             }
-			//If an account exists in the cloud but does not in the app itself, we create one in the app.
-			if(isExisting()==null && account!=null){
-				Log.d(TAG_NAME, "No Account Exists in app but does exist in cloud ... Creating a new Account");
-				cloudIF.insertAccount(namespace, 0, country, county);
-			}
 			Log.d(TAG_NAME, "Timee:"+System.currentTimeMillis()/1000L);
-			return account;
+			return cloudAccount;
 		}
 
 		@Override

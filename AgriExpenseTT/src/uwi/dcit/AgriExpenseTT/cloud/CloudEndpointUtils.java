@@ -29,7 +29,7 @@ public class CloudEndpointUtils {
 	//and set the LOCAL_APP_ENGINE_SERVER_URL to this address.
 	public static final boolean LOCAL_ANDROID_RUN = true;
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.10.139:8080";
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.4.180:8080";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.26.2:8080";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.2.2:8080/";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
     protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://centering-dock-715.appspot.com";

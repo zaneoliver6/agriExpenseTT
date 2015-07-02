@@ -616,13 +616,13 @@ public class DbQuery {
 		return acc;
 	}
 
-	public static void updateAccount(SQLiteDatabase db,long time){
-//		UpAcc acc=DbQuery.getUpAcc(db);
-//		if(acc.getLastUpdated()<=time){
-//			ContentValues cv=new ContentValues();
-//			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
-//			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
-//		}
+	public static void updateAccount(SQLiteDatabase db, long time){
+		Account acc=DbQuery.getUpAcc(db);
+		if(acc.getLastUpdated()<time){
+			ContentValues cv=new ContentValues();
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
+			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
+		}
 	}
 
     //checks to see if there are any crop cycles or not

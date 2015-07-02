@@ -217,6 +217,33 @@ public class ResourcePurchaseEndpoint {
     }
 
     /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "purchaseWithID")
+    public ResourcePurchase purchaseWithID(@Named("namespace") String namespace,
+                                         @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        Key k = KeyFactory.createKey("ResourcePurchase",id);
+        String keyString = KeyFactory.keyToString(k);
+        EntityManager mgr = getEntityManager();
+        ResourcePurchase rpurchase = null;
+        try {
+            rpurchase = mgr.find(ResourcePurchase.class, keyString);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("---000---_");
+        return rpurchase;
+    }
+
+
+    /**
      * This inserts a new entity into App Engine datastore. If the entity
      * already exists in the datastore, an exception is thrown. It uses HTTP
      * POST method.

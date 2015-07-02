@@ -240,8 +240,8 @@ public class CycleEndpoint {
      * @return The entity with primary key id.
      */
     @ApiMethod(name = "getCycle")
-    public Cycle getCycle(@Named("namespace") String namespace,
-                          @Named("keyrep") String keyrep) {
+     public Cycle getCycle(@Named("namespace") String namespace,
+                           @Named("keyrep") String keyrep) {
         NamespaceManager.set(namespace);
         EntityManager mgr = getEntityManager();
         Key k = KeyFactory.stringToKey(keyrep);
@@ -253,6 +253,34 @@ public class CycleEndpoint {
         }
         return c;
     }
+
+    /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *It is mainly used when updating a cycle with respect to the cloud's database.
+     * Note that a Transaction Log's Key Representation cannot be used to find that of a cycle
+     * hence we pass the ID of the cycle and create the key in this method itself.
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "CycleWithID")
+    public Cycle CycleIdOnly(@Named("namespace") String namespace,
+                         @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        EntityManager mgr = getEntityManager();
+        Key k = KeyFactory.createKey("Cycle", id);
+        String keyString = KeyFactory.keyToString(k);
+        Cycle c = null;
+        try {
+            c = mgr.find(Cycle.class, keyString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+
 
     /**
      * This inserts a new entity into App Engine datastore. If the entity
@@ -349,7 +377,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
 //            d.delete(k);
-            Cycle findCycle = mgr.find(Cycle.class,k);
+            Cycle findCycle = mgr.find(Cycle.class, k);
             mgr.getTransaction().begin();
             mgr.remove(findCycle);
             mgr.getTransaction().commit();
@@ -357,6 +385,7 @@ public class CycleEndpoint {
             e.printStackTrace();
         }
     }
+
 
     private boolean containsCycle(Cycle cycle) {
         NamespaceManager.set(cycle.getAccount());

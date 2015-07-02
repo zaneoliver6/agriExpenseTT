@@ -51,7 +51,7 @@ public class Sync {
 			long localUpdate= localAccount.getLastUpdated();
 			long cloudUpdate=cloudAccount.getLastUpdated();
 			Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
-
+			cloudUpdate=2;
 			if(localUpdate>cloudUpdate){//local more recent than cloud
 				//the local does not have an account which means it has never been synced
 				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
@@ -70,6 +70,7 @@ public class Sync {
 
 
 			}else if(cloudUpdate>localUpdate){//Cloud is more updated
+				Log.d("CLOUD VS LOCAL", "Cloud Copying to Local");
 				//the local does not have an account which means it has never been synced
 				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
 					/*there is no local account, the user must decide
@@ -94,9 +95,8 @@ public class Sync {
 			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, localAccount.getKeyrep());
 		//only local exist
 		}else{
-
 			new SyncExec(tL, namespace, 0, 0).execute(Option.createCloudNewOpt);
-		//only cloud exist
+			//only cloud exist
 			//create local account
 		}
 	}

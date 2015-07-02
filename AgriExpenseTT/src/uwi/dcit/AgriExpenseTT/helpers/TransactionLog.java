@@ -211,6 +211,7 @@ public class TransactionLog {
 		CloudInterface c=new CloudInterface(context, db, dbh);
 		c.flushToCloud();
 		//After we update the cloud, the local data as well as the cloud data are in sync!
+
 	}
 	public boolean createCloud(String namespace){
 		
@@ -275,7 +276,10 @@ public class TransactionLog {
 			c.setAccount(namespace);
 			try {
 				c=endpointUse.insertCycleUse(c).execute();
-			} catch (IOException e) {e.printStackTrace();
+			}
+			catch (IOException e)
+			{e.printStackTrace();
+
 				return false;}
 			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
@@ -293,10 +297,10 @@ public class TransactionLog {
 			p.setCost(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST)));
 			p.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex( ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 			p.setAccount(namespace);
-//			try {
-//				p=endpointPurchase.insertRPurchase(p).execute();
-//			} catch (IOException e) {e.printStackTrace();
-//				return false;}
+			try {
+				p=endpointPurchase.insertRPurchase(p).execute();
+			} catch (IOException e) {e.printStackTrace();
+				return false;}
 			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
 		}
 		cursor.close();
@@ -360,11 +364,17 @@ public class TransactionLog {
 			if (tlist != null) {
                 List<TransLog> transList = tlist.getItems();
                 for (TransLog tLog : transList) {
-                    if (tLog.getOperation().equals(TransactionLog.TL_INS))
-                        logInsertLocal(tLog, namespace);
-                    else if (tLog.getOperation().equals(TransactionLog.TL_UPDATE))
-                        logUpdateLocal(tLog, namespace);
+					Log.d("TTTTEEESSSSTTTT","Transaction Log:"+tLog.getTableKind()+"\n");
+                    if (tLog.getOperation().equals(TransactionLog.TL_INS)){
+						Log.d("TTTTEEESSSSTTTT","Local INSERTION");
+						logInsertLocal(tLog, namespace);
+					}
+                    else if (tLog.getOperation().equals(TransactionLog.TL_UPDATE)){
+						Log.d("TTTTEEESSSSTTTT","Local UPDATE");
+						logUpdateLocal(tLog, namespace);
+					}
                     else if (tLog.getOperation().equals(TransactionLog.TL_DEL)) {
+						Log.d("TTTTEEESSSSTTTT","Local Deletee");
                         logDeleteLocal(tLog, namespace);
                     }
                 }
@@ -375,7 +385,8 @@ public class TransactionLog {
 	public void logInsertLocal (TransLog t,String namespace){
 		ContentValues cv=new ContentValues();
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
-			Cycle c=getCycle(namespace,t.getKeyrep());
+//			Cycle c=getCycle(namespace,t.getKeyrep());
+			Cycle c=getCycle2(namespace, t.getId());
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
@@ -387,7 +398,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			ResourcePurchase p=getPurchase(namespace,t.getKeyrep());
+			ResourcePurchase p=getPurchase2(namespace,t.getId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -412,7 +423,7 @@ public class TransactionLog {
 		ContentValues cv=new ContentValues();
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
 			Log.d("CHECKKK", "KeyRep:"+t.getKeyrep());
-			Cycle c=getCycle(namespace,t.getKeyrep());
+			Cycle c=getCycle2(namespace,t.getId());
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
@@ -424,7 +435,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+t.getRowId(), null);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			ResourcePurchase p=getPurchase(namespace,t.getKeyrep());
+			ResourcePurchase p=getPurchase2(namespace, t.getId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -454,6 +465,7 @@ public class TransactionLog {
 	}
 
 	private Cycle getCycle(String namespace, String keyrep){
+		Log.d("TEST GETTINGGGG", "NameSpace:"+namespace+"Key:"+keyrep);
 		CycleApi.Builder builder = new CycleApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
 		         null);         
@@ -465,6 +477,21 @@ public class TransactionLog {
 		} catch (IOException e) {e.printStackTrace();}
 		return c;
 	}
+
+	private Cycle getCycle2(String namespace, int id){
+		Log.d("TEST GETTINGGGG", "NameSpace:"+namespace+"ID:"+id);
+		CycleApi.Builder builder = new CycleApi.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		CycleApi endpoint = builder.build();
+		Cycle c = null;
+		try {
+			c=endpoint.cycleWithID(namespace,id).execute();
+		} catch (IOException e) {e.printStackTrace();}
+		return c;
+	}
+
 	private ResourcePurchase getPurchase(String namespace,String keyrep){
 		ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
 		         AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
@@ -472,9 +499,22 @@ public class TransactionLog {
 		builder = CloudEndpointUtils.updateBuilder(builder);
         ResourcePurchaseApi endpoint = builder.build();
 		ResourcePurchase p = null;
-//		try {
-//			p=endpoint.getRPurchase(namespace, keyrep).execute();
-//		} catch (IOException e) {e.printStackTrace();}
+		try {
+			p=endpoint.getRPurchase(namespace, keyrep).execute();
+		} catch (IOException e) {e.printStackTrace();}
+		return p;
+	}
+
+	private ResourcePurchase getPurchase2(String namespace, int id){
+		ResourcePurchaseApi.Builder builder = new ResourcePurchaseApi.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		ResourcePurchaseApi endpoint = builder.build();
+		ResourcePurchase p = null;
+		try {
+			p=endpoint.purchaseWithID(namespace, id).execute();
+		} catch (IOException e) {e.printStackTrace();}
 		return p;
 	}
 
