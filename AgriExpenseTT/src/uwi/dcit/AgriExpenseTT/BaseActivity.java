@@ -24,6 +24,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected boolean isTablet = false;
     protected final int RequestCode_backup =2;
+    protected String country,county;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +95,16 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         if(this.signInManager.isExisting()==null){
             Intent i = new Intent(getApplicationContext(), Backup.class);
             startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+            Log.i("FUCKING TESTTTTT","County:"+country);
             Log.i("backupDataTest","No Accounts Exist!");
             if(NetworkHelper.isNetworkAvailable(this)==true){
                 Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
-                signInManager.signIn();
+                signInManager.signIn(country,county);
             }
         }
         else{
             Log.i("backupDataTest","Signing in!");
-            signInManager.signIn();
+            signInManager.signIn(country,county);
         }
 
 //        Intent i = new Intent(getApplicationContext(), Backup.class);

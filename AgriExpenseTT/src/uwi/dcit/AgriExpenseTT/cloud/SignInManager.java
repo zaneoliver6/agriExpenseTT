@@ -51,11 +51,14 @@ public class SignInManager {
 
     }
 
-	public void signIn(){
+	public void signIn(String country, String county){
         Log.d(TAG_NAME, "Attempting to Log in");
 		Account acc = isExisting(); 								// Check if Account is already created
-		if(acc == null)
-			accountSetUp();							// Account doesn't exist so we've to setup a new one (means we never signed in)
+		if(acc == null) {
+			accountSetUp();        // Account doesn't exist so we've to setup a new one (means we never signed in)
+			this.country=country;
+			this.county=county;
+		}
 		else
 			startSync(acc.getAccount());						    // Account exists already so we can Initiate Sign-in process
 	}

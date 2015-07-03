@@ -20,6 +20,7 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleApi.model.CycleCollection;
@@ -210,6 +211,7 @@ public class TransactionLog {
         cursor.close();
 		CloudInterface c=new CloudInterface(context, db, dbh);
 		c.flushToCloud();
+
 		//After we update the cloud, the local data as well as the cloud data are in sync!
 
 	}
@@ -378,6 +380,13 @@ public class TransactionLog {
                         logDeleteLocal(tLog, namespace);
                     }
                 }
+				//Some sort of changes have been made at this point and we want to set the lastUpdated to the
+				//System's current time.
+				Account localAcc = DbQuery.getUpAcc(db);
+				Log.d("TIME","BEFORE :"+localAcc.getLastUpdated()+"\n");
+				DbQuery.updateAccount(db,System.currentTimeMillis()/1000L);
+				localAcc = DbQuery.getUpAcc(db);
+				Log.d("TIME","AFTER :"+localAcc.getLastUpdated()+"\n");
             }
 			return null;
 		}
