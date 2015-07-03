@@ -6,9 +6,6 @@ import android.os.Parcelable;
 
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
-
-import java.util.Date;
-
 public class LocalResourcePurchase implements Parcelable{
 	private int pId;
 	private int resourceId;

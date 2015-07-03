@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +69,8 @@ public class FragmentUseResource extends Fragment{
         String category = getArguments().getString("type");
 
         ActionBar bar = null;
-        if (this.getActivity() instanceof ActionBarActivity){
-            bar = ((ActionBarActivity)this.getActivity()).getSupportActionBar();
+        if (this.getActivity() instanceof AppCompatActivity){
+            bar = ((AppCompatActivity)this.getActivity()).getSupportActionBar();
         }
 
         if(category.equals(DHelper.cat_plantingMaterial)){

@@ -8,18 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-
-import java.io.IOException;
-
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
-import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 //import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 //import com.dcit.agriexpensett.upAccApi.model.UpAcc;

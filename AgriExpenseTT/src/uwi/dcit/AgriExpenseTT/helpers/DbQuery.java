@@ -21,13 +21,13 @@ import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
-//import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
+
+//import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
 //import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbQuery {

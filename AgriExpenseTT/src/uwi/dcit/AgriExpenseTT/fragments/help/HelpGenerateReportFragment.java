@@ -2,6 +2,7 @@ package uwi.dcit.AgriExpenseTT.fragments.help;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ public class HelpGenerateReportFragment extends Fragment {
 		txtHeading.setText("Introduction");
 		
 		ImageView img = (ImageView)view.findViewById(R.id.article_image);
-		img.setImageDrawable(getResources().getDrawable(R.drawable.help_homescreen));
+//		img.setImageDrawable(getResources().getDrawable(R.drawable.help_homescreen));
+		img.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.help_homescreen, null));
 		
 		
 		TextView txtContent = (TextView)view.findViewById(R.id.article_text);

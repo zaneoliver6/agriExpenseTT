@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,8 +55,8 @@ public class FragmentCycleUseCategory extends Fragment {
 		setupClick();
 
         //set color of action bar
-        if (this.getActivity() instanceof ActionBarActivity){
-            ((ActionBarActivity)this.getActivity())
+        if (this.getActivity() instanceof AppCompatActivity){
+            ((AppCompatActivity)this.getActivity())
                     .getSupportActionBar()
                     .setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
         }
