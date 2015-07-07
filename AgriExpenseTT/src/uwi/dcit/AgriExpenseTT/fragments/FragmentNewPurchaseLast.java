@@ -183,7 +183,7 @@ public class FragmentNewPurchaseLast extends Fragment{
                         if(category.equals(DHelper.cat_labour) && currC != null){
 
                             //insert purchase
-                            res = dm.insertPurchase(resId, quantifier, qty, category, cost);
+                            res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
                             int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
                             ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
