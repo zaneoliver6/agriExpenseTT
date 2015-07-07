@@ -64,8 +64,9 @@ public class SignInManager {
 
     public Account isExisting(){
         Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
-		if(acc!=null)
-			Log.i("myTestGET ACCOUNT","Got an account!");
+		if(acc!=null) {
+			Log.i("myTestGET ACCOUNT", "Got an account!");
+		}
 		else
 			Log.i("myTest GET ACCOUNT","Did no get any account!");
 //        if(acc.getAccount() == null || acc.getAccount().equals(""))
@@ -222,6 +223,7 @@ public class SignInManager {
 		protected Account doInBackground(String... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
             Account cloudAccount = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
+
 			Account localAccount = isExisting();
 			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
 			//cloud and local account is created.
@@ -230,6 +232,7 @@ public class SignInManager {
 				//Should be able to obtain the country and area selection from the user.
                 cloudIF.insertAccount(namespace, 0, country, county);
             }
+
 			Log.d(TAG_NAME, "Timee:"+System.currentTimeMillis()/1000L);
 			return cloudAccount;
 		}

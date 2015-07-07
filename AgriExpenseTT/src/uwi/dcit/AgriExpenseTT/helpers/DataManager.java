@@ -4,18 +4,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.AgriExpenseTT.cloud.CloudInterface;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
+import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
-//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 
 public class DataManager {
@@ -23,21 +25,21 @@ public class DataManager {
 	DbHelper dbh;
 	Context context;
 	TransactionLog tL;
-//	UpAcc acc;
+	Account acc;
 	public DataManager(Context context){
 		dbh= new DbHelper(context);
 //		db=dbh.getReadableDatabase();
         db = dbh.getWritableDatabase();
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
-//		acc=DbQuery.getUpAcc(db);
+		acc=DbQuery.getUpAcc(db);
 	}
 	public DataManager(Context context,SQLiteDatabase db,DbHelper dbh){
 		this.dbh= dbh;
 		this.db=db;
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
-//		acc=DbQuery.getUpAcc(db);
+		acc=DbQuery.getUpAcc(db);
 	}
 
 	public void insertCycle(int cropId, String landType, double landQty,long time){
@@ -58,15 +60,18 @@ public class DataManager {
     public int insertCycle(int cropId, String name, String landType, double landQty,long time){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
-//        if(acc!=null){
-//            //insert into transaction table
-//            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
-//            //try insert into cloud
+		Log.i("IINNSSEERRTT", "Account is:"+acc.getAccount());
+        if(acc!=null){
+            //insert into transaction table
+            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
+            //try insert into cloud
 //            if(acc.getSignedIn()==1){
-//                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-//                c.insertCycle();
+                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
+                c.insertCycle();
 //            }
-//        }
+        }
+		DbQuery.updateAccount(db,System.currentTimeMillis()/1000);
         return id;
     }
 

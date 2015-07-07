@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected boolean isTablet = false;
     protected final int RequestCode_backup =2;
-    protected String country,county;
+    protected String country=null,county=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,32 +92,36 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 //                signInManager.myTests();
 //            }
 //        })).start();
-        if(this.signInManager.isExisting()==null){
-            Intent i = new Intent(getApplicationContext(), Backup.class);
-            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-            Log.i("FUCKING TESTTTTT","County:"+country);
-            Log.i("backupDataTest","No Accounts Exist!");
-            if(NetworkHelper.isNetworkAvailable(this)==true){
-                Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
-                signInManager.signIn(country,county);
+//        if(this.signInManager.isExisting()==null){
+//            Intent i = new Intent(getApplicationContext(), Backup.class);
+//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+//            Log.i("FUCKING TESTTTTT","County:"+country);
+//            Log.i("backupDataTest","No Accounts Exist!");
+//            if(NetworkHelper.isNetworkAvailable(this)==true){
+//                Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
+//                signInManager.signIn(country,county);
+//            }
+//        }
+//        else{
+//            Log.i("backupDataTest","Signing in!");
+//            signInManager.signIn(country,county);
+//        }
+        Intent i = new Intent(getApplicationContext(), Backup.class);
+        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
+            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+                return;
             }
+            if(this.country==null && this.county==null) {
+                startActivityForResult(i, RequestCode_backup);// Launch the Backup activity with the sign-up action passed
+            }
+           signInManager.signIn(country,county);
         }
-        else{
-            Log.i("backupDataTest","Signing in!");
+        else if (!this.signInManager.isSignedIn()){
+            // If not signed attempt to login with existing account
+            Log.i("BLAHHHHHHH", "BLAHHHHHHHHH");
             signInManager.signIn(country,county);
         }
-
-//        Intent i = new Intent(getApplicationContext(), Backup.class);
-//        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
-//            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-//                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//           startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-//        }
-//        else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
-//            signInManager.signIn();
-//        }
     }
 
     @Override

@@ -45,7 +45,7 @@ public class Sync {
 			long cloudUpdate=cloudAccount.getLastUpdated();
 			Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
 			//Forcing a sync from the cloud.
-//			cloudUpdate=2;
+			cloudUpdate=2;
 
 			if(localUpdate>cloudUpdate){//local more recent than cloud
 				//the local does not have an account which means it has never been synced

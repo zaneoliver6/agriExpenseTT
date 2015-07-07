@@ -616,6 +616,7 @@ public class CloudInterface {
 		String namespace;
 		long time;
         String country,county;
+		int signedIn;
 		public insertAccountTask(String namespace, long time, String country, String county){
 			this.namespace=namespace;
 			this.time=time;
@@ -636,8 +637,8 @@ public class CloudInterface {
             acc.setCountry(country);
 			try {
 				Log.i("myTestToInsertttttt","Name:"+namespace+"Country:"+country+"County:"+county);
-				endpoint.getOrInsertAccount(namespace, "SVG", "St George's").execute();
-//				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
+//				endpoint.getOrInsertAccount(namespace, "SVG", "St George's").execute();
+				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
 				DbQuery.insertAccountTask(db,dbh,acc);
 
 			}

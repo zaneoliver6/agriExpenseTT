@@ -455,15 +455,24 @@ public class DbQuery {
 	public static void deleteRecord(SQLiteDatabase db,DbHelper dbh,String table,int id)throws Exception{
         if(table.equals(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME)){
             db.delete(table, UpdateAccountContract.UpdateAccountEntry._ID+""+id, null);
-        }else if(table.equals(CycleEntry.TABLE_NAME)){
+        }
+		else if(table.equals(CycleEntry.TABLE_NAME)){
             db.delete(table, CycleEntry._ID+"="+id, null);
-        }else if(table.equals(ResourcePurchaseEntry.TABLE_NAME)){
+        }
+		else if(table.equals(ResourcePurchaseEntry.TABLE_NAME)){
             db.delete(table, ResourcePurchaseEntry._ID+"="+id, null);
-        }else if(table.equals(ResourceContract.ResourceEntry.TABLE_NAME)){
+        }
+		else if(table.equals(ResourceContract.ResourceEntry.TABLE_NAME)){
             db.delete(table, ResourceContract.ResourceEntry._ID+"="+id, null);
-        }else if(table.equals(CycleResourceEntry.TABLE_NAME)){
+        }
+		else if(table.equals(CycleResourceEntry.TABLE_NAME))
+		{
             db.delete(table,CycleResourceEntry._ID+"="+id,null);
-        }else{
+        }
+		else if(table.equals(RedoLogEntry.TABLE_NAME)){
+			db.delete(table,RedoLogEntry._ID+"="+id, null);
+		}
+		else{
             throw new Exception("no contract defined for this table");
         }
 	}
