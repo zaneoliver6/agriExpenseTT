@@ -392,7 +392,9 @@ public class TransactionLog {
 		ContentValues cv=new ContentValues();
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
 //			Cycle c=getCycle(namespace,t.getKeyrep());
-			Cycle c=getCycle2(namespace, t.getId());
+			Cycle c=getCycle2(namespace, t.getRowId());
+			Log.i("CHECKKK", "Transaction Object:"+t);
+			Log.i("CHECKKK", "Object:"+c);
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
@@ -404,7 +406,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			ResourcePurchase p=getPurchase2(namespace,t.getId());
+			ResourcePurchase p=getPurchase2(namespace,t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -414,7 +416,7 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
 			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
-			CycleUse c=getCycleUse(namespace,t.getKeyrep());
+			CycleUse c=getCycleUse2(namespace,t.getRowId());
 			cv.put(CycleResourceEntry._ID, t.getRowId());
 			//cv.put(DbHelper.CYCLE_RESOURCE_TYPE, );
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
@@ -428,8 +430,9 @@ public class TransactionLog {
 	public void logUpdateLocal(TransLog t,String namespace){
 		ContentValues cv=new ContentValues();
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
-			Log.d("CHECKKK", "KeyRep:"+t.getKeyrep());
-			Cycle c=getCycle2(namespace,t.getId());
+			Log.i("CHECKKK", "Transaction:"+t);
+			Cycle c=getCycle2(namespace,t.getRowId());
+			Log.i("CHECKKK", "Object:"+c);
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
@@ -441,7 +444,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+t.getRowId(), null);
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
-			ResourcePurchase p=getPurchase2(namespace, t.getId());
+			ResourcePurchase p=getPurchase2(namespace, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
@@ -451,7 +454,7 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
 			db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+t.getRowId(), null);
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
-			CycleUse c=getCycleUse(namespace,t.getKeyrep());
+			CycleUse c=getCycleUse2(namespace,t.getRowId());
 			cv.put(CycleResourceEntry._ID, t.getRowId());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE,c.getResource());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
@@ -533,6 +536,19 @@ public class TransactionLog {
 		CycleUse c=null;
 		try {
 			c=endpoint.getCycleUse(namespace, keyrep).execute();
+		} catch (IOException e) {e.printStackTrace();}
+		return c;
+	}
+
+	private CycleUse getCycleUse2(String namespace, int id){
+		CycleUseApi.Builder builder = new CycleUseApi.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		CycleUseApi endpoint = builder.build();
+		CycleUse c=null;
+		try {
+			c=endpoint.cycleUseWithId(namespace, id).execute();
 		} catch (IOException e) {e.printStackTrace();}
 		return c;
 	}

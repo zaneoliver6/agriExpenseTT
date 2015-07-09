@@ -66,11 +66,11 @@ public class DataManager {
             //insert into transaction table
             DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
             //try insert into cloud
-//            if(acc.getSignedIn()==1){
+            if(acc.getSignedIn()==1){
                 CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
                 c.insertCycle();
-//            }
+            }
         }
 		DbQuery.updateAccount(db,System.currentTimeMillis()/1000);
         return id;

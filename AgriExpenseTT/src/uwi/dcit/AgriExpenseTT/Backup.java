@@ -42,4 +42,11 @@ public class Backup extends BaseActivity {
 		getMenuInflater().inflate(R.menu.backup_data, menu);
 		return true;
 	}
+
+//	@Override
+//	public void onPause(){
+//		super.onPause();
+//		Log.i("myTest!!!!!!!!!!!!","PAUSED CALLED!");
+//		signInManager.signIn(country,county);
+//	}
 }

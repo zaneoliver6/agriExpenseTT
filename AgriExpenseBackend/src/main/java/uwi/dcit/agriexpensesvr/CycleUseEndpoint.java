@@ -166,6 +166,46 @@ public class CycleUseEndpoint {
 		 */
     }
 
+
+    /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "cycleUseWithId")
+    public CycleUse cycleUseWithIdOnly(@Named("namespace") String namespace,
+                                @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        EntityManager mgr = getEntityManager();
+        CycleUse cycleuse = null;
+        Key k = KeyFactory.createKey("CycleUse",id);
+        String keyString = KeyFactory.keyToString(k);
+        try {
+            cycleuse = mgr.find(CycleUse.class, keyString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cycleuse;
+        // DatastoreService
+        // datastore=DatastoreServiceFactory.getDatastoreService();
+		/*
+		 * Entity et = null; try { et=datastore.get(k); } catch
+		 * (com.google.appengine.api.datastore.EntityNotFoundException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); } if(et==null)
+		 * return null; cycleuse.setAmount((Double) et.getProperty("amount"));
+		 * cycleuse.setCost((Double) et.getProperty("cost"));
+		 * cycleuse.setCycleid((Integer) et.getProperty("cycleid"));
+		 * cycleuse.setPurchaseId((Integer) et.getProperty("purchaseId"));
+		 * cycleuse.setResource((String) et.getProperty("resource")); /*try {
+		 * cycleuse = mgr.find(CycleUse.class, id); } finally { mgr.close(); }
+		 */
+    }
+
+
+
     /**
      * This inserts a new entity into App Engine datastore. If the entity
      * already exists in the datastore, an exception is thrown. It uses HTTP

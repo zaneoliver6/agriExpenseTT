@@ -607,7 +607,31 @@ public class CloudInterface {
 		}
 		
 	}
+
 	public void insertAccount(String namespace, long time, String country, String county){
+		if(time==-1)
+			time=System.currentTimeMillis()/1000L;
+		AccountApi.Builder builder = new AccountApi.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		AccountApi endpoint = builder.build();
+		Account acc=new Account();
+		acc.setAccount(namespace);
+		acc.setLastUpdated(time);
+		acc.setCountry(country);
+		acc.setCounty(county);
+		try {
+			Log.i("myTestToInsertttttt","Name:"+namespace+"Country:"+country+"County:"+county);
+			acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
+			DbQuery.insertAccountTask(db,dbh,acc);
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void insertAccount2(String namespace, long time, String country, String county){
 		if(time==-1)
 			time=System.currentTimeMillis()/1000L;
 		new insertAccountTask(namespace,time,country,county).execute();
@@ -616,7 +640,6 @@ public class CloudInterface {
 		String namespace;
 		long time;
         String country,county;
-		int signedIn;
 		public insertAccountTask(String namespace, long time, String country, String county){
 			this.namespace=namespace;
 			this.time=time;
@@ -640,13 +663,15 @@ public class CloudInterface {
 //				endpoint.getOrInsertAccount(namespace, "SVG", "St George's").execute();
 				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
 				DbQuery.insertAccountTask(db,dbh,acc);
-
 			}
 			catch (IOException e) {
 				e.printStackTrace();
 			}
 	return null;
 }
+
+
+
 	}
 	public void updateUpAccC(Long time){
 		Account acc=DbQuery.getUpAcc(db);

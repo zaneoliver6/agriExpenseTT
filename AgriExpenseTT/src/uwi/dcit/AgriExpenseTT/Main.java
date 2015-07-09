@@ -146,8 +146,7 @@ public class Main extends BaseActivity{
                     country=data.getStringExtra("country");
                     county=data.getStringExtra("county");
                     Log.d("Main Activity","returned with "+country+" "+county);
-//                    signInManager.signIn();
-
+                    signInManager.signIn(country,county);
                 }
                 break;
             case DHelper.CYCLE_REQUEST_CODE:

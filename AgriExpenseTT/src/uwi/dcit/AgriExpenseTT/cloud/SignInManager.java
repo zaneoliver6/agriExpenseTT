@@ -45,8 +45,6 @@ public class SignInManager {
         this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
-		this.country="Trinidad";
-		this.county="St. George";
 
     }
 
@@ -54,12 +52,15 @@ public class SignInManager {
         Log.d(TAG_NAME, "Attempting to Log in");
 		Account acc = isExisting(); 								// Check if Account is already created
 		if(acc == null) {
-			accountSetUp();        // Account doesn't exist so we've to setup a new one (means we never signed in)
+			accountSetUp(); // Account doesn't exist so we've to setup a new one (means we never signed in)
 			this.country=country;
 			this.county=county;
 		}
-		else
-			startSync(acc.getAccount());						    // Account exists already so we can Initiate Sign-in process
+		else {
+			startSync(acc.getAccount());
+		}// Account exists already so we can Initiate Sign-in process
+		//Due to the fact that start sync is threaded, it will finish on its own timing...
+		//need to update the sign in method later down.
 	}
 
     public Account isExisting(){
@@ -75,6 +76,14 @@ public class SignInManager {
         return acc;                         // Return the Account if received.
 //        return null;
     }
+
+
+	public boolean accountExists(){
+		Account acc = DbQuery.getUpAcc(db);
+		if(acc==null)
+			return false;
+		return true;
+	}
 
 	public boolean signOut(){
 		Log.d(TAG_NAME, "Account is logged in, attempting to sign out");
@@ -147,8 +156,10 @@ public class SignInManager {
 	    	.setItems(items, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
                     String namespace = convertString2Namespace(items[item].toString());
-		            if (namespace != null)startSync(namespace); //convert choice to name space and attempt to upload
-                    else signInReturn(false, "Unable to create Account with the backup system");
+		            if (namespace != null)
+						startSync(namespace); //convert choice to name space and attempt to upload
+                    else
+						signInReturn(false, "Unable to create Account with the backup system");
 		        }
 		    }).show();
 	}
@@ -223,7 +234,6 @@ public class SignInManager {
 		protected Account doInBackground(String... params) {
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
             Account cloudAccount = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
-
 			Account localAccount = isExisting();
 			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
 			//cloud and local account is created.
@@ -232,16 +242,17 @@ public class SignInManager {
 				//Should be able to obtain the country and area selection from the user.
                 cloudIF.insertAccount(namespace, 0, country, county);
             }
-
 			Log.d(TAG_NAME, "Timee:"+System.currentTimeMillis()/1000L);
+			cloudAccount = cloudIF.getAccount(namespace);
 			return cloudAccount;
 		}
 
 		@Override
 		protected void onPostExecute(Account cloudAcc) {
 			Account localAccount = isExisting();
+			DbQuery.signInAccount(db,localAccount);
 			Log.i("Check Sync Call","Reached Here at all! Account:"+cloudAcc);
-			if (localAccount != null) {
+			if (localAccount != null && cloudAcc!=null) {
                 Sync sync = new Sync(db, dbh, context, getSigninObject());
 				Log.i("Check Sync Call","Reached Here!");
                 sync.start(namespace, cloudAcc);

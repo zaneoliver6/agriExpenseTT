@@ -88,7 +88,7 @@ public class TransLog {
     @Override
     public String toString() {
         return "table " + tableKind + " trans" + operation + " transtime"
-                + transTime + "key" +keyrep;
+                + transTime + "key" +keyrep + "id"+id;
     }
 
     public int getId() {

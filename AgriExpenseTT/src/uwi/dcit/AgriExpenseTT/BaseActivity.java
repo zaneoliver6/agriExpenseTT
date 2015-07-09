@@ -1,6 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.accounts.Account;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -107,17 +109,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 //            signInManager.signIn(country,county);
 //        }
         Intent i = new Intent(getApplicationContext(), Backup.class);
-        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
+        boolean accountExists = this.signInManager.accountExists();
+        if (accountExists==false){ 			// User does not exist => check Internet and then create user
             if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
                 Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
                 return;
             }
-            if(this.country==null && this.county==null) {
+            if(accountExists==false)
                 startActivityForResult(i, RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-            }
-           signInManager.signIn(country,county);
         }
-        else if (!this.signInManager.isSignedIn()){
+        else if (this.signInManager.isSignedIn()){
             // If not signed attempt to login with existing account
             Log.i("BLAHHHHHHH", "BLAHHHHHHHHH");
             signInManager.signIn(country,county);

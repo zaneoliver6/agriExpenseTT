@@ -109,6 +109,7 @@ public class DbQuery {
 	public static void insertAccountTask(SQLiteDatabase db, DbHelper dbh, Account acc){
 
 		ContentValues cv=new ContentValues();
+		Log.i("ACCOUNT TO BE INSERTED",""+acc);
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, acc.getAccount());
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, acc.getCounty());
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS, acc.getAddress());
@@ -633,6 +634,15 @@ public class DbQuery {
 			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 		}
 	}
+
+	public static void signInAccount(SQLiteDatabase db, Account acc){
+		if(acc.getSignedIn()!=1){
+			ContentValues cv=new ContentValues();
+			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
+			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
+		}
+	}
+
 
     //checks to see if there are any crop cycles or not
     public static boolean cyclesExist(SQLiteDatabase db){
