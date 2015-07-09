@@ -32,6 +32,7 @@ import uwi.dcit.agriexpensesvr.myTestApi.MyTestApi;
 import uwi.dcit.agriexpensesvr.myTestApi.model.MyBean;
 
 
+
 public class SignInManager {
 	Context context;
 	SQLiteDatabase db;
@@ -78,11 +79,51 @@ public class SignInManager {
     }
 
 
-	public boolean accountExists(){
+	public boolean localAccountExists(){
 		Account acc = DbQuery.getUpAcc(db);
 		if(acc==null)
 			return false;
 		return true;
+	}
+
+	public boolean cloudAccountExists(){
+		AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
+		accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
+		AccountApi accountApi = accountBuilder.build();
+		final CloudInterface cloudIF = new CloudInterface(context, db, dbh);
+		ArrayList<String> deviceAccounts = getAccounts();
+		final String username = convertString2Namespace(deviceAccounts.get(0));
+		Log.i(">>>><<<<<<",username);
+		final TruthValue th = new TruthValue();
+		if(username!=null){
+			try {
+					new Thread(new Runnable() {
+						public void run() {
+							Account cloudAccount = cloudIF.getAccount(username);
+							if(cloudAccount==null) {
+								Log.i("FALSE","FALSE");
+								th.setFalse();
+							}
+							else {
+								Log.i("TRUE","TRUE");
+								th.setTrue();
+							}
+						}
+
+					}).start();
+				Thread.sleep(500L);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			Log.i("TRUTH",":::"+th.getTruth());
+			if(th.getTruth())
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
 	}
 
 	public boolean signOut(){

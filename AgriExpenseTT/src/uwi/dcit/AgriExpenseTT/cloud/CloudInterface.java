@@ -698,6 +698,8 @@ public class CloudInterface {
 
 	}
 
+
+
 	public Account getAccount(String namespace){
         AccountApi.Builder builder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(),null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
