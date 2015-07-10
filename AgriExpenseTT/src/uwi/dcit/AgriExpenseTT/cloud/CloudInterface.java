@@ -679,7 +679,6 @@ public class CloudInterface {
 		new updateUpAcc().execute(acc);
 	}
 	public class updateUpAcc extends AsyncTask<Account,Void,Void>{
-
 		@Override
 		protected Void doInBackground(Account... params) {
             AccountApi.Builder builder = new AccountApi.Builder(

@@ -86,7 +86,7 @@ public class SignInManager {
 		return true;
 	}
 
-	public boolean cloudAccountExists(){
+	public void cloudAccountExists(){
 		AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
 		accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
 		AccountApi accountApi = accountBuilder.build();
@@ -94,36 +94,22 @@ public class SignInManager {
 		ArrayList<String> deviceAccounts = getAccounts();
 		final String username = convertString2Namespace(deviceAccounts.get(0));
 		Log.i(">>>><<<<<<",username);
-		final TruthValue th = new TruthValue();
 		if(username!=null){
 			try {
-					new Thread(new Runnable() {
-						public void run() {
-							Account cloudAccount = cloudIF.getAccount(username);
-							if(cloudAccount==null) {
-								Log.i("FALSE","FALSE");
-								th.setFalse();
-							}
-							else {
-								Log.i("TRUE","TRUE");
-								th.setTrue();
-							}
+				new Thread(new Runnable() {
+					public void run() {
+						Account cloudAccount = cloudIF.getAccount(username);
+						if(cloudAccount!=null){
+							DbQuery.insertAccountTask(db,dbh,cloudAccount);
 						}
-
-					}).start();
+					}
+				}).start();
 				Thread.sleep(500L);
 			}
 			catch(Exception e){
 				e.printStackTrace();
 			}
-			Log.i("TRUTH",":::"+th.getTruth());
-			if(th.getTruth())
-				return true;
-			else
-				return false;
 		}
-		else
-			return false;
 	}
 
 	public boolean signOut(){
