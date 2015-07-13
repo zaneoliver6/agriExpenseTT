@@ -75,30 +75,30 @@ public class DbQuery {
     }
 	
 	//based on the material being used inserts USE of a particular material for a particular CYCLE
-	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
-		ContentValues cv= new ContentValues();
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
-		cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
-		
-		db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
-		int rowId=getLast(db, dbh, CycleResourceEntry.TABLE_NAME);
-		tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
-		return rowId; 
-	}
+//	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
+//		ContentValues cv= new ContentValues();
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
+//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
+//		db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
+//		int rowId=getLast(db, dbh, CycleResourceEntry.TABLE_NAME);
+//		tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
+//		return rowId;
+//	}
 
-    public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty, String quantifier, double useCost, long time, TransactionLog tl){
+    public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty, String quantifier, double useCost, TransactionLog tl){
         ContentValues cv= new ContentValues();
+		Log.i("HII","WOIIIIIIII");
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
-//        cv.put(CycleResourceEntry.)
+//        cv.put(CycleResourceEntry.CYCLE_NAME, cycleName);
 
         db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
         int rowId=getLast(db, dbh, CycleResourceEntry.TABLE_NAME);
@@ -263,6 +263,7 @@ public class DbQuery {
 			n.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
             n.setCycleName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_NAME)));
 			list.add(n);
+			Log.i("GETTING CYCLES <-> View", "CYCLE FROM LOCAL:" + n);
 		}
 
         cursor.close();
@@ -305,6 +306,7 @@ public class DbQuery {
 			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
             m.setDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			list.add(m);
+			Log.i("RESOURCE PURCHASE PULL",">>>>>>>>>>>>>>>>>>>"+m);
 		}
 
         cursor.close();

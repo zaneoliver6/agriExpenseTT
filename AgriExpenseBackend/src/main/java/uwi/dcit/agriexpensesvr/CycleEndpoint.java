@@ -301,7 +301,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists ");
             }
             else {
                 // using account to store

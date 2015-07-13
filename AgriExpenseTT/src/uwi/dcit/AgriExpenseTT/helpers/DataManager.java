@@ -62,17 +62,19 @@ public class DataManager {
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
 		Log.i("IINNSSEERRTT Cycle", "Account is:"+acc.getAccount());
+		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
         if(acc!=null){
             //insert into transaction table
             DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
             //try insert into cloud
             if(acc.getSignedIn()==1){
-                CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
                 c.insertCycle();
             }
         }
-		DbQuery.updateAccount(db,System.currentTimeMillis()/1000);
+		time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
+		c.updateUpAccC(time);
         return id;
     }
 
@@ -97,16 +99,18 @@ public class DataManager {
     public int insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
         int id = DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, time, tL);
 		Log.i("IINNSSEERRTT Purchase", "Account is:"+acc.getAccount());
+		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
         if(acc!=null){
             //insert into redo log table
             DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
             //try to insert into cloud
 //            if(acc.getSignedIn()==1){
-                CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
                 c.insertPurchase();
 //            }
         }
-		DbQuery.updateAccount(db,System.currentTimeMillis()/1000);
+		time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
+		c.updateUpAccC(time);
         return id;
     }
 	
@@ -251,12 +255,15 @@ public class DataManager {
 		//insert into redo log table
 		DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, id, "ins");
 		//try to insert into cloud
+		CloudInterface cloud = new CloudInterface(context, db, dbh);//new CloudInterface(context);
 		if(acc!=null ){
 //			if(acc.getSignedIn()==1) {
-				CloudInterface c = new CloudInterface(context, db, dbh);//new CloudInterface(context);
-				c.insertCycleUseC();
+				cloud.insertCycleUseC();
 //			}
 		}
+		long time = System.currentTimeMillis()/1000;
+		cloud.updateUpAccC(time);
+		DbQuery.updateAccount(db,time);
 	}
 	
 	
@@ -265,28 +272,34 @@ public class DataManager {
 		//update the cloud
 		TransactionLog tl=new TransactionLog(dbh, db,context);
 		tl.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_UPDATE);
+		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
-			//record in transaction log
-//			if(acc.getSignedIn()==1){
-				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+//			record in transaction log
+			if(acc.getSignedIn()==1){
 				cloud.updatePurchase();
-//			}
+			}
 		}
+		long time = System.currentTimeMillis()/1000;
+		cloud.updateUpAccC(time);
+		DbQuery.updateAccount(db,time);
 	}
 	public boolean updateCycle(LocalCycle c, ContentValues cv){
 		int result = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+c.getId(), null);
 		//update the cloud
 		TransactionLog tl = new TransactionLog(dbh, db,context);
 		tl.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(),TransactionLog.TL_UPDATE);
-//		if(acc!=null){
-//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
-//			//record in transaction log
-//			if(acc.getSignedIn()==1){
-//				CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-//				cloud.updateCycle();
-//			}
-//		}
+		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		if(acc!=null){
+			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
+			//record in transaction log
+			if(acc.getSignedIn()==1){
+				cloud.updateCycle();
+			}
+		}
+		long time = System.currentTimeMillis()/1000;
+		cloud.updateUpAccC(time);
+		DbQuery.updateAccount(db,time);
         return (result != -1);
 	}
 	

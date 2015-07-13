@@ -86,10 +86,11 @@ public class SignInManager {
 		return true;
 	}
 
-	public void cloudAccountExists(){
+	public void cloudAccountCheck(){
 		AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
 		accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
 		AccountApi accountApi = accountBuilder.build();
+
 		final CloudInterface cloudIF = new CloudInterface(context, db, dbh);
 		ArrayList<String> deviceAccounts = getAccounts();
 		final String username = convertString2Namespace(deviceAccounts.get(0));
@@ -100,6 +101,8 @@ public class SignInManager {
 					public void run() {
 						Account cloudAccount = cloudIF.getAccount(username);
 						if(cloudAccount!=null){
+							long time = 0;
+							cloudAccount.setLastUpdated(time);
 							DbQuery.insertAccountTask(db,dbh,cloudAccount);
 						}
 					}

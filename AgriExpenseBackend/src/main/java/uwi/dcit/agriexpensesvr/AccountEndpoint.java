@@ -105,6 +105,8 @@ public class AccountEndpoint {
                 account.setCountry(accountUpdate.getCountry());
             if(accountUpdate.getCounty()!=null)
                 account.setCounty(accountUpdate.getCounty());
+            if(accountUpdate.getLastUpdated()!=0)
+                account.setLastUpdated(accountUpdate.getLastUpdated());
             em.getTransaction().begin();
             em.persist(account);
             em.getTransaction().commit();

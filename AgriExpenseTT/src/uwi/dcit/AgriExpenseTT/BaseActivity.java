@@ -114,7 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
                 return;
             }
-            this.signInManager.cloudAccountExists();
+            this.signInManager.cloudAccountCheck();
             if(!this.signInManager.localAccountExists())
                 startActivityForResult(i, RequestCode_backup);// Launch the Backup activity with the sign-up action passed
             signInManager.signIn(country,county);

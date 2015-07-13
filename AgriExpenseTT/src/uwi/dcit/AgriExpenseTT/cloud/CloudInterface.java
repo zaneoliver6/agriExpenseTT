@@ -233,7 +233,7 @@ public class CloudInterface {
 					insertLog();
 					//When we have finished inserting a cycle, we would like to record the timestamp of the change made to the local database.
 					//This would be reflected in the lastUpdated variable.
-					DbQuery.updateAccount(db,System.currentTimeMillis()/1000L);
+//					DbQuery.updateAccount(db,System.currentTimeMillis()/1000L);
 
 				}
 			}
@@ -266,7 +266,6 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
 				CycleUse c=DbQuery.getACycleUse(db, dbh, rowId);
 				c.setAccount(DbQuery.getAccountName(db));
-				
 				try{
 					c=endpoint.insertCycleUse(c).execute();
 				}catch(Exception e){
@@ -721,6 +720,31 @@ public class CloudInterface {
 		updatePurchase();
 		deletePurchase();
 		deleteCycle();
+		//We need to set the time of both the app's database and the cloud to the same.
+		Account localAccount=DbQuery.getUpAcc(db);
+		AccountApi.Builder builder = new AccountApi.Builder(
+				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
+				null);
+		builder = CloudEndpointUtils.updateBuilder(builder);
+		AccountApi endpoint = builder.build();
+		Account cloudAccount=null;
+		try {
+			cloudAccount = endpoint.getAccount(localAccount.getAccount()).execute();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		long time = System.currentTimeMillis()/1000;
+		cloudAccount.setLastUpdated(time);
+		DbQuery.updateAccount(db,time);
+		if (cloudAccount != null) {
+			try {
+				endpoint.updateAccount(cloudAccount).execute();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

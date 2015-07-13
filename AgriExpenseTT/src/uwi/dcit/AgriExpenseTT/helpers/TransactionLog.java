@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
+import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
@@ -379,11 +381,20 @@ public class TransactionLog {
                 }
 				//Some sort of changes have been made at this point and we want to set the lastUpdated to the
 				//System's current time.
+				long time = System.currentTimeMillis()/1000L;
 				Account localAcc = DbQuery.getUpAcc(db);
-				Log.d("TIME","BEFORE :"+localAcc.getLastUpdated()+"\n");
-				DbQuery.updateAccount(db,System.currentTimeMillis()/1000L);
+				DbQuery.updateAccount(db,time);
 				localAcc = DbQuery.getUpAcc(db);
-				Log.d("TIME","AFTER :"+localAcc.getLastUpdated()+"\n");
+				Log.i("Local Account Time:",">>>"+localAcc.getLastUpdated());
+				AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
+				accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
+				AccountApi accountApi = accountBuilder.build();
+				try{
+					accountApi.updateAccount(localAcc).execute();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
             }
 			return null;
 		}
