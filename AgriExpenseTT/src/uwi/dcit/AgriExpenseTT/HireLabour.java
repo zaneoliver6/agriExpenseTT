@@ -3,11 +3,15 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.view.View;
 
+import uwi.dcit.AgriExpenseTT.fragments.FragmentAddData;
+import uwi.dcit.AgriExpenseTT.fragments.FragmentAddDataLast;
 import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -18,7 +22,7 @@ public class HireLabour extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_cycle);
+		setContentView(R.layout.labour_layout);
 //		setupInitial(); // Commented out because it may run twice based on => http://developer.android.com/reference/android/app/Activity.html
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Hire Labour");
 	}
@@ -33,7 +37,7 @@ public class HireLabour extends BaseActivity {
 	private void setupInitial() {
 		ListFragment start = new HireLabourLists();
 		Bundle b = new Bundle();
-		b.putString("type","workers");
+		b.putString("type", "workers");
 		start.setArguments(b);
 
 		getSupportFragmentManager()
@@ -41,7 +45,16 @@ public class HireLabour extends BaseActivity {
             .replace(R.id.NewCycleListContainer, start)
             .commit();
 	}
-	
+
+    public void AddLabourer(View view){
+        Intent intent = new Intent(HireLabour.this, AddData.class);
+        Bundle b = new Bundle();
+        b.putString("type",DHelper.cat_labour);
+        b.putString("action",DHelper.cat_labour);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
+
 	public void replaceSub(String extras){
 		TextView sub_head = (TextView)findViewById(R.id.tv_mainNew_subheader);
 		sub_head.setText(extras);
