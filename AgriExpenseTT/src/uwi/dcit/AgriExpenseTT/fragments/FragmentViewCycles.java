@@ -109,15 +109,17 @@ public class FragmentViewCycles extends ListFragment{
 		
 		switch(item.getItemId()){
 			case R.id.crop_view:
-				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
+				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
+//				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
+				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
 				launchCycleUsage(info.position);
 				break;
 			case R.id.crop_edit: //Edit Cycle
-				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
+//				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
 				editCycleCoption(info.position);
 				break;
 			case R.id.crop_delete:
-				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
+//				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
 				deletCycleOption(this.getListView(), info.position); //Use the same delete operation from list item click
 				break;
 			default:
@@ -305,6 +307,7 @@ public class FragmentViewCycles extends ListFragment{
             txt = qty +" "+ txt + "s";
 
             ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
+			Log.i("FREDDDDDDDd","Date:"+currCycle.getTime());
             ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
             ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
 

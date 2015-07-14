@@ -407,11 +407,12 @@ public class TransactionLog {
 			Log.i("CHECKKK", "Transaction Object:"+t);
 			Log.i("CHECKKK", "Object:"+c);
 			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, c.getCropName());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_AMOUNT, c.getLandQty());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
-			//cv.put(DbHelper.CROPCYCLE_DATE, c.get);
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_DATE, c.getStartDate());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, c.getHarvestType());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());

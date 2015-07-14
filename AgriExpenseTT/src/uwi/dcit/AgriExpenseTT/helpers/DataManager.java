@@ -43,9 +43,9 @@ public class DataManager {
 		acc=DbQuery.getUpAcc(db);
 	}
 
-	public void insertCycle(int cropId, String landType, double landQty,long time){
-		//insert into database
-		int id=DbQuery.insertCycle(db, dbh, cropId, landType, landQty,tL,time);
+//	public void insertCycle(int cropId, String landType, double landQty,long time){
+//		//insert into database
+//		int id=DbQuery.insertCycle(db, dbh, cropId, landType, landQty,tL,time);
 //		if(acc!=null){
 //			//insert into transaction table
 //			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
@@ -55,13 +55,13 @@ public class DataManager {
 //				c.insertCycle();
 //			}
 //		}
-		//update database last updated time
-	}
+//		//update database last updated time
+//	}
 
     public int insertCycle(int cropId, String name, String landType, double landQty, long time){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
-		Log.i("IINNSSEERRTT Cycle", "Account is:"+acc.getAccount());
+		Log.i("IINNSSEERRTT Cycle", "Cycle is:"+acc.getAccount());
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
         if(acc!=null){
             //insert into transaction table

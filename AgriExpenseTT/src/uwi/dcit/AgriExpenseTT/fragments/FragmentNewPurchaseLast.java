@@ -188,7 +188,7 @@ public class FragmentNewPurchaseLast extends Fragment{
                             ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
                             //use all of the qty of that purchase in the given cycle
-                            dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost(),currC.getCycleName());
+                            dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
 
                             //update purchase
                             p.setQtyRemaining(p.getQtyRemaining() - qty);

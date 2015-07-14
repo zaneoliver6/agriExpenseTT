@@ -98,6 +98,7 @@ public class DbQuery {
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
+		cv.put(CycleResourceEntry.CYCLE_DATE_USED, System.currentTimeMillis()/1000);
 //        cv.put(CycleResourceEntry.CYCLE_NAME, cycleName);
 
         db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
@@ -120,22 +121,22 @@ public class DbQuery {
 		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME,null,cv);
 	}
 	
-	public static int insertCycle(SQLiteDatabase db, DbHelper dbh,int cropId, String landType, double landQty,TransactionLog tl,long time){
-		ContentValues cv=new ContentValues();
-		cv.put(CycleEntry.CROPCYCLE_CROPID, cropId);
-		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
-		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
-		cv.put(CycleEntry.CROPCYCLE_DATE, time);
-		cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
-		cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
-		cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
-		cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE,"Lb");
-		cv.put(CycleEntry.CROPCYCLE_RESOURCE, DbQuery.findResourceName(db, dbh, cropId));
-		db.insert(CycleEntry.TABLE_NAME, null,cv);
-		int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
-		tl.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
-		return rowId;
-	}
+//	public static int insertCycle(SQLiteDatabase db, DbHelper dbh,int cropId, String landType, double landQty,TransactionLog tl,long time){
+//		ContentValues cv=new ContentValues();
+//		cv.put(CycleEntry.CROPCYCLE_CROPID, cropId);
+//		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
+//		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
+//		cv.put(CycleEntry.CROPCYCLE_DATE, time);
+//		cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
+//		cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
+//		cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
+//		cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE,"Lb");
+//		cv.put(CycleEntry.CROPCYCLE_RESOURCE, DbQuery.findResourceName(db, dbh, cropId));
+//		db.insert(CycleEntry.TABLE_NAME, null,cv);
+//		int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
+//		tl.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
+//		return rowId;
+//	}
 
     public static int insertCycle(SQLiteDatabase db, DbHelper dbh, int cropId, String name, String landType, double landQty, TransactionLog tL, long time) {
         ContentValues cv=new ContentValues();
@@ -143,6 +144,7 @@ public class DbQuery {
         cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
         cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
         cv.put(CycleEntry.CROPCYCLE_DATE, time);
+		Log.i("insertion","time:"+time);
         cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
         cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
         cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
@@ -152,6 +154,7 @@ public class DbQuery {
         db.insert(CycleEntry.TABLE_NAME, null,cv);
         int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
         tL.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
+		Log.i("HELLO","WHAT I INSERTED:"+DbQuery.getCycle(db,dbh,rowId));
         return rowId;
     }
 	
@@ -537,6 +540,7 @@ public class DbQuery {
 		c.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_HARVEST_AMT)));
 		c.setCostPer(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_COSTPER)));
 		c.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
+		c.setStartDate(cursor.getLong((cursor.getColumnIndex(CycleEntry.CROPCYCLE_DATE))));
         cursor.close();
 		return c;
 	}

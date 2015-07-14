@@ -203,7 +203,7 @@ public class CloudInterface {
 
                 Cycle c = DbQuery.getCycle(db, dbh, rowId);
 				c.setAccount(DbQuery.getAccountName(db));   // Uses the account rep as the namespace
-
+				Log.i("TEST MEEE","Cycle:"+c.getStartDate());
 				try{
 					c=endpoint.insertCycle(c).execute();
 

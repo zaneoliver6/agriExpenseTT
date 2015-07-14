@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -155,6 +156,7 @@ public class FragmentNewCycleLast extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Log.i("HELLO PAPI", "Time We Store In Cycle:"+unixDate);
                         DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
                         res = dm.insertCycle(plantMaterialId, TextHelper.formatUserText(et_CycleName.getText().toString()) , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
