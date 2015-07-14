@@ -22,6 +22,7 @@ public class ResourcePurchase {
     private double qtyRemaining;
     private String type;
     private String elementName;
+    private long purchaseDate;
 
     public String getKeyrep() {
         return keyrep;
@@ -37,7 +38,7 @@ public class ResourcePurchase {
     }
 
     public ResourcePurchase(int pId, int resourceId, String quantifier, double qty,
-                            double cost, double qtyRemaining, String type) {
+                            double cost, double qtyRemaining, String type, long purchaseDate) {
         super();
         this.pId = pId;
         this.resourceId = resourceId;
@@ -46,7 +47,16 @@ public class ResourcePurchase {
         this.cost = cost;
         this.qtyRemaining = qtyRemaining;
         this.type = type;
+        this.purchaseDate=purchaseDate;
     }
+    public long getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(long purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
 
     public int getpId() {
         return pId;

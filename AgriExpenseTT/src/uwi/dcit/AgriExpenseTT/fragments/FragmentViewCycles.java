@@ -307,7 +307,7 @@ public class FragmentViewCycles extends ListFragment{
             txt = qty +" "+ txt + "s";
 
             ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
-			Log.i("FREDDDDDDDd","Date:"+currCycle.getTime());
+//			Log.i("FREDDDDDDDd","Date:"+currCycle.getTime());
             ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
             ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
 

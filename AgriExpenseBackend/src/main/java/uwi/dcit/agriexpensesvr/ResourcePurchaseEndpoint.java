@@ -152,6 +152,7 @@ public class ResourcePurchaseEndpoint {
             p.setCost((Double) e.getProperty("cost"));
             p.setQtyRemaining((Double) e.getProperty("qtyRemaining"));
             p.setKeyrep((String) e.getProperty("keyrep"));
+            p.setPurchaseDate((long) e.getProperty("purchaseDate"));
             pL.add(p);
         }
         return pL;

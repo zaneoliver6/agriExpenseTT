@@ -154,7 +154,7 @@ public class DbQuery {
         db.insert(CycleEntry.TABLE_NAME, null,cv);
         int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
         tL.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
-		Log.i("HELLO","WHAT I INSERTED:"+DbQuery.getCycle(db,dbh,rowId));
+		Log.i("HELLO", "WHAT I INSERTED:" + DbQuery.getCycle(db, dbh, rowId));
         return rowId;
     }
 	
@@ -332,6 +332,7 @@ public class DbQuery {
 			m.setQty(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY)));
 			m.setCost(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_COST)));
 			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
+			m.setDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			list.add(m);
 		}
         cursor.close();
@@ -355,6 +356,7 @@ public class DbQuery {
 		purchase.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 		purchase.setType(cursor.getString(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE)));
 		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
+		purchase.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 
         cursor.close();
 		return purchase;

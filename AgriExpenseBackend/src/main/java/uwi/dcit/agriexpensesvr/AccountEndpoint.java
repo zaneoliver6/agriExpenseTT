@@ -80,7 +80,7 @@ public class AccountEndpoint {
         EntityManager em = getEntityManager();
 
         Account account = em.find(Account.class, KeyFactory.createKey("Account", namespace));
-        if (account == null)System.out.println("Unable to Find account associated with namespace :"+namespace);
+        if (account == null)System.out.println("Unable to Find account asso ciated with namespace :"+namespace);
         else System.out.println("Found: " + account);
         //em.close();
         return account;

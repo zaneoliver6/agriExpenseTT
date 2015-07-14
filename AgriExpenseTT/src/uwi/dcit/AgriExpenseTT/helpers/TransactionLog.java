@@ -426,6 +426,7 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
+			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,p.getPurchaseDate());
 			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
 			CycleUse c=getCycleUse2(namespace,t.getRowId());
