@@ -139,7 +139,7 @@ public class ResourcePurchaseEndpoint {
         List<ResourcePurchase> pL = new ArrayList<ResourcePurchase>();
         System.out.println("record Holder:------------------");
         while (i.hasNext()) {
-            System.out.println("record------------------");
+            System.out.println("record-------------  -----");
             Entity e = i.next();
             System.out.println(e.toString());
             ResourcePurchase p = new ResourcePurchase();

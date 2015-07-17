@@ -156,7 +156,6 @@ public class FragmentNewCycleLast extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.i("HELLO PAPI", "Time We Store In Cycle:"+unixDate);
                         DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
                         res = dm.insertCycle(plantMaterialId, TextHelper.formatUserText(et_CycleName.getText().toString()) , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
 
@@ -165,13 +164,13 @@ public class FragmentNewCycleLast extends Fragment {
                             public void run() {
                                 if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
                                 else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
-
+//
                                 Bundle bundle = new Bundle();
                                 bundle.putString("type", "cycle");
                                 bundle.putInt("id", res);
                                 Intent i = new Intent();
                                 i.putExtras(bundle);
-
+//
                                 getActivity().setResult(DHelper.CYCLE_REQUEST_CODE, i );
                                 if (!(getActivity() instanceof Main))
                                     getActivity().finish();

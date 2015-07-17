@@ -63,15 +63,15 @@ public class DataManager {
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
 		Log.i("IINNSSEERRTT Cycle", "Cycle is:"+acc.getAccount());
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
-        if(acc!=null){
-            //insert into transaction table
-            DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
-            //try insert into cloud
-            if(acc.getSignedIn()==1){
+		if(acc!=null){
+			//insert into transaction table
+			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
+			//try insert into cloud
+			if(acc.getSignedIn()==1){
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
-                c.insertCycle();
-            }
-        }
+				c.insertCycle();
+			}
+		}
 		time = System.currentTimeMillis()/1000;
 		DbQuery.updateAccount(db,time);
 		c.updateUpAccC(time);

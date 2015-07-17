@@ -273,7 +273,7 @@ public class TransactionLog {
 			c.setPurchaseId(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID)));
 			c.setResource(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)));
 			c.setCost(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)));
-			//c.setQuantifier(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QUANTIFIER)));
+//			c.setQuantifier(cursor.getString(cursor.getColumnIndex(DbHelper.CYCLE_RESOURCE_QUANTIFIER)));
 			c.setAccount(namespace);
 			try {
 				c=endpointUse.insertCycleUse(c).execute();
@@ -298,6 +298,7 @@ public class TransactionLog {
 			p.setCost(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST)));
 			p.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex( ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 			p.setAccount(namespace);
+			p.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			try {
 				p=endpointPurchase.insertRPurchase(p).execute();
 			} catch (IOException e) {e.printStackTrace();

@@ -35,6 +35,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import uwi.dcit.AgriExpenseTT.CycleUsage;
@@ -67,6 +68,7 @@ public class FragmentPurchaseUse extends Fragment {
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		Log.i("HERE","Beginning");
 		view=inflater.inflate(R.layout.activity_use_purchase_frag, container, false);
 
 		dbh = new DbHelper(this.getActivity().getBaseContext());
@@ -75,6 +77,7 @@ public class FragmentPurchaseUse extends Fragment {
 		int pId = Integer.parseInt(getArguments().getString("pId"));
 		int cycleId = Integer.parseInt(getArguments().getString("cycleId"));
 		typeSpent = Double.parseDouble(getArguments().getString("total"));
+//		Cycle cyc = DbQuery.getCycle(db,dbh,cycleId);
 
 		setDetails(pId,cycleId);
 
@@ -83,34 +86,44 @@ public class FragmentPurchaseUse extends Fragment {
 	}
 	
 	private void setDetails(int pId,int cycleId) {
+		Log.i("WOI","WOI");
 		p = DbQuery.getARPurchase(db, dbh, pId);
 		c = getArguments().getParcelable("cycleMain");
-
-        Log.i("Fragment Purchase",c.getCropName());
-        Log.i("Fragment Purchase",p.getQuantifier());
+//		Cycle cyc = DbQuery.getCycle(db,dbh,cycleId);
+//		c.setCropName(cyc.getCropName());
+//		c.setCostPer(cyc.getCostPer());
+//		c.setHarvestAmt(cyc.getHarvestAmt());
+//		c.setHarvestType(cyc.getHarvestType());
+//		c.setId(cyc.getId());
+//		c.setLandQty(cyc.getLandQty());
+//		c.setTime(cyc.getStartDate());
+//		c.setTotalSpent(cyc.getTotalSpent());
+//		c.setCropId(cyc.getCropId());
+        Log.i("Fragment Purchase","CYCLE:"+c);
+        Log.i("Fragment Purchase","PURCHASE:"+p);
 
 		amtRem = p.getQtyRemaining();
-        amtPur = p.getQty();
-        quantifier = p.getQuantifier();
+		amtPur = p.getQty();
+		quantifier = p.getQuantifier();
 
 		btn_typeUse = (Button)view.findViewById(R.id.btn_UsePurchase_useType);
 		btn_typeUse.setText(quantifier);
-		
+
 
 		description = (TextView)view.findViewById(R.id.tv_usePurchase_top_det1);
-		
+
 		section1 = (TextView)view.findViewById(R.id.tv_usageDetails_sec1);
 		section2 = (TextView)view.findViewById(R.id.tv_usageDetails_sec2);
 		section3 = (TextView)view.findViewById(R.id.tv_usageDetails_sec3);
 
 		et_amt      = (EditText)view.findViewById(R.id.et_useAmt);
-        amt_hint    = (TextView)view.findViewById((R.id.tv_amnt_hint));
-        amt_hint.setText("Enter the amount of " + quantifier + "s used");
+		amt_hint    = (TextView)view.findViewById((R.id.tv_amnt_hint));
+		amt_hint.setText("Enter the amount of " + quantifier + "s used");
 
 		Button calc=(Button)view.findViewById(R.id.btn_UsePurchase_cal);
 		Button dne=(Button)view.findViewById(R.id.btn_usePurchase_done);
 		label();
-		
+
 		Click click = new Click();
 		calc.setOnClickListener(click);
 		dne.setOnClickListener(click);
@@ -119,10 +132,10 @@ public class FragmentPurchaseUse extends Fragment {
 
 	//sets labels to match data
 	private void label(){
-		DecimalFormat df = new DecimalFormat("#.00"); 
+		DecimalFormat df = new DecimalFormat("#.00");
 		String res=DbQuery.findResourceName(db, dbh,p.getResourceId());
 		description.setText("" + res + " has " + quantifier + " " + amtRem + " remaining");
-		
+
 		section1.setText("Using " + useAmount + " " + quantifier + " adds $" + calCost + " to the current crop cycle");
 		section2.setText("Total spent on " + p.getType() + " becomes $" + (typeSpent + calCost));
 		section3.setText("The crop cycle's new total cost becomes $" + Double.valueOf(df.format((c.getTotalSpent() + calCost))));
@@ -132,13 +145,14 @@ public class FragmentPurchaseUse extends Fragment {
 
 		@Override
 		public void onClick(View v) {
+			Log.i(">>>><<<","Started Onclick!");
 			if(v.getId() == R.id.btn_UsePurchase_useType){
 				ArrayList<String> arr=new ArrayList<>();
 				popArr(arr);
 				showPopup(getActivity(), 0, arr);
 				return;
 			}
-			
+
 			if(et_amt.getText().toString() == null||et_amt.getText().toString().equals("")){
 //				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
                 amt_hint.setText("Enter Amount Purchased");
@@ -165,7 +179,6 @@ public class FragmentPurchaseUse extends Fragment {
 				}else if(v.getId()==R.id.btn_usePurchase_done){
 					DataManager dm=new DataManager(getActivity().getBaseContext());
 					dm.insertCycleUse(c.getId(), p.getPId(), useAmount, p.getType(),quantifier, calCost);
-					
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
 					Toast.makeText(getActivity(), rem+" Remaining", Toast.LENGTH_SHORT).show();
 
@@ -179,8 +192,9 @@ public class FragmentPurchaseUse extends Fragment {
 					c.setTotalSpent(c.getTotalSpent()+ calCost);
 					cv=new ContentValues();
 					cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
-					dm.updateCycle(c,cv); 
+					dm.updateCycle(c,cv);
 					Log.i(getTag(), c.getTotalSpent()+" "+c.getId());
+					DbQuery.updateAccount(db,System.currentTimeMillis()/1000);
 					/*IntentLauncher i=new IntentLauncher();
 					i.start();*/
 
@@ -201,13 +215,13 @@ public class FragmentPurchaseUse extends Fragment {
 	private void popArr(ArrayList<String> arr) {
 		String qtfr=p.getQuantifier();
 		//better to use the quantifier of how it was bought
-		if(qtfr.equals(DHelper.qtf_fertilizer_g) || qtfr.equals(DHelper.qtf_fertilizer_kg) 
+		if(qtfr.equals(DHelper.qtf_fertilizer_g) || qtfr.equals(DHelper.qtf_fertilizer_kg)
 	   || qtfr.equals(DHelper.qtf_fertilizer_lb) || qtfr.equals(DHelper.qtf_fertilizer_bag)){
 			arr.add(DHelper.qtf_fertilizer_g);
 			arr.add(DHelper.qtf_fertilizer_lb);
 			arr.add(DHelper.qtf_fertilizer_kg);
 			arr.add(DHelper.qtf_fertilizer_bag);
-		}else if(qtfr.equals(DHelper.qtf_chemical_L) || qtfr.equals(DHelper.qtf_chemical_ml) 
+		}else if(qtfr.equals(DHelper.qtf_chemical_L) || qtfr.equals(DHelper.qtf_chemical_ml)
 				|| qtfr.equals(DHelper.qtf_chemical_oz)){
 			arr.add(DHelper.qtf_chemical_ml);
 			arr.add(DHelper.qtf_chemical_L);
@@ -220,10 +234,10 @@ public class FragmentPurchaseUse extends Fragment {
 		int pWidth=600;
 		int pHeight=550;
 		//gets layout inflator for the activity
-		LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
+		LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		//using the layout inflator u js got, inflate a layout into a view
 		View simpList = inflater.inflate(R.layout.simple_plist, null);
-		
+
 		populateListView(simpList,items);
 		registerListClick(simpList,flag);
 		// Creating the PopupWindow
@@ -335,6 +349,6 @@ public class FragmentPurchaseUse extends Fragment {
 		}
 		return -1;
 	}
-
+//
 }
 

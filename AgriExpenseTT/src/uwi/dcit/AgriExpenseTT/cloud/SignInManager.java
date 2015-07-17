@@ -107,7 +107,7 @@ public class SignInManager {
 						}
 					}
 				}).start();
-				Thread.sleep(500L);
+				Thread.sleep(1000L);
 			}
 			catch(Exception e){
 				e.printStackTrace();

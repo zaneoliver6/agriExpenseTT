@@ -44,21 +44,27 @@ public class FragmentEmpty extends Fragment{
 
         if(type.equals("purchase")){
 			if(category == null){
-				desc.setText("Tap here to create a new purchase");
+//				desc.setText("Tap here to create a new purchase");
+                desc.setText("There Are Currently No Purchases");
 			}else{
 				desc.setText("Sorry you have not purchased any "+category+" as yet");
 			}
-		}else if(type.equals("cycle")){
-			desc.setText("Tap here to create a new cycle");
-		}else if(type.equals("purchase")){
+		}
+        else if(type.equals("cycle")){
+//			desc.setText("Tap here to create a new cycle");
+            desc.setText("There Are Currently No Cycles");
+		}
+        else if(type.equals("purchase")){
 			if(category == null){
 				desc.setText("Sorry you haven't purchased any of this to use as yet");
 			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
 				desc.setText("Sorry you haven't purhased any "+category+", so there's nothing to use");
 			}
-		}else if(type.equals("select")){
+		}
+        else if(type.equals("select")){
             desc.setText("Select something to begin operations");
-        }else if (type.equals("labour")){
+        }
+        else if (type.equals("labour")){
             desc.setText("Tap here to add a new labourer");
             this.isLabour = true;
         }
@@ -74,7 +80,7 @@ public class FragmentEmpty extends Fragment{
                 @Override
                 public void onClick(View v) {
                     Log.d("Empty Fragment"," creating a new purchase ");
-                    createPurchase();
+//                    createPurchase();
                 }
             });
         }else if(type.equals("cycle")){
@@ -82,7 +88,7 @@ public class FragmentEmpty extends Fragment{
                 @Override
                 public void onClick(View v) {
                     Log.d("Empty Fragment"," creating a new cycle");
-                    createCycle();
+//                    createCycle();
                 }
             });
         }else if (type.equals("labour")){
@@ -90,7 +96,7 @@ public class FragmentEmpty extends Fragment{
                 @Override
                 public void onClick(View v) {
                     Log.d("Empty Fragment"," creating a new labourer");
-                    createLabourer();
+//                    createLabourer();
                 }
             });
         }else if(type.equals("cycleuse")){
@@ -111,6 +117,7 @@ public class FragmentEmpty extends Fragment{
 
     public void createCycle(){
         getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
+        getActivity().finish();
     }
     public void createPurchase(){
         getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewPurchase.class), DHelper.PURCHASE_REQUEST_CODE);

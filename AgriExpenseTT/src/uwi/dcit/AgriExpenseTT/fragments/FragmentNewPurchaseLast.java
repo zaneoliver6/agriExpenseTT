@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -169,7 +170,6 @@ public class FragmentNewPurchaseLast extends Fragment{
                 }
 
                 res = -1;
-
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

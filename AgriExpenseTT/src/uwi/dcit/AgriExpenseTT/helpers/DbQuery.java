@@ -67,6 +67,7 @@ public class DbQuery {
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, qty);
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE, DbQuery.findResourceName(db, dbh, resourceId));
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, time);
+		Log.i("TIMEEEEEEEEEEe",">>>>>>"+time);
 
         db.insert(ResourcePurchaseEntry.TABLE_NAME, null, cv);
         int rowId=getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
@@ -145,6 +146,8 @@ public class DbQuery {
         cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
         cv.put(CycleEntry.CROPCYCLE_DATE, time);
 		Log.i("insertion","time:"+time);
+		Log.i("insertion","cropId"+cropId);
+		Log.i("insertion","cropName:"+name);
         cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
         cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
         cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
@@ -356,7 +359,7 @@ public class DbQuery {
 		purchase.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 		purchase.setType(cursor.getString(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE)));
 		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
-		purchase.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
+//		purchase.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 
         cursor.close();
 		return purchase;
