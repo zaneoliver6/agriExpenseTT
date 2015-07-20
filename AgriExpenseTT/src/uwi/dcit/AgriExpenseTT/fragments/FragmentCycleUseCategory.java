@@ -120,8 +120,8 @@ public class FragmentCycleUseCategory extends Fragment {
 		SQLiteDatabase db=dbh.getWritableDatabase();
 
 		//getting aggregate and complex data 
-		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
+		ArrayList<LocalCycleUse> useList = new ArrayList<>();
+		DbQuery.getCycleUse(db, dbh, currCycle.getId(),useList,category);//fills list with currCycle uses of type category
 
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> names = null;
@@ -150,6 +150,7 @@ public class FragmentCycleUseCategory extends Fragment {
 				while(i.hasNext()){//goes through the names of the plantMaterials
 					if(name.equals(i.next())){
 						totals[pos] += lcu.getUseCost();
+						Log.i("Totalzzz","------"+totals[pos]);
 						found=true;
 					}else{
 						pos++;

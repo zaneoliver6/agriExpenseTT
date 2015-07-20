@@ -438,6 +438,8 @@ public class TransactionLog {
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
 			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.get);
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
+			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
+			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
 			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
 		}
 	}
@@ -474,7 +476,8 @@ public class TransactionLog {
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, c.getPurchaseId());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
-			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.get);
+			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
+//			cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
 			db.update(CycleResourceEntry.TABLE_NAME, cv, CycleResourceEntry._ID+"="+t.getRowId(), null);
 		}

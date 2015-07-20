@@ -359,15 +359,15 @@ public class DbQuery {
 		purchase.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
 		purchase.setType(cursor.getString(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE)));
 		purchase.setElementName(DbQuery.findResourceName(db, dbh, purchase.getResourceId()));
-//		purchase.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
+		purchase.setPurchaseDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 
         cursor.close();
 		return purchase;
 	}
 
-    public static List<LocalCycleUse> getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<LocalCycleUse> list,String type){
+    public static void getCycleUse(SQLiteDatabase db, DbHelper dbh,int cycleid,ArrayList<LocalCycleUse> list,String type){
 		String code;
-        if (list == null)list = new ArrayList<>();
+//        if (list == null)list = new ArrayList<>();
 
 		if(type==null)
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+"="+cycleid+";";
@@ -375,7 +375,7 @@ public class DbQuery {
 			code="select * from "+CycleResourceEntry.TABLE_NAME+" where "+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID+"="+cycleid+" and "+CycleResourceEntry.CYCLE_RESOURCE_TYPE+"='"+type+"';";
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
-			return list;
+			return ;
 		while(cursor.moveToNext()){
             LocalCycleUse l = new LocalCycleUse(cursor.getInt(cursor.getColumnIndex(CycleResourceEntry._ID)),
                     cursor.getInt(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID)),
@@ -384,11 +384,10 @@ public class DbQuery {
                     cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)),
                     cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)),
                     cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
-
+			Log.i("Checkkk","Local Cycle USE:::"+l);
 			list.add(l);
 		}
         cursor.close();
-        return list;
 	}
 
     public static List<LocalCycleUse> getCycleUseP(SQLiteDatabase db, DbHelper dbh,int purchaseId,ArrayList<LocalCycleUse> list,String type){
@@ -427,7 +426,7 @@ public class DbQuery {
 		c.setAmount(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QTY)));
 		c.setCost(cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)));
 		c.setResource(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)));
-
+		c.setQuantifier(cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
         cursor.close();
 		return c;
 	}

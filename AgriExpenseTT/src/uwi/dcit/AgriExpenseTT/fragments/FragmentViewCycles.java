@@ -228,7 +228,7 @@ public class FragmentViewCycles extends ListFragment{
 		stb.append("Details: ")
 			.append(getArguments().getString("name"))
 			.append(", cycle#")
-			.append(cycleList.get(position).getId());
+		.append(cycleList.get(position).getId());
 		
 		((HireLabour)getActivity()).replaceSub(stb.toString());
 		

@@ -320,6 +320,7 @@ public class CloudInterface {
                 ResourcePurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
 				purchase.setAccount(DbQuery.getAccountName(db));
 				try{
+					Log.i("Inserting Resource Pur.",">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+purchase+"Time:"+purchase.getPurchaseDate());
 					purchase=endpoint.insertRPurchase(purchase).execute();
 				}catch(Exception e){
 					return null;
