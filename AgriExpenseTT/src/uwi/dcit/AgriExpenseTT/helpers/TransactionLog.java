@@ -418,6 +418,8 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
+			insertTransLog(CycleContract.CycleEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
+
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
 			ResourcePurchase p=getPurchase2(namespace,t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
@@ -429,6 +431,8 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,p.getPurchaseDate());
 			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
+			insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
+
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
 			CycleUse c=getCycleUse2(namespace,t.getRowId());
 			cv.put(CycleResourceEntry._ID, t.getRowId());
@@ -441,6 +445,7 @@ public class TransactionLog {
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
 			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
+			insertTransLog(CycleResourceEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
 		}
 	}
 	public void logUpdateLocal(TransLog t,String namespace){
@@ -459,6 +464,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
 			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+t.getRowId(), null);
+			insertTransLog(CycleContract.CycleEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_UPDATE );
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
 			ResourcePurchase p=getPurchase2(namespace, t.getRowId());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
@@ -468,6 +474,7 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
+			insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_UPDATE );
 			db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+t.getRowId(), null);
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
 			CycleUse c=getCycleUse2(namespace,t.getRowId());
@@ -479,6 +486,7 @@ public class TransactionLog {
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
 //			cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
+			insertTransLog(CycleResourceEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_UPDATE );
 			db.update(CycleResourceEntry.TABLE_NAME, cv, CycleResourceEntry._ID+"="+t.getRowId(), null);
 		}
 	}

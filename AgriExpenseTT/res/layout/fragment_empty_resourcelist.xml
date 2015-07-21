@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:visibility="visible">
+    android:weightSum="1">
 
 
     <TextView
@@ -34,7 +33,7 @@
         android:layout_gravity="center"
         android:src="@drawable/icon_add_md"
         android:layout_width="71dp"
-        android:layout_height="71dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />
 
     <TextView

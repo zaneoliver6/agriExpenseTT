@@ -72,7 +72,6 @@ public class ViewCycleUsege extends BaseActivity {
 			 TextView tv_s1_1=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_1);
 			 TextView tv_s1_2=(TextView)row.findViewById(R.id.tv_cycUseItem_sub1_2);
 			 tv_m1.setText(curr.getResource()+" "+curr.getQuantifier()+"s Used");
-			 Log.i("TEST QUANTIFIER",">>>>:"+curr.getQuantifier());
 			 tv_s1_1.setText("Used:"+curr.getAmount()+" "+curr.getQuantifier());
 			 tv_s1_2.setText("Cost:$"+curr.getUseCost());
 			 

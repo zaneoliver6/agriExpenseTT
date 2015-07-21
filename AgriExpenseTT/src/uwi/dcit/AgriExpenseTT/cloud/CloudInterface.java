@@ -267,6 +267,7 @@ public class CloudInterface {
 				CycleUse c=DbQuery.getACycleUse(db, dbh, rowId);
 				c.setAccount(DbQuery.getAccountName(db));
 				try{
+					Log.i("INSERTING!","HEREe");
 					c=endpoint.insertCycleUse(c).execute();
 				}catch(Exception e){
 					return null;
@@ -319,6 +320,8 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();
                 ResourcePurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
 				purchase.setAccount(DbQuery.getAccountName(db));
+				int rowID= DbQuery.getLast(db,dbh,ResourcePurchaseEntry.TABLE_NAME);
+				Log.i("ROW ID>>>>","LAST ID FROM RESOURCE PURCHASE TABLE:"+rowID);
 				try{
 					Log.i("Inserting Resource Pur.",">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+purchase+"Time:"+purchase.getPurchaseDate());
 					purchase=endpoint.insertRPurchase(purchase).execute();
@@ -589,16 +592,20 @@ public class CloudInterface {
 				TransLog t=DbQuery.getLog(db,dbh,rowId);
 				String k=DbQuery.getKey(db, dbh, t.getTableKind(), t.getRowId());//gets the key for the related object in the cloud
 				t.setKeyrep(k);//stores the keyrep for its relating object
-				
+				Log.i("Transaction Log","Transaction Log Insertion::"+t);
 				t.setAccount(DbQuery.getAccountName(db));
+
+				int rowID= DbQuery.getLast(db,dbh,TransactionLogEntry.TABLE_NAME);
+				Log.i("ROW ID>>>>","LAST ID FROM TRANSACTION LOG TABLE:"+rowID);
+
 				try{
 					t=endpoint.insertTransLog(t).execute();
-					updateUpAccC(t.getTransTime());
+//					updateUpAccC(t.getTransTime());
 				}catch(Exception e){
                     e.printStackTrace();
 					return null;
 				}
-
+				updateUpAccC(t.getTransTime());
                 try {
                     DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
                 }catch (Exception e){e.printStackTrace();}

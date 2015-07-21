@@ -202,7 +202,9 @@ public class FragmentNewPurchaseLast extends Fragment{
                             cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
                             dm.updateCycle(currC,cv);
 
-                        }else{
+                        }
+                        else{
+                            Log.i("ELSE>>>","RESID:----"+resId);
                             if(category.equals(DHelper.cat_other))//if its the other category
                                 if(resId==-1)//and the resource does not exist
                                     resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, TextHelper.formatUserText(resource));//then insert it !
