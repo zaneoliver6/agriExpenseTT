@@ -19,6 +19,7 @@ import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
+import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
@@ -485,6 +486,7 @@ public class DbQuery {
 		else{
             throw new Exception("no contract defined for this table");
         }
+
 	}
 
 //	public static void insertAccountTask(SQLiteDatabase db,UpAcc acc){
@@ -570,9 +572,9 @@ public class DbQuery {
         cursor.close();
 	}
 
-	public static TransLog getLog(SQLiteDatabase db, DbHelper dbh, int rowId) {
+	public static TransLog getLog(SQLiteDatabase db, DbHelper dbh, int Id) {
 		TransLog t=new TransLog();
-		String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+ TransactionLogEntry._ID +"="+rowId;
+		String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+ TransactionLogEntry._ID +"="+Id;
 		Cursor cursor=db.rawQuery(code, null);
 		if(cursor.getCount()<1)
 			return null;
@@ -595,6 +597,19 @@ public class DbQuery {
 		String res = cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
 		cursor.close();
 		return res;
+	}
+
+	public static void getTransactionLog(SQLiteDatabase db){
+		String code ="select *"+ " from "+ TransactionLogContract.TransactionLogEntry.TABLE_NAME;
+		Cursor cursor=db.rawQuery(code ,null);
+		cursor.moveToFirst();
+		while(!cursor.isLast()){
+			Log.i("CURSOR","OPERATION:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_OPERATION)));
+			Log.i("CURSOR","ROWID:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_ROWID)));
+			Log.i("CURSOR","ID:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry._ID)));
+			cursor.moveToNext();
+		}
+		cursor.close();
 	}
 
     public static Account getAccount(SQLiteDatabase db){

@@ -171,8 +171,8 @@ public class ResourcePurchaseEndpoint {
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            String keyrep = (String) i.next().getProperty("keyrep");
-            removeRPurchase(keyrep, namespace);
+            int id = (Integer) i.next().getProperty("pId");
+            removeRPurchase(id, namespace);
         }
     }
 
@@ -324,12 +324,12 @@ public class ResourcePurchaseEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeRPurchase", httpMethod = HttpMethod.DELETE)
-    public void removeRPurchase(@Named("keyrep") String keyrep,
+    public void removeRPurchase(@Named("ID") int id,
                                 @Named("namespace") String namespace) {
         System.out.println("1111111111111");
         NamespaceManager.set(namespace);
 //        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-      Key k = KeyFactory.stringToKey(keyrep);
+        Key k = KeyFactory.createKey("ResourcePurchase",id);
 //        try {
 //            d.delete(k);
 //        } catch (Exception e) {

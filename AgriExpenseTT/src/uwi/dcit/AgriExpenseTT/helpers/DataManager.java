@@ -18,7 +18,10 @@ import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
+import uwi.dcit.agriexpensesvr.cycleUseApi.model.Key;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
+
 
 
 public class DataManager {
@@ -127,39 +130,39 @@ public class DataManager {
 		
 //		//PURCHASE
 //		//updating local Purchase
-//		RPurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
-//		ContentValues cv=new ContentValues();
-//		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
-//		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+l.getPurchaseId(), null);
-//		//record transaction in log
-//		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_DEL);
-//		if(acc!=null){
-//			//redo log (cloud)
-//			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(),TransactionLog.TL_UPDATE);
-//		}
-//		//CYCLE
-//		//updating local Cycle
-//		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
-//		cv=new ContentValues();
-//		cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
-//		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+l.getCycleid(), null);
-//		//record transaction in log
-//		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-//		if(acc!=null){
-//			//redo log (cloud)
-//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-//		}
-//		//CYCLEUSE
-//		//Delete CycleUse
-//		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
-//        try {
-//            DbQuery.deleteRecord(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId());
-//        }catch(Exception e){e.printStackTrace();}
-//        tL.insertTransLog(CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
-//		if(acc!=null){
-//			//redo log (cloud)
-//			DbQuery.insertRedoLog(db, dbh, CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
-//		}
+		ResourcePurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
+		ContentValues cv=new ContentValues();
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
+		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+l.getPurchaseId(), null);
+		//record transaction in log
+		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_DEL);
+		if(acc!=null){
+			//redo log (cloud)
+			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(),TransactionLog.TL_UPDATE);
+		}
+		//CYCLE
+		//updating local Cycle
+		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
+		cv=new ContentValues();
+		cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
+		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+l.getCycleid(), null);
+		//record transaction in log
+		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+		if(acc!=null){
+			//redo log (cloud)
+			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+		}
+		//CYCLEUSE
+		//Delete CycleUse
+		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
+        try {
+            DbQuery.deleteRecord(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId());
+        }catch(Exception e){e.printStackTrace();}
+        tL.insertTransLog(CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+		if(acc!=null){
+			//redo log (cloud)
+			DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+		}
 	}
 	
 	//--------------------------------------READY TO USE (FROM FRONT)
@@ -170,24 +173,24 @@ public class DataManager {
 		//put the delete in the redo log
 		
 		//getting all the cycleUse
-//		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
-//		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
-//		Iterator<LocalCycleUse> itr=list.iterator();
-//		while(itr.hasNext()){
-//			LocalCycleUse l=itr.next();
-//			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
-//		}
-//		//delete purchase
-//		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);
-//		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-//		if(acc!=null){
-//			//redo log (cloud)
-//			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-//			if(acc.getSignedIn()==1){
-//				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-//				c.deletePurchase();
-//			}
-//		}
+		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
+		Iterator<LocalCycleUse> itr=list.iterator();
+		while(itr.hasNext()){
+			LocalCycleUse l=itr.next();
+			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+		}
+		//delete purchase
+		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);
+		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
+		if(acc!=null){
+			//redo log (cloud)
+			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
+			if(acc.getSignedIn()==1){
+				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+				c.deletePurchase();
+			}
+		}
 	}
 	
 	//-----------------------------------READY TO USE (FROM FRONT)
@@ -197,27 +200,31 @@ public class DataManager {
 		//delete the cycle Locally
 		//insert into redo log (cloud)
 
-//		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
-//		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
-//		Iterator<LocalCycleUse> itr=list.iterator();
-//		while(itr.hasNext()){
-//			LocalCycleUse l=itr.next();
-//			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
-//		}
-//		//delete cycle
+		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
+		Iterator<LocalCycleUse> itr=list.iterator();
+		while(itr.hasNext()){
+			LocalCycleUse l=itr.next();
+			Log.i("Cycle Removal",":"+l);
+			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+		}
+		//delete cycle
 //		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
-//        try {
-//            DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId());
-//        }catch (Exception e){e.printStackTrace();}
-//        tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-//		if(acc!=null){
-//			//insert into redo log (cloud)
-//			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-//			if(acc.getSignedIn()==1){
-//				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
-//				cloud.deleteCycle();
-//			}
-//		}
+        try {
+            DbQuery.deleteRecord(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId());
+        }
+		catch (Exception e){
+			e.printStackTrace();
+		}
+        tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
+		if(acc!=null){
+			//insert into redo log (cloud)
+			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
+			if(acc.getSignedIn()==1){
+				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+				cloud.deleteCycle();
+			}
+		}
 	}
 	//---------------------- READY TO USE [WITHOUT INCLUSION OF RESOURCES TABLE]
 	public void deleteResource(int rId){

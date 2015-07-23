@@ -368,8 +368,8 @@ public class TransactionLog {
                 for (TransLog tLog : transList) {
 					Log.d("TTTTEEESSSSTTTT","Transaction Log:"+tLog.getTableKind()+"\n");
                     if (tLog.getOperation().equals(TransactionLog.TL_INS)){
-						Log.d("TTTTEEESSSSTTTT","Local INSERTION");
-						logInsertLocal(tLog, namespace);
+							Log.d("TTTTEEESSSSTTTT", "Local INSERTION");
+							logInsertLocal(tLog, namespace);
 					}
                     else if (tLog.getOperation().equals(TransactionLog.TL_UPDATE)){
 						Log.d("TTTTEEESSSSTTTT","Local UPDATE");
@@ -379,6 +379,8 @@ public class TransactionLog {
 						Log.d("TTTTEEESSSSTTTT","Local Deletee");
                         logDeleteLocal(tLog, namespace);
                     }
+					Log.i("SPIT TRANSCARION LOG","SPIT");
+					DbQuery.getTransactionLog(db);
                 }
 				//Some sort of changes have been made at this point and we want to set the lastUpdated to the
 				//System's current time.
@@ -405,47 +407,57 @@ public class TransactionLog {
 		if(t.getTableKind().equals(CycleContract.CycleEntry.TABLE_NAME)){
 //			Cycle c=getCycle(namespace,t.getKeyrep());
 			Cycle c=getCycle2(namespace, t.getRowId());
-			Log.i("CHECKKK", "Transaction Object:"+t);
-			Log.i("CHECKKK", "Object:"+c);
-			cv.put(CycleContract.CycleEntry._ID, t.getRowId());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, c.getCropName());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_AMOUNT, c.getLandQty());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_DATE, c.getStartDate());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, c.getHarvestType());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
-			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
-			insertTransLog(CycleContract.CycleEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
+			if(c!=null) {
+				Log.i("CHECKKK", "Transaction Object:" + t);
+				Log.i("CHECKKK", "Object:" + c);
+				cv.put(CycleContract.CycleEntry._ID, t.getRowId());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_NAME, c.getCropName());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_CROPID, c.getCropId());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_TYPE, c.getLandType());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_LAND_AMOUNT, c.getLandQty());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_DATE, c.getStartDate());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, c.getHarvestType());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
+				db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
+//				insertTransLog(CycleContract.CycleEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
+				Log.i("AT ROW ID","ROW ID ::"+t.getRowId()+"ID::"+t.getId());
+			}
+			insertTransLog(CycleContract.CycleEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 
 		}else if(t.getTableKind().equals(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME)){
 			ResourcePurchase p=getPurchase2(namespace,t.getRowId());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, p.getQty());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
-			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE,p.getPurchaseDate());
-			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
-			insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
+			if(p!=null) {
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry._ID, t.getRowId());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_TYPE, p.getType());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, p.getResourceId());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, p.getQty());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, p.getQuantifier());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
+				cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, p.getPurchaseDate());
+				db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
+//				insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
+			}
+			insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 
 		}else if(t.getTableKind().equals(CycleResourceEntry.TABLE_NAME)){
 			CycleUse c=getCycleUse2(namespace,t.getRowId());
-			cv.put(CycleResourceEntry._ID, t.getRowId());
-			//cv.put(DbHelper.CYCLE_RESOURCE_TYPE, );
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, c.getPurchaseId());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
-			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.get);
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
-			cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
-			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
-			insertTransLog(CycleResourceEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_INS );
+			if(c!=null) {
+				cv.put(CycleResourceEntry._ID, t.getRowId());
+				//cv.put(DbHelper.CYCLE_RESOURCE_TYPE, );
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, c.getCycleid());
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, c.getPurchaseId());
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, c.getAmount());
+				//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.get);
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, c.getResource());
+				cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, c.getQuantifier());
+				db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
+//				insertTransLog(CycleResourceEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
+			}
+			insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 		}
 	}
 	public void logUpdateLocal(TransLog t,String namespace){
@@ -494,7 +506,8 @@ public class TransactionLog {
     //TODO Refactor code to only accept one parameter when full use is determined
 	private void logDeleteLocal(TransLog tLog, String namespace2) {
         try {
-            DbQuery.deleteRecord(db, dbh, tLog.getTableKind(), tLog.getRowId());
+//            DbQuery.deleteRecord(db, dbh, tLog.getTableKind(), tLog.getRowId());
+			insertTransLog(tLog.getTableKind(), tLog.getRowId(), TransactionLog.TL_DEL);
         }catch (Exception e){e.printStackTrace();}
 	}
 
@@ -522,7 +535,11 @@ public class TransactionLog {
 		Cycle c = null;
 		try {
 			c=endpoint.cycleWithID(namespace,id).execute();
-		} catch (IOException e) {e.printStackTrace();}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 		return c;
 	}
 

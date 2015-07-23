@@ -27,6 +27,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
+import sun.rmi.runtime.Log;
+
 @Api( name = "cycleApi",
         version = "v1",
         namespace = @ApiNamespace(
@@ -226,8 +228,8 @@ public class CycleEndpoint {
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            String keyrep = (String) i.next().getProperty("keyrep");
-            removeCycle(keyrep, namespace);
+            int key = (Integer) i.next().getProperty("id");
+            removeCycle(key, namespace);
         }
     }
 
@@ -301,7 +303,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists ");
             }
             else {
                 // using account to store
@@ -370,10 +372,10 @@ public class CycleEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
-    public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
+    public void removeCycle(@Named("ID") int id, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
         //DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
+        Key k = KeyFactory.createKey("Cycle", id);
         EntityManager mgr = getEntityManager();
         try {
 //            d.delete(k);
