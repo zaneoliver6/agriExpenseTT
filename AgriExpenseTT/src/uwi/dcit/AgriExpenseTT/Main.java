@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
@@ -129,11 +130,24 @@ public class Main extends BaseActivity{
         if(findViewById(R.id.navContentRight)!=null){
             FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
             ft.remove(rightFrag).commit();
-            //have to put in someting here to purge transaction to ensure its still not running
+            //have to put in something here to purge transaction to ensure its still not running
             getSupportFragmentManager().executePendingTransactions();
         }
         super.onSaveInstanceState(outState);
     }
+
+    public void AddNewCycle (View view){ //the Add Cycle Button calls this function
+        if(focus == "cycle") {
+            Intent i = new Intent(this, NewCycle.class);
+            startActivity(i);
+        }
+        if(focus == "purchase"){
+            Intent i = new Intent(this, NewPurchase.class);
+            startActivity(i);
+            }
+    }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

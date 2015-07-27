@@ -10,7 +10,10 @@
         android:id="@+id/navContentLeft"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        >
+
+
+    </FrameLayout>
 
 
     <fragment
@@ -19,7 +22,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:name="uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment"
-        tools:layout="@layout/fragment_navigation_drawer" />
+        tools:layout="@layout/fragment_navigation_drawer"
+
+
+        />
 
 </android.support.v4.widget.DrawerLayout>
 

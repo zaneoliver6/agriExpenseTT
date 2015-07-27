@@ -31,6 +31,7 @@ import java.util.Comparator;
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -315,6 +316,9 @@ public class FragmentViewCycles extends ListFragment{
             return row;
 		}
 
+		public void addNewCycle(View view){
+			getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
+		}
         @Override
         public int getCount(){
             return cycleList.size();
