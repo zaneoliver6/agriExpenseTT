@@ -21,6 +21,7 @@ import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
+import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
@@ -81,14 +82,17 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
                 Cycle c = DbQuery.getCycle(db, dbh, rowId);
+				Log.i("UPDATE CYCLE","Cycle:"+c);
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
+				Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
 				c.setKeyrep(keyrep);
 				try{
 					//c=endpoint.insertCycle(c).execute();
 					c=endpoint.updateCycle(c).execute();
-                    endpoint.updateCycle(c);
-				}catch(Exception e){
-					
+//                    endpoint.updateCycle(c);
+				}
+				catch(Exception e){
+					e.printStackTrace();
 					System.out.println("could not update cycle");
 					return null;
 				}
@@ -381,10 +385,12 @@ public class CloudInterface {
 				Cycle c=new Cycle();
 				c.setId(rowId);
 				c.setAccount(DbQuery.getAccountName(db));
+				c.setKeyrep(DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, rowId));
 				if(c.getId()!=0){//was never inserted :o
 					try{
-						endpoint.removeCycle(c.getId(),c.getAccount()).execute();
+						endpoint.removeCycle(c.getKeyrep(),c.getAccount()).execute();
 					}
+
 					catch(Exception e){
 						c=null;
 					}
@@ -416,12 +422,25 @@ public class CloudInterface {
 					String code="select * from "+TransactionLogEntry.TABLE_NAME+ " where "+TransactionLogEntry.TRANSACTION_LOG_ROWID+" = "+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
 					Cursor cursor=db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					while(!cursor.isAfterLast()){
+						String tableName = cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_TABLE));
+						int i = cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+						Log.i("CHECKING","FROM CURSOR"+i+"  FROM LOGID:"+logId+"  FROM ROWID"+rowId);
+						if(tableName.equals(CycleEntry.TABLE_NAME)){
+							int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+							Log.i("DELETING CYCLE","DELETIONNNNNNNNN ID:"+Tid);
+							DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+							insertLog();
+						}
+						cursor.moveToNext();
+					}
 					cursor.close();
-
+//					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+//					cursor.close();
+//					Log.i("DELETING CYCLE","DELETIONNNNNNNNN ID:"+Tid);
 //					inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
-					insertLog();
+//					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+//					insertLog();
 				}
 
 			}
@@ -468,7 +487,8 @@ public class CloudInterface {
 				c.setAccount(DbQuery.getAccountName(db));
 				String keyrep=DbQuery.getKey(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 				c.setKeyrep(keyrep);
-				if(keyrep == null){
+				Log.i("KEYREPPPPPP",""+keyrep);
+				if(keyrep != null){
 					try{
 						endpoint.removeCycleUse(c.getKeyrep(),c.getAccount()).execute();
 					}catch(Exception e){
@@ -490,8 +510,9 @@ public class CloudInterface {
                     }catch (Exception  e){e.printStackTrace();}
 
 					//getting the transaction from the transaction log that matches this operation
-					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleResourceEntry.TABLE_NAME+
-							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
+//					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"="+CycleResourceEntry.TABLE_NAME+
+//							" and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
+					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
 					Cursor cursor = db.rawQuery(code, null);
 					cursor.moveToFirst();
 					int Tid=cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
@@ -532,9 +553,11 @@ public class CloudInterface {
                 ResourcePurchase p=new ResourcePurchase();
 				p.setPId(rowId);
 				p.setAccount(DbQuery.getAccountName(db));
-				if(p.getPId()!=0){
+				String keyrep = DbQuery.getKey(db,dbh,CloudKeyEntry.TABLE_NAME,rowId);
+				p.setKeyrep(keyrep);
+				if(p.getKeyrep()!=null){
 					try{
-						endpoint.removeRPurchase(p.getPId(), p.getAccount()).execute();
+						endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
 					}catch(Exception e){
 						e.printStackTrace();
 						p=null;
@@ -558,15 +581,27 @@ public class CloudInterface {
 					//remove key of cycle that was deleted from cloud
 //					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_TABLE+"='"+ResourcePurchaseEntry.TABLE_NAME+"'"
 //							+ " and "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
-					String code="select * from "+TransactionLogEntry.TRANSACTION_LOG_TABLE+" where "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
+					String code="select * from "+TransactionLogEntry.TABLE_NAME+" where "+TransactionLogEntry.TRANSACTION_LOG_ROWID+"="+rowId+" and "+TransactionLogEntry.TRANSACTION_LOG_OPERATION+"='del'";
 					Cursor cursor = db.rawQuery(code, null);
 					cursor.moveToFirst();
-					int Tid = cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+					while(!cursor.isAfterLast()){
+						String tableName = cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_TABLE));
+						if(tableName.equals(ResourcePurchaseEntry.TABLE_NAME)){
+							int Tid = cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
+							DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+							Log.i("DELETION","TRANSACTION LOG DELETION----PURCHASE");
+							insertLog();
+						}
+						cursor.moveToNext();
+					}
+
+//					int Tid = cursor.getInt(cursor.getColumnIndex(TransactionLogEntry._ID));
                     cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
-					insertLog();
+//					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+//					Log.i("DELETION","TRANSACTION LOG DELETION----CYCLE");
+//					insertLog();
 					
 				}
 			}
@@ -603,7 +638,7 @@ public class CloudInterface {
 				t.setAccount(DbQuery.getAccountName(db));
 
 				int rowID= DbQuery.getLast(db,dbh,TransactionLogEntry.TABLE_NAME);
-				Log.i("ROW ID>>>>","LAST ID FROM TRANSACTION LOG TABLE:"+rowID);
+				Log.i("ROW ID>>>>","LAST ID FROM TRANSACTION LOG TABLE:"+rowID+"ID FROM VARIABLE:"+t.getId());
 					try {
 						t = endpoint.insertTransLog(t).execute();
 //					updateUpAccC(t.getTransTime());

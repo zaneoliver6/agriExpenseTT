@@ -483,6 +483,9 @@ public class DbQuery {
 		else if(table.equals(RedoLogEntry.TABLE_NAME)){
 			db.delete(table,RedoLogEntry._ID+"="+id, null);
 		}
+		else if(table.equals((CloudKeyEntry.TABLE_NAME))){
+			db.delete(table,CloudKeyEntry._ID+"="+id, null);
+		}
 		else{
             throw new Exception("no contract defined for this table");
         }
@@ -537,6 +540,7 @@ public class DbQuery {
 		if(cursor.getCount() < 1)return null;
 		Cycle c = new Cycle();
 		cursor.moveToFirst();
+		c.setAccount(getAccountName(db));
 		c.setCropId(cursor.getInt(cursor.getColumnIndex(CycleEntry.CROPCYCLE_CROPID)));
 		c.setId(id);
 		c.setLandQty(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_LAND_AMOUNT)));

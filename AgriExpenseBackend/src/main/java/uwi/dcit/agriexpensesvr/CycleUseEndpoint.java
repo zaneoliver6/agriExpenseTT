@@ -225,7 +225,7 @@ public class CycleUseEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycleUse(cycleuse)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists ");
             }
             cycleuse.setKeyrep(KeyFactory.keyToString(k));
             cycleuse.setAccount(KeyFactory.keyToString(k));// using account to store
@@ -290,7 +290,7 @@ public class CycleUseEndpoint {
     public void removeCycleUse(@Named("keyrep") String keyrep,  @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
 //        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
+//        Key k = KeyFactory.stringToKey(keyrep);
 //        try {
 //            d.delete(k);
 //        } catch (Exception e) {
@@ -298,8 +298,10 @@ public class CycleUseEndpoint {
 //        }
 
         EntityManager mgr = getEntityManager();
-        CycleUse findCycleUse=mgr.find(CycleUse.class,k);
+//        CycleUse findCycleUse=mgr.find(CycleUse.class,keyrep);
         try{
+//            CycleUse findCycleUse=mgr.find(CycleUse.class,keyrep);
+            CycleUse findCycleUse = mgr.find(CycleUse.class,KeyFactory.stringToKey(keyrep));
             mgr.getTransaction().begin();
             mgr.remove(findCycleUse);
             mgr.getTransaction().commit();

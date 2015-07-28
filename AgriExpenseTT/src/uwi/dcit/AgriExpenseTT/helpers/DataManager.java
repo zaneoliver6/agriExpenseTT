@@ -120,38 +120,50 @@ public class DataManager {
 	
 	
 	//------------------------------------------READY TO USE (FROM FRONT)
-	public void deleteCycleUse(LocalCycleUse l){
+	public void deleteCycleUse(LocalCycleUse l, String type){
 		//update the Purchase that was used (local) add back the amount that was used
 		//update cloud, record it in the redo Log purchase Id and the table
 		//update the Cycle's total spent (local) subtract the usage cost from the cycle's total spent
 		//update cloud, record the update in the redo log
 		//finally delete cycleUse (locally)
 		//delete cycleUse in cloud, by recording the delete in the redo log
-		
+		CloudInterface clo= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		Log.i("Printing Local Use!",">>"+l);
 //		//PURCHASE
 //		//updating local Purchase
-		ResourcePurchase p=DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
-		ContentValues cv=new ContentValues();
-		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount()+p.getQtyRemaining()) );
-		db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+l.getPurchaseId(), null);
-		//record transaction in log
-		tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_DEL);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(),TransactionLog.TL_UPDATE);
+		if(type.equals("Purchase")) {
+			ResourcePurchase p = DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
+			ContentValues cv = new ContentValues();
+			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount() + p.getQtyRemaining()));
+			db.update(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, cv, ResourcePurchaseContract.ResourcePurchaseEntry._ID + "=" + l.getPurchaseId(), null);
+			//record transaction in log
+			tL.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_UPDATE);
+			if (acc != null) {
+				//redo log (cloud)
+				DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_UPDATE);
+			}
+			//NOTE
+			clo.updatePurchase();
 		}
+
 		//CYCLE
 		//updating local Cycle
-		Cycle c=DbQuery.getCycle(db, dbh, l.getCycleid());
-		cv=new ContentValues();
-		cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent()-l.getUseCost()) );
-		db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+l.getCycleid(), null);
-		//record transaction in log
-		tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-		if(acc!=null){
-			//redo log (cloud)
-			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+		if(type.equals("Cycle")) {
+			Log.i("CYCLE UPDATE", ">><<<::" + l.getCycleid());
+			Cycle c = DbQuery.getCycle(db, dbh, l.getCycleid());
+			ContentValues cv = new ContentValues();
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, (c.getTotalSpent() - l.getUseCost()));
+			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID + "=" + l.getCycleid(), null);
+			//record transaction in log
+			tL.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+			if (acc != null) {
+				//redo log (cloud)
+				DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+			}
+			//NOTE
+			clo.updateCycle();
 		}
+
 		//CYCLEUSE
 		//Delete CycleUse
 		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
@@ -163,6 +175,9 @@ public class DataManager {
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
 		}
+		//NOTE
+		clo.deleteCycleUse();
+
 	}
 	
 	//--------------------------------------READY TO USE (FROM FRONT)
@@ -176,9 +191,11 @@ public class DataManager {
 		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
 		Iterator<LocalCycleUse> itr=list.iterator();
+		CloudInterface clo= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 		while(itr.hasNext()){
 			LocalCycleUse l=itr.next();
-			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+			this.deleteCycleUse(l, "Purchase");//already does the recording into the redo log(cloud) and transaction log
+			clo.deleteCycleUse();
 		}
 		//delete purchase
 		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);
@@ -203,10 +220,11 @@ public class DataManager {
 		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
 		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
 		Iterator<LocalCycleUse> itr=list.iterator();
+
 		while(itr.hasNext()){
 			LocalCycleUse l=itr.next();
 			Log.i("Cycle Removal",":"+l);
-			this.deleteCycleUse(l);//already does the recording into the redo log(cloud) and transaction log
+			this.deleteCycleUse(l,"Cycle");//already does the recording into the redo log(cloud) and transaction log
 		}
 		//delete cycle
 //		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
@@ -225,6 +243,7 @@ public class DataManager {
 				cloud.deleteCycle();
 			}
 		}
+		DbQuery.getTransactionLog(db);
 	}
 	//---------------------- READY TO USE [WITHOUT INCLUSION OF RESOURCES TABLE]
 	public void deleteResource(int rId){
@@ -252,7 +271,7 @@ public class DataManager {
 		}
 		//delete resource
 		db.delete(ResourceContract.ResourceEntry.TABLE_NAME, ResourceContract.ResourceEntry._ID+"="+rId, null);
-		//not bothering to record in transaction log if not storing resources in clouf
+		//not bothering to record in transaction log if not storing resources in cloud
 		//not bothering to store in redo log if res not going to cloud
 	}
 	
@@ -271,6 +290,8 @@ public class DataManager {
 		long time = System.currentTimeMillis()/1000;
 		cloud.updateUpAccC(time);
 		DbQuery.updateAccount(db,time);
+		Log.i("SPIT TRANSCARION LOG","SPIT");
+		DbQuery.getTransactionLog(db);
 	}
 	
 	

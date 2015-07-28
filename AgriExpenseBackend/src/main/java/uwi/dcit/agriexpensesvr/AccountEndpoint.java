@@ -63,7 +63,7 @@ public class AccountEndpoint {
                 //em.close();
             }
         }else{
-            System.out.println("Account Previously Exists ");
+            System.out.println("Account Previously Exists");
             account = retrieve(namespace); // Retrieve th
         }
         return account;
@@ -80,7 +80,7 @@ public class AccountEndpoint {
         EntityManager em = getEntityManager();
 
         Account account = em.find(Account.class, KeyFactory.createKey("Account", namespace));
-        if (account == null)System.out.println("Unable to Find account associated with namespace :"+namespace);
+        if (account == null)System.out.println("Unable to Find account associated with namespace  :"+namespace);
         else System.out.println("Found: " + account);
         //em.close();
         return account;
@@ -97,7 +97,7 @@ public class AccountEndpoint {
         EntityManager em = getEntityManager();
         Account account = em.find(Account.class, KeyFactory.createKey("Account", accountUpdate.getAccount()));
         if (!containsAccount(account, em))
-            throw new EntityNotFoundException("Account with namespaceS: " + account.getAccount() +" does not exist");
+            throw new EntityNotFoundException("Account with namespace:    " + account.getAccount() +" does not exist");
         else{
             if(accountUpdate.getAddress()!=null)
                 account.setAddress(accountUpdate.getAddress());

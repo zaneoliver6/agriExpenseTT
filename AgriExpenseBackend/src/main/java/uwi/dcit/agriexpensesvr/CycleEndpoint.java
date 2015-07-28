@@ -228,7 +228,7 @@ public class CycleEndpoint {
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            int key = (Integer) i.next().getProperty("id");
+            String key = (String) i.next().getProperty("key");
             removeCycle(key, namespace);
         }
     }
@@ -303,7 +303,8 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists ");
+                throw new EntityExistsException("Object already existssz" +
+                        "");
             }
             else {
                 // using account to store
@@ -327,7 +328,7 @@ public class CycleEndpoint {
 
     /**
      * This method is used for updating an existing entity. If the entity does
-     * not exist in the datastore, an exception is thrown. It uses HTTP PUT
+     * not exist in the datastore, an exception  is thrown. It uses HTTP PUT
      * method.
      *
      * @param cycle
@@ -337,8 +338,8 @@ public class CycleEndpoint {
     @ApiMethod(name = "updateCycle")
     public Cycle updateCycle(Cycle cycle) {
         System.out.println(cycle.getKeyrep());
-        Key k = KeyFactory.stringToKey(cycle.getKeyrep());
-        cycle.setKey(k);
+        NamespaceManager.set(cycle.getAccount());
+        Key k = KeyFactory.createKey("Cycle", cycle.getId());
         EntityManager mgr = getEntityManager();
         Cycle c = null;
         try {
@@ -372,18 +373,19 @@ public class CycleEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
-    public void removeCycle(@Named("ID") int id, @Named("namespace") String namespace) {
+    public void removeCycle(@Named("KeyRep") String keyRep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
         //DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.createKey("Cycle", id);
+//        Key k = KeyFactory.createKey("Cycle", id);
         EntityManager mgr = getEntityManager();
         try {
 //            d.delete(k);
-            Cycle findCycle = mgr.find(Cycle.class, k);
+            Cycle findCycle = mgr.find(Cycle.class, KeyFactory.stringToKey(keyRep));
             mgr.getTransaction().begin();
             mgr.remove(findCycle);
             mgr.getTransaction().commit();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

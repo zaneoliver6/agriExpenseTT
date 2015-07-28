@@ -171,8 +171,8 @@ public class ResourcePurchaseEndpoint {
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            int id = (Integer) i.next().getProperty("pId");
-            removeRPurchase(id, namespace);
+            String key = (String) i.next().getProperty("keyrep");
+            removeRPurchase(key, namespace);
         }
     }
 
@@ -324,19 +324,18 @@ public class ResourcePurchaseEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeRPurchase", httpMethod = HttpMethod.DELETE)
-    public void removeRPurchase(@Named("ID") int id,
+    public void removeRPurchase(@Named("keyRep") String keyRep,
                                 @Named("namespace") String namespace) {
         System.out.println("1111111111111");
         NamespaceManager.set(namespace);
 //        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.createKey("ResourcePurchase",id);
-//        try {
+//        Key k = KeyFactory.createKey("ResourcePurchase",id);//        try {
 //            d.delete(k);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
         EntityManager mgr = getEntityManager();
-        ResourcePurchase rpFind = mgr.find(ResourcePurchase.class,k);
+        ResourcePurchase rpFind = mgr.find(ResourcePurchase.class,KeyFactory.stringToKey(keyRep));
         if(rpFind!=null){
             try {
                 mgr.getTransaction().begin();
