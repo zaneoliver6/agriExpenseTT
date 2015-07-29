@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class DataManager {
 	Context context;
 	TransactionLog tL;
 	Account acc;
+	NetworkHelper nh;
 	public DataManager(Context context){
 		dbh= new DbHelper(context);
 //		db=dbh.getReadableDatabase();
@@ -37,6 +40,7 @@ public class DataManager {
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);
+		nh= new NetworkHelper();
 	}
 	public DataManager(Context context,SQLiteDatabase db,DbHelper dbh){
 		this.dbh= dbh;
@@ -45,6 +49,8 @@ public class DataManager {
 		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);
 	}
+
+
 
 //	public void insertCycle(int cropId, String landType, double landQty,long time){
 //		//insert into database
@@ -70,7 +76,7 @@ public class DataManager {
 			//insert into transaction table
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
 			//try insert into cloud
-			if(acc.getSignedIn()==1){
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
 				c.insertCycle();
 			}
@@ -107,9 +113,9 @@ public class DataManager {
             //insert into redo log table
             DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
             //try to insert into cloud
-//            if(acc.getSignedIn()==1){
+            if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
                 c.insertPurchase();
-//            }
+            }
         }
 		time = System.currentTimeMillis()/1000;
 		DbQuery.updateAccount(db,time);

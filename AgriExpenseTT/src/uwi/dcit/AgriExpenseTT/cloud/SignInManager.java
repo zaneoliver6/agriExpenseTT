@@ -288,6 +288,7 @@ public class SignInManager {
                 sync.start(namespace, cloudAcc);
             }
             super.onPostExecute(cloudAcc);
+
 		}
 
 	}
