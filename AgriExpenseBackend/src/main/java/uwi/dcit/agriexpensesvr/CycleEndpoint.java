@@ -303,7 +303,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already existssz" +
+                throw new EntityExistsException("Object already exists     " +
                         "");
             }
             else {
@@ -356,8 +356,10 @@ public class CycleEndpoint {
                 c.setHarvestAmt(cycle.getHarvestAmt());
             if(cycle.getHarvestType()!=null)
                 c.setHarvestType(cycle.getHarvestType());
-            if(cycle.getTotalSpent()!=0)
+            if(cycle.getTotalSpent()!=0.0)
                 c.setTotalSpent(cycle.getTotalSpent());
+            if(cycle.getTotalSpent()==-1.00)
+                c.setTotalSpent(0.00);
             mgr.getTransaction().begin();
             mgr.persist(c);
             mgr.getTransaction().commit();

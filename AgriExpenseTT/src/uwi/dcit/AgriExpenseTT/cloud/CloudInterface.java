@@ -86,7 +86,10 @@ public class CloudInterface {
 				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
 				Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
 				c.setKeyrep(keyrep);
+				if(c.getTotalSpent()==0.00)
+					c.setTotalSpent(-1.00);
 				try{
+					Log.i("YOU ARE IN!","INSIDE THE UPDATE CODE!");
 					//c=endpoint.insertCycle(c).execute();
 					c=endpoint.updateCycle(c).execute();
 //                    endpoint.updateCycle(c);
@@ -94,7 +97,7 @@ public class CloudInterface {
 				catch(Exception e){
 					e.printStackTrace();
 					System.out.println("could not update cycle");
-					return null;
+					c=null;
 				}
 				if(c!=null){
 					//we stored they key as text in the account field of c when we returned
@@ -121,6 +124,7 @@ public class CloudInterface {
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
 					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Log.i("Cycle Update!","At ID:"+id);
 					insertLog();
 				}
 			}
@@ -337,7 +341,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
-					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getAccount(),rowId);
+					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getKeyrep(),rowId);
 					//remove from redo log
                     try {
                         DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
@@ -553,12 +557,16 @@ public class CloudInterface {
                 ResourcePurchase p=new ResourcePurchase();
 				p.setPId(rowId);
 				p.setAccount(DbQuery.getAccountName(db));
-				String keyrep = DbQuery.getKey(db,dbh,CloudKeyEntry.TABLE_NAME,rowId);
-				p.setKeyrep(keyrep);
-				if(p.getKeyrep()!=null){
+				String k = DbQuery.getKey(db,dbh,ResourcePurchaseEntry.TABLE_NAME,rowId);
+				p.setKeyrep(k);
+				Log.i("KEY","KEY IS::"+k);
+				Log.i("RP","REMOVING RES P. OBJECCT:::>>"+p);
+				if(p!=null){
 					try{
+						Log.i("RP","REMOVING RES P.");
 						endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
-					}catch(Exception e){
+					}
+					catch(Exception e){
 						e.printStackTrace();
 						p=null;
 					}

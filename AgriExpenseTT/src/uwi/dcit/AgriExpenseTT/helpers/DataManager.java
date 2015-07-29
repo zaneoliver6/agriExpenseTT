@@ -131,7 +131,7 @@ public class DataManager {
 		Log.i("Printing Local Use!",">>"+l);
 //		//PURCHASE
 //		//updating local Purchase
-		if(type.equals("Purchase")) {
+		if(type.equals("Cycle")) {
 			ResourcePurchase p = DbQuery.getARPurchase(db, dbh, l.getPurchaseId());
 			ContentValues cv = new ContentValues();
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, (l.getAmount() + p.getQtyRemaining()));
@@ -148,7 +148,7 @@ public class DataManager {
 
 		//CYCLE
 		//updating local Cycle
-		if(type.equals("Cycle")) {
+		if(type.equals("Purchase")) {
 			Log.i("CYCLE UPDATE", ">><<<::" + l.getCycleid());
 			Cycle c = DbQuery.getCycle(db, dbh, l.getCycleid());
 			ContentValues cv = new ContentValues();
@@ -195,7 +195,7 @@ public class DataManager {
 		while(itr.hasNext()){
 			LocalCycleUse l=itr.next();
 			this.deleteCycleUse(l, "Purchase");//already does the recording into the redo log(cloud) and transaction log
-			clo.deleteCycleUse();
+//			clo.deleteCycleUse();
 		}
 		//delete purchase
 		db.delete(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, ResourcePurchaseContract.ResourcePurchaseEntry._ID+"="+p.getPId(), null);

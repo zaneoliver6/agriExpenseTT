@@ -347,7 +347,7 @@ public class ResourcePurchaseEndpoint {
             }
         }
         else{
-            System.out.println("Resource Purchase Does Not Exist!");
+            System.out.println("Resource Purchase Does Not Exist! ");
         }
     }
 
