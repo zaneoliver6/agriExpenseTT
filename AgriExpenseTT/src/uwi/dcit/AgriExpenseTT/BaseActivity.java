@@ -97,7 +97,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 //        if(this.signInManager.isExisting()==null){
 //            Intent i = new Intent(getApplicationContext(), Backup.class);
 //            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-//            Log.i("FUCKING TESTTTTT","County:"+country);
 //            Log.i("backupDataTest","No Accounts Exist!");
 //            if(NetworkHelper.isNetworkAvailable(this)==true){
 //                Toast.makeText(getApplicationContext(), "Connection Available!", Toast.LENGTH_LONG).show();
@@ -117,7 +116,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             this.signInManager.cloudAccountCheck();
             if(!this.signInManager.localAccountExists())
                 startActivityForResult(i, RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-            signInManager.signIn(country,county);
+//            signInManager.signIn(country,county);
         }
         else if (this.signInManager.isSignedIn()){
             // If not signed attempt to login with existing account
