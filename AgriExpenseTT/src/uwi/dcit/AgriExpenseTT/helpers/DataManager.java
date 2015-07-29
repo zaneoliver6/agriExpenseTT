@@ -147,9 +147,11 @@ public class DataManager {
 			if (acc != null) {
 				//redo log (cloud)
 				DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_UPDATE);
+				if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+					//NOTE
+					clo.updatePurchase();
+				}
 			}
-			//NOTE
-			clo.updatePurchase();
 		}
 
 		//CYCLE
@@ -165,9 +167,11 @@ public class DataManager {
 			if (acc != null) {
 				//redo log (cloud)
 				DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
+				if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+					//NOTE
+					clo.updateCycle();
+				}
 			}
-			//NOTE
-			clo.updateCycle();
 		}
 
 		//CYCLEUSE
@@ -175,14 +179,19 @@ public class DataManager {
 		//db.delete(CycleResourceEntry.TABLE_NAME, DbHelper.CYCLE_RESOURCE_ID+"="+l.getId(), null);
         try {
             DbQuery.deleteRecord(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId());
-        }catch(Exception e){e.printStackTrace();}
+        }
+		catch(Exception e){
+			e.printStackTrace();
+		}
         tL.insertTransLog(CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+				//NOTE
+				clo.deleteCycleUse();
+			}
 		}
-		//NOTE
-		clo.deleteCycleUse();
 
 	}
 	
@@ -209,7 +218,7 @@ public class DataManager {
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1){
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 				c.deletePurchase();
 			}
@@ -244,7 +253,7 @@ public class DataManager {
 		if(acc!=null){
 			//insert into redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1){
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 				cloud.deleteCycle();
 			}
@@ -289,9 +298,9 @@ public class DataManager {
 		//try to insert into cloud
 		CloudInterface cloud = new CloudInterface(context, db, dbh);//new CloudInterface(context);
 		if(acc!=null ){
-//			if(acc.getSignedIn()==1) {
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)) {
 				cloud.insertCycleUseC();
-//			}
+			}
 		}
 		long time = System.currentTimeMillis()/1000;
 		cloud.updateUpAccC(time);
@@ -310,7 +319,7 @@ public class DataManager {
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
 //			record in transaction log
-			if(acc.getSignedIn()==1){
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				cloud.updatePurchase();
 			}
 		}
@@ -327,7 +336,7 @@ public class DataManager {
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
 			//record in transaction log
-			if(acc.getSignedIn()==1){
+			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				cloud.updateCycle();
 			}
 		}
@@ -354,6 +363,7 @@ public class DataManager {
 		}
         cursor.close();
 	}
+
 	public void insertResource(String name,String type) {
 		ContentValues cv=new ContentValues();
 		cv.put(ResourceContract.ResourceEntry.RESOURCES_NAME, name);
