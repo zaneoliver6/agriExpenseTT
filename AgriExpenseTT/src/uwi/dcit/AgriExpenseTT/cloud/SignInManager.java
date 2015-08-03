@@ -64,6 +64,21 @@ public class SignInManager {
 		//need to update the sign in method later down.
 	}
 
+	public void signIn(){
+		Log.d(TAG_NAME, "Attempting to Log in");
+		Account acc = isExisting(); 								// Check if Account is already created
+		if(acc == null) {
+			accountSetUp(); // Account doesn't exist so we've to setup a new one (means we never signed in)
+		}
+		else {
+			this.country=acc.getCountry();
+			this.county=acc.getCounty();
+			startSync(acc.getAccount());
+		}// Account exists already so we can Initiate Sign-in process
+		//Due to the fact that start sync is threaded, it will finish on its own timing...
+		//need to update the sign in method later down.
+	}
+
     public Account isExisting(){
         Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
 		if(acc!=null) {

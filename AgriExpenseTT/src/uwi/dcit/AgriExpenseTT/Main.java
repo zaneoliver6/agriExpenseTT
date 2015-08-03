@@ -20,8 +20,8 @@ public class Main extends BaseActivity{
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
     public final static String TAG = "Main";
-//    public String country="";
-//    public String county="";
+    public String country="";
+    public String county="";
 
     private String focus = "cycle";
 

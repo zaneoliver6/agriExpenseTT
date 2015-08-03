@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
@@ -26,7 +27,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected boolean isTablet = false;
     protected final int RequestCode_backup =2;
-    protected String country=null,county=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +116,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
             this.signInManager.cloudAccountCheck();
             if(!this.signInManager.localAccountExists())
                 startActivityForResult(i, RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-//            signInManager.signIn(country,county);
+            else
+                signInManager.signIn();
         }
         else if (this.signInManager.isSignedIn()){
             // If not signed attempt to login with existing account
             Log.i("BLAHHHHHHH", "BLAHHHHHHHHH");
-            signInManager.signIn(country,county);
+            signInManager.signIn();
         }
     }
 
