@@ -258,7 +258,7 @@ public class CycleUseEndpoint {
         try {
             findCycleUse=mgr.find(CycleUse.class,k);
             if (findCycleUse==null) {
-                throw new EntityNotFoundException("Object does not exist");
+                throw new EntityNotFoundException("Object does not exist   ");
             }
             else{
                 if(cycleUse.getResource()!=null)

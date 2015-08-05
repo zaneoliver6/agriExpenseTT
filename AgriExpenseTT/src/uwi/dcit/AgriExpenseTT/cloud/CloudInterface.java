@@ -341,6 +341,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
+					Log.i("CLOUD KEY","INSERTING CLOUD KEY!! >>>"+purchase.getKeyrep());
 					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getKeyrep(),rowId);
 					//remove from redo log
                     try {

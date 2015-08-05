@@ -62,6 +62,7 @@ public class ReportHelper {
 	 */
 	public void createReport(){		
 		//Create a default name for the report file based on current date
+
 		Calendar c = Calendar.getInstance();
 		StringBuilder stb = new StringBuilder();
 		stb.append(defaultName)
@@ -95,7 +96,8 @@ public class ReportHelper {
 	}
 	
 	private void writeExcel(File path, String filename, long l){
-		this.writeExcel(path, filename, l, 0);
+		long end = 2438574400000L;
+		this.writeExcel(path, filename, end, 1);
 	}
 	
 	private void writeExcel(File path, String filename, long endDate, long beginDate){
@@ -109,13 +111,15 @@ public class ReportHelper {
 		
 		int rowNum=0;
 		for(LocalCycle cycle : cycleList){
-			HSSFRow row = useSheet.createRow(rowNum++);
-			HSSFCell a0 = row.createCell(0);
-			a0.setCellValue("Cycle#"+cycle.getCropId()+": "+DbQuery.findResourceName(db, dbh, cycle.getCropId()));
-			HSSFCell a1 = row.createCell(1);
-			a1.setCellValue(cycle.getTotalSpent());
-			rowNum = writeCategories(filename, path,agriWrkbk,useSheet,cycle.getId(),rowNum);
-			rowNum += 3;
+			if(cycle.getTime()>=beginDate && cycle.getTime()<=endDate) {
+				HSSFRow row = useSheet.createRow(rowNum++);
+				HSSFCell a0 = row.createCell(0);
+				a0.setCellValue("Cycle#" + cycle.getCropId() + ": " + DbQuery.findResourceName(db, dbh, cycle.getCropId()));
+				HSSFCell a1 = row.createCell(1);
+				a1.setCellValue(cycle.getTotalSpent());
+				rowNum = writeCategories(filename, path, agriWrkbk, useSheet, cycle.getId(), rowNum);
+				rowNum += 3;
+			}
 		}
 	}
 
