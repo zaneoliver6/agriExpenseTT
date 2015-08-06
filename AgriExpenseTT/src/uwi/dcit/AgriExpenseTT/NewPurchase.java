@@ -28,6 +28,7 @@ public class NewPurchase extends BaseActivity {
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
 	}
+
     @Override
     protected void onResume(){
         super.onResume();
