@@ -1,61 +1,61 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_newcycle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uwi.dcit.AgriExpenseTT.NewCycle"
+    tools:ignore="MergeRootFrame" >
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container_newcycle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="uwi.dcit.AgriExpenseTT.NewCycle"
-        tools:ignore="MergeRootFrame" >
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <FrameLayout
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
-            <FrameLayout
-
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
 
 
-                    <TextView
-                        android:id="@+id/tv_mainNew_subheader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginEnd="25dp"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/txt_general_details"
-                        android:textColor="@color/secondary_text"
-                        android:textSize="@dimen/list_reuse_details" />
+                <TextView
+                    android:id="@+id/tv_mainNew_subheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/txt_general_details"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/list_reuse_details" />
 
-                </LinearLayout>
+            </LinearLayout>
 
-            </FrameLayout>
+        </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/NewCycleListContainer"
+        <FrameLayout
+            android:id="@+id/NewCycleListContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="78dp"
+                android:text="Add Labour"
+                android:id="@+id/Add_Labour_Button"
+                android:layout_gravity="center_horizontal|bottom"
+                android:onClick="AddLabourer"
+                />
+        </FrameLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="78dp"
-                    android:text="Add Labour"
-                    android:id="@+id/Add_Labour_Button"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:onClick="AddLabourer"
-                    />
-            </FrameLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+</FrameLayout>
 
-    </FrameLayout>

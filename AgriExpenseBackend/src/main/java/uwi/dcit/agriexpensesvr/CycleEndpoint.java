@@ -27,6 +27,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
+import sun.rmi.runtime.Log;
+
 @Api( name = "cycleApi",
         version = "v1",
         namespace = @ApiNamespace(
@@ -226,8 +228,8 @@ public class CycleEndpoint {
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            String keyrep = (String) i.next().getProperty("keyrep");
-            removeCycle(keyrep, namespace);
+            String key = (String) i.next().getProperty("key");
+            removeCycle(key, namespace);
         }
     }
 
@@ -240,8 +242,8 @@ public class CycleEndpoint {
      * @return The entity with primary key id.
      */
     @ApiMethod(name = "getCycle")
-    public Cycle getCycle(@Named("namespace") String namespace,
-                          @Named("keyrep") String keyrep) {
+     public Cycle getCycle(@Named("namespace") String namespace,
+                           @Named("keyrep") String keyrep) {
         NamespaceManager.set(namespace);
         EntityManager mgr = getEntityManager();
         Key k = KeyFactory.stringToKey(keyrep);
@@ -253,6 +255,34 @@ public class CycleEndpoint {
         }
         return c;
     }
+
+    /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *It is mainly used when updating a cycle with respect to the cloud's database.
+     * Note that a Transaction Log's Key Representation cannot be used to find that of a cycle
+     * hence we pass the ID of the cycle and create the key in this method itself.
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "CycleWithID")
+    public Cycle CycleIdOnly(@Named("namespace") String namespace,
+                         @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        EntityManager mgr = getEntityManager();
+        Key k = KeyFactory.createKey("Cycle", id);
+        String keyString = KeyFactory.keyToString(k);
+        Cycle c = null;
+        try {
+            c = mgr.find(Cycle.class, keyString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+
 
     /**
      * This inserts a new entity into App Engine datastore. If the entity
@@ -273,25 +303,32 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists     " +
+                        "");
             }
-            mgr.persist(cycle);
-        } catch (Exception e) {
-            return null;
-        } finally {
-            mgr.close();
+            else {
+                // using account to store
+                // the string rep of the
+                // key
+                cycle.setKeyrep(KeyFactory.keyToString(k));
+                cycle.setAccount(KeyFactory.keyToString(k));
+                mgr.getTransaction().begin();
+                mgr.persist(cycle);
+                mgr.getTransaction().commit();
+            }
         }
-        cycle.setKeyrep(KeyFactory.keyToString(k));
-        cycle.setAccount(KeyFactory.keyToString(k)); // using account to store
-        // the string rep of the
-        // key
+        catch (Exception e) {
+            return null;
+        }
+        finally {
+//            mgr.close();
+        }
         return cycle;
-
     }
 
     /**
      * This method is used for updating an existing entity. If the entity does
-     * not exist in the datastore, an exception is thrown. It uses HTTP PUT
+     * not exist in the datastore, an exception  is thrown. It uses HTTP PUT
      * method.
      *
      * @param cycle
@@ -301,18 +338,33 @@ public class CycleEndpoint {
     @ApiMethod(name = "updateCycle")
     public Cycle updateCycle(Cycle cycle) {
         System.out.println(cycle.getKeyrep());
-        Key k = KeyFactory.stringToKey(cycle.getKeyrep());
-        cycle.setKey(k);
+        NamespaceManager.set(cycle.getAccount());
+        Key k = KeyFactory.createKey("Cycle", cycle.getId());
         EntityManager mgr = getEntityManager();
+        Cycle c = null;
         try {
-            if (!containsCycle(cycle)) {
-                throw new EntityNotFoundException("Object does not exist");
-            }
-            mgr.persist(cycle);
-        } finally {
-            mgr.close();
+            c = mgr.find(Cycle.class, k);
         }
-        return cycle;
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+//            mgr.close();
+        }
+        if(c!=null){
+            if(cycle.getHarvestAmt()!=0)
+                c.setHarvestAmt(cycle.getHarvestAmt());
+            if(cycle.getHarvestType()!=null)
+                c.setHarvestType(cycle.getHarvestType());
+            if(cycle.getTotalSpent()!=0.0)
+                c.setTotalSpent(cycle.getTotalSpent());
+            if(cycle.getTotalSpent()==-1.00)
+                c.setTotalSpent(0.00);
+            mgr.getTransaction().begin();
+            mgr.persist(c);
+            mgr.getTransaction().commit();
+        }
+        return c;
     }
 
     /**
@@ -323,16 +375,23 @@ public class CycleEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
-    public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
+    public void removeCycle(@Named("KeyRep") String keyRep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
+        //DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.createKey("Cycle", id);
+        EntityManager mgr = getEntityManager();
         try {
-            d.delete(k);
-        } catch (Exception e) {
+//            d.delete(k);
+            Cycle findCycle = mgr.find(Cycle.class, KeyFactory.stringToKey(keyRep));
+            mgr.getTransaction().begin();
+            mgr.remove(findCycle);
+            mgr.getTransaction().commit();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private boolean containsCycle(Cycle cycle) {
         NamespaceManager.set(cycle.getAccount());
@@ -344,13 +403,14 @@ public class CycleEndpoint {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
 
     private static EntityManager getEntityManager() {
-        return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        //return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

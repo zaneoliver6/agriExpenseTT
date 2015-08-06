@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,7 +73,7 @@ public class FragmentGeneralCategory extends Fragment {
                 }
             }
         });
-
+		Log.i("CURRENT CYCLE",">>>>"+currCycle);
         totalLbl.setText("Total Expenses For " + currCycle.getCycleName());
 
 		DecimalFormat df = new DecimalFormat("#.00"); 

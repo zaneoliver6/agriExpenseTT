@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class RPurchase {
+public class ResourcePurchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
@@ -22,6 +22,7 @@ public class RPurchase {
     private double qtyRemaining;
     private String type;
     private String elementName;
+    private long purchaseDate;
 
     public String getKeyrep() {
         return keyrep;
@@ -31,13 +32,13 @@ public class RPurchase {
         this.keyrep = keyrep;
     }
 
-    public RPurchase() {
+    public ResourcePurchase() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public RPurchase(int pId, int resourceId, String quantifier, double qty,
-                     double cost, double qtyRemaining, String type) {
+    public ResourcePurchase(int pId, int resourceId, String quantifier, double qty,
+                            double cost, double qtyRemaining, String type, long purchaseDate) {
         super();
         this.pId = pId;
         this.resourceId = resourceId;
@@ -46,7 +47,16 @@ public class RPurchase {
         this.cost = cost;
         this.qtyRemaining = qtyRemaining;
         this.type = type;
+        this.purchaseDate=purchaseDate;
     }
+    public long getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(long purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
 
     public int getpId() {
         return pId;

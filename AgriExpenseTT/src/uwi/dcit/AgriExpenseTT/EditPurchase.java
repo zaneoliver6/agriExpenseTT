@@ -30,7 +30,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -188,8 +188,8 @@ public class EditPurchase extends BaseActivity {
         cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, date);
 		//Toast.makeText(EditPurchase.this, resource+" "+quantifier+" "+qty+" "+cost, Toast.LENGTH_LONG).show();
 		DataManager dm=new DataManager(EditPurchase.this, db, dbh);
-		RPurchase rp=p.toRPurchase();
-		dm.updatePurchase(rp, cv);
+        ResourcePurchase rp=p.toRPurchase();
+		dm.updatePurchase(rp,cv);
 		Intent i=new Intent();
 		setResult(1,i);
 		finish();

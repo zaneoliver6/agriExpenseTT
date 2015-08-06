@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -163,13 +164,13 @@ public class FragmentNewCycleLast extends Fragment {
                             public void run() {
                                 if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
                                 else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
-
+//
                                 Bundle bundle = new Bundle();
                                 bundle.putString("type", "cycle");
                                 bundle.putInt("id", res);
                                 Intent i = new Intent();
                                 i.putExtras(bundle);
-
+//
                                 getActivity().setResult(DHelper.CYCLE_REQUEST_CODE, i );
                                 if (!(getActivity() instanceof Main))
                                     getActivity().finish();

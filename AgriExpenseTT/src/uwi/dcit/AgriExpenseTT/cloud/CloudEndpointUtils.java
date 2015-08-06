@@ -25,33 +25,15 @@ import uwi.dcit.AgriExpenseTT.Main;
  * information.
  */
 public class CloudEndpointUtils {
-
-	/*
-	 * TODO: Need to change this to 'true' if you're running your backend
-	 * locally using the DevAppServer. See
-	 * http://developers.google.com/eclipse/docs/cloud_endpoints for more
-	 * information.
-	 */
-	protected static final boolean LOCAL_ANDROID_RUN = true;
-
-	/*
-	 * The root URL of where your DevAppServer is running (if you're running the
-	 * DevAppServer locally).
-	 */
-//	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080/";
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://192.168.1.145:8080/";
-
-	/*
-	 * The root URL of where your DevAppServer is running when it's being
-	 * accessed via the Android emulator (if you're running the DevAppServer
-	 * locally). In this case, you're running behind Android's virtual router.
-	 * See
-	 * http://developer.android.com/tools/devices/emulator.html#networkaddresses
-	 * for more information.
-	 */
-	// protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID =
-	// "http://10.0.2.2:8888";
-	protected static final String REMOTE_APP_ENGINE_SERVER_URL_FOR_ANDROID = "https://centering-dock-715.appspot.com";
+	//To ensure proper connection between backend and application, obtain the IPv4 Address
+	//and set the LOCAL_APP_ENGINE_SERVER_URL to this address.
+	public static final boolean LOCAL_ANDROID_RUN = true;
+//	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.10.139:8080";
+//	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.19.26:8080";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080";
+//	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.2.2:8080/";
+//	protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "http://10.0.2.2:8080";
+    protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://centering-dock-715.appspot.com";
 
 	/**
 	 * Updates the Google client builder to connect the appropriate server based
@@ -62,10 +44,10 @@ public class CloudEndpointUtils {
 	 * @return same Google client builder
 	 */
 	public static <B extends AbstractGoogleClient.Builder> B updateBuilder(B builder) {
-		if (!LOCAL_ANDROID_RUN) {
-			builder.setRootUrl(REMOTE_APP_ENGINE_SERVER_URL_FOR_ANDROID + "/_ah/api/");
-		}else{
+		if (LOCAL_ANDROID_RUN) {
             builder.setRootUrl(LOCAL_APP_ENGINE_SERVER_URL + "/_ah/api/");
+		}else{
+            builder.setRootUrl(REMOTE_APP_ENGINE_SERVER_URL + "/_ah/api/");
         }
 
         builder.setApplicationName("AgriExpenseAndroid");

@@ -79,7 +79,7 @@ public class TransLogEndpoint {
             for (TransLog obj : execute)
                 ;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
 
         return CollectionResponse.<TransLog> builder().setItems(execute)
@@ -131,7 +131,7 @@ public class TransLogEndpoint {
         while (i.hasNext()) {
             long id = (Long) i.next().getProperty("id");
             t = mgr.find(TransLog.class, id);
-            removeTransLog(KeyFactory.keyToString(t.getKey()), namespace);
+            removeTransLog(t.getId(), namespace);
         }
     }
 
@@ -177,13 +177,18 @@ public class TransLogEndpoint {
     // for lazy fetch.
 
     @ApiMethod(name = "getTransLog")
-    public TransLog getTransLog(@Named("id") Long id) {
+    public TransLog getTransLog(@Named ("NameSpace")String namespace, @Named("id") Long id) {
+        NamespaceManager.set(namespace);
         EntityManager mgr = getEntityManager();
         TransLog translog = null;
+        Key k = KeyFactory.createKey("TransLog",id);
         try {
-            translog = mgr.find(TransLog.class, id);
-        } finally {
-            mgr.close();
+            translog = mgr.find(TransLog.class,k);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }finally {
+//            mgr.close();
         }
         return translog;
     }
@@ -193,28 +198,38 @@ public class TransLogEndpoint {
      * already exists in the datastore, an exception is thrown. It uses HTTP
      * POST method.
      *
-     * @param translog
+     * @param transLog
      *            the entity to be inserted.
      * @return The inserted entity.
      */
     @ApiMethod(name = "insertTransLog")
-    public TransLog insertTransLog(TransLog translog) {
+    public TransLog insertTransLog(TransLog transLog ){
         System.out.println("----");
-        NamespaceManager.set(translog.getAccount());
+        NamespaceManager.set(transLog.getAccount());
         EntityManager mgr = getEntityManager();
-        Key k = KeyFactory.createKey("TransLog", translog.getId());
-        translog.setKey(k);
+        Key k = KeyFactory.createKey("TransLog", transLog.getId());
+        transLog.setKey(k);
+//        transLog.setKeyrep(Integer.toString(transLog.getId()));
+        transLog.setKeyrep(KeyFactory.keyToString(k));
         System.out.println("okieee");
         try {
-            if (containsTransLog(translog)) {
+            if (containsTransLog(transLog)) {
                 throw new EntityExistsException("Object already exists");
             }
-            System.out.println("persist");
-            mgr.persist(translog);
-        } finally {
-            mgr.close();
+            else {
+                System.out.println("persist");
+                mgr.getTransaction().begin();
+                mgr.persist(transLog);
+                mgr.getTransaction().commit();
+            }
         }
-        return translog;
+        catch(Exception e){
+            e.printStackTrace();
+        }finally {
+//            mgr.close();
+        }
+        System.out.println(">>>>>>>>>>>>>>"+transLog.getKeyrep());
+        return transLog;
     }
 
     /**
@@ -222,22 +237,36 @@ public class TransLogEndpoint {
      * not exist in the datastore, an exception is thrown. It uses HTTP PUT
      * method.
      *
-     * @param translog
+     * @param transLog
      *            the entity to be updated.
      * @return The updated entity.
      */
     @ApiMethod(name = "updateTransLog")
-    public TransLog updateTransLog(TransLog translog) {
+    public TransLog updateTransLog(TransLog transLog){
+        NamespaceManager.set(transLog.getAccount());
         EntityManager mgr = getEntityManager();
+//        Key k = KeyFactory.stringToKey(transLog.getKeyrep());
+        Key k = KeyFactory.createKey("TransLog", transLog.getId());
+        transLog.setKey(k);
+        TransLog findTransLog = mgr.find(TransLog.class,k);
+        System.out.println("TRANSACTION LOGG : "+findTransLog);
         try {
-            if (!containsTransLog(translog)) {
+            if (!containsTransLog(transLog)) {
                 throw new EntityNotFoundException("Object does not exist");
             }
-            mgr.persist(translog);
+            else{
+                if(transLog.getRowId()!=0)
+                    findTransLog.setRowId(transLog.getRowId());
+                if(transLog.getTableKind()!=null)
+                    findTransLog.setTableKind(transLog.getTableKind());
+                mgr.getTransaction().begin();
+                mgr.persist(findTransLog);
+                mgr.getTransaction().commit();
+            }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        return translog;
+        return findTransLog;
     }
 
     /**
@@ -248,14 +277,26 @@ public class TransLogEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeTransLog", httpMethod = HttpMethod.DELETE)
-    public void removeTransLog(@Named("keyrep") String keyrep,
+    public void removeTransLog(@Named("id") int id,
                                @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.stringToKey(keyrep);
+        Key k = KeyFactory.createKey("TransLog", id);
+        EntityManager mgr = getEntityManager();
+        TransLog findTransLog = mgr.find(TransLog.class,k);
         try {
-            d.delete(k);
-        } catch (Exception e) {
+//            d.delete(k);
+              if(findTransLog.getId()!=0){
+                  mgr.getTransaction().begin();
+                  mgr.remove(findTransLog);
+                  mgr.getTransaction().commit();
+              }
+            else{
+                  throw new EntityNotFoundException("Object does not exist");
+              }
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -274,13 +315,14 @@ public class TransLogEndpoint {
         } catch (Exception e) {
             contains = false;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
 
     private static EntityManager getEntityManager() {
-        return EMF.get().createEntityManager();
+        //return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

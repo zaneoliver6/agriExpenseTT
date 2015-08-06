@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,7 +40,7 @@ import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -169,7 +170,6 @@ public class FragmentNewPurchaseLast extends Fragment{
                 }
 
                 res = -1;
-
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -183,9 +183,9 @@ public class FragmentNewPurchaseLast extends Fragment{
                         if(category.equals(DHelper.cat_labour) && currC != null){
 
                             //insert purchase
-                            res = dm.insertPurchase(resId, quantifier, qty, category, cost);
+                            res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
                             int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
-                            RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
+                            ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
 
                             //use all of the qty of that purchase in the given cycle
                             dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
@@ -202,7 +202,9 @@ public class FragmentNewPurchaseLast extends Fragment{
                             cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
                             dm.updateCycle(currC,cv);
 
-                        }else{
+                        }
+                        else{
+                            Log.i("ELSE>>>","RESID:----"+resId);
                             if(category.equals(DHelper.cat_other))//if its the other category
                                 if(resId==-1)//and the resource does not exist
                                     resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, TextHelper.formatUserText(resource));//then insert it !

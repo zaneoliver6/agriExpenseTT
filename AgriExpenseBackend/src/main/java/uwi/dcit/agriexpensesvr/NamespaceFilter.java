@@ -15,7 +15,7 @@ public class NamespaceFilter implements javax.servlet.Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res,
                          FilterChain chain) throws IOException, ServletException {
-        System.out.println("mookeeenneh");
+        System.out.println("mookeeneh");
         // Make sure set() is only called if the current namespace is not
         // already set.
         if (NamespaceManager.get() == null) {

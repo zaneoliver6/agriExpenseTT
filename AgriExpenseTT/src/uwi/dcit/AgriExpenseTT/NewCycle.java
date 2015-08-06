@@ -16,7 +16,7 @@ public class NewCycle extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle);
-//		setupInitial();
+		//setupInitial();
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Cycle");
 	}
@@ -33,7 +33,6 @@ public class NewCycle extends BaseActivity {
 	private void setupInitial() {
 		Bundle arguments = new Bundle();
 		arguments.putString("type",DHelper.cat_plantingMaterial);
-		
 		ListFragment listFrag = new NewCycleLists();
 		listFrag.setArguments(arguments);
 		
@@ -48,8 +47,9 @@ public class NewCycle extends BaseActivity {
 		getMenuInflater().inflate(R.menu.new_cycle, menu);
 		return true;
 	}
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item){
         if (item.getItemId() == R.id.action_create_cycle) {
             Bundle b = new Bundle();
             b.putString("action",DHelper.cat_plantingMaterial);

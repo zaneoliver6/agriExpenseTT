@@ -8,8 +8,11 @@ import javax.persistence.Id;
 
 
 @Entity
-public class Cycle {@Id@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Key key;
+public class Cycle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Key key;
     private String Account;
     private int id;
     private int cropId;

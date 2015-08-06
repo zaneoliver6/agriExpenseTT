@@ -8,18 +8,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class UpAcc {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Key key;
     private String keyrep;
     private long lastUpdated;
-    private String acc;
+    private String account;
     private int signedIn;
     private String county;
     private String country;
     private String address;
 
+    public Account(Key key, String keyrep, long lastUpdated, String account) {
+        super();
+        this.key = key;
+        this.keyrep = keyrep;
+        this.lastUpdated = lastUpdated;
+        this.account = account;
+    }
 
     public String getCountry() {
         return country;
@@ -45,16 +52,8 @@ public class UpAcc {
         this.address = address;
     }
 
-    public UpAcc() {
+    public Account() {
         super();
-    }
-
-    public UpAcc(Key key, String keyrep, long lastUpdated, String acc) {
-        super();
-        this.key = key;
-        this.keyrep = keyrep;
-        this.lastUpdated = lastUpdated;
-        this.acc = acc;
     }
 
     public Key getKey() {
@@ -81,12 +80,12 @@ public class UpAcc {
         this.lastUpdated = lastUpdated;
     }
 
-    public String getAcc() {
-        return acc;
+    public String getAccount() {
+        return account;
     }
 
-    public void setAcc(String acc) {
-        this.acc = acc;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public int getSignedIn() {
@@ -97,4 +96,12 @@ public class UpAcc {
         this.signedIn = signedIn;
     }
 
+    @Override
+    public String toString(){
+        StringBuilder stb = new StringBuilder();
+        stb.append("Name: ").append(account);
+        if (key != null)stb.append(" Key: ").append(key);
+        if (lastUpdated != -1)stb.append("Updated Time in Millis: ").append(lastUpdated);
+        return stb.toString();
+    }
 }

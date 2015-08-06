@@ -12,6 +12,7 @@ public class CycleResourceContract {
 			+CycleResourceEntry.CYCLE_RESOURCE_CYCLEID + INT_TYPE + COMMA_SEP
 			+CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID + INT_TYPE + COMMA_SEP
 			+CycleResourceEntry.CYCLE_RESOURCE_TYPE + TEXT_TYPE + COMMA_SEP
+//			+CycleResourceEntry.CYCLE_NAME + TEXT_TYPE + COMMA_SEP
 			+CycleResourceEntry.CYCLE_RESOURCE_QTY + INT_TYPE + COMMA_SEP
 			+CycleResourceEntry.CYCLE_RESOURCE_USECOST + " real" + COMMA_SEP
 			+CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER + TEXT_TYPE + COMMA_SEP
@@ -25,6 +26,7 @@ public class CycleResourceContract {
 	
 	public static abstract class CycleResourceEntry implements BaseColumns{
 		public static final String TABLE_NAME="cycleResources";
+//		public static final String CYCLE_NAME="cycleName";
 		public static final String CYCLE_RESOURCE_PURCHASE_ID="pId";
 		public static final String CYCLE_RESOURCE_TYPE="type";
 		public static final String CYCLE_RESOURCE_QTY="qty";

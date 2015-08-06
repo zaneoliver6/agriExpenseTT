@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 
@@ -43,4 +42,11 @@ public class Backup extends BaseActivity {
 		getMenuInflater().inflate(R.menu.backup_data, menu);
 		return true;
 	}
+
+//	@Override
+//	public void onPause(){
+//		super.onPause();
+//		Log.i("myTest!!!!!!!!!!!!","PAUSED CALLED!");
+//		signInManager.signIn(country,county);
+//	}
 }

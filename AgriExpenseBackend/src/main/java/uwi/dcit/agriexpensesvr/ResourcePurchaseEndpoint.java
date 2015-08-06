@@ -21,20 +21,21 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.annotation.Resource;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
-@Api(name = "rPurchaseApi",
+@Api(name = "resourcePurchaseApi",
         version = "v1",
         namespace = @ApiNamespace(
                 ownerDomain = "agriexpensesvr.dcit.uwi",
                 ownerName = "agriexpensesvr.dcit.uwi",
                 packagePath = ""
         ))
-public class RPurchaseEndpoint {
+public class ResourcePurchaseEndpoint {
 
     /**
      * This method lists all the entities inserted in datastore. It uses HTTP
@@ -45,17 +46,17 @@ public class RPurchaseEndpoint {
      */
     @SuppressWarnings({ "unchecked", "unused" })
     @ApiMethod(name = "listRPurchase")
-    public CollectionResponse<RPurchase> listRPurchase(
+    public CollectionResponse<ResourcePurchase> listRPurchase(
             @Nullable @Named("cursor") String cursorString,
             @Nullable @Named("limit") Integer limit) {
 
         EntityManager mgr = null;
         Cursor cursor = null;
-        List<RPurchase> execute = null;
+        List<ResourcePurchase> execute = null;
 
         try {
             mgr = getEntityManager();
-            Query query = mgr.createQuery("select from RPurchase as RPurchase");
+            Query query = mgr.createQuery("select from ResourcePurchase as ResourcePurchase");
             if (cursorString != null && cursorString != "") {
                 cursor = Cursor.fromWebSafeString(cursorString);
                 query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
@@ -66,7 +67,7 @@ public class RPurchaseEndpoint {
                 query.setMaxResults(limit);
             }
 
-            execute = (List<RPurchase>) query.getResultList();
+            execute = (List<ResourcePurchase>) query.getResultList();
             cursor = JPACursorHelper.getCursor(execute);
             if (cursor != null)
                 cursorString = cursor.toWebSafeString();
@@ -74,22 +75,22 @@ public class RPurchaseEndpoint {
             // Tight loop for fetching all entities from datastore and
             // accomodate
             // for lazy fetch.
-            for (RPurchase obj : execute)
+            for (ResourcePurchase obj : execute)
                 ;
         } finally {
-            mgr.close();
+//            mgr.close();
         }
 
-        return CollectionResponse.<RPurchase> builder().setItems(execute)
+        return CollectionResponse.<ResourcePurchase> builder().setItems(execute)
                 .setNextPageToken(cursorString).build();
     }
 
     @SuppressWarnings("unchecked")
     @ApiMethod(name = "fetchAllPurchases")
-    public List<RPurchase> fetchAllPurchases() {
+    public List<ResourcePurchase> fetchAllPurchases() {
 
         EntityManager mgr = null;
-        List<RPurchase> execute = null;
+        List<ResourcePurchase> execute = null;
         Query query = null;
 
 		/* For namespace list fetching */
@@ -107,17 +108,17 @@ public class RPurchaseEndpoint {
             }
         }
         mgr = getEntityManager();
-        query = mgr.createQuery("SELECT FROM RPurchase AS RPurchase");
+        query = mgr.createQuery("SELECT FROM ResourcePurchase AS ResourcePurchase");
 
         // Set each namespace then return all results under that given namespace
 
-        List<RPurchase> purchaseList = new ArrayList<RPurchase>();
+        List<ResourcePurchase> purchaseList = new ArrayList<ResourcePurchase>();
 
         for (String i : results) {
 
             NamespaceManager.set(i);
-            execute = (List<RPurchase>) query.getResultList();
-            for (RPurchase obj : execute) {
+            execute = (List<ResourcePurchase>) query.getResultList();
+            for (ResourcePurchase obj : execute) {
                 purchaseList.add(obj);
             }
         }
@@ -125,23 +126,23 @@ public class RPurchaseEndpoint {
     }
 
     @ApiMethod(name = "getAllPurchases")
-    public List<RPurchase> getAllPurchases(@Named("namespace") String namespace) {
+    public List<ResourcePurchase> getAllPurchases(@Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
         DatastoreService datastore = DatastoreServiceFactory
                 .getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
-                "RPurchase");
+                "ResourcePurchase");
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
         Iterator<Entity> i = results.iterator();
-        List<RPurchase> pL = new ArrayList<RPurchase>();
+        List<ResourcePurchase> pL = new ArrayList<ResourcePurchase>();
         System.out.println("record Holder:------------------");
         while (i.hasNext()) {
-            System.out.println("record------------------");
+            System.out.println("record-------------  -----");
             Entity e = i.next();
             System.out.println(e.toString());
-            RPurchase p = new RPurchase();
+            ResourcePurchase p = new ResourcePurchase();
 
             p.setpId(Integer.parseInt("" + e.getProperty("pId")));
             p.setType((String) e.getProperty("type"));
@@ -151,6 +152,7 @@ public class RPurchaseEndpoint {
             p.setCost((Double) e.getProperty("cost"));
             p.setQtyRemaining((Double) e.getProperty("qtyRemaining"));
             p.setKeyrep((String) e.getProperty("keyrep"));
+            p.setPurchaseDate((long) e.getProperty("purchaseDate"));
             pL.add(p);
         }
         return pL;
@@ -162,15 +164,15 @@ public class RPurchaseEndpoint {
         DatastoreService datastore = DatastoreServiceFactory
                 .getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
-                "RPurchase");
+                "ResourcePurchase");
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
         Iterator<Entity> i = results.iterator();
 
         while (i.hasNext()) {
-            String keyrep = (String) i.next().getProperty("keyrep");
-            removeRPurchase(keyrep, namespace);
+            String key = (String) i.next().getProperty("keyrep");
+            removeRPurchase(key, namespace);
         }
     }
 
@@ -183,16 +185,16 @@ public class RPurchaseEndpoint {
      * @return The entity with primary key id.
      */
     @ApiMethod(name = "getRPurchase")
-    public RPurchase getRPurchase(@Named("namespace") String namespace,
+    public ResourcePurchase getRPurchase(@Named("namespace") String namespace,
                                   @Named("keyrep") String keyrep) {
         NamespaceManager.set(namespace);
         Key k = KeyFactory.stringToKey(keyrep);
         EntityManager mgr = getEntityManager();
-        RPurchase rpurchase = null;
+        ResourcePurchase rpurchase = null;
         try {
-            rpurchase = mgr.find(RPurchase.class, k);
+            rpurchase = mgr.find(ResourcePurchase.class, k);
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         System.out.println("---000---");
         return rpurchase;
@@ -216,6 +218,33 @@ public class RPurchaseEndpoint {
     }
 
     /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "purchaseWithID")
+    public ResourcePurchase purchaseWithID(@Named("namespace") String namespace,
+                                         @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        Key k = KeyFactory.createKey("ResourcePurchase",id);
+        String keyString = KeyFactory.keyToString(k);
+        EntityManager mgr = getEntityManager();
+        ResourcePurchase rpurchase = null;
+        try {
+            rpurchase = mgr.find(ResourcePurchase.class, keyString);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("---000---_");
+        return rpurchase;
+    }
+
+
+    /**
      * This inserts a new entity into App Engine datastore. If the entity
      * already exists in the datastore, an exception is thrown. It uses HTTP
      * POST method.
@@ -225,10 +254,10 @@ public class RPurchaseEndpoint {
      * @return The inserted entity.
      */
     @ApiMethod(name = "insertRPurchase")
-    public RPurchase insertRPurchase(RPurchase rpurchase) {
+    public ResourcePurchase insertRPurchase(ResourcePurchase rpurchase) {
         // TODO
         NamespaceManager.set(rpurchase.getAccount());
-        Key k = KeyFactory.createKey("RPurchase", rpurchase.getpId());
+        Key k = KeyFactory.createKey("ResourcePurchase", rpurchase.getpId());
         rpurchase.setKey(k);
         rpurchase.setKeyrep(KeyFactory.keyToString(k));
         EntityManager mgr = getEntityManager();
@@ -237,12 +266,16 @@ public class RPurchaseEndpoint {
             if (containsRPurchase(rpurchase)) {
                 throw new EntityExistsException("Object already exists");
             }
-            mgr.persist(rpurchase);
+            else{
+                rpurchase.setKeyrep(KeyFactory.keyToString(k));
+                rpurchase.setAccount(KeyFactory.keyToString(k));
+                mgr.getTransaction().begin();
+                mgr.persist(rpurchase);
+                mgr.getTransaction().commit();
+            }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        rpurchase.setKeyrep(KeyFactory.keyToString(k));
-        rpurchase.setAccount(KeyFactory.keyToString(k));
         return rpurchase;
     }
 
@@ -251,25 +284,36 @@ public class RPurchaseEndpoint {
      * not exist in the datastore, an exception is thrown. It uses HTTP PUT
      * method.
      *
-     * @param rpurchase
+     * @param-rpurchase
      *            the entity to be updated.
      * @return The updated entity.
      */
     @ApiMethod(name = "updateRPurchase")
-    public RPurchase updateRPurchase(RPurchase rpurchase) {
-        NamespaceManager.set(rpurchase.getAccount());
-        Key k = KeyFactory.stringToKey(rpurchase.getKeyrep());
-        rpurchase.setKey(k);
+    public ResourcePurchase updateRPurchase(ResourcePurchase rPurchase) {
+        NamespaceManager.set(rPurchase.getAccount());
+        Key k = KeyFactory.stringToKey(rPurchase.getKeyrep());
+        rPurchase.setKey(k);
+        ResourcePurchase currentRPurchase = getRPurchase(rPurchase.getAccount(),rPurchase.getKeyrep());
         EntityManager mgr = getEntityManager();
         try {
-            if (!containsRPurchase(rpurchase)) {
+            if (!containsRPurchase(rPurchase)) {
                 throw new EntityNotFoundException("Object does not exist");
             }
-            mgr.persist(rpurchase);
+            else{
+                if(rPurchase.getQtyRemaining()!=0)
+                    currentRPurchase.setQtyRemaining(rPurchase.getQtyRemaining());
+                if(rPurchase.getQuantifier()!=null)
+                    currentRPurchase.setQuantifier(rPurchase.getQuantifier());
+                if(rPurchase.getType()!=null)
+                    currentRPurchase.setType(rPurchase.getType());
+                mgr.getTransaction().begin();
+                mgr.persist(currentRPurchase);
+                mgr.getTransaction().commit();
+            }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        return rpurchase;
+        return currentRPurchase;
     }
 
     /**
@@ -280,51 +324,65 @@ public class RPurchaseEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeRPurchase", httpMethod = HttpMethod.DELETE)
-    public void removeRPurchase(@Named("keyrep") String keyrep,
+    public void removeRPurchase(@Named("keyRep") String keyRep,
                                 @Named("namespace") String namespace) {
         System.out.println("1111111111111");
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
-        try {
-            d.delete(k);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
-    public void deletePurchase(@Named("keyrep") String keyrep,
-                               @Named("namespace") String namespace) {
-        System.out.println("1111111111111");
-        NamespaceManager.set(namespace);
-        Key k = KeyFactory.stringToKey(keyrep);
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.createKey("ResourcePurchase",id);//        try {
+//            d.delete(k);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         EntityManager mgr = getEntityManager();
-        RPurchase purchase = mgr.find(RPurchase.class, k);
-        try {
-            mgr.remove(purchase);
-        } catch (Exception e) {
-            e.printStackTrace();
+        ResourcePurchase rpFind = mgr.find(ResourcePurchase.class,KeyFactory.stringToKey(keyRep));
+        if(rpFind!=null){
+            try {
+                mgr.getTransaction().begin();
+                mgr.remove(rpFind);
+                mgr.getTransaction().commit();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            System.out.println("Resource Purchase Does Not Exist! ");
         }
     }
 
-    private boolean containsRPurchase(RPurchase rpurchase) {
+//    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
+//    public void deletePurchase(@Named("keyrep") String keyrep,
+//                               @Named("namespace") String namespace) {
+//        System.out.println("1111111111111");
+//        NamespaceManager.set(namespace);
+//        Key k = KeyFactory.stringToKey(keyrep);
+//        EntityManager mgr = getEntityManager();
+//        ResourcePurchase purchase = mgr.find(ResourcePurchase.class, k);
+//        try {
+//            mgr.remove(purchase);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    private boolean containsRPurchase(ResourcePurchase rpurchase) {
         NamespaceManager.set(rpurchase.getAccount());
         EntityManager mgr = getEntityManager();
         boolean contains = true;
         try {
-            RPurchase item = mgr.find(RPurchase.class, rpurchase.getKey());
+            ResourcePurchase item = mgr.find(ResourcePurchase.class, rpurchase.getKey());
             if (item == null) {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
 
     private static EntityManager getEntityManager() {
-        return EMF.get().createEntityManager();
+        //return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
-
 }

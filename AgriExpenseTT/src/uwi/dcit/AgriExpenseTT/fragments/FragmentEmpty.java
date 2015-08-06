@@ -106,7 +106,7 @@ public class FragmentEmpty extends Fragment{
                 @Override
                  public void onClick(View v) {
                     Log.d("Empty Fragment"," creating a new purchase ");
-                    createPurchase();
+//                    createPurchase();
                 }
             });
         }else if(type.equals("cycle")){
@@ -143,11 +143,9 @@ public class FragmentEmpty extends Fragment{
 
     public void createCycle(){
         getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
+        getActivity().finish();
     }
     public void createPurchase(){
         getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewPurchase.class), DHelper.PURCHASE_REQUEST_CODE);
     }
-
-
 }
-

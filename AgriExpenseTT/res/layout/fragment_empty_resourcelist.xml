@@ -6,11 +6,33 @@
     android:weightSum="1">
 
 
+    <TextView
+        android:layout_width="31dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.23" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"></TableLayout>
+
+    <TextView
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:text="Please Select The Add Button Above To Insert Resources"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.03"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_helpscreen" />
+
     <ImageView
         android:id="@+id/img_empty_frag"
         android:layout_gravity="center"
         android:src="@drawable/icon_add_md"
-        android:layout_width="wrap_content"
+        android:layout_width="71dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />
 

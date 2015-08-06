@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +29,7 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -55,8 +55,8 @@ public class FragmentCycleUseCategory extends Fragment {
 		setupClick();
 
         //set color of action bar
-        if (this.getActivity() instanceof ActionBarActivity){
-            ((ActionBarActivity)this.getActivity())
+        if (this.getActivity() instanceof AppCompatActivity){
+            ((AppCompatActivity)this.getActivity())
                     .getSupportActionBar()
                     .setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
         }
@@ -120,8 +120,8 @@ public class FragmentCycleUseCategory extends Fragment {
 		SQLiteDatabase db=dbh.getWritableDatabase();
 
 		//getting aggregate and complex data 
-		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
+		ArrayList<LocalCycleUse> useList = new ArrayList<>();
+		DbQuery.getCycleUse(db, dbh, currCycle.getId(),useList,category);//fills list with currCycle uses of type category
 
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> names = null;
@@ -137,8 +137,8 @@ public class FragmentCycleUseCategory extends Fragment {
 				LocalCycleUse lcu = itr.next();
                 Log.d(TAG, "Processing: " + lcu.toString());
 				catTotal += lcu.getUseCost();//stores the total amount of money spent on plantMaterials
-						
-				RPurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
+
+                ResourcePurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
 				String name = DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
 						
 				//calculates the total spent on each plantMaterial
@@ -150,6 +150,7 @@ public class FragmentCycleUseCategory extends Fragment {
 				while(i.hasNext()){//goes through the names of the plantMaterials
 					if(name.equals(i.next())){
 						totals[pos] += lcu.getUseCost();
+						Log.i("Totalzzz","------"+totals[pos]);
 						found=true;
 					}else{
 						pos++;

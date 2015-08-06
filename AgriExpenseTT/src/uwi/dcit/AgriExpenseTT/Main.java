@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import java.util.Timer;
+
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -21,6 +23,8 @@ public class Main extends BaseActivity{
     private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
     public final static String TAG = "Main";
+    public String country="";
+    public String county="";
 
     private String focus = "cycle";
 
@@ -149,10 +153,10 @@ public class Main extends BaseActivity{
         switch (requestCode){
             case RequestCode_backup:
                 if (resultCode == 1) {
-                    String country=data.getStringExtra("country");
-                    String county=data.getStringExtra("county");
+                    country=data.getStringExtra("country");
+                    county=data.getStringExtra("county");
                     Log.d("Main Activity","returned with "+country+" "+county);
-                    signInManager.signIn();
+                    signInManager.signIn(country,county);
                 }
                 break;
             case DHelper.CYCLE_REQUEST_CODE:
@@ -164,5 +168,13 @@ public class Main extends BaseActivity{
                 buildScreen();
                 break;
         }
+    }
+
+    protected String onGetResult(int requestCode, int resultCode, Intent data){
+        switch(requestCode){
+            case 1:
+                return country;
+        }
+        return null;
     }
 }

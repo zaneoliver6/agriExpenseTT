@@ -24,7 +24,7 @@ import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
-import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
+//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbHelper extends SQLiteOpenHelper{
 
@@ -244,10 +244,10 @@ public class DbHelper extends SQLiteOpenHelper{
 	
 	private void populate(SQLiteDatabase db, TransactionLog tL) {
 		//create user Account
-		UpAcc acc = new UpAcc();
-		acc.setSignedIn(0);
-		acc.setLastUpdated(System.currentTimeMillis() / 1000L);
-		DbQuery.insertUpAcc(db, acc);
+//		UpAcc acc = new UpAcc();
+//		acc.setSignedIn(0);
+//		acc.setLastUpdated(System.currentTimeMillis() / 1000L);
+//		DbQuery.insertAccountTask(db, acc);
 		
 		insertDefaultCrops(db);
 		insertDefaultFertilizers(db);
