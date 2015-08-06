@@ -34,7 +34,7 @@ public class NewPurchase extends BaseActivity {
         setupInitial();
     }
 	
-	private void setupInitial() {
+	private void setupInitial() {//to make the bundle for the add purchase button use the category argument
 		Bundle arguments = new Bundle();
 		arguments.putString("type","category");
 		

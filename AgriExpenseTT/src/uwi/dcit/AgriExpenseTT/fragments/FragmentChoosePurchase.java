@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
+import uwi.dcit.AgriExpenseTT.NewCycle;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -50,9 +53,10 @@ public class FragmentChoosePurchase extends ListFragment {
 	String type = null;
 	int cycleId;
 	LocalCycle curr = null;
-	
+	View view;
 	final int req_edit = 1;
-	
+
+
 	@Override
 	public void onActivityCreated(Bundle savedState){
 		super.onActivityCreated(savedState);
@@ -66,7 +70,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
 		db	= dbh.getWritableDatabase();
 		dm	= new DataManager(getActivity(), db, dbh);
-		
+
         if (getArguments() != null){
             curr = getArguments().getParcelable("cycle");
             type = getArguments().getString("det");
@@ -76,13 +80,18 @@ public class FragmentChoosePurchase extends ListFragment {
 		
 		if(curr != null)cycleId = curr.getId();
 
-		
+
 		populateList();
 		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
 	}
-	
+
+	private void createNewPurchase(){
+			Intent intent = new Intent(getActivity().getApplicationContext(), NewPurchase.class);
+			startActivity(intent);
+	}
+
 	private void populateList() {
 		pList	= new ArrayList<>();
 		
@@ -91,28 +100,37 @@ public class FragmentChoosePurchase extends ListFragment {
 		else
 			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
 	
-		Collections.sort(pList, new Comparator<LocalResourcePurchase>(){
+		Collections.sort(pList, new Comparator<LocalResourcePurchase>() {
 			@Override
 			public int compare(LocalResourcePurchase item1, LocalResourcePurchase item2) {
 				return item1.getType().compareTo(item2.getType());
-			}			
+			}
 		});
 	}
-		
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		//returns the inflated layout which contains the list view
-		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+		view = inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+
+		final Button button = (Button) view.findViewById(R.id.fragment_choose_purchase_button);
+
+		button.setText("Add Purchase");
+		button.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				createNewPurchase();
+			}
+		});
+		return view;
 	}
-		
+
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
 		super.onCreateContextMenu(menu, v, menuInfo);
-		
+
 		MenuInflater inflater = this.getActivity().getMenuInflater();
 		inflater.inflate(R.menu.resource_purchase_context_menu, menu);
 	}
-	
+
 	/**
 	 * Context menu refers to the menu that will be brought up on long press
 	 */
@@ -130,7 +148,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		}
 		return false;
 	}
-	 
+
 	 @Override
 	 public void onListItemClick(ListView l, View v, int position, long id) {
 		 if((type != null) && (type.equals("edit"))){				//when called by edit data

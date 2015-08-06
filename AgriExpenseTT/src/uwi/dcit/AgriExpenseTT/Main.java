@@ -137,14 +137,8 @@ public class Main extends BaseActivity{
     }
 
     public void AddNewCycle (View view){ //the Add Cycle Button calls this function
-        if(focus == "cycle") {
             Intent i = new Intent(this, NewCycle.class);
             startActivity(i);
-        }
-        if(focus == "purchase"){
-            Intent i = new Intent(this, NewPurchase.class);
-            startActivity(i);
-            }
     }
 
 

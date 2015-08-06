@@ -29,8 +29,8 @@ public class FragmentEmpty extends Fragment{
 		
 		view = inflater.inflate(R.layout.fragment_empty_resourcelist, container, false);
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
-		setupButton(type);
-
+        final Button button = (Button) view.findViewById(R.id.AddResButton);
+        setupButton(type);
 
         switch (type){
             case "purchase":
@@ -48,25 +48,34 @@ public class FragmentEmpty extends Fragment{
         if(type.equals("purchase")){ // Setting up the text for the page depending on the type
 			if(category == null){
 				desc.setText("Tap here to create a new purchase");
+                button.setText("Add Purchase");
 			}else{
 				desc.setText("Sorry you have not purchased any "+category+" as yet");
 			}
 		}else if(type.equals("cycle")){
 			desc.setText("Tap here to create a new cycle");
+            button.setText("Add Cycle");
 		}else if(type.equals("purchase")){
 			if(category == null){
 				desc.setText("Sorry you haven't purchased any of this to use as yet");
+                button.setText("Add Purchase");
 			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
 				desc.setText("Sorry you haven't purhased any "+category+", so there's nothing to use");
+                button.setText("Add Purchase");
 			}
 		}else if(type.equals("select")){
             desc.setText("Select something to begin operations");
+            button.setText("Add");
         }else if (type.equals("labour")){
             desc.setText("Tap here to add a new labourer");
+            button.setText("Add Labour");
             this.isLabour = true;
+        }else{
+            button.setText("Add Purchase");
         }
 
-        final Button button = (Button) view.findViewById(R.id.AddResButton);
+
+
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 addResource();

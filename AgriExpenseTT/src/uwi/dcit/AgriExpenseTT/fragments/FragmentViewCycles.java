@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
+import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -47,6 +49,7 @@ public class FragmentViewCycles extends ListFragment{
 	DbHelper dbh;
 	final int req_edit=1;
 //	final String className = "ViewCycles";
+	View view;
 
     private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
@@ -92,9 +95,24 @@ public class FragmentViewCycles extends ListFragment{
 		});
 	}
 
+	private void createNewCycle(){
+		Intent intent = new Intent(getActivity().getApplicationContext(), NewCycle.class);
+		startActivity(intent);
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+        view = inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+
+		final Button button = (Button) view.findViewById(R.id.fragment_choose_purchase_button);
+
+		button.setText("Add Cycle");
+		button.setOnClickListener(new View.OnClickListener(){
+			public void onClick(View v){
+				createNewCycle();
+			}
+		});
+		return view;
 	}
 	
 	@Override
