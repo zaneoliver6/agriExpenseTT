@@ -5,22 +5,44 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
+
+import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
 public class ReminderBroadcaster extends BroadcastReceiver {
-
+	SQLiteDatabase db;
+	DbHelper dbh;
 	public static String NOTIFICATION_ID = "agriexpense_id";
     public static String NOTIFICATION = "agriexpesne";
     
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d("AgriExpense- Reminder", "Received Broadcast");
-		
-		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-		 
-		Notification notification = intent.getParcelableExtra(NOTIFICATION);
-        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-        notificationManager.notify(id, notification);
+		Log.i("AgriExpense- Reminder", "Received Broadcast");
+		dbh = new DbHelper(context);
+		db = dbh.getWritableDatabase();
+
+//		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//		Notification notification = intent.getParcelableExtra(NOTIFICATION);
+//        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+//        notificationManager.notify(id, notification);
+		if(intent.getAction().equals("android.CUSTOM_INTENT")){
+			Account acc = DbQuery.getUpAcc(db);
+			long time= System.currentTimeMillis();
+			//Setting reminder to happen if account doesn't get updated in an hour(Using an hour for testing purposes!)!
+			if(acc!=null && time-acc.getLastUpdated()>600) {
+				NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+				mBuilder.setSmallIcon(R.drawable.logo_agrinet);
+				mBuilder.setContentTitle("Agri-Expense Alert!");
+				mBuilder.setContentText("Hi, Please Don't Forget to Enter Your Data!");
+				NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+				mNotificationManager.notify(0, mBuilder.build());
+			}
+		}
 	}
 
 }
