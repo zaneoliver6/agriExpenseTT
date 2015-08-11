@@ -10,12 +10,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
+import java.sql.Time;
 import java.util.Timer;
 
+import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
 
 public class Main extends BaseActivity{
@@ -39,6 +43,7 @@ public class Main extends BaseActivity{
 
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
+        broadcastIntent();
     }
 
     @Override
@@ -176,5 +181,11 @@ public class Main extends BaseActivity{
                 return country;
         }
         return null;
+    }
+
+    public void broadcastIntent(){
+        Intent intent = new Intent();
+        intent.setAction("android.CUSTOM_INTENT");
+        sendBroadcast(intent);
     }
 }
