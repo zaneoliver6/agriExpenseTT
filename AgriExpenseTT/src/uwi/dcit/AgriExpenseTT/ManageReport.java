@@ -28,7 +28,7 @@ public class ManageReport extends BaseActivity {
 
         getSupportFragmentManager()
 			.beginTransaction()
-			.add(R.id.reportListContainer, fragment)
+			//.add(R.id.reportListContainer ,fragment)
 			.commit();
 	}
 
@@ -43,6 +43,5 @@ public class ManageReport extends BaseActivity {
 		//TODO open time dialog to set time frame
 		ReportHelper cvh = new ReportHelper(this);
     	cvh.createReport();
-		
 	}
 }

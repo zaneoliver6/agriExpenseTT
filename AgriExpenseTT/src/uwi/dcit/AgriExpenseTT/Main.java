@@ -1,7 +1,11 @@
 package uwi.dcit.AgriExpenseTT;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,16 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
-import java.sql.Time;
-import java.util.Timer;
+import java.util.Calendar;
 
-import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
 
 public class Main extends BaseActivity{
@@ -29,8 +29,13 @@ public class Main extends BaseActivity{
     public final static String TAG = "Main";
     public String country="";
     public String county="";
-
     private String focus = "cycle";
+
+
+    private SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyAlarmPrefs" ;
+    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
+    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,13 @@ public class Main extends BaseActivity{
 
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
-        broadcastIntent();
+        //broadcastIntent();
+        String weekDay="";
+        int hour=0;
+        preferences(weekDay,hour);
+        runAlarm(hour,59,weekDay);
+        //runAlarm(1,22,"D");
+
     }
 
     @Override
@@ -183,9 +194,49 @@ public class Main extends BaseActivity{
         return null;
     }
 
-    public void broadcastIntent(){
-        Intent intent = new Intent();
-        intent.setAction("android.CUSTOM_INTENT");
-        sendBroadcast(intent);
+    public void preferences(String weekDay, int hour){
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
+        hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
+        //if(weekDay.equals("DEFAULT")&& hour==99){
+            //GET WEEK/DAY VALUE AND HOUR VALUE
+            Log.i("NEED TO SETUP ACTIVITY", " SETUP ACTIVITY PLEASE -- USER INFO!");
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            hour=16;
+            weekDay="D";
+            editor.putString(MyAlarmPreferencesWeekDay, weekDay);
+            editor.putInt(MyAlarmPreferencesHour, hour);
+            editor.commit();
+
+            weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
+            hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
+            Log.i("SET",""+weekDay+""+hour);
+        //}
+    }
+
+    public void runAlarm(int hour, int minute, String type){
+        Context ctx = this.getApplicationContext();
+        int timeValue;
+        if(type.toUpperCase().equals("D"))
+            timeValue=3600;
+        else
+            timeValue=25200;
+        AlarmManager alarmMgr = (AlarmManager)ctx.getSystemService(Context.ALARM_SERVICE);
+        if(alarmMgr==null){
+            Intent intent = new Intent();
+            intent.setAction("android.intent.CustomAlarm");
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+            //Set the alarm time.
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+            calendar.set(Calendar.MINUTE, minute);
+            // setRepeating() lets you specify a precise custom interval--in this case
+            alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+                    1000 * 60 * timeValue, alarmIntent);
+        }
+        else{
+            Log.i("Alarm here already!","Hello");
+        }
     }
 }
