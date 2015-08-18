@@ -140,7 +140,7 @@ public class DbQuery {
 //		return rowId;
 //	}
 
-    public static int insertCycle(SQLiteDatabase db, DbHelper dbh, int cropId, String name, String landType, double landQty, TransactionLog tL, long time) {
+    public static int insertCycle(SQLiteDatabase db, DbHelper dbh, int cropId, String name, String landType, double landQty, TransactionLog tL, long time, String closed) {
         ContentValues cv=new ContentValues();
         cv.put(CycleEntry.CROPCYCLE_CROPID, cropId);
         cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
@@ -155,6 +155,7 @@ public class DbQuery {
         cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE,"Lb");
         cv.put(CycleEntry.CROPCYCLE_RESOURCE, DbQuery.findResourceName(db, dbh, cropId));
         cv.put(CycleEntry.CROPCYCLE_NAME, name);
+		cv.put(CycleEntry.CROPCYCLE_CLOSED, closed);
         db.insert(CycleEntry.TABLE_NAME, null,cv);
         int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
         tL.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
@@ -263,7 +264,7 @@ public class DbQuery {
 			n.setLandQty(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_LAND_AMOUNT)));
 			n.setTime(cursor.getLong(cursor.getColumnIndex(CycleEntry.CROPCYCLE_DATE)));
 			n.setTotalSpent(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_TOTALSPENT)));
-			
+			n.setClosed(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_CLOSED)));
 			n.setHarvestAmt(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_HARVEST_AMT)));
 			n.setHarvestType(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_HARVEST_TYPE)));
 			n.setCostPer(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_COSTPER)));
@@ -551,6 +552,7 @@ public class DbQuery {
 		c.setCostPer(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_COSTPER)));
 		c.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
 		c.setStartDate(cursor.getLong((cursor.getColumnIndex(CycleEntry.CROPCYCLE_DATE))));
+		c.setClosed(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_CLOSED)));
         cursor.close();
 		return c;
 	}
@@ -649,6 +651,7 @@ public class DbQuery {
 		acc.setLastUpdated(cursor.getLong(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED)));
 		acc.setSignedIn(cursor.getInt(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN)));
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
+		acc.setCountry(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTRY)));
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
 		Log.i("findAccountTest", "Name of Account! ->>"+acc.getAccount());
         cursor.close();

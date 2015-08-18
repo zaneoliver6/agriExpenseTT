@@ -37,6 +37,7 @@
     <string name="menu_action_view_res">View Resource</string>
     <string name="menu_action_edit_crop">Edit Crop Cycle</string>
     <string name="menu_action_delete_crop">Delete Crop Cycle</string>
+    <string name="menu_action_close_crop">Close Crop Cycle</string>
     <string name="menu_action_view_crop">View Crop Cycle</string>
     <string name="menu_action_edit_pur">Edit Purchase</string>
     <string name="menu_action_delete_pur">Delete Purchase</string>

@@ -186,6 +186,7 @@ public class FragmentPurchaseUse extends Fragment {
 					p.setQtyRemaining(rem);
 					ContentValues cv=new ContentValues();
 					cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
+					Log.i("NEW QUANTITY",">>>"+p.getQtyRemaining());
 					dm.updatePurchase(p,cv);
 
 					//updating cycle

@@ -278,7 +278,8 @@ public class CloudInterface {
 				try{
 					Log.i("INSERTING!","HEREe");
 					c=endpoint.insertCycleUse(c).execute();
-				}catch(Exception e){
+				}
+				catch(Exception e){
 					return null;
 				}
 				if(c!=null){

@@ -26,6 +26,7 @@ public class Cycle {
     private String cropName;
     private long startDate;
     private String county;
+    private String closed;
 
     public double getHarvestAmt() {
         return harvestAmt;
@@ -60,7 +61,7 @@ public class Cycle {
     public Cycle() {
         super();
     }
-    public Cycle(int cropId, String landType, double landQty, String cropName, long startDate, String county) {
+    public Cycle(int cropId, String landType, double landQty, String cropName, long startDate, String county, String closed) {
         super();
         this.cropId = cropId;
         this.landType = landType;
@@ -68,6 +69,7 @@ public class Cycle {
         this.cropName = cropName;
         this.startDate = startDate;
         this.county = county;
+        this.closed=closed;
     }
 
     public int getId() {
@@ -127,10 +129,16 @@ public class Cycle {
     public void setCounty(String county) {
         this.county = county;
     }
+    public void setClosed(String closed){
+        this.closed=closed;
+    }
+    public String getClosed(){
+        return closed;
+    }
 
     @Override
     public String toString() {
-        return "cycleId:" + id + " cropId:" + cropId + " landType:" + landType + " landQty" + landQty + " cropName" + cropName + "";
+        return "cycleId:" + id + " cropId:" + cropId + " landType:" + landType + " landQty" + landQty + " cropName" + cropName + "closed"+closed;
     }
 
 }

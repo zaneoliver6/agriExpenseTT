@@ -420,6 +420,7 @@ public class TransactionLog {
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, c.getHarvestType());
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_CLOSED, c.getClosed());
 				db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
 //				insertTransLog(CycleContract.CycleEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 				Log.i("AT ROW ID","ROW ID ::"+t.getRowId()+"ID::"+t.getId());
@@ -476,6 +477,7 @@ public class TransactionLog {
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, c.getHarvestType());
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, c.getHarvestAmt());
 				cv.put(CycleContract.CycleEntry.CROPCYCLE_COSTPER, c.getCostPer());
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_CLOSED, c.getClosed());
 				db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID + "=" + t.getRowId(), null);
 			}
 			insertTransLog(CycleContract.CycleEntry.TABLE_NAME,t.getRowId(),TransactionLog.TL_UPDATE );

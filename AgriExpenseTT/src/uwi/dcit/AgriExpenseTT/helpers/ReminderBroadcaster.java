@@ -9,10 +9,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-
 import java.util.Calendar;
-
-import uwi.dcit.AgriExpenseTT.BaseActivity;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 
@@ -36,10 +33,10 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 		dbh = new DbHelper(context);
 		db = dbh.getWritableDatabase();
 
-//		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
-//        notificationManager.notify(id, notification);
+		//		NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		//        int id = intent.getIntExtra(NOTIFICATION_ID, 0);
+		//        notificationManager.notify(id, notification);
+
 		if(intent.getAction().equals("android.intent.CustomAlarm")){
 			Intent resultIntent = new Intent(context, Main.class);
 			// Because clicking the notification opens a new ("special") activity, there's
@@ -57,49 +54,35 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 
 		if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 			Log.i("HELLO","WE REBOOTED!");
-
 			alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-			if(alarmMgr!=null) {
-				int hour=0;
-				String weekDay=null;
-
-
-				sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-				weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
-				hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
-				if(weekDay.equals("DEFAULT")&& hour==99){
-					//GET WEEK/DAY VALUE AND HOUR VALUE
-					Log.i("NEED TO SETUP ACTIVITY", " SETUP ACTIVITY PLEASE -- USER INFO!");
-				}
-
-				else {
-					int timeValue;
-					if (weekDay.toUpperCase().equals("D"))
-						timeValue = 3600;
-					else
-						timeValue = 25200;
-
-					intent = new Intent();
-					intent.setAction("android.intent.CustomAlarm");
-					alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-					// Set the alarm to start at 8:30 a.m.
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTimeInMillis(System.currentTimeMillis());
-					calendar.set(Calendar.HOUR_OF_DAY, hour);
-					//NOTE MINUTE HAS BEEN SET TO 0
-					calendar.set(Calendar.MINUTE, 0);
-//
-//				// setRepeating() lets you specify a precise custom interval
-					alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
-							1000 * 60 * timeValue, alarmIntent);
-				}
+			int hour=0;
+			String weekDay=null;
+			sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+			weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
+			hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
+			if(weekDay.equals("DEFAULT")&& hour==99){
+				//GET WEEK/DAY VALUE AND HOUR VALUE
+				Log.i("NEED TO SETUP ACTIVITY", " SETUP ACTIVITY PLEASE -- USER INFO!");
 			}
-			else{
-				Log.i("ATTENTION","ALARM EXISTS ALREADY!");
+			else {
+				int timeValue;
+				if (weekDay.toUpperCase().equals("D"))
+					timeValue = 60;
+				else
+					timeValue = 25200;
+				intent = new Intent();
+				intent.setAction("android.intent.CustomAlarm");
+				alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+				// Set the alarm to start at 8:30 a.m.
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(System.currentTimeMillis());
+				calendar.set(Calendar.HOUR_OF_DAY, hour);
+				//NOTE MINUTE HAS BEEN SET TO 0
+				calendar.set(Calendar.MINUTE, 23);
+				// setRepeating() lets you specify a precise custom interval
+				alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
+						1000 * 60 * timeValue, alarmIntent);
 			}
 		}
-
 	}
-
 }

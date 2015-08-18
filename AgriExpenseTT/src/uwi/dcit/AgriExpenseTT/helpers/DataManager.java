@@ -67,9 +67,9 @@ public class DataManager {
 //		//update database last updated time
 //	}
 
-    public int insertCycle(int cropId, String name, String landType, double landQty, long time){
+    public int insertCycle(int cropId, String name, String landType, double landQty, long time, String closed){
         //insert into database
-        int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time);
+        int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time,closed);
 		Log.i("IINNSSEERRTT Cycle", "Cycle is:"+acc.getAccount());
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 		if(acc!=null){
@@ -327,6 +327,7 @@ public class DataManager {
 		cloud.updateUpAccC(time);
 		DbQuery.updateAccount(db,time);
 	}
+
 	public boolean updateCycle(LocalCycle c, ContentValues cv){
 		int result = db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+c.getId(), null);
 		//update the cloud

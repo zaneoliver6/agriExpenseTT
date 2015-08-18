@@ -15,6 +15,7 @@ public class LocalCycle implements Parcelable{
 	private double costPer;
 	private String cropName;
     private String cycleName;
+	private String closed;
 	
 	public String getCropName() {
 		return cropName;
@@ -45,6 +46,12 @@ public class LocalCycle implements Parcelable{
 	}
 	public void setTime(long time) {
 		this.time = time;
+	}
+	public void setClosed(String closed){
+		this.closed=closed;
+	}
+	public String getClosed(){
+		return closed;
 	}
 	public LocalCycle() {
 		super();
@@ -117,7 +124,7 @@ public class LocalCycle implements Parcelable{
 
     @Override
 	public String toString() {
-		return "cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+" cycleName" + cycleName;
+		return "cycleId:"+id+" cropId:"+cropId+" landType:"+landType+" landQty"+landQty+" cycleName" + cycleName+ "closed"+closed;
 	}
 
 	public LocalCycle(Parcel dest){

@@ -152,6 +152,7 @@ public class CycleEndpoint {
             c.setHarvestType((String) e.getProperty("harvestType"));
             c.setCostPer((Double) e.getProperty("costPer"));
             c.setKeyrep((String) e.getProperty("keyrep"));
+            c.setClosed((String) e.getProperty("closed"));
             cL.add(c);
         }
         return cL;
@@ -303,7 +304,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists                  " +
+                throw new EntityExistsException("Object already exists         " +
                         "");
             }
             else {
@@ -360,6 +361,8 @@ public class CycleEndpoint {
                 c.setTotalSpent(cycle.getTotalSpent());
             if(cycle.getTotalSpent()==-1.00)
                 c.setTotalSpent(0.00);
+            if(cycle.getClosed().equals("closed"))
+                c.setClosed("closed");
             mgr.getTransaction().begin();
             mgr.persist(c);
             mgr.getTransaction().commit();

@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +43,9 @@ import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
+import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
+import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 
 public class FragmentViewCycles extends ListFragment{
 	String type=null;
@@ -106,6 +110,7 @@ public class FragmentViewCycles extends ListFragment{
 
 		final Button button = (Button) view.findViewById(R.id.fragment_choose_purchase_button);
 
+
 		button.setText("Add Cycle");
 		button.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
@@ -141,6 +146,8 @@ public class FragmentViewCycles extends ListFragment{
 //				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
 				deletCycleOption(this.getListView(), info.position); //Use the same delete operation from list item click
 				break;
+			case R.id.crop_close:
+				closeCycleOption(this.getListView(), info.position);
 			default:
 				return super.onContextItemSelected(item);
 		}
@@ -154,13 +161,18 @@ public class FragmentViewCycles extends ListFragment{
 
 		if(type == null){
 			launchCycleUsage(position);
-		}else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
+		}
+		else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
 			assignCycleToLabour(position);			
-		}else if(type.equals("delete")){ //When called by delete data
-			deletCycleOption(l, position);
-		}else if(type.equals("edit")){//when called by edit data
+		}
+		else if(type.equals("delete")){ //When called by delete data
+				deletCycleOption(l, position);
+		}
+		else if(type.equals("edit")){//when called by edit data
 			editCycleCoption(position);
 		}
+		else if(type.equals("close"))
+			closeCycleOption(l, position);
 	}
 
     @Override
@@ -218,21 +230,46 @@ public class FragmentViewCycles extends ListFragment{
 	}
 	
 	public void editCycleCoption(int position){
-		Intent i = new Intent(getActivity(),EditCycle.class);
- 		i.putExtra("cycle", cycleList.get(position));
- 		startActivityForResult(i,req_edit);
+		if(cycleList.get(position).getClosed().equals("closed")){
+			Toast.makeText(getActivity(), "Cannot edit a closed cycle", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			Intent i = new Intent(getActivity(), EditCycle.class);
+			i.putExtra("cycle", cycleList.get(position));
+			startActivityForResult(i, req_edit);
+		}
+	}
+
+	public void closeCycleOption(ListView l, int position){
+		Log.i(">>>>>>>>>","CLOSING");
+		CloseConfirmator c=new CloseConfirmator(position,(CycleListAdapter) l.getAdapter());
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+
+		alertBuilder.setMessage("Are you sure you want to close?")
+				.setCancelable(true)
+				.setPositiveButton("Close",c)
+				.setNegativeButton("Cancel",c)
+				.create()
+				.show();
 	}
 	
 	public void deletCycleOption(ListView l, int position){
-		DeleteConfirmator c=new DeleteConfirmator(position,(CycleListAdapter) l.getAdapter());
-		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-		
-        alertBuilder.setMessage("Are you sure you want to delete?")
-        			.setCancelable(true)        
-        			.setPositiveButton("Delete",c)
-        			.setNegativeButton("Cancel",c)
-        			.create() 
-        			.show();
+		if(cycleList.get(position).getClosed().equals("closed")){
+			Toast.makeText(getActivity(), "Cannot delete a closed cycle", Toast.LENGTH_SHORT).show();
+			Log.i("Closed","Clsoed");
+		}
+		else {
+			deletCycleOption(l, position);
+			DeleteConfirmator c = new DeleteConfirmator(position, (CycleListAdapter) l.getAdapter());
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+
+			alertBuilder.setMessage("Are you sure you want to delete?")
+					.setCancelable(true)
+					.setPositiveButton("Delete", c)
+					.setNegativeButton("Cancel", c)
+					.create()
+					.show();
+		}
 	}
 	
 	public void assignCycleToLabour(int position){
@@ -268,6 +305,37 @@ public class FragmentViewCycles extends ListFragment{
 		cycAdapt.notifyDataSetChanged();
 	}
 
+	public class CloseConfirmator implements DialogInterface.OnClickListener{
+		int position;
+		CycleListAdapter listAdapter;
+
+		public CloseConfirmator(int position,CycleListAdapter l){
+			this.position=position;
+			this.listAdapter=l;
+		}
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+
+			if(which==DialogInterface.BUTTON_POSITIVE){
+
+				DataManager dm=new DataManager(getActivity(), db, dbh);
+				LocalCycle c = cycleList.get(position);
+				c.setClosed("closed");
+				ContentValues cv=new ContentValues();
+				cv.put(CycleContract.CycleEntry.CROPCYCLE_CLOSED ,(c.getClosed()));
+				dm.updateCycle(c,cv);
+//				cycleList.remove(position);
+//				listAdapter.notifyDataSetChanged();
+				Toast.makeText(getActivity(),"Cycle successfully closed", Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+//				//DeleteExpenseList.this.finish();
+			}
+			else if(which==DialogInterface.BUTTON_NEGATIVE){
+				dialog.cancel();
+			}
+		}
+	}
+
 	public class DeleteConfirmator implements DialogInterface.OnClickListener{
 		int position;
 		CycleListAdapter listAdapter;
@@ -282,13 +350,19 @@ public class FragmentViewCycles extends ListFragment{
 			if(which==DialogInterface.BUTTON_POSITIVE){
 				
 				DataManager dm=new DataManager(getActivity(), db, dbh);
-				dm.deleteCycle(cycleList.get(position));
-				
-				//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
-				cycleList.remove(position);
-				listAdapter.notifyDataSetChanged();
-				Toast.makeText(getActivity(),"Cycle successfully deleted", Toast.LENGTH_SHORT).show();			
-				dialog.dismiss();
+				//if(cycleList.get(position).getClosed().equals("open")) {
+					dm.deleteCycle(cycleList.get(position));
+
+					//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
+					cycleList.remove(position);
+					listAdapter.notifyDataSetChanged();
+					Toast.makeText(getActivity(), "Cycle successfully deleted", Toast.LENGTH_SHORT).show();
+					dialog.dismiss();
+				//}
+				//else{
+				//	Toast.makeText(getActivity(), "Cannot delete a closed cycle", Toast.LENGTH_SHORT).show();
+				//	dialog.dismiss();
+				//}
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();
@@ -315,10 +389,12 @@ public class FragmentViewCycles extends ListFragment{
 
             String txt = (currCycle.getCropName() != null ) ? currCycle.getCropName() : DbQuery.findResourceName(db, dbh, currCycle.getCropId());
             String cycleName = (currCycle.getCycleName() != null) ? currCycle.getCycleName().toUpperCase() : txt;
-
+			String closed = currCycle.getClosed();
             ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);
             ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(("Name: "+ cycleName));
-
+			if(closed.equals("closed")){
+				((ImageView)row.findViewById(R.id.icon_purchaseType)).setImageResource(R.drawable.crop_under_sun);
+			}
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
             double qty = currCycle.getLandQty();
