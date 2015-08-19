@@ -19,6 +19,7 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 	public static final String MyPREFERENCES = "MyAlarmPrefs" ;
 	public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
 	public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
+	public static final String MyAlarmSet = "MyAlarmSet";
 
 	SQLiteDatabase db;
 	DbHelper dbh;
@@ -60,6 +61,7 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 			sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 			weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
 			hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
+
 			if(weekDay.equals("DEFAULT")&& hour==99){
 				//GET WEEK/DAY VALUE AND HOUR VALUE
 				Log.i("NEED TO SETUP ACTIVITY", " SETUP ACTIVITY PLEASE -- USER INFO!");
@@ -82,6 +84,10 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 				// setRepeating() lets you specify a precise custom interval
 				alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
 						1000 * 60 * timeValue, alarmIntent);
+				//Now that the alarm has been set, we can keep a track of this!
+				SharedPreferences.Editor editor = sharedpreferences.edit();
+				editor.putBoolean(MyAlarmSet,true);
+				editor.commit();
 			}
 		}
 	}
