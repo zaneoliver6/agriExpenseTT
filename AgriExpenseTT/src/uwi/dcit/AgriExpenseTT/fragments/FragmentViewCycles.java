@@ -57,17 +57,17 @@ public class FragmentViewCycles extends ListFragment{
 
     private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
-	
+
 	ArrayList<LocalCycle> cycleList = new ArrayList<>();
 	CycleListAdapter cycAdapt;
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedState){
 		super.onActivityCreated(savedState);
 		this.registerForContextMenu(getListView());
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,7 +84,7 @@ public class FragmentViewCycles extends ListFragment{
 
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
-	
+
 	public void populateList() {
 		DbQuery.getCycles(db, dbh, cycleList);
 
@@ -95,7 +95,7 @@ public class FragmentViewCycles extends ListFragment{
 				if (item1.getTime() == item2.getTime())return 0;
 				else if (item1.getTime() > item2.getTime())return -1;
 				else return 1;
-			}			
+			}
 		});
 	}
 
@@ -119,18 +119,18 @@ public class FragmentViewCycles extends ListFragment{
 		});
 		return view;
 	}
-	
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
 		super.onCreateContextMenu(menu, v, menuInfo);
-		
+
 		MenuInflater inflater = this.getActivity().getMenuInflater();
 		inflater.inflate(R.menu.resource_crop_context_menu, menu);
 	}
-	
+
 	public boolean onContextItemSelected(MenuItem item){
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-		
+
 		switch(item.getItemId()){
 			case R.id.crop_view:
 				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
@@ -153,7 +153,7 @@ public class FragmentViewCycles extends ListFragment{
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -163,7 +163,7 @@ public class FragmentViewCycles extends ListFragment{
 			launchCycleUsage(position);
 		}
 		else if(type.equals(DHelper.cat_labour)){ //Assigning labour to cycle
-			assignCycleToLabour(position);			
+			assignCycleToLabour(position);
 		}
 		else if(type.equals("delete")){ //When called by delete data
 				deletCycleOption(l, position);
@@ -228,7 +228,7 @@ public class FragmentViewCycles extends ListFragment{
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
         }
 	}
-	
+
 	public void editCycleCoption(int position){
 		if(cycleList.get(position).getClosed().equals("closed")){
 			Toast.makeText(getActivity(), "Cannot edit a closed cycle", Toast.LENGTH_SHORT).show();
@@ -252,14 +252,14 @@ public class FragmentViewCycles extends ListFragment{
 				.create()
 				.show();
 	}
-	
+
 	public void deletCycleOption(ListView l, int position){
 		if(cycleList.get(position).getClosed().equals("closed")){
 			Toast.makeText(getActivity(), "Cannot delete a closed cycle", Toast.LENGTH_SHORT).show();
 			Log.i("Closed","Clsoed");
 		}
 		else {
-			deletCycleOption(l, position);
+			//deletCycleOption(l, position);
 			DeleteConfirmator c = new DeleteConfirmator(position, (CycleListAdapter) l.getAdapter());
 			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
 
@@ -271,31 +271,31 @@ public class FragmentViewCycles extends ListFragment{
 					.show();
 		}
 	}
-	
+
 	public void assignCycleToLabour(int position){
 		ListFragment fragment	= new HireLabourLists();
-		
+
 		Bundle arguments		= new Bundle();
 		arguments.putString("type", "quantifier");
 		arguments.putString("name", getArguments().getString("name"));
 		arguments.putParcelable("cycle", cycleList.get(position));
-		
+
 		StringBuilder stb = new StringBuilder();
 		stb.append("Details: ")
 			.append(getArguments().getString("name"))
 			.append(", cycle#")
 		.append(cycleList.get(position).getId());
-		
+
 		((HireLabour)getActivity()).replaceSub(stb.toString());
-		
-		
+
+
 		fragment.setArguments(arguments);
 		getFragmentManager()
 			.beginTransaction()
 				.replace(R.id.NewCycleListContainer, fragment)
 				.commit();
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
@@ -339,21 +339,21 @@ public class FragmentViewCycles extends ListFragment{
 	public class DeleteConfirmator implements DialogInterface.OnClickListener{
 		int position;
 		CycleListAdapter listAdapter;
-		
+
 		public DeleteConfirmator(int position,CycleListAdapter l){
 			this.position=position;
 			this.listAdapter=l;
 		}
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			
+
 			if(which==DialogInterface.BUTTON_POSITIVE){
-				
+
 				DataManager dm=new DataManager(getActivity(), db, dbh);
 				//if(cycleList.get(position).getClosed().equals("open")) {
 					dm.deleteCycle(cycleList.get(position));
 
-					//DbQuery.deleteRecord(db, dbh, DbHelper.TABLE_CROPCYLE, cList.get(position).getId());
+					//DbQuery.deleteRecord(db,dbh, CycleContract.CycleEntry.TABLE_NAME, cycleList.get(position).getId());
 					cycleList.remove(position);
 					listAdapter.notifyDataSetChanged();
 					Toast.makeText(getActivity(), "Cycle successfully deleted", Toast.LENGTH_SHORT).show();
@@ -369,7 +369,7 @@ public class FragmentViewCycles extends ListFragment{
 			}
 		}
 	}
-	
+
 	public class CycleListAdapter extends ArrayAdapter<LocalCycle> {
         Context myContext;
 
