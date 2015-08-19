@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -201,12 +202,29 @@ public class FragmentCycleUseCategory extends Fragment {
                 startActivity(n);
                 return;
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-                newFrag = new FragmentUseResource();
-                Bundle arguments = new Bundle();
-                arguments.putString("type",category);
-                arguments.putParcelable("cycle", currCycle);
-                arguments.putString("total",""+catTotal);
-                newFrag.setArguments(arguments);
+				if( currCycle.getClosed().equals("closed")) {
+					Intent n = new Intent(getActivity(),ViewCycleUsege.class);
+					Bundle arguments = new Bundle();
+					arguments .putString("type", category);
+					currCycle=getArguments().getParcelable("cycle");
+					arguments.putString("id", "" + currCycle.getId());
+					n.putExtras(arguments);
+					startActivity(n);
+					Toast.makeText(getActivity(), "Cannot purchase items for a closed cycle!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				else {
+					newFrag = new FragmentUseResource();
+					Bundle arguments = new Bundle();
+					arguments.putString("type", category);
+					arguments.putParcelable("cycle", currCycle);
+					arguments.putString("total", "" + catTotal);
+					newFrag.setArguments(arguments);
+				}
+				//}
+				//else{
+				//	Toast.makeText(getActivity(), "Cannot purchase items for a closed cycle!", Toast.LENGTH_SHORT).show();
+				//}
 			}
 
             if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){

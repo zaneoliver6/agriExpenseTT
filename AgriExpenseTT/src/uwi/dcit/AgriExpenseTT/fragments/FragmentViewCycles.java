@@ -393,7 +393,7 @@ public class FragmentViewCycles extends ListFragment{
             ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);
             ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(("Name: "+ cycleName));
 			if(closed.equals("closed")){
-				((ImageView)row.findViewById(R.id.icon_purchaseType)).setImageResource(R.drawable.crop_under_sun);
+				((ImageView)row.findViewById(R.id.icon_purchaseType)).setImageResource(R.drawable.ic_launcher_web);
 			}
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
