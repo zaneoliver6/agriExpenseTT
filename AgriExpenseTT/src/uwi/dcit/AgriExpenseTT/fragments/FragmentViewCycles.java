@@ -241,16 +241,21 @@ public class FragmentViewCycles extends ListFragment{
 	}
 
 	public void closeCycleOption(ListView l, int position){
-		Log.i(">>>>>>>>>","CLOSING");
-		CloseConfirmator c=new CloseConfirmator(position,(CycleListAdapter) l.getAdapter());
-		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+		if(cycleList.get(position).getClosed().equals("open")) {
+			Log.i(">>>>>>>>>", "CLOSING");
+			CloseConfirmator c = new CloseConfirmator(position, (CycleListAdapter) l.getAdapter());
+			AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
 
-		alertBuilder.setMessage("Are you sure you want to close?")
-				.setCancelable(true)
-				.setPositiveButton("Close",c)
-				.setNegativeButton("Cancel",c)
-				.create()
-				.show();
+			alertBuilder.setMessage("Are you sure you want to close?")
+					.setCancelable(true)
+					.setPositiveButton("Close", c)
+					.setNegativeButton("Cancel", c)
+					.create()
+					.show();
+		}
+		else{
+			Toast.makeText(getActivity(), "Cannot close a closed cycle", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	public void deletCycleOption(ListView l, int position){
