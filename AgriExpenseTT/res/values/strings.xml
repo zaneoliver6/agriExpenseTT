@@ -143,4 +143,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_alarm">AlarmActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

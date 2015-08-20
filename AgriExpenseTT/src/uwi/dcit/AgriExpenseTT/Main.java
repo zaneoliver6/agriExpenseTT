@@ -58,11 +58,7 @@ public class Main extends BaseActivity{
 
         new Thread(new Runnable() {
             public void run() {
-                String weekDay="";
-                int hour=0;
-                setPreferences();
-                //runAlarm(hour,59,weekDay);
-                runAlarm();
+                setPreferencesCall();
             }
         }).start();
     }
@@ -206,54 +202,13 @@ public class Main extends BaseActivity{
 
 
 
-    public void setPreferences(){
+    public void setPreferencesCall(){
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         Boolean set = sharedpreferences.getBoolean(MyPreferencesSet,false);
         if(!set) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(MyAlarmPreferencesWeekDay, "D");
-            editor.putInt(MyAlarmPreferencesHour, 14);
-            editor.putBoolean(MyPreferencesSet, true);
-            editor.putBoolean(MyAlarmSet,false);
-            editor.commit();
+            Intent i = new Intent(Main.this, AlarmActivity.class);
+            startActivity(i);
             Log.i("PREF SET","PREFERENCES SET");
-        }
-    }
-
-    public void runAlarm() {
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        boolean set = sharedpreferences.getBoolean(MyAlarmSet, false);
-        if (!set) {
-            String weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay,"NIL");
-            int hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
-            if(hour!=99 && !weekDay.equals("NIL")) {
-                Context ctx = this.getApplicationContext();
-                Intent intent = new Intent();
-                intent.setAction("android.intent.CustomAlarm");
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
-                int timeValue;
-                if (weekDay.toUpperCase().equals("D"))
-                    timeValue = 60;
-                //AN HOUR
-                else
-                    timeValue = 10080;
-                //A DAY
-                AlarmManager alarmMgr = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-                alarmMgr.cancel(alarmIntent);
-                //Set the alarm time.
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(System.currentTimeMillis());
-                calendar.set(Calendar.HOUR_OF_DAY, hour);
-                calendar.set(Calendar.MINUTE, 41);
-                // setRepeating() lets you specify a precise custom interval--in this case
-                alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
-                        1000 * 60 * timeValue, alarmIntent);
-                //Now that the alarm has been set, we can keep a track of this!
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(MyAlarmSet, true);
-                editor.commit();
-                Log.i("ALARM", "ALARM SET");
-            }
         }
     }
 }
