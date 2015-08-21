@@ -181,7 +181,6 @@ public class FragmentPurchaseUse extends Fragment {
 					dm.insertCycleUse(c.getId(), p.getPId(), useAmount, p.getType(),quantifier, calCost);
 					double rem=(amtRem-useAmount)*convertFromTo(quantifier,p.getQuantifier());
 					Toast.makeText(getActivity(), rem+" Remaining", Toast.LENGTH_SHORT).show();
-
 					//updating purchase
 					p.setQtyRemaining(rem);
 					ContentValues cv=new ContentValues();

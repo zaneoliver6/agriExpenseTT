@@ -205,8 +205,10 @@ public class Main extends BaseActivity{
     public void setPreferencesCall(){
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         Boolean set = sharedpreferences.getBoolean(MyPreferencesSet,false);
+        Intent i = new Intent(Main.this, AlarmActivity.class);
+        //startActivity(i);
         if(!set) {
-            Intent i = new Intent(Main.this, AlarmActivity.class);
+//            Intent i = new Intent(Main.this, AlarmActivity.class);
             startActivity(i);
             Log.i("PREF SET","PREFERENCES SET");
         }

@@ -689,7 +689,7 @@ public class DbQuery {
     }
 
     public static boolean resourceExist(SQLiteDatabase db){
-        String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">0";
+        String code="select COUNT(*) FROM "+ResourcePurchaseEntry.TABLE_NAME+" where "+ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING+">=0";
         boolean res = false;
         Cursor c=db.rawQuery(code,null);
         if(c.moveToFirst()) {

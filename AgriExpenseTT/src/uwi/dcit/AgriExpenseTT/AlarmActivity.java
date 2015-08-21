@@ -1,30 +1,23 @@
 package uwi.dcit.AgriExpenseTT;
 
-import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import uwi.dcit.AgriExpenseTT.helpers.InputFilterMinMax;
 
 public class AlarmActivity extends AppCompatActivity {
     Spinner sItems;
@@ -99,14 +92,13 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
 
-    public void buttonSelected(View view) {
+    public void buttonSelected(View view){
 
         int hour = sItems.getSelectedItemPosition()+1;
-        Log.i("Hi","SELECTED:::::---"+hour);
-
         String amPm = sItems2.getSelectedItem().toString();
-        Log.i("llll",""+amPm);
-        if(amPm.equals(" PM "))
+        if(amPm.equals(" PM ") && hour==12)
+            hour=0;
+        else if(amPm.equals(" PM "))
             hour+=12;
 
         Log.i("Hi","SELECTED:::::---"+hour);
@@ -131,6 +123,7 @@ public class AlarmActivity extends AppCompatActivity {
         editor.commit();
         Log.i("PREF SET","PREFERENCES SET");
         runAlarm();
+        finish();
     }
 
     public void runAlarm() {

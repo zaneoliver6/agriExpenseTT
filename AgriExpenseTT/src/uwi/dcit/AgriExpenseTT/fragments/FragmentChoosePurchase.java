@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -99,7 +101,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		if(type != null && (type.equals("delete") || type.equals("edit")))
 			DbQuery.getPurchases(db, dbh, pList, null, null, true);
 		else
-			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
+			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should
 	
 		Collections.sort(pList, new Comparator<LocalResourcePurchase>() {
 			@Override
