@@ -146,4 +146,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="title_activity_alarm">AlarmActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_alarm2">AlarmActivity2</string>
 </resources>

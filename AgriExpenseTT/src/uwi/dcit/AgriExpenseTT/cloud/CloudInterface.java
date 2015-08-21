@@ -151,6 +151,9 @@ public class CloudInterface {
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
                 ResourcePurchase p=DbQuery.getARPurchase(db, dbh, rowId);
 				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
+				if(p.getQtyRemaining()==0){
+					p.setQtyRemaining(-1.00);
+				}
 				try{
 					p.setKeyrep(keyrep);
 					p=endpoint.updateRPurchase(p).execute();

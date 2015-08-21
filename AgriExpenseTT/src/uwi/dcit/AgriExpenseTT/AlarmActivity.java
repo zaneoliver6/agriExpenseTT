@@ -1,6 +1,8 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -8,24 +10,25 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.helpers.InputFilterMinMax;
 
 public class AlarmActivity extends AppCompatActivity {
-
-    EditText eText;
-    Button btn;
+    Spinner sItems;
+    Spinner sItems2;
     RadioGroup rg;
     private SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyAlarmPrefs" ;
@@ -38,8 +41,39 @@ public class AlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-        eText = (EditText) findViewById(R.id.editText);
-        eText.setFilters(new InputFilter[]{new InputFilterMinMax("1", "24")});
+
+        List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add("1:00");
+        spinnerArray.add("2:00");
+        spinnerArray.add("3:00");
+        spinnerArray.add("4:00");
+        spinnerArray.add("5:00");
+        spinnerArray.add("6:00");
+        spinnerArray.add("7:00");
+        spinnerArray.add("8:00");
+        spinnerArray.add("9:00");
+        spinnerArray.add("10:00");
+        spinnerArray.add("11:00");
+        spinnerArray.add("12:00");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sItems = (Spinner) findViewById(R.id.spinner);
+        sItems.setAdapter(adapter);
+
+        List<String> spinnerArray2 =  new ArrayList<String>();
+        spinnerArray2.add(" AM ");
+        spinnerArray2.add(" PM ");
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerArray2);
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sItems2 = (Spinner) findViewById(R.id.spinner2);
+        sItems2.setAdapter(adapter2);
+
     }
 
     @Override
@@ -64,10 +98,18 @@ public class AlarmActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void buttonSelected(View view) {
-        btn = (Button) findViewById(R.id.button2);
-        String hour = eText.getText().toString();
-        int hr=Integer.parseInt(hour);
+
+        int hour = sItems.getSelectedItemPosition()+1;
+        Log.i("Hi","SELECTED:::::---"+hour);
+
+        String amPm = sItems2.getSelectedItem().toString();
+        Log.i("llll",""+amPm);
+        if(amPm.equals(" PM "))
+            hour+=12;
+
+        Log.i("Hi","SELECTED:::::---"+hour);
 
         rg =(RadioGroup) findViewById(R.id.radioGroup);
         int id = rg.getCheckedRadioButtonId();
@@ -83,13 +125,12 @@ public class AlarmActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putString(MyAlarmPreferencesWeekDay, weekDay);
-        editor.putInt(MyAlarmPreferencesHour, hr);
+        editor.putInt(MyAlarmPreferencesHour, hour);
         editor.putBoolean(MyPreferencesSet, true);
         editor.putBoolean(MyAlarmSet,false);
         editor.commit();
         Log.i("PREF SET","PREFERENCES SET");
         runAlarm();
-        return;
     }
 
     public void runAlarm() {
@@ -106,7 +147,7 @@ public class AlarmActivity extends AppCompatActivity {
                 int timeValue;
                 if (weekDay.toUpperCase().equals("D"))
                     timeValue = 1440;
-                    //AN HOUR
+                    //A DAY
                 else
                     timeValue = 10080;
                 //A DAY
@@ -128,4 +169,6 @@ public class AlarmActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

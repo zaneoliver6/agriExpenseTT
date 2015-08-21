@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -253,6 +254,10 @@ public class FragmentChoosePurchase extends ListFragment {
 
              //Get Layout of An Item and Store it in a view
 			 View row=inflater.inflate(R.layout.purchased_item, parent, false);
+
+			 if(curr.getQtyRemaining()==0.00){
+				 ((ImageView)row.findViewById(R.id.icon_pitem_next)).setImageResource(R.drawable.ic_empty);
+			 }
 
 			 //setting the colours
 			 View line=row.findViewById(R.id.line_pitem);

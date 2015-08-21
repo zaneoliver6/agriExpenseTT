@@ -302,6 +302,8 @@ public class ResourcePurchaseEndpoint {
             else{
                 if(rPurchase.getQtyRemaining()!=0)
                     currentRPurchase.setQtyRemaining(rPurchase.getQtyRemaining());
+                if(rPurchase.getQtyRemaining()==-1.00)
+                    currentRPurchase.setQtyRemaining(0.00);
                 if(rPurchase.getQuantifier()!=null)
                     currentRPurchase.setQuantifier(rPurchase.getQuantifier());
                 if(rPurchase.getType()!=null)
