@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,20 +13,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import uwi.dcit.AgriExpenseTT.AddData;
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
+import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
     private String type;
+    private String category;
     protected boolean isLabour = false;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         type = getArguments().getString("type");
-		String category = getArguments().getString("category");
+        category = getArguments().getString("category");
 		
 		view = inflater.inflate(R.layout.fragment_empty_resourcelist, container, false);
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
@@ -49,7 +53,7 @@ public class FragmentEmpty extends Fragment{
 			if(category == null){
 				desc.setText("Tap here to create a new purchase");
                 button.setText("Add Purchase");
-			}else{
+			}else {
 				desc.setText("Sorry you have not purchased any "+category+" as yet");
 			}
 		}else if(type.equals("cycle")){
@@ -88,41 +92,44 @@ public class FragmentEmpty extends Fragment{
 	}
 
 
-    private void addResource(){
-        if(type.equals("cycle")){
+    private void addResource() {// Adds functionality to the add cycle or Add purchase button
+        if (type.equals("cycle")) {
             Intent intent = new Intent(getActivity().getApplicationContext(), NewCycle.class);
             startActivity(intent);
-        }
-        else if(type.equals("purchase")) {
+        } else if (type.equals("purchase")) {
             Intent intent = new Intent(getActivity().getApplicationContext(), NewPurchase.class);
+            //Bundle b = new Bundle();     the button go to go directly to the category... nt working yet, rel annoying
+            //startActivity(intent);
+            //b.putString("action",DHelper.cat_plantingMaterial);
+            //intent.putExtras(b);
             startActivity(intent);
         }
     }
 
-    private void setupButton(String type) {
-        ImageView v=(ImageView)view.findViewById(R.id.img_empty_frag);
+    private void setupButton(String type) {// functionality kinda deleted atm.. dont know how it will affect if deleted atm but will test soon
+        ImageView v=(ImageView)view.findViewById(R.id.Empty_Agri_Logo);
         if(type.equals("purchase")){
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                  public void onClick(View v) {
-                    Log.d("Empty Fragment"," creating a new purchase ");
-                    createPurchase();
+                    Log.d("Empty Fragment", " creating a new purchase ");
+                    //createPurchase();
                 }
             });
         }else if(type.equals("cycle")){
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Empty Fragment"," creating a new cycle");
-                    createCycle();
+                    Log.d("Empty Fragment", " creating a new cycle");
+                    //createCycle();
                 }
             });
         }else if (type.equals("labour")){
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Empty Fragment"," creating a new labourer");
-                    createLabourer();
+                    Log.d("Empty Fragment", " creating a new labourer");
+                    //createLabourer();
                 }
             });
         }else if(type.equals("cycleuse")){
@@ -133,21 +140,21 @@ public class FragmentEmpty extends Fragment{
                 }
             });
         }else if(type.equals("select")){
-            v.setImageResource(R.drawable.icon_touch);
+            //v.setImageResource(R.drawable.icon_touch);
         }
     }
 
-    private void createLabourer() {
-        getActivity().startActivityForResult(new Intent(getActivity(), HireLabour.class), DHelper.PURCHASE_REQUEST_CODE);
-    }
-
-    public void createCycle(){
-        getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
-    }
-    public void createPurchase(){
-        getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewPurchase.class), DHelper.PURCHASE_REQUEST_CODE);
-    }
-
-
 }
+
+//if (category.equals("Planting material")) {
+//Intent intent = new Intent(getActivity().getApplicationContext(), NewPurchase.class);
+//Bundle b = new Bundle();
+//b.putString("category", "Planting material");
+//b.putString("action", "Planting material");
+//intent.putExtras(b);
+//startActivity(intent);
+//} else {
+//    Intent intent = new Intent(getActivity().getApplicationContext(), NewPurchase.class);
+//    startActivity(intent);
+//}
 

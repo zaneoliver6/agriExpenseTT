@@ -136,13 +136,6 @@ public class Main extends BaseActivity{
         super.onSaveInstanceState(outState);
     }
 
-    public void AddNewCycle (View view){ //the Add Cycle Button calls this function
-            Intent i = new Intent(this, NewCycle.class);
-            startActivity(i);
-    }
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

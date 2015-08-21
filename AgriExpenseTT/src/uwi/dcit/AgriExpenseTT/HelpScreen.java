@@ -1,9 +1,10 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-
+import android.view.View;
 import uwi.dcit.AgriExpenseTT.fragments.help.HelpListFragment;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
@@ -23,5 +24,10 @@ public class HelpScreen extends BaseActivity {
         	.beginTransaction()
         	.replace(R.id.help_lists, fragment)
         	.commit();
+	}
+
+	public void ViewSlide(View view){
+		Intent intent = new Intent(HelpScreen.this, Introtest.class);
+		startActivity(intent);
 	}
 }
