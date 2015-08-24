@@ -12,8 +12,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_mainNew_header"
@@ -45,23 +45,25 @@
             android:id="@+id/reportListContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp" 
-            android:layout_weight="4">
+            android:layout_weight="3.70">
         </FrameLayout>
-        
+
         <FrameLayout
             android:id="@+id/reportControlsContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp" 
+            android:layout_height="0dp"
             android:layout_weight="4">
+
             <Button
 		        android:id="@+id/btn_addReport"
-		        android:layout_width="180dp"
+		        android:layout_width="418dp"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="20dp"
 		        android:layout_marginStart="20dp"
 		        android:layout_marginTop="20dp"
 		        android:background="@drawable/btn_custom"
-		        android:text="@string/btn_reports_new" />
+		        android:text="@string/btn_reports_new"
+                android:layout_gravity="center_horizontal|bottom" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

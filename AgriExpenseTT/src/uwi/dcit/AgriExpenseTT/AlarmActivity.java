@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,7 +88,6 @@ public class AlarmActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -143,14 +143,14 @@ public class AlarmActivity extends AppCompatActivity {
                     //A DAY
                 else
                     timeValue = 10080;
-                //A DAY
+                    //A WEEK
                 AlarmManager alarmMgr = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
                 alarmMgr.cancel(alarmIntent);
                 //Set the alarm time.
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
-                calendar.set(Calendar.MINUTE, 35);
+                calendar.set(Calendar.MINUTE, 0);
                 // setRepeating() lets you specify a precise custom interval--in this case
                 alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
                         1000 * 60 * timeValue, alarmIntent);
@@ -158,6 +158,7 @@ public class AlarmActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(MyAlarmSet, true);
                 editor.commit();
+                Toast.makeText(this, "Alarm Set Successfully", Toast.LENGTH_SHORT).show();
                 Log.i("ALARM", "ALARM SET");
             }
         }

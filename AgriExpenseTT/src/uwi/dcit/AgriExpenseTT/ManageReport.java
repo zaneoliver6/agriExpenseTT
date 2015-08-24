@@ -28,7 +28,7 @@ public class ManageReport extends BaseActivity {
 
         getSupportFragmentManager()
 			.beginTransaction()
-			.add(R.id.reportListContainer ,fragment)
+			.add(R.id.reportListContainer,fragment)
 			.commit();
 	}
 

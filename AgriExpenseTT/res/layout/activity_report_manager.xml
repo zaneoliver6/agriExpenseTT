@@ -20,8 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="0.17">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_mainNew_header"
@@ -47,6 +46,13 @@
                     android:textColor="#999999"
                     android:textSize="16sp" />
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/reportListContainer"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.23">
+            </FrameLayout>
 
 
             <FrameLayout
