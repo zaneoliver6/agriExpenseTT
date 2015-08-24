@@ -112,6 +112,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="title_activity_backup_data">Backup Data</string>
     <string name="manage_data_edit_btn">Edit Data</string>
     <string name="manage_data_add_btn">Add Data</string>
+    <string name="manage_alarm_preferences">Edit Alarm Preferences</string>>
     <string name="manage_data_delete_btn">Delete</string>
     <string name="backup_header_main">Overview</string>
     <string name="backup_header_description">The follow list contains information that relates to what is stored by the system and provides options that will allow you to backup and sync your information online to increase the reliablity of the system</string>

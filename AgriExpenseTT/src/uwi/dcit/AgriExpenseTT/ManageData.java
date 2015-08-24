@@ -28,6 +28,10 @@ public class ManageData extends BaseActivity {
 		startActivity(new Intent(ManageData.this,AddData.class));
 	}
 
+	public void alarmPreferencesEdit(View view){
+		startActivity(new Intent(ManageData.this,AlarmActivity.class));
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

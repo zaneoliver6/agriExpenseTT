@@ -83,7 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 break;
             case 6:
                 backUpData();
-
                 break;
             default:
                 startActivity(new Intent(this, Main.class));
