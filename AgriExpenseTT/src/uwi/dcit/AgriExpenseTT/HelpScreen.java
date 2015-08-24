@@ -26,8 +26,4 @@ public class HelpScreen extends BaseActivity {
         	.commit();
 	}
 
-	public void ViewSlide(View view){
-		Intent intent = new Intent(HelpScreen.this, Introtest.class);
-		startActivity(intent);
-	}
 }

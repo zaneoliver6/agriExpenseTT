@@ -98,10 +98,6 @@ public class FragmentEmpty extends Fragment{
             startActivity(intent);
         } else if (type.equals("purchase")) {
             Intent intent = new Intent(getActivity().getApplicationContext(), NewPurchase.class);
-            //Bundle b = new Bundle();     the button go to go directly to the category... nt working yet, rel annoying
-            //startActivity(intent);
-            //b.putString("action",DHelper.cat_plantingMaterial);
-            //intent.putExtras(b);
             startActivity(intent);
         }
     }

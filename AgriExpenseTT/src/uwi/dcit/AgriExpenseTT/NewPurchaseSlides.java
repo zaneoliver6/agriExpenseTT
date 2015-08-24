@@ -21,7 +21,7 @@ import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.fragments.ScreenSlidePageFragment;
 
-public class Introtest extends FragmentActivity {
+public class NewPurchaseSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -30,9 +30,11 @@ public class Introtest extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.slide_one_alt,
-            R.drawable.slide_two_alt,
-            R.drawable.slide_three_alt,
+            R.drawable.new_purchase_slide2,
+            R.drawable.new_purchase_slide3,
+            R.drawable.new_purchase_slide4,
+            R.drawable.new_purchase_slide5,
+            R.drawable.new_purchase_slide6,
     };
 
     @Override

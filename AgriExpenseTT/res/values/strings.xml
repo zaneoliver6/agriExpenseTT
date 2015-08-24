@@ -144,4 +144,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_new_crop_cycle_slides">NewCropCycleSlides</string>
+    <string name="title_activity_new_purchase_slides">NewPurchaseSlides</string>
+    <string name="title_activity_hiring_labour_slides">HiringLabourSlides</string>
 </resources>

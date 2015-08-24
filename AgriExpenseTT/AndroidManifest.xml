@@ -196,6 +196,18 @@
             android:name=".Introtest"
             android:label="@string/title_activity_introtest" >
         </activity>
+        <activity
+            android:name=".NewCropCycleSlides"
+            android:label="@string/title_activity_new_crop_cycle_slides" >
+        </activity>
+        <activity
+            android:name=".NewPurchaseSlides"
+            android:label="@string/title_activity_new_purchase_slides" >
+        </activity>
+        <activity
+            android:name=".HiringLabourSlides"
+            android:label="@string/title_activity_hiring_labour_slides" >
+        </activity>
     </application>
 
 </manifest>
