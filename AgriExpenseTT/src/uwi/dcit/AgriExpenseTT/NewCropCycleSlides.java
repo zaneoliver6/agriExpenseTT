@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,5 +115,9 @@ public class NewCropCycleSlides extends FragmentActivity {
         }
     }
 
+    public void ReturnToMain(View view){
+        Intent intent = new Intent(NewCropCycleSlides.this, Main.class);
+        startActivity(intent);
+    }
 
 }
