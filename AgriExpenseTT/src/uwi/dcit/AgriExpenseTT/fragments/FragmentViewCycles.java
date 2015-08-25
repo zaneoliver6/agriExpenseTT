@@ -388,7 +388,6 @@ public class FragmentViewCycles extends ListFragment{
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = ((Activity)myContext).getLayoutInflater();
             View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
-
             //get the elements of that view and set them accordingly
             LocalCycle currCycle = cycleList.get(position);
 
@@ -418,9 +417,6 @@ public class FragmentViewCycles extends ListFragment{
             return row;
 		}
 
-		public void addNewCycle(View view){
-			getActivity().startActivityForResult(new Intent(getActivity().getApplicationContext(), NewCycle.class), DHelper.CYCLE_REQUEST_CODE);
-		}
         @Override
         public int getCount(){
             return cycleList.size();

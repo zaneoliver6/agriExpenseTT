@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.fragments.help;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import uwi.dcit.AgriExpenseTT.HiringLabourSlides;
+import uwi.dcit.AgriExpenseTT.Introtest;
+import uwi.dcit.AgriExpenseTT.NewCropCycleSlides;
+import uwi.dcit.AgriExpenseTT.NewPurchaseSlides;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.HelpTopics;
@@ -37,22 +42,31 @@ public class HelpListFragment extends ListFragment{
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 				
 				Fragment frag = null;
-				
+				Intent intent;
+
 				switch (position){
 					case 0:
-						frag = new HelpIntroFragment();
+						intent =new Intent(getActivity(), Introtest.class);
+						startActivity(intent);
+						//frag = new HelpIntroFragment();
 						break;
 					case 1:
-						frag = new HelpNewPurchaseFragment();
+						intent = new Intent(getActivity(), NewPurchaseSlides.class);
+						startActivity(intent);
+						//frag = new HelpNewPurchaseFragment();
 						break;
 					case 2:
-						frag = new HelpNewCropCycleFragment();
+						intent = new Intent(getActivity(), NewCropCycleSlides.class);
+						startActivity(intent);
+						//frag = new HelpNewCropCycleFragment();
 						break;
 					case 3:
 						frag = new HelpManageResourceFragment();
 						break;
 					case 4:
-						frag = new HelpHiringLabourFragment();
+						intent = new Intent(getActivity(), HiringLabourSlides.class);
+						startActivity(intent);
+						//frag = new HelpHiringLabourFragment();
 						break;
 					case 5:
 						frag = new HelpManageDataFragment();

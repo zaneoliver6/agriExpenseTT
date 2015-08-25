@@ -188,12 +188,6 @@
         </activity>
 
 
-        <!-- <receiver android:name=".helpers.ReminderBroadcaster"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.receivers.AlarmReceiver">         </action> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-
         <receiver
             android:name=".helpers.ReminderBroadcaster"
             android:enabled="true" >
@@ -210,6 +204,23 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".Introtest"
+            android:label="@string/title_activity_introtest" >
+        </activity>
+        <activity
+            android:name=".NewCropCycleSlides"
+            android:label="@string/title_activity_new_crop_cycle_slides" >
+        </activity>
+        <activity
+            android:name=".NewPurchaseSlides"
+            android:label="@string/title_activity_new_purchase_slides" >
+        </activity>
+        <activity
+            android:name=".HiringLabourSlides"
+            android:label="@string/title_activity_hiring_labour_slides" >
+        </activity>
 
         <activity
             android:name=".AlarmActivity"

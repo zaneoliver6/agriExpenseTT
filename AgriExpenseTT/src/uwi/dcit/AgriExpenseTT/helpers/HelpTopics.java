@@ -8,9 +8,9 @@ public class HelpTopics {
 		"Creating a New Crop Cycle",
 		"Manage Resources",
 		"Hiring Labour",
-		"Manage Data / Settings",
 		"Calculating Expected Sales",
-		"Generating Reports"
+		"Generating Reports",
+		"Others Page"
 	};
 	
 	public static int [] Layouts = new int[] {
