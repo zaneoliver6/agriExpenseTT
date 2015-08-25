@@ -101,6 +101,7 @@ public class FragmentEmpty extends Fragment{
             startActivity(intent);
         }
     }
+    
 
     private void setupButton(String type) {// Sets the text for the page
         ImageView v=(ImageView)view.findViewById(R.id.Empty_Agri_Logo);
