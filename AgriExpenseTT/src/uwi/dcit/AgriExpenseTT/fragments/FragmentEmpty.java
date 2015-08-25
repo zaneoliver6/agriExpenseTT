@@ -102,7 +102,7 @@ public class FragmentEmpty extends Fragment{
         }
     }
 
-    private void setupButton(String type) {// functionality kinda deleted atm.. dont know how it will affect if deleted atm but will test soon
+    private void setupButton(String type) {// Sets the text for the page
         ImageView v=(ImageView)view.findViewById(R.id.Empty_Agri_Logo);
         if(type.equals("purchase")){
             v.setOnClickListener(new View.OnClickListener() {
