@@ -76,11 +76,12 @@ public class FragmentNewCycleLast extends Fragment {
 		return view;
 	}
 
-    @Override
-    public void onDestroy() {
-        db.close();
-        super.onDestroy();
-    }
+//    @Override
+//    public void onDestroy() {
+//        Log.i("PROBLEM","PROBLEM");
+//        db.close();
+//        super.onDestroy();
+//    }
 	
 	private void setDetails(View view) {
 

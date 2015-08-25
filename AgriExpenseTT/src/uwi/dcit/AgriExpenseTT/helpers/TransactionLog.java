@@ -424,6 +424,7 @@ public class TransactionLog {
 				db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
 //				insertTransLog(CycleContract.CycleEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 				Log.i("AT ROW ID","ROW ID ::"+t.getRowId()+"ID::"+t.getId());
+				//DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getKeyrep(),c.);
 			}
 			insertTransLog(CycleContract.CycleEntry.TABLE_NAME, t.getRowId(), TransactionLog.TL_INS);
 

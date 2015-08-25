@@ -304,7 +304,7 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists" +
+                throw new EntityExistsException("Object already exists! " +
                         "");
             }
             else {
@@ -316,6 +316,7 @@ public class CycleEndpoint {
                 mgr.getTransaction().begin();
                 mgr.persist(cycle);
                 mgr.getTransaction().commit();
+
             }
         }
         catch (Exception e) {
@@ -338,7 +339,7 @@ public class CycleEndpoint {
      */
     @ApiMethod(name = "updateCycle")
     public Cycle updateCycle(Cycle cycle) {
-        System.out.println(cycle.getKeyrep());
+        //System.out.println(cycle.getKeyrep());
         NamespaceManager.set(cycle.getAccount());
         Key k = KeyFactory.createKey("Cycle", cycle.getId());
         EntityManager mgr = getEntityManager();

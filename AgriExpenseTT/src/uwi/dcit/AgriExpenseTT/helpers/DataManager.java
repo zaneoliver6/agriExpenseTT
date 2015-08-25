@@ -70,7 +70,7 @@ public class DataManager {
     public int insertCycle(int cropId, String name, String landType, double landQty, long time, String closed){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time,closed);
-		Log.i("IINNSSEERRTT Cycle", "Cycle is:"+acc.getAccount());
+		Log.i("IINNSSEERRTT Cycle", "Cycle!");
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
 		if(acc!=null){
 			//insert into transaction table

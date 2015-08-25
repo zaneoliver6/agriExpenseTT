@@ -82,10 +82,11 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
                 Cycle c = DbQuery.getCycle(db, dbh, rowId);
+				c.setAccount(DbQuery.getAccountName(db));
 				Log.i("UPDATE CYCLE","Cycle:"+c);
-				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
-				Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
-				c.setKeyrep(keyrep);
+				//String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
+				//Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
+				//c.setKeyrep(keyrep);
 				if(c.getTotalSpent()==0.00)
 					c.setTotalSpent(-1.00);
 				try{
@@ -150,12 +151,13 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
                 ResourcePurchase p=DbQuery.getARPurchase(db, dbh, rowId);
-				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
+				p.setAccount(DbQuery.getAccountName(db));
+				//String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
 				if(p.getQtyRemaining()==0){
 					p.setQtyRemaining(-1.00);
 				}
 				try{
-					p.setKeyrep(keyrep);
+					//p.setKeyrep(keyrep);
 					p=endpoint.updateRPurchase(p).execute();
 				}catch(Exception e){
 					
@@ -227,7 +229,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(c.getAccount());
 					//store key of inserted cycle into cloud - cloud key table
-					DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
+					DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getKeyrep(),rowId);
 					//remove from redo log
                     try {
                         DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
@@ -722,7 +724,7 @@ public class CloudInterface {
 			try {
 				Log.i("myTestToInsertttttt","Name:"+namespace+"Country:"+country+"County:"+county);
 //				endpoint.getOrInsertAccount(namespace, "SVG", "St George's").execute();
-				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
+				acc=endpoint.getOrInsertAccount(acc.getAccount(), acc.getCountry(), acc.getCounty()).execute();
 				DbQuery.insertAccountTask(db,dbh,acc);
 			}
 			catch (IOException e) {

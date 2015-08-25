@@ -291,19 +291,29 @@ public class ResourcePurchaseEndpoint {
     @ApiMethod(name = "updateRPurchase")
     public ResourcePurchase updateRPurchase(ResourcePurchase rPurchase) {
         NamespaceManager.set(rPurchase.getAccount());
-        Key k = KeyFactory.stringToKey(rPurchase.getKeyrep());
-        rPurchase.setKey(k);
-        ResourcePurchase currentRPurchase = getRPurchase(rPurchase.getAccount(),rPurchase.getKeyrep());
+        Key k = KeyFactory.createKey("ResourcePurchase", rPurchase.getpId());
+//        rPurchase.setKey(k);
+//        rPurchase.setKeyrep(KeyFactory.keyToString(k));
+
+        //Key k = KeyFactory.stringToKey(rPurchase.getKeyrep());
+        //rPurchase.setKey(k);
         EntityManager mgr = getEntityManager();
+        ResourcePurchase currentRPurchase = null;
         try {
-            if (!containsRPurchase(rPurchase)) {
-                throw new EntityNotFoundException("Object does not exist");
-            }
-            else{
-                if(rPurchase.getQtyRemaining()!=0)
-                    currentRPurchase.setQtyRemaining(rPurchase.getQtyRemaining());
+            currentRPurchase = mgr.find(ResourcePurchase.class, k);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally {
+//            mgr.close();
+        }
+        if(currentRPurchase!=null){
                 if(rPurchase.getQtyRemaining()==-1.00)
                     currentRPurchase.setQtyRemaining(0.00);
+                else
+                    //(rPurchase.getQtyRemaining()!=0)
+                    currentRPurchase.setQtyRemaining(rPurchase.getQtyRemaining());
                 if(rPurchase.getQuantifier()!=null)
                     currentRPurchase.setQuantifier(rPurchase.getQuantifier());
                 if(rPurchase.getType()!=null)
@@ -311,9 +321,6 @@ public class ResourcePurchaseEndpoint {
                 mgr.getTransaction().begin();
                 mgr.persist(currentRPurchase);
                 mgr.getTransaction().commit();
-            }
-        } finally {
-//            mgr.close();
         }
         return currentRPurchase;
     }

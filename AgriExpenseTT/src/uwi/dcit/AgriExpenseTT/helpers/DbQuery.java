@@ -508,6 +508,7 @@ public class DbQuery {
 		cv.put(CloudKeyEntry.CLOUD_KEY, k);
 		cv.put(CloudKeyEntry.CLOUD_KEY_ROWID, id);
 		db.insert(CloudKeyEntry.TABLE_NAME, null, cv);
+		Log.i("KEY KEY",""+table+" "+k+""+id);
 	}
 
     public static String getKey(SQLiteDatabase db,DbHelper dbh,String table,int id){
@@ -541,7 +542,7 @@ public class DbQuery {
 		if(cursor.getCount() < 1)return null;
 		Cycle c = new Cycle();
 		cursor.moveToFirst();
-		c.setAccount(getAccountName(db));
+		//c.setAccount(getAccountName(db));
 		c.setCropId(cursor.getInt(cursor.getColumnIndex(CycleEntry.CROPCYCLE_CROPID)));
 		c.setId(id);
 		c.setLandQty(cursor.getDouble(cursor.getColumnIndex(CycleEntry.CROPCYCLE_LAND_AMOUNT)));
