@@ -27,14 +27,14 @@ import uwi.dcit.AgriExpenseTT.Main;
 public class CloudEndpointUtils {
 	//To ensure proper connection between backend and application, obtain the IPv4 Address
 	//and set the LOCAL_APP_ENGINE_SERVER_URL to this address.
-	public static final boolean LOCAL_ANDROID_RUN = true;
+	public static final boolean LOCAL_ANDROID_RUN = false;
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.10.139:8080";
-	//protected static final String LOCAL_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone2.appspot.com/";
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone3.appspot.com/";
+	//protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.2.2:8080/";
-	//protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "https://agriexpense-milestone2.appspot.com/";
-    protected static final String REMOTE_APP_ENGINE_SERVER_URL = "http://localhost:8080";
-	//protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone2.appspot.com/";
+	protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "https://agriexpense-milestone3.appspot.com/";
+    //protected static final String REMOTE_APP_ENGINE_SERVER_URL = "http://localhost:8080";
+	protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone3.appspot.com/";
 
 	/**
 	 * Updates the Google client builder to connect the appropriate server based
