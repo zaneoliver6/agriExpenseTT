@@ -121,7 +121,7 @@ public class AlarmActivity extends AppCompatActivity {
         editor.putBoolean(MyPreferencesSet, true);
         editor.putBoolean(MyAlarmSet,false);
         editor.commit();
-        Log.i("PREF SET","PREFERENCES SET");
+        Log.i("PREF SET","PREFERENCES SET!");
         runAlarm();
         finish();
     }
