@@ -7,6 +7,30 @@
           href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+    <script>
+      function init2() {
+                            var ROOT = 'https://your_app_id.appspot.com/_ah/api';
+                            gapi.client.load('cycleApi', 'v1', function() {
+                                            console.log("Hello Loaded!");
+                            }, ROOT);
+
+                            var name="Fred";
+                            gapi.client.myApi.sayHi({'name': name}).execute(
+                            function(response) {
+                                            console.log("Fetched Cycles!");
+                            }
+                            );
+
+
+
+
+      }
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=init2"></script>
+
+
+
 </head>
 <body role="document" style="padding-top: 70px;">
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -30,8 +54,7 @@
                     </ul>
                 </li>
                 <li><a href="/_ah/api/explorer">Google Cloud Endpoints API Explorer</a></li>
-                <li><a href="https://console.developers.google.com">Google Developers Console</a>
-                </li>
+                <li><a href="https://console.developers.google.com">Google Developers Console</a></li>
             </ul>
         </div>
     </div>
@@ -66,6 +89,7 @@
                     </div>
                 </form>
                 <br/>
+
 
                 <p>If you need step-by-step instructions for connecting your Android application to
                     this backend module, see <a
@@ -135,6 +159,6 @@
  More info here : https://developers.google.com/api-client-library/javascript/reference/referencedocs
 -->
 
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
+
 </body>
 </html>

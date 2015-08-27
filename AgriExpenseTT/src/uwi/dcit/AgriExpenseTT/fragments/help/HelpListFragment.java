@@ -12,7 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import uwi.dcit.AgriExpenseTT.HiringLabourSlides;
-import uwi.dcit.AgriExpenseTT.Introtest;
+import uwi.dcit.AgriExpenseTT.IntroductionSlides;
+import uwi.dcit.AgriExpenseTT.ManageResourceSlides;
 import uwi.dcit.AgriExpenseTT.NewCropCycleSlides;
 import uwi.dcit.AgriExpenseTT.NewPurchaseSlides;
 import uwi.dcit.AgriExpenseTT.R;
@@ -40,28 +41,27 @@ public class HelpListFragment extends ListFragment{
 	public void setupListeners(){
         this.getListView().setOnItemClickListener(new OnItemClickListener(){
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-				
+
 				Fragment frag = null;
 				Intent intent;
 
 				switch (position){
 					case 0:
-						intent =new Intent(getActivity(), Introtest.class);
+						intent =new Intent(getActivity(), IntroductionSlides.class);
 						startActivity(intent);
-						//frag = new HelpIntroFragment();
 						break;
 					case 1:
 						intent = new Intent(getActivity(), NewPurchaseSlides.class);
 						startActivity(intent);
-						//frag = new HelpNewPurchaseFragment();
 						break;
 					case 2:
 						intent = new Intent(getActivity(), NewCropCycleSlides.class);
 						startActivity(intent);
-						//frag = new HelpNewCropCycleFragment();
 						break;
 					case 3:
-						frag = new HelpManageResourceFragment();
+						intent = new Intent(getActivity(), ManageResourceSlides.class);
+						startActivity(intent);
+						//frag = new HelpManageResourceFragment();
 						break;
 					case 4:
 						intent = new Intent(getActivity(), HiringLabourSlides.class);
@@ -69,13 +69,13 @@ public class HelpListFragment extends ListFragment{
 						//frag = new HelpHiringLabourFragment();
 						break;
 					case 5:
-						frag = new HelpManageDataFragment();
+						//frag = new HelpManageDataFragment();
 						break;
 					case 6:
-						frag = new HelpCalculateSalesFragment();
+						//frag = new HelpCalculateSalesFragment();
 						break;
 					case 7:
-						frag = new HelpGenerateReportFragment();
+						//frag = new HelpGenerateReportFragment();
 						break;
 					default:
 						Toast.makeText(getActivity(), "Help Topic not found", Toast.LENGTH_SHORT).show();

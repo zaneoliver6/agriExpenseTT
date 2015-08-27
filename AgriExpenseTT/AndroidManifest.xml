@@ -187,7 +187,6 @@
             </intent-filter>
         </activity>
 
-
         <receiver
             android:name=".helpers.ReminderBroadcaster"
             android:enabled="true" >
@@ -206,7 +205,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Introtest"
+            android:name=".IntroductionSlides"
             android:label="@string/title_activity_introtest" >
         </activity>
         <activity
@@ -221,10 +220,13 @@
             android:name=".HiringLabourSlides"
             android:label="@string/title_activity_hiring_labour_slides" >
         </activity>
-
         <activity
             android:name=".AlarmActivity"
             android:label="@string/title_activity_alarm" >
+        </activity>
+        <activity
+            android:name=".ManageResourceSlides"
+            android:label="@string/title_activity_manage_resource_slides" >
         </activity>
     </application>
 

@@ -92,7 +92,7 @@
                     android:id="@+id/editText2"
                     android:layout_gravity="center" />
 
-                <EditText
+                <TextView
                     android:paddingLeft="20dp"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
@@ -104,11 +104,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="date"
+                    android:textAlignment="center"
                     android:ems="10"
                     android:id="@+id/Report_end_date"
                     android:layout_gravity="center" />
 
-                <EditText
+                <TextView
                     android:paddingLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,8 +123,17 @@
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:ems="10"
+                    android:textAlignment="center"
                     android:id="@+id/report_start_date"
                     android:paddingTop="50dp"
+                    android:layout_gravity="center_horizontal|top" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="30dp"
+                    android:text="Format: (DD/MM/YYYY)"
+                    android:id="@+id/textView"
                     android:layout_gravity="center_horizontal|top" />
 
             </FrameLayout>

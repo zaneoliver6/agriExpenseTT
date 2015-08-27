@@ -146,4 +146,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="title_activity_new_crop_cycle_slides">NewCropCycleSlides</string>
     <string name="title_activity_new_purchase_slides">NewPurchaseSlides</string>
     <string name="title_activity_hiring_labour_slides">HiringLabourSlides</string>
+    <string name="title_activity_manage_resource_slides">ManageResourceSlides</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

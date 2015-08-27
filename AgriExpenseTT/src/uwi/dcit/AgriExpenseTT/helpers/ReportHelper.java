@@ -60,7 +60,7 @@ public class ReportHelper {
 	/**
 	 * Create a report using a combination of the default filename and the current time
 	 */
-	public void createReport(){		
+	public void createReport(long start, long end){
 		//Create a default name for the report file based on current date
 
 		Calendar c = Calendar.getInstance();
@@ -74,33 +74,28 @@ public class ReportHelper {
 			.append(c.get(Calendar.YEAR))
 			.append(".xls");
 		
-		createReport(stb.toString());
+		createReport(stb.toString(), start, end);
 	}
 	
 	/**
 	 * Create a report with the supplied filename up to the current time frame
 	 * @param filename This string will identify the name of the file that will be generated
 	 */
-	public void createReport(String filename){
+	public void createReport(String filename, long start, long end){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
 		if (!path.exists()) {
 			path.mkdirs();
 			Log.i("CSVHelper", " Folder does not exist, Creating folder at "+path.toString());
 		}
-		writeExcel(path, filename);
+		writeExcel(path, filename, start, end);
 	}
+
 	
-	private void writeExcel(File path, String filename){
-		Calendar c = Calendar.getInstance();
-		this.writeExcel(path, filename,c.getTimeInMillis());
-	}
+//	private void writeExcel(File path, String filename, long start, long end){
+//		this.writeExcel(path, filename, start, end);
+//	}
 	
-	private void writeExcel(File path, String filename, long l){
-		long end = 2438574400000L;
-		this.writeExcel(path, filename, end, 1);
-	}
-	
-	private void writeExcel(File path, String filename, long endDate, long beginDate){
+	private void writeExcel(File path, String filename, long start, long end){
 		
 		ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
 		DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
@@ -108,10 +103,10 @@ public class ReportHelper {
 		
 		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
 		HSSFSheet useSheet = agriWrkbk.createSheet("Crop Cycle");
-		
+		Log.i("Start-End",""+start+" "+end);
 		int rowNum=0;
 		for(LocalCycle cycle : cycleList){
-			if(cycle.getTime()>=beginDate && cycle.getTime()<=endDate) {
+			if(cycle.getTime()>=start && cycle.getTime()<=end) {
 				HSSFRow row = useSheet.createRow(rowNum++);
 				HSSFCell a0 = row.createCell(0);
 				a0.setCellValue("Cycle#" + cycle.getCropId() + ": " + DbQuery.findResourceName(db, dbh, cycle.getCropId()));
@@ -119,6 +114,7 @@ public class ReportHelper {
 				a1.setCellValue(cycle.getTotalSpent());
 				rowNum = writeCategories(filename, path, agriWrkbk, useSheet, cycle.getId(), rowNum);
 				rowNum += 3;
+				Log.i("TIME","BETWEEN TIME");
 			}
 		}
 	}

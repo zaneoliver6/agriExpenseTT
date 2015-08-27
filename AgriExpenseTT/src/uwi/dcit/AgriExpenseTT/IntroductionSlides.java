@@ -2,10 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -15,14 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import uwi.dcit.AgriExpenseTT.fragments.ScreenSlidePageFragment;
-
-public class Introtest extends FragmentActivity {
+public class IntroductionSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -31,9 +22,13 @@ public class Introtest extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.slide_one_alt,
-            R.drawable.slide_two_alt,
-            R.drawable.slide_three_alt,
+            R.drawable.introslide1,
+            R.drawable.introslide2,
+            R.drawable.introslide3,
+            R.drawable.introslide4,
+            R.drawable.introslide5,
+            R.drawable.introslide6,
+            R.drawable.cycledefinition,
     };
 
     @Override
@@ -113,7 +108,7 @@ public class Introtest extends FragmentActivity {
         }
     }
         public void ReturnToMain(View view){
-            Intent intent = new Intent(Introtest.this, Main.class);
+            Intent intent = new Intent(IntroductionSlides.this, Main.class);
             startActivity(intent);
         }
 }
