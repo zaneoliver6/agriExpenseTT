@@ -37,11 +37,15 @@ public class Main extends BaseActivity{
     private String focus = "cycle";
     public SQLiteDatabase db;
     private SharedPreferences sharedpreferences;
+    private SharedPreferences sharedPreferencesFirstRun;
     public static final String MyPREFERENCES = "MyAlarmPrefs" ;
     public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
     public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
     public static final String MyAlarmSet = "MyAlarmSet";
     public static final String MyPreferencesSet = "MyPrefSet";
+
+    public static final String FirstRunPreferences = "MyFirstRunPrefs";
+    public static final String FirstRun="MyPrefs-FirstRun";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,11 @@ public class Main extends BaseActivity{
         new Thread(new Runnable() {
             public void run() {
                 setPreferencesCall();
+            }
+        }).start();
+        new Thread(new Runnable() {
+            public void run() {
+                firstRunCheck();
             }
         }).start();
     }
@@ -198,12 +207,23 @@ public class Main extends BaseActivity{
     public void setPreferencesCall(){
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         Boolean set = sharedpreferences.getBoolean(MyPreferencesSet,false);
-        Intent i = new Intent(Main.this, AlarmActivity.class);
-        //startActivity(i);
         if(!set) {
-//            Intent i = new Intent(Main.this, AlarmActivity.class);
+          Intent i = new Intent(Main.this, AlarmActivity.class);
             startActivity(i);
             Log.i("PREF SET","PREFERENCES SET");
         }
+    }
+
+    public void firstRunCheck(){
+        sharedPreferencesFirstRun = getSharedPreferences(FirstRunPreferences, Context.MODE_PRIVATE);
+        Boolean set = sharedPreferencesFirstRun.getBoolean(FirstRun, false);
+        if(!set){
+            Intent  p = new Intent(Main.this, IntroductionSlides.class);
+            startActivity(p);
+            SharedPreferences.Editor editor = sharedPreferencesFirstRun.edit();
+            editor.putBoolean(FirstRun,true);
+            editor.commit();
+        }
+
     }
 }
