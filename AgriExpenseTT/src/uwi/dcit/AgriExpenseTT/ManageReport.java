@@ -51,8 +51,8 @@ public class ManageReport extends BaseActivity {
 		String date = to.getText().toString();
 		Log.i("YEAR",""+date);
 		int dayF = Integer.parseInt(date.substring(0,2));
-		int monthF = Integer.parseInt(date.substring(2,4));
-		int yearF = Integer.parseInt(date.substring(4,8));
+		int monthF = Integer.parseInt(date.substring(3,5));
+		int yearF = Integer.parseInt(date.substring(6,10));
 		Log.i("START",""+dayF+""+monthF+""+yearF);
 		Calendar toDate = Calendar.getInstance();
 		toDate.set(Calendar.DAY_OF_MONTH,dayF);
@@ -67,8 +67,8 @@ public class ManageReport extends BaseActivity {
 		EditText from = (EditText) findViewById(R.id.Report_end_date);
 		date = from.getText().toString();
 		int dayT= Integer.parseInt(date.substring(0,2));
-		int monthT = Integer.parseInt(date.substring(2,4));
-		int yearT = Integer.parseInt(date.substring(4,8));
+		int monthT = Integer.parseInt(date.substring(3,5));
+		int yearT = Integer.parseInt(date.substring(6,10));
 
 		Calendar fromDate = Calendar.getInstance();
 		fromDate.set(Calendar.DAY_OF_MONTH,dayT);
