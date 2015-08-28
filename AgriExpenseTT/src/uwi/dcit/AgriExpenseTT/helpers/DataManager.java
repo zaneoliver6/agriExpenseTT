@@ -70,8 +70,9 @@ public class DataManager {
     public int insertCycle(int cropId, String name, String landType, double landQty, long time, String closed){
         //insert into database
         int id=DbQuery.insertCycle(db, dbh, cropId, name, landType, landQty,tL,time,closed);
-		Log.i("IINNSSEERRTT Cycle", "Cycle!");
 		CloudInterface c= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
 		if(acc!=null){
 			//insert into transaction table
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
@@ -79,11 +80,9 @@ public class DataManager {
 			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
 				c.insertCycle();
+				c.updateUpAccC(time);
 			}
 		}
-		time = System.currentTimeMillis()/1000;
-		DbQuery.updateAccount(db,time);
-		c.updateUpAccC(time);
         return id;
     }
 
@@ -107,19 +106,18 @@ public class DataManager {
 
     public int insertPurchase( int resourceId, String quantifier, double qty,String type, double cost, long time){
         int id = DbQuery.insertResourceExp(db, dbh, type, resourceId, quantifier, qty, cost, time, tL);
-		Log.i("IINNSSEERRTT Purchase", "Account is:"+acc.getAccount());
 		CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
+		time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
         if(acc!=null){
             //insert into redo log table
             DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
             //try to insert into cloud
             if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
                 c.insertPurchase();
+				c.updateUpAccC(time);
             }
         }
-		time = System.currentTimeMillis()/1000;
-		DbQuery.updateAccount(db,time);
-		c.updateUpAccC(time);
         return id;
     }
 	
@@ -297,14 +295,14 @@ public class DataManager {
 		DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, id, "ins");
 		//try to insert into cloud
 		CloudInterface cloud = new CloudInterface(context, db, dbh);//new CloudInterface(context);
+		long time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
 		if(acc!=null ){
 			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)) {
 				cloud.insertCycleUseC();
+				cloud.updateUpAccC(time);
 			}
 		}
-		long time = System.currentTimeMillis()/1000;
-		cloud.updateUpAccC(time);
-		DbQuery.updateAccount(db,time);
 		Log.i("SPIT TRANSCARION LOG","SPIT");
 		DbQuery.getTransactionLog(db);
 	}
@@ -316,16 +314,16 @@ public class DataManager {
 		TransactionLog tl=new TransactionLog(dbh, db,context);
 		tl.insertTransLog(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_UPDATE);
 		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		long time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
 //			record in transaction log
 			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				cloud.updatePurchase();
+				cloud.updateUpAccC(time);
 			}
 		}
-		long time = System.currentTimeMillis()/1000;
-		cloud.updateUpAccC(time);
-		DbQuery.updateAccount(db,time);
 	}
 
 	public boolean updateCycle(LocalCycle c, ContentValues cv){
@@ -334,16 +332,16 @@ public class DataManager {
 		TransactionLog tl = new TransactionLog(dbh, db,context);
 		tl.insertTransLog(CycleContract.CycleEntry.TABLE_NAME, c.getId(),TransactionLog.TL_UPDATE);
 		CloudInterface cloud= new CloudInterface(context,db,dbh);// new CloudInterface(context);
+		long time = System.currentTimeMillis()/1000;
+		DbQuery.updateAccount(db,time);
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
 			//record in transaction log
 			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
 				cloud.updateCycle();
+				cloud.updateUpAccC(time);
 			}
 		}
-		long time = System.currentTimeMillis()/1000;
-		cloud.updateUpAccC(time);
-		DbQuery.updateAccount(db,time);
         return (result != -1);
 	}
 	

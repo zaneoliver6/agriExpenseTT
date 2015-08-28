@@ -661,7 +661,7 @@ public class DbQuery {
 
 	public static void updateAccount(SQLiteDatabase db, long time){
 		Account acc=DbQuery.getUpAcc(db);
-		if(acc.getLastUpdated()<time){
+		if(acc!=null && acc.getLastUpdated()<time){
 			ContentValues cv=new ContentValues();
 			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, time);
 			db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);

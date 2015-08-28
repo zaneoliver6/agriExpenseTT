@@ -228,6 +228,14 @@
             android:name=".ManageResourceSlides"
             android:label="@string/title_activity_manage_resource_slides" >
         </activity>
+        <activity
+            android:name=".CalculateSalesSlides"
+            android:label="@string/title_activity_calculate_sales_slides" >
+        </activity>
+        <activity
+            android:name=".GeneratingReportSlides"
+            android:label="@string/title_activity_generating_report_slides" >
+        </activity>
     </application>
 
 </manifest>

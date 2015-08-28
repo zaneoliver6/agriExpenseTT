@@ -258,7 +258,7 @@ public class FragmentChoosePurchase extends ListFragment {
 			 View row=inflater.inflate(R.layout.purchased_item, parent, false);
 
 			 if(curr.getQtyRemaining()==0.00){
-				 ((ImageView)row.findViewById(R.id.icon_pitem_next)).setImageResource(R.drawable.ic_empty);
+				 ((ImageView)row.findViewById(R.id.icon_pitem_next)).setImageResource(R.drawable.ic_empty2);
 			 }
 
 			 //setting the colours

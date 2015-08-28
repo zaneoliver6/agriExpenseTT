@@ -11,6 +11,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import uwi.dcit.AgriExpenseTT.CalculateSalesSlides;
+import uwi.dcit.AgriExpenseTT.GeneratingReportSlides;
 import uwi.dcit.AgriExpenseTT.HiringLabourSlides;
 import uwi.dcit.AgriExpenseTT.IntroductionSlides;
 import uwi.dcit.AgriExpenseTT.ManageResourceSlides;
@@ -69,9 +71,13 @@ public class HelpListFragment extends ListFragment{
 						//frag = new HelpHiringLabourFragment();
 						break;
 					case 5:
+						intent = new Intent(getActivity(), CalculateSalesSlides.class);
+						startActivity(intent);
 						//frag = new HelpManageDataFragment();
 						break;
 					case 6:
+						intent = new Intent(getActivity(), GeneratingReportSlides.class);
+						startActivity(intent);
 						//frag = new HelpCalculateSalesFragment();
 						break;
 					case 7:

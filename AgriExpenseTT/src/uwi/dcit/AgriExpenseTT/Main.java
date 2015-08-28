@@ -62,9 +62,12 @@ public class Main extends BaseActivity{
 
         new Thread(new Runnable() {
             public void run() {
+
                 setPreferencesCall();
             }
         }).start();
+
+
         new Thread(new Runnable() {
             public void run() {
                 firstRunCheck();
@@ -223,7 +226,7 @@ public class Main extends BaseActivity{
             SharedPreferences.Editor editor = sharedPreferencesFirstRun.edit();
             editor.putBoolean(FirstRun,true);
             editor.commit();
-        }
 
+        }
     }
 }

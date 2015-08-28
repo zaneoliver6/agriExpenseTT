@@ -32,7 +32,7 @@ public class CloudEndpointUtils {
 	//protected static final String LOCAL_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone3.appspot.com/";
 	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080";
 //	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://10.0.2.2:8080/";
-	protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "https://agriexpense-milestone3.appspot.com/";
+	//protected static final String LOCAL_APP_ENGINE_SERVER_URL_FOR_ANDROID = "https://agriexpense-milestone3.appspot.com/";
     protected static final String REMOTE_APP_ENGINE_SERVER_URL = "http://localhost:8080";
 	//protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://agriexpense-milestone3.appspot.com/";
 
