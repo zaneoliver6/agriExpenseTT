@@ -56,21 +56,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
-        <activity
-            android:name=".CycleUsage"
-            android:label="@string/title_activity_cycle_useage" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.Main" />
-        </activity>
-        <activity
-            android:name=".UseResource"
-            android:label="@string/title_activity_use_resource"
-            android:windowSoftInputMode="stateHidden" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uwi.dcit.AgriExpenseTT.Main" />
-        </activity>
+
         <activity
             android:name=".DeleteData"
             android:label="Delete data"
