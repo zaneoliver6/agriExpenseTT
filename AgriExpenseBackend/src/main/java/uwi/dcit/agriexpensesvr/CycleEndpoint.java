@@ -1,4 +1,5 @@
 package uwi.dcit.agriexpensesvr;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -24,10 +25,8 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
-import sun.rmi.runtime.Log;
 
 @Api( name = "cycleApi",
         version = "v1",
@@ -52,13 +51,13 @@ public class CycleEndpoint {
             @Nullable @Named("limit") Integer limit) {
 
         EntityManager mgr = null;
-        Cursor cursor = null;
+        Cursor cursor;
         List<Cycle> execute = null;
 
         try {
             mgr = getEntityManager();
             Query query = mgr.createQuery("select from Cycle as Cycle");
-            if (cursorString != null && cursorString != "") {
+            if (cursorString != null && !cursorString.equals("")) {
                 cursor = Cursor.fromWebSafeString(cursorString);
                 query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
             }
@@ -90,16 +89,16 @@ public class CycleEndpoint {
     @ApiMethod(name = "fetchAllCycles")
     public List<Cycle> fetchAllCycles() {
 
-        EntityManager mgr = null;
-        List<Cycle> execute = null;
-        Query query = null;
+        EntityManager mgr;
+        List<Cycle> execute;
+        Query query;
 
 		/* For namespace list fetching */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
                 Entities.NAMESPACE_METADATA_KIND);
 
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
         for (Entity e : ds.prepare(q).asIterable()) {
             if (e.getKey().getId() != 0) {
                 System.out.println("<default>");
@@ -113,7 +112,7 @@ public class CycleEndpoint {
 
         // Set each namespace then return all results under that given namespace
 
-        List<Cycle> cycleList = new ArrayList<Cycle>();
+        List<Cycle> cycleList = new ArrayList<>();
 
         for (String i : results) {
 
@@ -137,7 +136,7 @@ public class CycleEndpoint {
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
         Iterator<Entity> i = results.iterator();
-        List<Cycle> cL = new ArrayList<Cycle>();
+        List<Cycle> cL = new ArrayList<>();
         while (i.hasNext()) {
             Entity e = i.next();
             // System.out.println(e.toString());
@@ -165,16 +164,16 @@ public class CycleEndpoint {
                                         @Named("start_date") String start_date,
                                         @Named("end_date") String end_date) {
 
-        EntityManager mgr = null;
-        List<Cycle> execute = null;
-        Query query = null;
+        EntityManager mgr;
+        List<Cycle> execute;
+        Query query;
 
 		/* For namespace list fetching */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
                 Entities.NAMESPACE_METADATA_KIND);
 
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
         for (Entity e : ds.prepare(q).asIterable()) {
             if (e.getKey().getId() != 0) {
                 System.out.println("<default>");
@@ -203,7 +202,7 @@ public class CycleEndpoint {
 
         // Set each namespace then return all results under that given namespace
 
-        List<Cycle> cycleList = new ArrayList<Cycle>();
+        List<Cycle> cycleList = new ArrayList<>();
 
         for (String i : results) {
 
@@ -226,10 +225,9 @@ public class CycleEndpoint {
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
-        Iterator<Entity> i = results.iterator();
 
-        while (i.hasNext()) {
-            String key = (String) i.next().getProperty("key");
+        for (Entity result : results) {
+            String key = (String) result.getProperty("key");
             removeCycle(key, namespace);
         }
     }
@@ -322,9 +320,9 @@ public class CycleEndpoint {
         catch (Exception e) {
             return null;
         }
-        finally {
+//        finally {
 //            mgr.close();
-        }
+//        }
         return cycle;
     }
 
@@ -350,9 +348,9 @@ public class CycleEndpoint {
         catch(Exception e){
             e.printStackTrace();
         }
-        finally {
+//        finally {
 //            mgr.close();
-        }
+//        }
         if(c!=null){
             if(cycle.getHarvestAmt()!=0)
                 c.setHarvestAmt(cycle.getHarvestAmt());
@@ -406,9 +404,10 @@ public class CycleEndpoint {
             if (item == null) {
                 contains = false;
             }
-        } finally {
+        }catch(Exception e){System.out.println(e.getMessage());}
+//        finally {
 //            mgr.close();
-        }
+//        }
         return contains;
     }
 
