@@ -1,30 +1,21 @@
 package uwi.dcit.AgriExpenseTT;
 
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-
-import java.util.Calendar;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
-import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
 
 public class Main extends BaseActivity{
@@ -51,28 +42,17 @@ public class Main extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
+        mTitle = getTitle();
         // Needed after setContentView to refer to the appropriate XML View
         setupNavDrawer();
 
-        mTitle = getTitle();
-
         // Added Google Analytics
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
-        //broadcastIntent();
+        GAnalyticsHelper
+                .getInstance(this.getApplicationContext())
+                .sendScreenView("Main Screen");
 
-        new Thread(new Runnable() {
-            public void run() {
-
-                setPreferencesCall();
-            }
-        }).start();
-
-
-        new Thread(new Runnable() {
-            public void run() {
-                firstRunCheck();
-            }
-        }).start();
+        setPreferencesCall();
+        firstRunCheck();
     }
 
     @Override
@@ -82,6 +62,9 @@ public class Main extends BaseActivity{
         buildScreen();
     }
 
+    /**
+     * BuildScreen will be used to setup the screen based on the device type and the orientation
+     */
     private void buildScreen(){
         Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -91,6 +74,9 @@ public class Main extends BaseActivity{
         }
     }
 
+    /**
+     * Setup the Screen if running in potrait mode
+     */
     private void setupPort() {
         Fragment frag = new FragmentSlidingMain();
         Bundle bundle = new Bundle();
@@ -103,6 +89,9 @@ public class Main extends BaseActivity{
             .commit();
     }
 
+    /**
+     * Used to implement the master-detail view for the details
+     */
     private void setupLand() {
         leftFrag = new FragmentSlidingMain();
         rightFrag = new FragmentEmpty();
@@ -112,7 +101,7 @@ public class Main extends BaseActivity{
         leftFrag.setArguments(bundle);
 
         Bundle arguments=new Bundle();
-        arguments.putString("type","select");
+        arguments.putString("type", "select");
         rightFrag.setArguments(arguments);
 
         getSupportFragmentManager()
@@ -123,8 +112,10 @@ public class Main extends BaseActivity{
     }
 
     public void restoreActionBar() {
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(mTitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setTitle(mTitle);
+        }
     }
 
     @Override
@@ -156,7 +147,7 @@ public class Main extends BaseActivity{
             ft.replace(R.id.navContentRight,newFrag).addToBackStack("left");
             rightFrag=newFrag;
             rightFrag.setRetainInstance(false);
-        }else{
+        }else {
             ft.replace(R.id.navContentLeft,newFrag).addToBackStack("right");
         }
         ft.commit();

@@ -138,16 +138,14 @@
         </activity>
         <activity
             android:name=".HelpScreen"
-            android:label="@string/title_activity_help_screen"
-            android:parentActivityName=".Main" >
+            android:label="@string/title_activity_help_screen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
         <activity
             android:name=".ManageReport"
-            android:label="@string/title_activity_report_manager"
-            android:parentActivityName=".ManageData" >
+            android:label="@string/title_activity_report_manager">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.ManageData" />
@@ -155,7 +153,6 @@
         <activity
             android:name=".Backup"
             android:label="@string/title_activity_backup_data"
-            android:parentActivityName=".Main"
             android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
