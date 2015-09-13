@@ -1,25 +1,16 @@
 package uwi.dcit.AgriExpenseTT;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import uwi.dcit.AgriExpenseTT.fragments.ScreenSlidePageFragment;
 
 public class HiringLabourSlides extends FragmentActivity {
 

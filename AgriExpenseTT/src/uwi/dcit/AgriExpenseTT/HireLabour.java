@@ -3,15 +3,12 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.view.View;
+import android.widget.TextView;
 
-import uwi.dcit.AgriExpenseTT.fragments.FragmentAddData;
-import uwi.dcit.AgriExpenseTT.fragments.FragmentAddDataLast;
 import uwi.dcit.AgriExpenseTT.fragments.HireLabourLists;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;

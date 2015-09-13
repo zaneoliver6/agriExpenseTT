@@ -10,7 +10,6 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 import java.io.IOException;
-import java.security.KeyFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -21,7 +20,6 @@ import uwi.dcit.AgriExpenseTT.models.CloudKeyContract.CloudKeyEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.RedoLogContract.RedoLogEntry;
-import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
@@ -74,8 +72,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             CycleApi endpoint= builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, CycleEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -143,8 +141,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
 			ResourcePurchaseApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -202,8 +200,8 @@ public class CloudInterface {
 
 			builder = CloudEndpointUtils.updateBuilder(builder);
 			CycleApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
 
@@ -271,8 +269,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             CycleUseApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleResourceEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -326,8 +324,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             ResourcePurchaseApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -384,8 +382,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             CycleApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", CycleEntry.TABLE_NAME);
@@ -484,8 +482,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             CycleUseApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", CycleResourceEntry.TABLE_NAME);
@@ -552,8 +550,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             ResourcePurchaseApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
 			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", ResourcePurchaseEntry.TABLE_NAME);
@@ -568,15 +566,12 @@ public class CloudInterface {
 				p.setKeyrep(k);
 				Log.i("KEY","KEY IS::"+k);
 				Log.i("RP","REMOVING RES P. OBJECCT:::>>"+p);
-				if(p!=null){
-					try{
-						Log.i("RP","REMOVING RES P.");
-						endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
-					}
-					catch(Exception e){
-						e.printStackTrace();
-						p=null;
-					}
+				try {
+					Log.i("RP", "REMOVING RES P.");
+					endpoint.removeRPurchase(p.getKeyrep(), p.getAccount()).execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+					p = null;
 				}
 				if(p!=null){//the removal was successful OR there was not ever inserted into the cloud
 					int id=DbQuery.getCloudKeyId(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
@@ -637,8 +632,8 @@ public class CloudInterface {
 			         null);         
 			builder = CloudEndpointUtils.updateBuilder(builder);
             TranslogApi endpoint = builder.build();
-			ArrayList<Integer> rowIds=new ArrayList<Integer>();
-			ArrayList<Integer> logIds=new ArrayList<Integer>();
+			ArrayList<Integer> rowIds = new ArrayList<>();
+			ArrayList<Integer> logIds = new ArrayList<>();
 			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, TransactionLogEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -791,23 +786,17 @@ public class CloudInterface {
 				null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
 		AccountApi endpoint = builder.build();
-		Account cloudAccount=null;
+		Account cloudAccount;
 		try {
 			cloudAccount = endpoint.getAccount(localAccount.getAccount()).execute();
+			long time = System.currentTimeMillis() / 1000;
+			cloudAccount.setLastUpdated(time);
+			DbQuery.updateAccount(db, time);
+
+			endpoint.updateAccount(cloudAccount).execute();
 		}
 		catch(Exception e){
 			e.printStackTrace();
-		}
-		long time = System.currentTimeMillis()/1000;
-		cloudAccount.setLastUpdated(time);
-		DbQuery.updateAccount(db,time);
-		if (cloudAccount != null) {
-			try {
-				endpoint.updateAccount(cloudAccount).execute();
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
 		}
 	}
 	

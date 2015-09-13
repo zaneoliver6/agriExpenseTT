@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ import uwi.dcit.AgriExpenseTT.models.ResourceContract;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
-import uwi.dcit.agriexpensesvr.cycleUseApi.model.Key;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 
@@ -32,7 +29,6 @@ public class DataManager {
 	Context context;
 	TransactionLog tL;
 	Account acc;
-	NetworkHelper nh;
 	public DataManager(Context context){
 		dbh= new DbHelper(context);
 //		db=dbh.getReadableDatabase();
@@ -40,7 +36,6 @@ public class DataManager {
 		this.context=context;
 		tL=new TransactionLog(dbh,db,context);
 		acc=DbQuery.getUpAcc(db);
-		nh= new NetworkHelper();
 	}
 	public DataManager(Context context,SQLiteDatabase db,DbHelper dbh){
 		this.dbh= dbh;
@@ -77,7 +72,7 @@ public class DataManager {
 			//insert into transaction table
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, id, "ins");
 			//try insert into cloud
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				Log.i("IINNSSEERRTT", "Going to insert into cloud!");
 				c.insertCycle();
 				c.updateUpAccC(time);
@@ -113,8 +108,8 @@ public class DataManager {
             //insert into redo log table
             DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, id, "ins");
             //try to insert into cloud
-            if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
-                c.insertPurchase();
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
+				c.insertPurchase();
 				c.updateUpAccC(time);
             }
         }
@@ -145,7 +140,7 @@ public class DataManager {
 			if (acc != null) {
 				//redo log (cloud)
 				DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, l.getPurchaseId(), TransactionLog.TL_UPDATE);
-				if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+				if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 					//NOTE
 					clo.updatePurchase();
 				}
@@ -165,7 +160,7 @@ public class DataManager {
 			if (acc != null) {
 				//redo log (cloud)
 				DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, l.getCycleid(), TransactionLog.TL_UPDATE);
-				if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+				if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 					//NOTE
 					clo.updateCycle();
 				}
@@ -185,7 +180,7 @@ public class DataManager {
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleResourceContract.CycleResourceEntry.TABLE_NAME, l.getId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				//NOTE
 				clo.deleteCycleUse();
 			}
@@ -201,7 +196,7 @@ public class DataManager {
 		//put the delete in the redo log
 		
 		//getting all the cycleUse
-		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+		ArrayList<LocalCycleUse> list = new ArrayList<>();
 		DbQuery.getCycleUseP(db, dbh, p.getPId(), list, null);
 		Iterator<LocalCycleUse> itr=list.iterator();
 		CloudInterface clo= new CloudInterface(context,db,dbh);//new CloudInterface(context);
@@ -216,7 +211,7 @@ public class DataManager {
 		if(acc!=null){
 			//redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getPId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				CloudInterface c= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 				c.deletePurchase();
 			}
@@ -230,7 +225,7 @@ public class DataManager {
 		//delete the cycle Locally
 		//insert into redo log (cloud)
 
-		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
+		ArrayList<LocalCycleUse> list = new ArrayList<>();
 		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
 		Iterator<LocalCycleUse> itr=list.iterator();
 
@@ -251,7 +246,7 @@ public class DataManager {
 		if(acc!=null){
 			//insert into redo log (cloud)
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_DEL);
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				CloudInterface cloud= new CloudInterface(context,db,dbh);//new CloudInterface(context);
 				cloud.deleteCycle();
 			}
@@ -267,19 +262,16 @@ public class DataManager {
 		//delete resource and record in transaction log
 		//-----Not Sure If we're having resources in the cloud
 
-		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
+		ArrayList<LocalResourcePurchase> pList = new ArrayList<>();
 		DbQuery.getResourcePurchases(db, dbh, pList, rId);
-		Iterator<LocalResourcePurchase>pI=pList.iterator();
-		while(pI.hasNext()){
-			this.deletePurchase(pI.next().toRPurchase());
+		for (LocalResourcePurchase aPList : pList) {
+			this.deletePurchase(aPList.toRPurchase());
 		}
-		
-		ArrayList<LocalCycle> cList=new ArrayList<LocalCycle>();
+
+		ArrayList<LocalCycle> cList = new ArrayList<>();
 		DbQuery.getCycles(db, dbh, cList);
-		Iterator<LocalCycle> cI=cList.iterator();
-		while(cI.hasNext()){
-			LocalCycle c=cI.next();
-			if(c.getCropId()==rId)
+		for (LocalCycle c : cList) {
+			if (c.getCropId() == rId)
 				this.deleteCycle(c);
 		}
 		//delete resource
@@ -298,7 +290,7 @@ public class DataManager {
 		long time = System.currentTimeMillis()/1000;
 		DbQuery.updateAccount(db,time);
 		if(acc!=null ){
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)) {
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				cloud.insertCycleUseC();
 				cloud.updateUpAccC(time);
 			}
@@ -319,7 +311,7 @@ public class DataManager {
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME,p.getPId(), TransactionLog.TL_UPDATE);
 //			record in transaction log
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				cloud.updatePurchase();
 				cloud.updateUpAccC(time);
 			}
@@ -337,7 +329,7 @@ public class DataManager {
 		if(acc!=null){
 			DbQuery.insertRedoLog(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getId(), TransactionLog.TL_UPDATE);
 			//record in transaction log
-			if(acc.getSignedIn()==1 && nh.isWifiAvailable(this.context)){
+			if (acc.getSignedIn() == 1 && NetworkHelper.isWifiAvailable(this.context)) {
 				cloud.updateCycle();
 				cloud.updateUpAccC(time);
 			}

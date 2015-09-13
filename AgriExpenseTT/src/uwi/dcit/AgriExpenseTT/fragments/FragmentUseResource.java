@@ -1,10 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -22,13 +24,16 @@ public class FragmentUseResource extends Fragment{
     LocalCycle cycle;
     String type;
     double total;
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_use_resource, container, false);
         cycle = getArguments().getParcelable("cycle");
         type  = getArguments().getString("type");
-        total = Double.parseDouble(getArguments().getString("total"));
+        String totalStr = getArguments().getString("total");
+        if (totalStr != null) total = Double.parseDouble(totalStr);
+        context = this.getContext();
 
         setup();
         return view;
@@ -73,18 +78,31 @@ public class FragmentUseResource extends Fragment{
             bar = ((AppCompatActivity)this.getActivity()).getSupportActionBar();
         }
 
-        if(category.equals(DHelper.cat_plantingMaterial)){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourPM)));
-        }else if(category.equals(DHelper.cat_fertilizer)){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourFer)));
-        }else if(category.equals(DHelper.cat_soilAmendment)){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourSoil)));
-        }else if(category.equals(DHelper.cat_chemical)){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
-        }else if(category.equals(DHelper.cat_other)){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourChem)));
-        }else if (category.equals((DHelper.cat_labour))){
-            if (bar != null)bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colourLabour)));
+        switch (category) {
+            case DHelper.cat_plantingMaterial:
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourPM)));
+                break;
+            case DHelper.cat_fertilizer:
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourFer)));
+                break;
+            case DHelper.cat_soilAmendment:
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourSoil)));
+                break;
+            case DHelper.cat_chemical:
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourChem)));
+                break;
+            case DHelper.cat_other:
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourChem)));
+                break;
+            case (DHelper.cat_labour):
+                if (bar != null)
+                    bar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.colourLabour)));
+                break;
         }
     }
 }

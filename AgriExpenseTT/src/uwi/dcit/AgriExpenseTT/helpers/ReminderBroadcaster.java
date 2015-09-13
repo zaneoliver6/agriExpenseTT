@@ -1,4 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
+
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,7 +10,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
 import java.util.Calendar;
+
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
 
@@ -56,8 +59,8 @@ public class ReminderBroadcaster extends BroadcastReceiver{
 		if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 			Log.i("HELLO","WE REBOOTED!");
 			alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-			int hour=0;
-			String weekDay=null;
+			int hour;
+			String weekDay;
 			sharedpreferences = context.getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 			weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay, "DEFAULT");
 			hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);

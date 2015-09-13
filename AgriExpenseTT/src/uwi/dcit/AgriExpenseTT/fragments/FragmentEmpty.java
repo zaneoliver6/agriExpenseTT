@@ -1,9 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +11,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import uwi.dcit.AgriExpenseTT.AddData;
-import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 
 public class FragmentEmpty extends Fragment{
 	View view;
@@ -49,33 +43,34 @@ public class FragmentEmpty extends Fragment{
                 break;
         }
 
-        if(type.equals("purchase")){ // Setting up the text for the page depending on the type
-			if(category == null){
-				desc.setText("Tap here to create a new purchase");
+        switch (type) { // Setting up the text for the page depending on the type
+            case "purchase":
+                if (category == null) {
+                    desc.setText("Sorry you haven't purchased any of this to use as yet");
+                    button.setText("Add Purchase");
+                } else {
+                    desc.setText("Sorry you haven't purchased any of this to use as yet");
+                    desc.setText("Sorry you haven't purhased any " + category + ", so there's nothing to use");
+                    button.setText("Add Purchase");
+                }
+                break;
+            case "cycle":
+                desc.setText("Tap here to create a new cycle");
+                button.setText("Add Cycle");
+                break;
+
+            case "select":
+                desc.setText("Select something to begin operations");
+                button.setText("Add");
+                break;
+            case "labour":
+                desc.setText("Tap here to add a new labourer");
+                button.setText("Add Labour");
+                this.isLabour = true;
+                break;
+            default:
                 button.setText("Add Purchase");
-			}else {
-				desc.setText("Sorry you have not purchased any "+category+" as yet");
-			}
-		}else if(type.equals("cycle")){
-			desc.setText("Tap here to create a new cycle");
-            button.setText("Add Cycle");
-		}else if(type.equals("purchase")){
-			if(category == null){
-				desc.setText("Sorry you haven't purchased any of this to use as yet");
-                button.setText("Add Purchase");
-			}else{desc.setText("Sorry you haven't purchased any of this to use as yet");
-				desc.setText("Sorry you haven't purhased any "+category+", so there's nothing to use");
-                button.setText("Add Purchase");
-			}
-		}else if(type.equals("select")){
-            desc.setText("Select something to begin operations");
-            button.setText("Add");
-        }else if (type.equals("labour")){
-            desc.setText("Tap here to add a new labourer");
-            button.setText("Add Labour");
-            this.isLabour = true;
-        }else{
-            button.setText("Add Purchase");
+                break;
         }
 
 
@@ -105,39 +100,45 @@ public class FragmentEmpty extends Fragment{
 
     private void setupButton(String type) {// Sets the text for the page
         ImageView v=(ImageView)view.findViewById(R.id.Empty_Agri_Logo);
-        if(type.equals("purchase")){
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                 public void onClick(View v) {
-                    Log.d("Empty Fragment"," creating a new purchase ");
+        switch (type) {
+            case "purchase":
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("Empty Fragment", " creating a new purchase ");
 //                    createPurchase();
-                }
-            });
-        }else if(type.equals("cycle")){
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Empty Fragment", " creating a new cycle");
-                    //createCycle();
-                }
-            });
-        }else if (type.equals("labour")){
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("Empty Fragment", " creating a new labourer");
-                    //createLabourer();
-                }
-            });
-        }else if(type.equals("cycleuse")){
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                    }
+                });
+                break;
+            case "cycle":
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("Empty Fragment", " creating a new cycle");
+                        //createCycle();
+                    }
+                });
+                break;
+            case "labour":
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("Empty Fragment", " creating a new labourer");
+                        //createLabourer();
+                    }
+                });
+                break;
+            case "cycleuse":
+                v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 //                    Log.d()
-                }
-            });
-        }else if(type.equals("select")){
-            //v.setImageResource(R.drawable.icon_touch);
+                    }
+                });
+                break;
+            case "select":
+                //v.setImageResource(R.drawable.icon_touch);
+                break;
         }
     }
 

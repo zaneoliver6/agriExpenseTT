@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -145,26 +146,26 @@ public class FragmentNewPurchaseLast extends Fragment{
 
 			else if(v.getId() == R.id.btn_newpurchaselast_done){
 				final double qty,cost;
-				if( ((et_qty.getText().toString()) == null)||((et_qty.getText().toString()).equals(""))  ){
+                if ((et_qty.getText().toString()).equals("")) {
 
 					helper_qty.setText("Enter Quantity Purchased");
-                    helper_qty.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_qty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-					return;
-				}else{
+                    helper_qty.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_error));
+                    et_qty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                    return;
+                }else{
 					qty=Double.parseDouble(et_qty.getText().toString());
-                    et_qty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                    et_qty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
 
 				}
-				if( (et_cost.getText().toString() == null) || ((et_cost.getText().toString()).equals("")) ){
+                if ((et_cost.getText().toString()).equals("")) {
                     helper_cost.setText("Enter cost");
-                    helper_cost.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_cost.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-					return;
-				}else{
+                    helper_cost.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_error));
+                    et_cost.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                    return;
+                }else{
 					cost=Double.parseDouble(et_cost.getText().toString());
-                    et_cost.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
-				}
+                    et_cost.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                }
                 if(unixDate == 0){
                     formatDisplayDate(null);
                 }

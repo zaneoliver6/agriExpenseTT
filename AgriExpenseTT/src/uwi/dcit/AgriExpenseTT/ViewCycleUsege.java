@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -33,13 +31,13 @@ public class ViewCycleUsege extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_cycle_usege);
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("View Cycle Usage");
-		list=new ArrayList<LocalCycleUse>();
+		list = new ArrayList<>();
 		type=getIntent().getStringExtra("type");
 		int cycleId=Integer.parseInt(getIntent().getStringExtra("id"));
 		dbh=new DbHelper(this);
 		db=dbh.getWritableDatabase();
-		
-		pList=new ArrayList<LocalResourcePurchase>();
+
+		pList = new ArrayList<>();
 		DbQuery.getPurchases(db, dbh, pList, type, null,true);
 		ListView listview=(ListView)findViewById(R.id.listview_cycleUse);
 		
@@ -87,10 +85,9 @@ public class ViewCycleUsege extends BaseActivity {
 
 	public int pPos(int pId){
 		int i=0;
-		Iterator<LocalResourcePurchase> itr=pList.iterator();
-		
-		while(itr.hasNext()){
-			if(pId==itr.next().getpId())
+
+		for (LocalResourcePurchase aPList : pList) {
+			if (pId == aPList.getpId())
 				return i;
 			i++;
 		}

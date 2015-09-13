@@ -7,10 +7,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -135,16 +136,16 @@ public class FragmentNewCycleLast extends Fragment {
                 newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
             }else if(v.getId()==R.id.btn_newCyclelast_dne){
 
-                if(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals("")){
+                if (et_landQty.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
                     error.setText("Enter the Land Quantity");
-                    error.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                    error.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_error));
+                    et_landQty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
                     return;
                 }else{
                     error.setText(getResources().getText(R.string.hint_new_cycle_land_quantity));
-                    error.setTextColor(getResources().getColor(R.color.helper_text_color));
-                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                    error.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_color));
+                    et_landQty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
                 }
                 if (et_CycleName.getText().toString().equals("")){
                     et_CycleName.setText(plantMaterial);
@@ -187,6 +188,7 @@ public class FragmentNewCycleLast extends Fragment {
     @SuppressLint("ValidFragment")
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
+        @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();

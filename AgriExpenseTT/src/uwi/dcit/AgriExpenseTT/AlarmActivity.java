@@ -5,8 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,7 +36,7 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
-        List<String> spinnerArray =  new ArrayList<String>();
+        List<String> spinnerArray = new ArrayList<>();
         spinnerArray.add("1:00");
         spinnerArray.add("2:00");
         spinnerArray.add("3:00");
@@ -50,18 +50,18 @@ public class AlarmActivity extends AppCompatActivity {
         spinnerArray.add("11:00");
         spinnerArray.add("12:00");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sItems = (Spinner) findViewById(R.id.spinner);
         sItems.setAdapter(adapter);
 
-        List<String> spinnerArray2 =  new ArrayList<String>();
+        List<String> spinnerArray2 = new ArrayList<>();
         spinnerArray2.add(" AM ");
         spinnerArray2.add(" PM ");
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, spinnerArray2);
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -105,7 +105,7 @@ public class AlarmActivity extends AppCompatActivity {
 
         rg =(RadioGroup) findViewById(R.id.radioGroup);
         int id = rg.getCheckedRadioButtonId();
-        String weekDay=null;
+        String weekDay;
         if(id==R.id.radioButton){
             Log.i("WEEKLY","WEEKLY");
             weekDay="W";

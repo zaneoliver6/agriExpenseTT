@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,7 +36,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
-import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import uwi.dcit.AgriExpenseTT.CycleUsage;
@@ -48,6 +48,7 @@ public class FragmentPurchaseUse extends Fragment {
 	private DbHelper dbh;
 	private LocalCycle c = null;
 	private ResourcePurchase p;
+	private Context context;
 	
 	private double useAmount= 0.0, //the amount you are going to use
 	                calCost = 0.0,
@@ -69,6 +70,7 @@ public class FragmentPurchaseUse extends Fragment {
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		Log.i("HERE","Beginning");
+		this.context = this.getContext();
 		view=inflater.inflate(R.layout.activity_use_purchase_frag, container, false);
 
 		dbh = new DbHelper(this.getActivity().getBaseContext());
@@ -76,7 +78,8 @@ public class FragmentPurchaseUse extends Fragment {
 
 		int pId = Integer.parseInt(getArguments().getString("pId"));
 		int cycleId = Integer.parseInt(getArguments().getString("cycleId"));
-		typeSpent = Double.parseDouble(getArguments().getString("total"));
+		String totalStr = getArguments().getString("total");
+		typeSpent = (totalStr != null) ? Double.parseDouble(totalStr) : 0.0;
 //		Cycle cyc = DbQuery.getCycle(db,dbh,cycleId);
 
 		setDetails(pId,cycleId);
@@ -153,22 +156,20 @@ public class FragmentPurchaseUse extends Fragment {
 				return;
 			}
 
-			if(et_amt.getText().toString() == null||et_amt.getText().toString().equals("")){
-//				Toast.makeText(getActivity().getBaseContext(), "Enter Amount Purchased", Toast.LENGTH_SHORT).show();
-                amt_hint.setText("Enter Amount Purchased");
-                amt_hint.setTextColor(getResources().getColor(R.color.helper_text_error));
-                et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+			if (et_amt.getText().toString().equals("")) {
+				amt_hint.setText("Enter Amount Purchased");
+				amt_hint.setTextColor(ContextCompat.getColor(context, R.color.helper_text_error));
+				et_amt.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 			}else{
 				useAmount=Double.parseDouble(et_amt.getText().toString());
 				if(useAmount>amtRem){
-//					Toast.makeText(getActivity().getBaseContext(), "Not enough "+quantifier+" remaining", Toast.LENGTH_SHORT).show();
                     amt_hint.setText("Not enough " + quantifier + " remaining");
-                    amt_hint.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+					amt_hint.setTextColor(ContextCompat.getColor(context, R.color.helper_text_error));
+					et_amt.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
 					return;
 				}
-                et_amt.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
-                amt_hint.setTextColor(getResources().getColor(R.color.helper_text_color));
+				et_amt.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+				amt_hint.setTextColor(ContextCompat.getColor(context, R.color.helper_text_color));
 
 				calCost =(useAmount/amtPur)*p.getCost();
 				calCost =Math.round(calCost *100.0)/100.0;
@@ -252,7 +253,7 @@ public class FragmentPurchaseUse extends Fragment {
 	}
 	private void populateListView(View simpList,ArrayList<String> items) {
 		//build adaptor
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(
 				getActivity().getBaseContext(),				//context for activity
 				android.R.layout.simple_list_item_1,	//layout to use(Create) this is what the options in the list look like
 				items);			//items to be displayed
@@ -283,69 +284,78 @@ public class FragmentPurchaseUse extends Fragment {
 		//general case converting to itself
 		if(typePur.equals(typeUse))
 			return 1;
-		if(typePur.equals(DHelper.qtf_fertilizer_kg)){// kg to ...
-			if(typeUse.equals(DHelper.qtf_fertilizer_lb)){
-				return 2.20462;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_g)){
-				return 1000;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_bag)){
-				return .2;
-			}
-		}else if(typePur.equals(DHelper.qtf_fertilizer_lb)){// lb to ....
-			if(typeUse.equals(DHelper.qtf_fertilizer_kg)){
-				return 0.453592;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_g)){
-				return 453.592;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_bag)){
-				return (0.453592*.2);
-			}
-		}else if(typePur.equals(DHelper.qtf_fertilizer_g)){// g to ....
-			if(typeUse.equals(DHelper.qtf_fertilizer_kg)){
-				return .001;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_lb)){
-				return 0.00220462;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_bag)){
-				return (0.001*.2);
-			}
-		}else if(typePur.equals(DHelper.qtf_fertilizer_bag)){// bag to ....
-			if(typeUse.equals(DHelper.qtf_fertilizer_kg)){
-				return 5;
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_lb)){
-				return (5*2.20462);
-			}
-			if(typeUse.equals(DHelper.qtf_fertilizer_g)){
-				return (5*1000);
-			}
-		}else if(typePur.equals(DHelper.qtf_soilAmendment_truck)){
-			Log.d("Fragment Purchase Use", "Soil Amendment");
-		}else if(typePur.equals(DHelper.qtf_chemical_L)){//litre to ...
-			if(typeUse.equals(DHelper.qtf_chemical_ml)){
-				return (1000);
-			}
-			if(typeUse.equals(DHelper.qtf_chemical_oz)){
-				return (35.1951);
-			}
-		}else if(typePur.equals(DHelper.qtf_chemical_oz)){// oz to ...
-			if(typeUse.equals(DHelper.qtf_chemical_ml)){
-				return (28.4131);
-			}
-			if(typeUse.equals(DHelper.qtf_chemical_L)){
-				return (0.0284131);
-			}
-		}else if(typePur.equals(DHelper.qtf_chemical_ml)){// ml to ....
-			if(typeUse.equals(DHelper.qtf_chemical_oz)){
-				return (0.0351951);
-			}
-			if(typeUse.equals(DHelper.qtf_chemical_L)){
-				return (0.001);
-			}
+		switch (typePur) {
+			case DHelper.qtf_fertilizer_kg: // kg to ...
+				if (typeUse.equals(DHelper.qtf_fertilizer_lb)) {
+					return 2.20462;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_g)) {
+					return 1000;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_bag)) {
+					return .2;
+				}
+				break;
+			case DHelper.qtf_fertilizer_lb: // lb to ....
+				if (typeUse.equals(DHelper.qtf_fertilizer_kg)) {
+					return 0.453592;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_g)) {
+					return 453.592;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_bag)) {
+					return (0.453592 * .2);
+				}
+				break;
+			case DHelper.qtf_fertilizer_g: // g to ....
+				if (typeUse.equals(DHelper.qtf_fertilizer_kg)) {
+					return .001;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_lb)) {
+					return 0.00220462;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_bag)) {
+					return (0.001 * .2);
+				}
+				break;
+			case DHelper.qtf_fertilizer_bag: // bag to ....
+				if (typeUse.equals(DHelper.qtf_fertilizer_kg)) {
+					return 5;
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_lb)) {
+					return (5 * 2.20462);
+				}
+				if (typeUse.equals(DHelper.qtf_fertilizer_g)) {
+					return (5 * 1000);
+				}
+				break;
+			case DHelper.qtf_soilAmendment_truck:
+				Log.d("Fragment Purchase Use", "Soil Amendment");
+				break;
+			case DHelper.qtf_chemical_L: //litre to ...
+				if (typeUse.equals(DHelper.qtf_chemical_ml)) {
+					return (1000);
+				}
+				if (typeUse.equals(DHelper.qtf_chemical_oz)) {
+					return (35.1951);
+				}
+				break;
+			case DHelper.qtf_chemical_oz: // oz to ...
+				if (typeUse.equals(DHelper.qtf_chemical_ml)) {
+					return (28.4131);
+				}
+				if (typeUse.equals(DHelper.qtf_chemical_L)) {
+					return (0.0284131);
+				}
+				break;
+			case DHelper.qtf_chemical_ml: // ml to ....
+				if (typeUse.equals(DHelper.qtf_chemical_oz)) {
+					return (0.0351951);
+				}
+				if (typeUse.equals(DHelper.qtf_chemical_L)) {
+					return (0.001);
+				}
+				break;
 		}
 		return -1;
 	}

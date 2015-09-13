@@ -6,15 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-
 
 import uwi.dcit.AgriExpenseTT.R;
 
 
 public class ScreenSlidePageFragment extends Fragment {
 
-    public static final ScreenSlidePageFragment newInstance(String message){
+    public static ScreenSlidePageFragment newInstance(String message) {
         ScreenSlidePageFragment f = new ScreenSlidePageFragment();
         Bundle b = new Bundle(1);
         b.putString("EXTRA_MESSAGE", message);

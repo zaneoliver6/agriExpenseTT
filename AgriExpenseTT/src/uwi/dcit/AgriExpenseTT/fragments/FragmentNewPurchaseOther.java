@@ -1,9 +1,11 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,11 +32,13 @@ public class FragmentNewPurchaseOther extends Fragment{
 	
 	String resource;
 	String quantifier;
+    Context context;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view=inflater.inflate(R.layout.fragment_other_quanifier, container, false);
 		setup();
+        context = this.getContext();
 
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment - Other Category");
 
@@ -60,12 +64,14 @@ public class FragmentNewPurchaseOther extends Fragment{
 
 		Click c = new Click();
 		btn_dne.setOnClickListener(c);
-		if(getArguments().getString("found").equals("yes")){
-			resource=getArguments().getString("resource");
+        String isFound = getArguments().getString("found");
+        if (isFound != null && isFound.equals("yes")) {
+            resource=getArguments().getString("resource");
 			et_res.setVisibility(View.GONE);
-			TextView tvLbl=(TextView)view.findViewById(R.id.tv_newPurchase_other_res);
-			tvLbl.setVisibility(View.GONE);
-		}
+            tv_error_res.setVisibility(View.GONE);
+//			TextView tvLbl=(TextView)view.findViewById(R.id.tv_newPurchase_other_res);
+//			tvLbl.setVisibility(View.GONE);
+        }
 	}
 
     public class Click implements OnClickListener{
@@ -77,23 +83,23 @@ public class FragmentNewPurchaseOther extends Fragment{
 
 //				if(getArguments().getString("found").equals("no")) // TODO Not sure what this statement is checking for
 //					resource = et_res.getText().toString();
-				if((et_res.getText().toString()) == null || (et_res.getText().toString()).equals("")){
-					tv_error_res.setText("Enter the name of your resource that can be purchased");
-                    tv_error_res.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_res.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-					return;
-				}else{
-                    et_res.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                if ((et_res.getText().toString()).equals("")) {
+                    tv_error_res.setText("Enter the name of your resource that can be purchased");
+                    tv_error_res.setTextColor(ContextCompat.getColor(context, R.color.helper_text_error));
+                    et_res.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                    return;
+                }else{
+                    et_res.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
                     resource = et_res.getText().toString();
                 }
 
-                if((et_qtfr.getText().toString()) == null || (et_qtfr.getText().toString()).equals("")){
-                    tv_error_qtfr.setTextColor(getResources().getColor(R.color.helper_text_error));
+                if ((et_qtfr.getText().toString()).equals("")) {
+                    tv_error_qtfr.setTextColor(ContextCompat.getColor(context, R.color.helper_text_error));
                     tv_error_qtfr.setText("Enter how you are going to measure what you are buying");
-                    et_qtfr.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-					return;
-				}else{
-                    et_qtfr.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                    et_qtfr.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                    return;
+                }else{
+                    et_qtfr.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
                     quantifier = et_qtfr.getText().toString();
                 }
 
@@ -129,9 +135,8 @@ public class FragmentNewPurchaseOther extends Fragment{
                         .commit();// Commit the transaction
                 }else{
                     tv_error_res.setText("Resource Already Exists. Enter another name for your resource or check list of materials");
-                    tv_error_res.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_res.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-                    return;
+                    tv_error_res.setTextColor(ContextCompat.getColor(context, R.color.helper_text_error));
+                    et_res.getBackground().setColorFilter(ContextCompat.getColor(context, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
                 }
 
 //                finish();

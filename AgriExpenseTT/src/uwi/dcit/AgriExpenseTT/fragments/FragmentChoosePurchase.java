@@ -9,11 +9,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -34,7 +32,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
-import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
@@ -263,19 +260,26 @@ public class FragmentChoosePurchase extends ListFragment {
 
 			 //setting the colours
 			 View line=row.findViewById(R.id.line_pitem);
-             if(curr.getType().equals(DHelper.cat_plantingMaterial)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
-                }else if(curr.getType().equals(DHelper.cat_fertilizer)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
-                }else if(curr.getType().equals(DHelper.cat_soilAmendment)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
-                }else if(curr.getType().equals(DHelper.cat_chemical)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
-                }else if(curr.getType().equals(DHelper.cat_labour)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
-                }else if(curr.getType().equals(DHelper.cat_other)){
-                line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
-             }
+			 switch (curr.getType()) {
+				 case DHelper.cat_plantingMaterial:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
+					 break;
+				 case DHelper.cat_fertilizer:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
+					 break;
+				 case DHelper.cat_soilAmendment:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
+					 break;
+				 case DHelper.cat_chemical:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
+					 break;
+				 case DHelper.cat_labour:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+					 break;
+				 case DHelper.cat_other:
+					 line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
+					 break;
+			 }
 			 
 			   //get the elements of that view and set them accordingly
 			 TextView header=(TextView)row.findViewById(R.id.tv_pItem_header);
