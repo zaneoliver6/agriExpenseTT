@@ -84,6 +84,7 @@ public class SignInManager {
 		return acc != null;
 	}
 
+	//TODO This function doesn't appear to work well ()
 	public void cloudAccountCheck(){
 		AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
 		accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);

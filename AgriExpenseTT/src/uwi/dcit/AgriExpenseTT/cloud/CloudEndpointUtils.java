@@ -27,7 +27,7 @@ import uwi.dcit.AgriExpenseTT.Main;
 public class CloudEndpointUtils {
 	//To ensure proper connection between backend and application, obtain the IPv4 Address
 	//and set the LOCAL_APP_ENGINE_SERVER_URL to this address.
-	public static final boolean LOCAL_ANDROID_RUN = true;
+	public static final boolean LOCAL_ANDROID_RUN = false;
 	protected static final String LOCAL_APP_ENGINE_SERVER_URL = "http://localhost:8080";
 	protected static final String REMOTE_APP_ENGINE_SERVER_URL = "https://centering-dock-715.appspot.com";
 

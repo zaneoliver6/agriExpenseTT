@@ -151,4 +151,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_calculate_sales_slides">CalculateSalesSlides</string>
     <string name="title_activity_generating_report_slides">GeneratingReportSlides</string>
+    <string name="help_generate_report">The application allows user to generate a report that can be utilized in most computers today. This allow farmers to have greater flexibility with keeping records and store the records in formats that can be submitted to other agencies such as the Agricultural based financial institutions.</string>
 </resources>

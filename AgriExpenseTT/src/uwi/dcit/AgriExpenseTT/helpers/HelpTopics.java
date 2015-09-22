@@ -8,6 +8,7 @@ public class HelpTopics {
 		"Creating a New Crop Cycle",
 		"Manage Resources/Settings",
 		"Hiring Labour",
+			"Manage Data",
 		"Calculating Expected Sales",
 		"Generating Reports",
 	};
