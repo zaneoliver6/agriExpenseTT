@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -139,9 +140,10 @@ public class WelcomeScreen extends AppCompatActivity {
             for (int i = 0; i < TOTAL_PAGES - 1; i++) {
                 ImageView circle = (ImageView) circles.getChildAt(i);
                 if (i == index) {
-                    circle.setColorFilter(getResources().getColor(R.color.text_selected));
+
+                    circle.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.text_selected));
                 } else {
-                    circle.setColorFilter(getResources().getColor(R.color.transparent_bg));
+                    circle.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.transparent_bg));
                 }
             }
         }
