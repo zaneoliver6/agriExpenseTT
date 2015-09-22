@@ -14,7 +14,6 @@ import android.view.Menu;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
-import uwi.dcit.AgriExpenseTT.fragments.slides.IntroductionSlides;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
@@ -213,12 +212,11 @@ public class Main extends BaseActivity{
         sharedPreferencesFirstRun = getSharedPreferences(FirstRunPreferences, Context.MODE_PRIVATE);
         Boolean set = sharedPreferencesFirstRun.getBoolean(FirstRun, false);
         if(!set){
-            Intent  p = new Intent(Main.this, IntroductionSlides.class);
+            Intent p = new Intent(Main.this, WelcomeScreen.class);
             startActivity(p);
             SharedPreferences.Editor editor = sharedPreferencesFirstRun.edit();
             editor.putBoolean(FirstRun,true);
             editor.commit();
-
         }
     }
 }

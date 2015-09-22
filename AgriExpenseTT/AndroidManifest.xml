@@ -56,7 +56,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
         </activity>
-
         <activity
             android:name=".DeleteData"
             android:label="Delete data"
@@ -218,6 +217,11 @@
         <activity
             android:name=".fragments.slides.GeneratingReportSlides"
             android:label="@string/title_activity_generating_report_slides" >
+        </activity>
+        <activity
+            android:name=".WelcomeScreen"
+            android:label="@string/title_activity_welcome_screen"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

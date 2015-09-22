@@ -27,5 +27,9 @@
     <dimen name="label_dataentry_margin">10dp</dimen>
     <dimen name="label_item_details_bottom_margin">3dp</dimen>
     <dimen name="lable_item_details_left_margin">12dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="welcome_content_min_height">96dp</dimen>
 
 </resources>

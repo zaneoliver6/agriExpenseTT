@@ -152,4 +152,11 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="title_activity_calculate_sales_slides">CalculateSalesSlides</string>
     <string name="title_activity_generating_report_slides">GeneratingReportSlides</string>
     <string name="help_generate_report">The application allows user to generate a report that can be utilized in most computers today. This allow farmers to have greater flexibility with keeping records and store the records in formats that can be submitted to other agencies such as the Agricultural based financial institutions.</string>
+    <string name="title_activity_welcome_screen">WelcomeScreen</string>
+    <string name="welcome_screen_1_title">Welcome</string>
+    <string name="welcome_screen_1_desc">AgriExpense is a mobile application that will keep track of some of the input of the production process</string>
+    <string name="welcome_screen_2_title">Cycles</string>
+    <string name="welcome_screen_2_desc">Cycles represent each individual plot of land that is planted. Each individual planting is usually represented as a crop cycle.</string>
+    <string name="welcome_screen_3_title">Purchases</string>
+    <string name="welcome_screen_3_desc">Purchases represents the total cost of the items purchased. As materials from the purchase is used during the life of the crop, the fraction of the cost will be added to the cycle.</string>
 </resources>
