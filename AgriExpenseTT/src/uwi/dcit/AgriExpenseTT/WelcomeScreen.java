@@ -59,7 +59,7 @@ public class WelcomeScreen extends AppCompatActivity {
                     }
                 } else {
                     if (!isOpaque) {
-                        pager.setBackgroundColor(getResources().getColor(R.color.primary_material_light));
+                        pager.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_material_light));
                         isOpaque = true;
                     }
                 }
