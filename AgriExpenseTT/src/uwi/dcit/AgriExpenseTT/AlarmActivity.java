@@ -138,12 +138,10 @@ public class AlarmActivity extends AppCompatActivity {
                 intent.setAction("android.intent.CustomAlarm");
                 PendingIntent alarmIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
                 int timeValue;
-                if (weekDay.toUpperCase().equals("D"))
+                if (weekDay.toUpperCase().equals("D"))  //A DAY
                     timeValue = 1440;
-                    //A DAY
-                else
+                else                                    //A WEEK
                     timeValue = 10080;
-                    //A WEEK
                 AlarmManager alarmMgr = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
                 alarmMgr.cancel(alarmIntent);
                 //Set the alarm time.
