@@ -28,7 +28,7 @@ import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 public class DbHelper extends SQLiteOpenHelper{
 
-	public static final int VERSION = 172;
+	public static final int VERSION = 174;
 	public static final String DATABASE_NAME="agriDb";
 	public static final String TAG_NAME = "AgriExpenseDBHelper";
 	public Context ctx;
@@ -50,6 +50,10 @@ public class DbHelper extends SQLiteOpenHelper{
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
 		Log.i(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
+		if (oldVersion < 174){ // Made Changes that are incompatible and data will be dropped
+			this.dropTables(db);
+			this.onCreate(db);
+		}
 
         // TODO Add logic to place the crop name as the cycle name for existing cycle records
         // TODO Add Date to CycleResource and place timestamp automatically for values
