@@ -1,6 +1,7 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments.slides;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
@@ -12,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class HiringLabourSlides extends FragmentActivity {
+import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.R;
+
+public class CalculateSalesSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -21,15 +25,12 @@ public class HiringLabourSlides extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.hiringslide1,
-            R.drawable.hiringslide2,
-            R.drawable.hiringslide3,
-            R.drawable.hiringslide4,
-            R.drawable.hiringslide5,
-            R.drawable.hiringslide6,
-            R.drawable.hiringslide7,
-            R.drawable.hiringslide8,
-            R.drawable.hiringslide9,
+            R.drawable.calcslide1,
+            R.drawable.calcslide2,
+            R.drawable.calcslide3,
+            R.drawable.calcslide4,
+            R.drawable.calcslide5,
+            R.drawable.calcslide6
     };
 
     @Override
@@ -108,6 +109,8 @@ public class HiringLabourSlides extends FragmentActivity {
             (container).removeView((View) object);
         }
     }
-
-
+    public void ReturnToMain(View view){
+        Intent intent = new Intent(CalculateSalesSlides.this, Main.class);
+        startActivity(intent);
+    }
 }

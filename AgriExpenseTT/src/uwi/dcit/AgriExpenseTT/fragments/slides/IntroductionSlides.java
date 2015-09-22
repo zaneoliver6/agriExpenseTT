@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments.slides;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class ManageResourceSlides extends FragmentActivity {
+import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.R;
+
+public class IntroductionSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -22,15 +25,13 @@ public class ManageResourceSlides extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.settingslide1,
-            R.drawable.settingslide2,
-            R.drawable.settingslide3,
-            R.drawable.settingslide4,
-            R.drawable.settingslide5,
-            R.drawable.settingslide6,
-            R.drawable.settingslide7,
-            R.drawable.settingslide8,
-            R.drawable.settingslide9,
+            R.drawable.introslide1,
+            R.drawable.introslide2,
+            R.drawable.introslide3,
+            R.drawable.introslide4,
+            R.drawable.introslide5,
+            R.drawable.introslide6,
+            R.drawable.cycledefinition,
     };
 
     @Override
@@ -109,8 +110,8 @@ public class ManageResourceSlides extends FragmentActivity {
             (container).removeView((View) object);
         }
     }
-    public void ReturnToMain(View view){
-        Intent intent = new Intent(ManageResourceSlides.this, Main.class);
-        startActivity(intent);
-    }
+        public void ReturnToMain(View view){
+            Intent intent = new Intent(IntroductionSlides.this, Main.class);
+            startActivity(intent);
+        }
 }

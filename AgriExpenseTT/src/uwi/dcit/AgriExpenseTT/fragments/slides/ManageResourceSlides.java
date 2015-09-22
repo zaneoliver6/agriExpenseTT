@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments.slides;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class GeneratingReportSlides extends FragmentActivity {
+import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.R;
+
+public class ManageResourceSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -22,10 +25,15 @@ public class GeneratingReportSlides extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.reportslide1,
-            R.drawable.reportslide2,
-            R.drawable.reportslide3,
-            R.drawable.reportslide4
+            R.drawable.settingslide1,
+            R.drawable.settingslide2,
+            R.drawable.settingslide3,
+            R.drawable.settingslide4,
+            R.drawable.settingslide5,
+            R.drawable.settingslide6,
+            R.drawable.settingslide7,
+            R.drawable.settingslide8,
+            R.drawable.settingslide9,
     };
 
     @Override
@@ -105,7 +113,7 @@ public class GeneratingReportSlides extends FragmentActivity {
         }
     }
     public void ReturnToMain(View view){
-        Intent intent = new Intent(GeneratingReportSlides.this, Main.class);
+        Intent intent = new Intent(ManageResourceSlides.this, Main.class);
         startActivity(intent);
     }
 }

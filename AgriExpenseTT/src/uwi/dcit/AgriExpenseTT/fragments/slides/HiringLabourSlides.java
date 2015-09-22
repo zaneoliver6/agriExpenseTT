@@ -1,7 +1,6 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments.slides;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
@@ -13,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class NewCropCycleSlides extends FragmentActivity {
+import uwi.dcit.AgriExpenseTT.R;
+
+public class HiringLabourSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -22,10 +23,15 @@ public class NewCropCycleSlides extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.newcycle2,
-            R.drawable.newcycle3,
-            R.drawable.newcycle4,
-            R.drawable.newcycle5,
+            R.drawable.hiringslide1,
+            R.drawable.hiringslide2,
+            R.drawable.hiringslide3,
+            R.drawable.hiringslide4,
+            R.drawable.hiringslide5,
+            R.drawable.hiringslide6,
+            R.drawable.hiringslide7,
+            R.drawable.hiringslide8,
+            R.drawable.hiringslide9,
     };
 
     @Override
@@ -105,9 +111,5 @@ public class NewCropCycleSlides extends FragmentActivity {
         }
     }
 
-    public void ReturnToMain(View view){
-        Intent intent = new Intent(NewCropCycleSlides.this, Main.class);
-        startActivity(intent);
-    }
 
 }

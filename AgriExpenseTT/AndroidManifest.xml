@@ -188,19 +188,19 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".IntroductionSlides"
+            android:name=".fragments.slides.IntroductionSlides"
             android:label="@string/title_activity_introtest" >
         </activity>
         <activity
-            android:name=".NewCropCycleSlides"
+            android:name=".fragments.slides.NewCropCycleSlides"
             android:label="@string/title_activity_new_crop_cycle_slides" >
         </activity>
         <activity
-            android:name=".NewPurchaseSlides"
+            android:name=".fragments.slides.NewPurchaseSlides"
             android:label="@string/title_activity_new_purchase_slides" >
         </activity>
         <activity
-            android:name=".HiringLabourSlides"
+            android:name=".fragments.slides.HiringLabourSlides"
             android:label="@string/title_activity_hiring_labour_slides" >
         </activity>
         <activity
@@ -208,15 +208,15 @@
             android:label="@string/title_activity_alarm" >
         </activity>
         <activity
-            android:name=".ManageResourceSlides"
+            android:name=".fragments.slides.ManageResourceSlides"
             android:label="@string/title_activity_manage_resource_slides" >
         </activity>
         <activity
-            android:name=".CalculateSalesSlides"
+            android:name=".fragments.slides.CalculateSalesSlides"
             android:label="@string/title_activity_calculate_sales_slides" >
         </activity>
         <activity
-            android:name=".GeneratingReportSlides"
+            android:name=".fragments.slides.GeneratingReportSlides"
             android:label="@string/title_activity_generating_report_slides" >
         </activity>
     </application>

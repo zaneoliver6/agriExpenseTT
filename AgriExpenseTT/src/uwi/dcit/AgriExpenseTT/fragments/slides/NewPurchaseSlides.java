@@ -1,4 +1,4 @@
-package uwi.dcit.AgriExpenseTT;
+package uwi.dcit.AgriExpenseTT.fragments.slides;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class CalculateSalesSlides extends FragmentActivity {
+import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.R;
+
+public class NewPurchaseSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
 
@@ -22,12 +25,11 @@ public class CalculateSalesSlides extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 
     int[] mResources = {
-            R.drawable.calcslide1,
-            R.drawable.calcslide2,
-            R.drawable.calcslide3,
-            R.drawable.calcslide4,
-            R.drawable.calcslide5,
-            R.drawable.calcslide6
+            R.drawable.new_purchase_slide2,
+            R.drawable.new_purchase_slide3,
+            R.drawable.new_purchase_slide4,
+            R.drawable.new_purchase_slide5,
+            R.drawable.new_purchase_slide6,
     };
 
     @Override
@@ -106,8 +108,9 @@ public class CalculateSalesSlides extends FragmentActivity {
             (container).removeView((View) object);
         }
     }
+
     public void ReturnToMain(View view){
-        Intent intent = new Intent(CalculateSalesSlides.this, Main.class);
+        Intent intent = new Intent(NewPurchaseSlides.this, Main.class);
         startActivity(intent);
     }
 }
