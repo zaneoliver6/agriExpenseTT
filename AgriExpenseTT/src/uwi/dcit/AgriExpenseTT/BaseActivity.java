@@ -19,11 +19,11 @@ import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks , NavigationControl {
 
+    protected final int RequestCode_backup = 2;
     protected SignInManager signInManager;
     protected Fragment leftFrag,rightFrag;
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected boolean isTablet = false;
-    protected final int RequestCode_backup =2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
+        switch (position) { // Check to ensure that the we are not relaunching the current activity
             case 0:
                 // Home
                 if (!(this instanceof Main))
@@ -51,13 +51,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 //new cycle
                 if (!(this instanceof NewCycle))
                     startActivity(new Intent(this, NewCycle.class));
-
                 break;
             case 2:
                 //new purchase
                 if (!(this instanceof NewPurchase))
                     startActivity(new Intent(this, NewPurchase.class));
-
                 break;
             case 3:
                 //hire labour

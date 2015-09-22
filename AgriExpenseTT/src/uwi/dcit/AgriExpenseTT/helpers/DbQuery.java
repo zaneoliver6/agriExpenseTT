@@ -654,8 +654,8 @@ public class DbQuery {
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
 		acc.setCountry(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTRY)));
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
-		Log.i("findAccountTest", "Name of Account! ->>"+acc.getAccount());
-        cursor.close();
+		Log.i("DBQuery", "getUpAcc: Name of Account! ->>" + acc.getAccount());
+		cursor.close();
 		return acc;
 	}
 

@@ -34,12 +34,12 @@ import uwi.dcit.agriexpensesvr.myTestApi.model.MyBean;
 
 
 public class SignInManager {
+	private final String TAG_NAME = "SignInManager";
 	Context context;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Activity activity;
 	private String county,country;
-    private final String TAG_NAME = "SignInManager";
 
     public SignInManager(Activity activity, Context ctx){
         this.context = ctx;
@@ -49,19 +49,16 @@ public class SignInManager {
 
     }
 
-	public void signIn(String country, String county){
-        Log.d(TAG_NAME, "Attempting to Log in");
+	public void signIn(String country, String county) {                // TODO Change why do we ask for the country and county before we check for user
+		Log.d(TAG_NAME, "Attempting to Log in");
 		Account acc = isExisting(); 								// Check if Account is already created
 		if(acc == null) {
-			accountSetUp(); // Account doesn't exist so we've to setup a new one (means we never signed in)
+			accountSetUp();                                        // Account doesn't exist so we've to setup a new one (means we never signed in)
 			this.country=country;
 			this.county=county;
-		}
-		else {
+		} else {                                                        // Account exists already so we can Initiate Sign-in process
 			startSync(acc.getAccount());
-		}// Account exists already so we can Initiate Sign-in process
-		//Due to the fact that start sync is threaded, it will finish on its own timing...
-		//need to update the sign in method later down.
+		}
 	}
 
 	public void signIn(){
@@ -81,24 +78,15 @@ public class SignInManager {
 
     public Account isExisting(){
         Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
-		if(acc!=null) {
-			Log.i("myTestGET ACCOUNT", "Got an account!");
-		}
-		else
-			Log.i("myTest GET ACCOUNT","Did no get any account!");
-//        if(acc.getAccount() == null || acc.getAccount().equals(""))
-		if(acc==null)
-            return null;                    // The information returned will be null if no record exists
-        return acc;                         // Return the Account if received.
-//        return null;
-    }
+		if (acc != null) Log.i("SignInManager", "Account Previously Created");
+		else Log.i("SignInManager", "No Account Previous Exists");
+		return acc;                         // Return the Account if received (will be null if none exists).
+	}
 
 
 	public boolean localAccountExists(){
 		Account acc = DbQuery.getUpAcc(db);
-		if(acc==null)
-			return false;
-		return true;
+		return acc != null;
 	}
 
 	public void cloudAccountCheck(){
@@ -107,15 +95,18 @@ public class SignInManager {
 		AccountApi accountApi = accountBuilder.build();
 
 		final CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-		ArrayList<String> deviceAccounts = getAccounts();
+		ArrayList<String> deviceAccounts = getAccounts(); //TODO Check if account from a shared preference instead
+		//TODO Check why we only accessing the first from the list of accounts accessed
 		final String username = convertString2Namespace(deviceAccounts.get(0));
-		Log.i(">>>><<<<<<",username);
+		Log.i("SingInManager", "Selected: " + username);
+
+//		Log.i(">>>><<",username);
 		if(username!=null){
 			try {
 				new Thread(new Runnable() {
 					public void run() {
 						Account cloudAccount = cloudIF.getAccount(username);
-						if(cloudAccount!=null){
+						if (cloudAccount != null) {
 							long time = 0;
 							cloudAccount.setLastUpdated(time);
 							DbQuery.insertAccountTask(db,dbh,cloudAccount);
@@ -266,48 +257,6 @@ public class SignInManager {
 		return this;
 	}
 
-	//Create an Asynchronous Task to create new thread to handle this process
-	private class SetupSignInTask extends AsyncTask<String, Void, Account> {
-
-		private String namespace;
-
-		public SetupSignInTask(String namespace){
-			this.namespace=namespace;
-		}
-
-		@Override
-		protected Account doInBackground(String... params) {
-			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-            Account cloudAccount = cloudIF.getAccount(namespace);//returns  Account if there is any to the onPostExecute
-			Account localAccount = isExisting();
-			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
-			//cloud and local account is created.
-            if (cloudAccount == null || localAccount==null){
-                Log.d(TAG_NAME, "No Account Exists in neither app or cloud ... Creating a new Account");
-				//Should be able to obtain the country and area selection from the user.
-                cloudIF.insertAccount(namespace, 0, country, county);
-            }
-			Log.d(TAG_NAME, "Timee:"+System.currentTimeMillis()/1000L);
-			cloudAccount = cloudIF.getAccount(namespace);
-			return cloudAccount;
-		}
-
-		@Override
-		protected void onPostExecute(Account cloudAcc) {
-			Account localAccount = isExisting();
-			DbQuery.signInAccount(db,localAccount);
-			Log.i("Check Sync Call","Reached Here at all! Account:"+cloudAcc);
-			if (localAccount != null && cloudAcc!=null) {
-                Sync sync = new Sync(db, dbh, context, getSigninObject());
-				Log.i("Check Sync Call","Reached Here!");
-                sync.start(namespace, cloudAcc);
-            }
-            super.onPostExecute(cloudAcc);
-
-		}
-
-	}
-
     public String getCounty() {
         return county;
     }
@@ -323,4 +272,46 @@ public class SignInManager {
     public void setCountry(String country) {
         this.country = country;
     }
+
+	//Create an Asynchronous Task to create new thread to handle this process
+	private class SetupSignInTask extends AsyncTask<String, Void, Account> {
+
+		private String namespace;
+
+		public SetupSignInTask(String namespace) {
+			this.namespace = namespace;
+		}
+
+		@Override
+		protected Account doInBackground(String... params) {
+
+			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
+			Account cloudAccount = cloudIF.getAccount(namespace);    //returns  Account if there is any to the onPostExecute
+			Account localAccount = isExisting();
+			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
+			//cloud and local account is created.
+			if (cloudAccount == null || localAccount == null) {
+				Log.d(TAG_NAME, "No Account Exists in neither app or cloud ... Creating a new Account");
+				//Should be able to obtain the country and area selection from the user.
+				cloudIF.insertAccount(namespace, 0, country, county);
+			}
+			cloudAccount = cloudIF.getAccount(namespace);
+			return cloudAccount;
+		}
+
+		@Override
+		protected void onPostExecute(Account cloudAcc) {
+			Account localAccount = isExisting();
+			DbQuery.signInAccount(db, localAccount);
+			Log.i("Check Sync Call", "Reached Here at all! Account:" + cloudAcc);
+			if (localAccount != null && cloudAcc != null) {
+				Sync sync = new Sync(db, dbh, context, getSigninObject());
+				Log.i("Check Sync Call", "Reached Here!");
+				sync.start(namespace, cloudAcc);
+			}
+			super.onPostExecute(cloudAcc);
+
+		}
+
+	}
 }
