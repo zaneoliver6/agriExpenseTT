@@ -13,9 +13,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
-//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
-
-//import com.dcit.agriexpensett.upAccApi.model.UpAcc;
 
 
 public class Sync {
@@ -25,6 +22,7 @@ public class Sync {
 	DbHelper dbh;
 	Context context;
 	TransactionLog tL;
+	private final String TAG_NAME = "Sync";
 	public enum Option{
 		updateCloudOpt,updateLocalOpt,overwriteCloudOpt,overwriteLocalOpt,createCloudNewOpt
 	}
@@ -40,17 +38,18 @@ public class Sync {
 
 
 		//both exist
-		if(localAccount!=null &&cloudAccount !=null){
-			long localUpdate= localAccount.getLastUpdated();
-			long cloudUpdate=cloudAccount.getLastUpdated();
-			Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
+		if (localAccount != null && cloudAccount != null) {
+			long localUpdateTime = localAccount.getLastUpdated();
+			long cloudUpdateTime = cloudAccount.getLastUpdated();
+			Log.d(TAG_NAME, "Cloud: " + cloudUpdateTime + " Local: " + localUpdateTime);
 
-			if(localUpdate>cloudUpdate){//local more recent than cloud
-				//the local does not have an account which means it has never been synced
-				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
-					/*there is no local account, the user must decide
-					 * if he's gonna use the datastore or if he's going to overwrite it*/
-					confirmSync(localUpdate,cloudUpdate,namespace);
+			if (localUpdateTime > cloudUpdateTime) {    // local more recent than cloud
+				Log.d(TAG_NAME, "Local was more recently updated");
+
+				if (localAccount.getAccount() == null || localAccount.getAccount().equals("")) { //the local does not have an account which means it has never been synced
+					Log.d(TAG_NAME, "No Local Account Exists. Assuming user never created one");
+
+					confirmSync(localUpdateTime, cloudUpdateTime, namespace); //there is no localaccount, the user must decide if he's gonna use the datastore or if he's going to overwrite it
 
 				//the local has an account which means it has already at some point synced
 				}else{
@@ -58,17 +57,19 @@ public class Sync {
 					 * just get the logs and update the cloud
 					 */
 
-					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateCloudOpt);
+					(new SyncExec(tL, namespace, cloudUpdateTime, localUpdateTime)).execute
+							(Option.updateCloudOpt);
 				}
 
 
-			}else if(cloudUpdate>localUpdate){//Cloud is more updated
-				Log.d("CLOUD VS LOCAL", "Cloud Copying to Local");
+			} else if (cloudUpdateTime > localUpdateTime) {//Cloud is more updated
+				Log.d(TAG_NAME, "Cloud was more recently updated");
 				//the local does not have an account which means it has never been synced
 				if(localAccount.getAccount()==null || localAccount.getAccount().equals("")){
 					/*there is no local account, the user must decide
 					 * if he's gonna use the datastore or if he's going to overwrite it*/
-					confirmSync(localUpdate,cloudUpdate,namespace);
+					Log.d(TAG_NAME, "No Local Account Exists. Assuming user never created one");
+					confirmSync(localUpdateTime, cloudUpdateTime, namespace);
 
 				//the local has an account which means it has already at some point synced
 				}else{
@@ -76,13 +77,16 @@ public class Sync {
 					 * just get the logs and update the local
 					 */
 
-					new SyncExec(tL, namespace, cloudUpdate, localUpdate).execute(Option.updateLocalOpt);
+					new SyncExec(tL, namespace, cloudUpdateTime, localUpdateTime).execute(Option.updateLocalOpt);
 				}
 
-			}
-			else if(cloudUpdate==localUpdate){
+			} else if (cloudUpdateTime == -1 && localUpdateTime == -1) {
+				// The point of creating a new account the lastupdated time set to -1
+				new SyncExec(tL, namespace, cloudUpdateTime, localUpdateTime).execute(Option.updateLocalOpt);
+			} else if (cloudUpdateTime == localUpdateTime) {
 				//Do Nothing Since Both Are The Same
-				Log.d("CLOUD VS LOCAL", "Cloud:"+cloudUpdate+"Local:"+localUpdate);
+				Log.d("CLOUD VS LOCAL", "Cloud:" + cloudUpdateTime + "Local:" + localUpdateTime);
+
 			}
 			ContentValues cv=new ContentValues();
 			cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_CLOUD_KEY, localAccount.getKeyrep());
@@ -96,27 +100,27 @@ public class Sync {
 	public class SyncExec extends AsyncTask<Option,Void,Boolean>{
 		TransactionLog tL;
 		String namespace;
-		long cloudUpdate,localUpdate;
+		long cloudUpdateTime, localUpdateTime;
 		public SyncExec(TransactionLog tL,String namespace,long cloudUpdate,long localUpdate){
 			this.tL=tL;
 			this.namespace=namespace;
-			this.cloudUpdate=cloudUpdate;
-			this.localUpdate=localUpdate;
+			this.cloudUpdateTime = cloudUpdate;
+			this.localUpdateTime = localUpdate;
 		}
 		@Override
 		protected Boolean doInBackground(Option... params) {
-			Option option=params[0];
+			Option option = params[0];
 			ContentValues cv=new ContentValues();
 			Boolean success = Boolean.valueOf("true");
 			switch(option){
 				case updateCloudOpt:
-					tL.updateCloud(cloudUpdate);
+					tL.updateCloud(cloudUpdateTime);
 					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
 					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
 					
 				case updateLocalOpt:
-					tL.logsUpdateLocal(namespace,localUpdate);
+					tL.logsUpdateLocal(namespace, localUpdateTime);
 					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
 					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;

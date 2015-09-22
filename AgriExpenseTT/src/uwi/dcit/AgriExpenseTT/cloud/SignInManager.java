@@ -17,7 +17,6 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.Main;
@@ -26,10 +25,6 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
-import uwi.dcit.agriexpensesvr.cycleApi.CycleApi;
-import uwi.dcit.agriexpensesvr.cycleApi.model.Cycle;
-import uwi.dcit.agriexpensesvr.myTestApi.MyTestApi;
-import uwi.dcit.agriexpensesvr.myTestApi.model.MyBean;
 
 
 
@@ -133,42 +128,6 @@ public class SignInManager {
 		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
 	}
 
-    public void myTests() {
-        MyTestApi.Builder builder = new MyTestApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
-        builder = CloudEndpointUtils.updateBuilder(builder);
-        MyTestApi api = builder.build();
-
-        AccountApi.Builder accountBuilder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
-        accountBuilder = CloudEndpointUtils.updateBuilder(accountBuilder);
-        AccountApi accountApi = accountBuilder.build();
-
-		CycleApi.Builder cycleBuilder = new CycleApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null);
-		cycleBuilder = CloudEndpointUtils.updateBuilder(cycleBuilder);
-		CycleApi cycleApi = cycleBuilder.build();
-
-        try {
-            MyBean bean = api.sayHi("Hi").execute();
-            System.out.println(bean.getData());
-
-            uwi.dcit.agriexpensesvr.accountApi.model.Account acc = accountApi.getOrInsertAccount("kyle.e.defreitas", "SVG", "St George's").execute();
-            System.out.println(acc.toString());
-
-			Cycle c = new Cycle();
-			c.setId(78);
-			c.setAccount("kyle.e.defreitas");
-			c.setCounty("George");
-			c.setLandType("Bed");
-			c.setCropName("Corn");
-			c.setTotalSpent(90.00);
-			uwi.dcit.agriexpensesvr.cycleApi.model.Cycle cyc = cycleApi.insertCycle(c).execute();
-			System.out.println(c.toString());
-
-			Log.i("myTest",c.toString());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 	public void accountSetUp(){
         Log.d(TAG_NAME, "");
@@ -291,11 +250,11 @@ public class SignInManager {
 			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
 			//cloud and local account is created.
 			if (cloudAccount == null || localAccount == null) {
-				Log.d(TAG_NAME, "No Account Exists in neither app or cloud ... Creating a new Account");
+				Log.d(TAG_NAME, "No Account Exists locally on  app or in the cloud ... Creating a new Account");
 				//Should be able to obtain the country and area selection from the user.
-				cloudIF.insertAccount(namespace, 0, country, county);
-			}
-			cloudAccount = cloudIF.getAccount(namespace);
+				cloudAccount = cloudIF.insertAccount(namespace, 0, country, county);
+			} else
+				cloudAccount = cloudIF.getAccount(namespace);
 			return cloudAccount;
 		}
 
@@ -303,10 +262,8 @@ public class SignInManager {
 		protected void onPostExecute(Account cloudAcc) {
 			Account localAccount = isExisting();
 			DbQuery.signInAccount(db, localAccount);
-			Log.i("Check Sync Call", "Reached Here at all! Account:" + cloudAcc);
 			if (localAccount != null && cloudAcc != null) {
 				Sync sync = new Sync(db, dbh, context, getSigninObject());
-				Log.i("Check Sync Call", "Reached Here!");
 				sync.start(namespace, cloudAcc);
 			}
 			super.onPostExecute(cloudAcc);

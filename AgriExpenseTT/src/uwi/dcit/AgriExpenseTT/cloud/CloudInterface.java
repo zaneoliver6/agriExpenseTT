@@ -37,6 +37,7 @@ public class CloudInterface {
 	SQLiteDatabase db;
 	DbHelper dbh;
 	TransactionLog tL;
+	private final String TAG_NAME = "CloudInterface";
 
 	public CloudInterface(Context context) {
 		dbh= new DbHelper(context);
@@ -86,12 +87,10 @@ public class CloudInterface {
 		new InsertLog().execute();
 	}
 
-	public void insertAccount(String namespace, long time, String country, String county) {
+	public Account insertAccount(String namespace, long time, String country, String county) {
 		if (time == -1)
 			time = System.currentTimeMillis() / 1000L;
-		AccountApi.Builder builder = new AccountApi.Builder(
-				AndroidHttp.newCompatibleTransport(), new JacksonFactory(),
-				null);
+		AccountApi.Builder builder = new AccountApi.Builder(AndroidHttp.newCompatibleTransport(), new JacksonFactory(), null);
 		builder = CloudEndpointUtils.updateBuilder(builder);
 		AccountApi endpoint = builder.build();
 		Account acc = new Account();
@@ -100,12 +99,13 @@ public class CloudInterface {
 		acc.setCountry(country);
 		acc.setCounty(county);
 		try {
-			Log.i("CloudInterface", "Name:" + namespace + "Country:" + country + "County:" + county);
+			Log.i(TAG_NAME, "Name:" + namespace + " Country:" + country + " County:" + county);
 			acc = endpoint.getOrInsertAccount(acc.getAccount(), acc.getCounty(), acc.getCountry()).execute();
 			DbQuery.insertAccountTask(db, dbh, acc);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return acc;
 	}
 
 	public void insertAccount2(String namespace, long time, String country, String county) {
@@ -116,8 +116,12 @@ public class CloudInterface {
 
 	public void updateUpAccC(Long time) {
 		Account acc = DbQuery.getUpAcc(db);
-		acc.setLastUpdated(time);
-		new updateUpAcc().execute(acc);
+		if (acc != null) {
+			acc.setLastUpdated(time);
+			new updateUpAcc().execute(acc);
+		} else {
+			Log.wtf(TAG_NAME, "No Account Stored in Local Database");
+		}
 	}
 
 	public Account getAccount(String namespace) {
@@ -152,11 +156,12 @@ public class CloudInterface {
 		Account cloudAccount;
 		try {
 			cloudAccount = endpoint.getAccount(localAccount.getAccount()).execute();
-			long time = System.currentTimeMillis() / 1000;
-			cloudAccount.setLastUpdated(time);
-			DbQuery.updateAccount(db, time);
-
-			endpoint.updateAccount(cloudAccount).execute();
+			if (cloudAccount != null) {
+				long time = System.currentTimeMillis() / 1000;
+				cloudAccount.setLastUpdated(time);
+				DbQuery.updateAccount(db, time);
+				endpoint.updateAccount(cloudAccount).execute();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -179,24 +184,24 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId = logI.next(), rowId = rowI.next();//the current primary key of CROP CYCLE Table
 				Cycle c = DbQuery.getCycle(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccountName(db));
-				Log.i("UPDATE CYCLE", "Cycle:" + c);
-				//String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
-				//Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
-				//c.setKeyrep(keyrep);
-				if (c.getTotalSpent() == 0.00)
-					c.setTotalSpent(-1.00);
-				try {
-					Log.i("YOU ARE IN!", "INSIDE THE UPDATE CODE!");
-					//c=endpoint.insertCycle(c).execute();
-					c = endpoint.updateCycle(c).execute();
-//                    endpoint.updateCycle(c);
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("could not update cycle");
-					c = null;
-				}
 				if (c != null) {
+					c.setAccount(DbQuery.getAccountName(db));
+					Log.i("UPDATE CYCLE", "Cycle:" + c);
+					//String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
+					//Log.i("KEYPREP UDATE",">>>>>>>>"+keyrep);
+					//c.setKeyrep(keyrep);
+					if (c.getTotalSpent() == 0.00)
+						c.setTotalSpent(-1.00);
+					try {
+						Log.i("YOU ARE IN!", "INSIDE THE UPDATE CODE!");
+						//c=endpoint.insertCycle(c).execute();
+						c = endpoint.updateCycle(c).execute();
+						//                    endpoint.updateCycle(c);
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("could not update cycle");
+						c = null;
+					}
 					//we stored they key as text in the account field of c when we returned
 					//System.out.println(c.getAccount());
 					//store key of inserted cycle into cloud - cloud key table
@@ -249,19 +254,19 @@ public class CloudInterface {
 			while (logI.hasNext()) {
 				int logId = logI.next(), rowId = rowI.next();//the current primary key of CROP CYCLE Table
 				ResourcePurchase p = DbQuery.getARPurchase(db, dbh, rowId);
-				p.setAccount(DbQuery.getAccountName(db));
-				//String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
-				if (p.getQtyRemaining() == 0) {
-					p.setQtyRemaining(-1.00);
-				}
-				try {
-					//p.setKeyrep(keyrep);
-					p = endpoint.updateRPurchase(p).execute();
-				} catch (Exception e) {
-
-					return null;
-				}
 				if (p != null) {
+					p.setAccount(DbQuery.getAccountName(db));
+					//String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
+					if (p.getQtyRemaining() == 0) {
+						p.setQtyRemaining(-1.00);
+					}
+					try {
+						//p.setKeyrep(keyrep);
+						p = endpoint.updateRPurchase(p).execute();
+					} catch (Exception e) {
+
+						return null;
+					}
 					//we stored they key as text in the account field of c when we returned
 					//System.out.println(c.getAccount());
 					//store key of inserted cycle into cloud - cloud key table
@@ -315,16 +320,17 @@ public class CloudInterface {
 						rowId = rowI.next();              // The current primary key of CROP CYCLE Table
 
 				Cycle c = DbQuery.getCycle(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccountName(db));   // Uses the account rep as the namespace
-				Log.i("TEST MEEE", "Cycle:" + c.getStartDate());
-				try {
-					c = endpoint.insertCycle(c).execute();
 
-				} catch (Exception e) {
-
-					return null;
-				}
 				if (c != null) {
+					c.setAccount(DbQuery.getAccountName(db));   // Uses the account rep as the namespace
+					Log.i("TEST MEEE", "Cycle:" + c.getStartDate());
+					try {
+						c = endpoint.insertCycle(c).execute();
+
+					} catch (Exception e) {
+
+						return null;
+					}
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(c.getAccount());
 					//store key of inserted cycle into cloud - cloud key table
@@ -372,14 +378,15 @@ public class CloudInterface {
 			while (logI.hasNext()) {
 				int logId = logI.next(), rowId = rowI.next();
 				CycleUse c = DbQuery.getACycleUse(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccountName(db));
-				try {
-					Log.i("INSERTING!", "HEREe");
-					c = endpoint.insertCycleUse(c).execute();
-				} catch (Exception e) {
-					return null;
-				}
+
 				if (c != null) {
+					c.setAccount(DbQuery.getAccountName(db));
+					try {
+						Log.i("INSERTING!", "HEREe");
+						c = endpoint.insertCycleUse(c).execute();
+					} catch (Exception e) {
+						return null;
+					}
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(c.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
@@ -426,20 +433,23 @@ public class CloudInterface {
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				ResourcePurchase purchase = DbQuery.getARPurchase(db, dbh, rowId);
-				purchase.setAccount(DbQuery.getAccountName(db));
-				int rowID = DbQuery.getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
-				Log.i("ROW ID>>>>", "LAST ID FROM RESOURCE PURCHASE TABLE:" + rowID);
-				try {
-					Log.i("Inserting Resource Pur.", ">>>>>>>>>>>>>>>>>>>>>>>>>>>>" + purchase + "Time:" + purchase.getPurchaseDate());
-					purchase = endpoint.insertRPurchase(purchase).execute();
-				} catch (Exception e) {
-					return null;
-				}
+
 				if (purchase != null) {
+					purchase.setAccount(DbQuery.getAccountName(db));
+					int rowID = DbQuery.getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
+					Log.i("ROW ID>>>>", "LAST ID FROM RESOURCE PURCHASE TABLE:" + rowID);
+					try {
+						Log.i(TAG_NAME, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>" + purchase + "Time:" + purchase
+								.getPurchaseDate());
+						purchase = endpoint.insertRPurchase(purchase).execute();
+					} catch (Exception e) {
+						return null;
+					}
+
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
-					Log.i("CLOUD KEY", "INSERTING CLOUD KEY!! >>>" + purchase.getKeyrep());
+					Log.i(TAG_NAME, "INSERTING CLOUD KEY!! >>>" + purchase.getKeyrep());
 					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getKeyrep(), rowId);
 					//remove from redo log
 					try {
