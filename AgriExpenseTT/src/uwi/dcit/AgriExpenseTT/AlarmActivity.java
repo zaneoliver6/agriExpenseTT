@@ -21,15 +21,15 @@ import java.util.Calendar;
 import java.util.List;
 
 public class AlarmActivity extends AppCompatActivity {
+    public static final String MyPREFERENCES = "MyAlarmPrefs";
+    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay";
+    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour";
+    public static final String MyAlarmSet = "MyAlarmSet";
+    public static final String MyPreferencesSet = "MyPrefSet";
     Spinner sItems;
     Spinner sItems2;
     RadioGroup rg;
     private SharedPreferences sharedpreferences;
-    public static final String MyPREFERENCES = "MyAlarmPrefs" ;
-    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
-    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
-    public static final String MyAlarmSet = "MyAlarmSet";
-    public static final String MyPreferencesSet = "MyPrefSet";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
 
         List<String> spinnerArray = new ArrayList<>();
+
         spinnerArray.add("1:00");
         spinnerArray.add("2:00");
         spinnerArray.add("3:00");
@@ -50,8 +51,7 @@ public class AlarmActivity extends AppCompatActivity {
         spinnerArray.add("11:00");
         spinnerArray.add("12:00");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sItems = (Spinner) findViewById(R.id.spinner);
