@@ -41,6 +41,8 @@
 -dontwarn javax.imageio.metadata.IIOMetadata
 -dontwarn org.apache.commons.logging.LogFactory
 -dontwarn org.apache.commons.codec.digest.DigestUtils
+-dontwarn com.google.**
+-dontwarn org.apache.**
 
 -optimizations !class/unboxing/enum
 
