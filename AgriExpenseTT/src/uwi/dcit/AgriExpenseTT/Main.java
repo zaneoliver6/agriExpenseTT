@@ -188,16 +188,6 @@ public class Main extends BaseActivity{
         }
     }
 
-    protected String onGetResult(int requestCode, int resultCode, Intent data){
-        switch(requestCode){
-            case 1:
-                return country;
-        }
-        return null;
-    }
-
-
-
     public void setPreferencesCall(){
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         Boolean set = sharedpreferences.getBoolean(MyPreferencesSet,false);
