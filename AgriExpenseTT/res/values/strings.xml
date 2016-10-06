@@ -115,7 +115,7 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="manage_alarm_preferences">Edit Alarm Preferences</string>
     <string name="manage_data_delete_btn">Delete</string>
     <string name="backup_header_main">Overview</string>
-    <string name="backup_header_description">The follow list contains information that relates to what is stored by the system and provides options that will allow you to backup and sync your information online to increase the reliablity of the system</string>
+    <string name="backup_header_description">The follow list contains information that relates to what is stored by the system and provides options that will allow you to backup and sync your information online to increase the reliability of the system</string>
     <string name="title_activity_main_activity_redesign">AgriExpense</string>
     <string name="title_activity_main">AgriExpense</string>
     <string name="title_section1">Section 1</string>
@@ -165,4 +165,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="daily">Daily</string>
     <string name="weekly">Weekly</string>
     <string name="set_alarm">Set Alarm</string>
+    <string name="country_belong_msg">Select the country you belong to</string>
 </resources>

@@ -52,7 +52,7 @@ public class FragmentSelectLocation extends ListFragment {
 		
 		populateList();
 
-		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
+		listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
 		setListAdapter(listAdapt);
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Select Location Fragment");
 	}
@@ -88,13 +88,12 @@ public class FragmentSelectLocation extends ListFragment {
 		view = inflater.inflate(R.layout.list_reuse, container, false);
 
 		tv_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
-//		et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
 
         if (type.equals(DHelper.location_county)) {
 
             tv_main.setText("Select the " + countyTerm + " you belong to");
         }else {
-            tv_main.setText("Select the country you belong to");
+	        tv_main.setText(R.string.country_belong_msg);
         }
         return view;
 	}

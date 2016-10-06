@@ -1,44 +1,53 @@
 package uwi.dcit.AgriExpenseTT.cloud;
 
-import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-//import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.util.ArrayList;
 
-import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
+//import com.google.android.gms.auth.GoogleAuthUtil;
 
 
-public class SignInManager {
+public class SignInManager implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+	public static final int RC_SIGN_IN = 412;
 	private final String TAG_NAME = "SignInManager";
-	Context context;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	Activity activity;
+	private Activity context;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private Activity activity;
 	private String county,country;
+	private GoogleApiClient mGoogleApiClient;
+	private ProgressDialog syncDialog;
 
-    public SignInManager(Activity activity, Context ctx){
-        this.context = ctx;
-        this.activity = activity;
+	public SignInManager(Activity activity, Activity ctx) {
+		this.context = ctx;
+		this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
 
@@ -57,11 +66,40 @@ public class SignInManager {
 //	}
 
 	public void signIn(String country, String county){
-		Log.d(TAG_NAME, "Running new version of the sign in activity");
+		this.country = country;
+		this.county = county;
 
+		// Using Google recommended way to sign in https://developers.google.com/identity/sign-in/android/sign-in?configured=true
+		Log.d(TAG_NAME, "Running new version of the sign in activity with country");
+		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+				.requestEmail()
+				.build();
+		mGoogleApiClient = new GoogleApiClient.Builder(context)
+				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.build();
+		Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+		context.startActivityForResult(signInIntent, RC_SIGN_IN); // NB The activity callback is handled in the Base Activity
+	}
+
+
+	public void handleSignInResult(GoogleSignInResult result) {
+		String namespace;
+		namespace = result.getSignInAccount().getEmail();
+		if (namespace != null) {
+			Log.d(TAG_NAME, "Handle Sign in received: " + namespace);
+			syncDialog = ProgressDialog.show(context, "Backup Information", "Uploading Information for " + namespace + " to the cloud to prevent data loss", true);
+			syncDialog.show();
+			new SetupSignInTask(namespace).execute();
+		}
 	}
 
 	public void signIn(){
+		Log.d(TAG_NAME, "Running new version of the sign in activity");
+	}
+
+	public void signInOld() {
 		Log.d(TAG_NAME, "Attempting to Log in");
 		Account acc = isExistingOld(); 								// Check if Account is already created
 		if(acc == null) {
@@ -76,8 +114,8 @@ public class SignInManager {
 		//need to update the sign in method later down.
 	}
 
-    public Account isExistingOld(){
-        Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
+	private Account isExistingOld() {
+		Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
 		if (acc != null) Log.i("SignInManager", "Account Previously Created");
 		else Log.i("SignInManager", "No Account Previous Exists");
 		return acc;                         // Return the Account if received (will be null if none exists).
@@ -135,13 +173,13 @@ public class SignInManager {
 	}
 
 
-	public void accountSetUpOld(){
-        Log.d(TAG_NAME, "");
+	private void accountSetUpOld() {
+		Log.d(TAG_NAME, "");
 		ArrayList<String> deviceAccounts = getAccounts();
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		if(deviceAccounts.isEmpty()){
-			handleNoAccounts();
-			//return;
+//			handleNoAccounts();
+			return;
 		}
 
 		final CharSequence[] items = new CharSequence[deviceAccounts.size()];
@@ -175,22 +213,6 @@ public class SignInManager {
 	}
 
 	//--------------------------------------------------Helper stuff
-	private void handleNoAccounts(){
-		(new AlertDialog.Builder(context))
-			.setTitle("No Accounts Available")
-			.setMessage("A Google Account is required to backup the application data. Create an account before attempting to backup")
-			.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					context.startActivity(new Intent(context, Main.class));
-				}
-			})
-			.setNeutralButton("Create Account", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					context.startActivity(new Intent(android.provider.Settings.ACTION_ADD_ACCOUNT));
-				}
-			})
-			.show();
-	}
 
 	private ArrayList<String> getAccounts(){
 		ArrayList<String> accountList = new ArrayList<>();
@@ -220,7 +242,7 @@ public class SignInManager {
         return account != null && (account.getSignedIn() == 1);
     }
 
-	public SignInManager getSigninObject(){
+	private SignInManager getSigninObject() {
 		return this;
 	}
 
@@ -239,6 +261,29 @@ public class SignInManager {
     public void setCountry(String country) {
         this.country = country;
     }
+
+	/*
+		This method relates to handleing the google sign in connection
+		https://developers.google.com/android/guides/api-client#manually_managed_connections
+	 */
+	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+	}
+
+	@Override
+	public void onConnected(@Nullable Bundle bundle) {
+
+	}
+
+	@Override
+	public void onConnectionSuspended(int i) {
+
+	}
+
+	private void reportFailures(String message, String type) {
+		//TODO Develop System to send messages to
+	}
 
 	//Create an Asynchronous Task to create new thread to handle this process
 	private class SetupSignInTask extends AsyncTask<String, Void, Account> {
@@ -268,14 +313,50 @@ public class SignInManager {
 
 		@Override
 		protected void onPostExecute(Account cloudAcc) {
-			Account localAccount = isExistingOld();
-			DbQuery.signInAccount(db, localAccount);
-			if (localAccount != null && cloudAcc != null) {
-				Sync sync = new Sync(db, dbh, context, getSigninObject());
-				sync.start(namespace, cloudAcc);
+			boolean isSuccess = false;
+			try {
+				Account localAccount = isExistingOld();
+				DbQuery.signInAccount(db, localAccount);
+				if (localAccount != null && cloudAcc != null) {
+					Sync sync = new Sync(db, dbh, context, getSigninObject());
+					sync.start(namespace, cloudAcc);
+				}
+				isSuccess = true;
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			super.onPostExecute(cloudAcc);
 
+			syncDialog.cancel();
+			if (isSuccess) {
+				new AlertDialog.Builder(context) // Use Dialog to provide better feedback to ensure... toast are not easily seen
+						.setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to OK icon from material library
+						.setTitle("Backup")
+						.setMessage("Records was successfully backed up in the cloud")
+						.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+
+							}
+						})
+						.show();
+			} else {
+				new AlertDialog.Builder(context) // Use Dialog to provide better feedback to ensure... toast are not easily seen
+						.setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to OK icon from material library
+						.setTitle("Backup")
+						.setMessage("Error Occurred While attempting to backup. Do you wish to report a message to the administrators of the app to help resolve the issue?")
+						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								reportFailures("Backup Data", "Unable to bakup information to server after first signing");
+							}
+						}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialogInterface, int i) {
+					}
+				})
+						.show();
+			}
 		}
 
 	}

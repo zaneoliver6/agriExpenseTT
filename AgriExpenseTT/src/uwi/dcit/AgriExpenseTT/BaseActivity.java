@@ -1,14 +1,19 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
@@ -41,56 +46,64 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) { // Check to ensure that the we are not relaunching the current activity
-            case 0:
-                // Home
+            case 0:// Home
                 if (!(this instanceof Main))
                     startActivity(new Intent(this, Main.class));
                 break;
-            case 1:
-                //new cycle
+            case 1://new cycle
                 if (!(this instanceof NewCycle))
                     startActivity(new Intent(this, NewCycle.class));
                 break;
-            case 2:
-                //new purchase
+            case 2://new purchase
                 if (!(this instanceof NewPurchase))
                     startActivity(new Intent(this, NewPurchase.class));
                 break;
-            case 3:
-                //hire labour
+            case 3://hire labour
                 if (!(this instanceof HireLabour))
                     startActivity(new Intent(this, HireLabour.class));
                 break;
-            case 4:
-                //report manager
+            case 4://report manager
                 if (!(this instanceof ManageReport))
                     startActivity(new Intent(this,ManageReport.class));
                 break;
-            case 5:
-                // manage data
+            case 5:// manage data
                 if (!(this instanceof ManageData))
                     startActivity(new Intent(this,ManageData.class));
                 break;
-            case 6:
-                backUpData();
+            case 6: // sign in
+                signIn();
                 break;
             default:
                 startActivity(new Intent(this, Main.class));
         }
     }
 
-    public void backUpData(){
+    public void signIn() {
         Intent i = new Intent(getApplicationContext(), Backup.class);
         if (!this.signInManager.localAccountExists()) {
             if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(this) // Use Dialog to provide better feedback to ensure... toast are not easily seen
+                        .setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to Error icon from material library
+                        .setTitle("No Internet Connection")
+                        .setMessage("Ensure that your device is connected to the internet before signing in.")
+                        .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                signIn();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.d("BaseActivity", "Sign-in Activity Cancelled");
+                                //TODO Put activity log here for tracking
+                            }
+                        })
+                        .show();
                 return;
             }
-            this.signInManager.cloudAccountCheck();             // User does not exist => check Internet and then create user
-            if(!this.signInManager.localAccountExists())
-                startActivityForResult(i, RequestCode_backup);  // Launch the Backup activity with the sign-up action passed
-            else
-                signInManager.signIn();
+            // Connected to the Internet so we attempt to sign in
+            startActivityForResult(i, RequestCode_backup);  // Launch the Backup activity with the sign-up action passed
         }
         else if (this.signInManager.isSignedIn()){
             // If not signed attempt to login with existing account
@@ -161,6 +174,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
         if(getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == SignInManager.RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            this.signInManager.handleSignInResult(result);
         }
     }
 }

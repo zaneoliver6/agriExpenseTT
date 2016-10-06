@@ -20,23 +20,22 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class Main extends BaseActivity{
 
-    private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
     public final static String TAG = "Main";
-    public String country="";
-    public String county="";
-    private String focus = "cycle";
-    public SQLiteDatabase db;
-    private SharedPreferences sharedpreferences;
-    private SharedPreferences sharedPreferencesFirstRun;
     public static final String MyPREFERENCES = "MyAlarmPrefs" ;
     public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
     public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
     public static final String MyAlarmSet = "MyAlarmSet";
     public static final String MyPreferencesSet = "MyPrefSet";
-
     public static final String FirstRunPreferences = "MyFirstRunPrefs";
     public static final String FirstRun="MyPrefs-FirstRun";
+    public String country = "";
+    public String county = "";
+    public SQLiteDatabase db;
+    private CharSequence mTitle;
+    private String focus = "cycle";
+    private SharedPreferences sharedpreferences;
+    private SharedPreferences sharedPreferencesFirstRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +166,7 @@ public class Main extends BaseActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case RequestCode_backup:
                 if (resultCode == 1) {
@@ -206,7 +205,7 @@ public class Main extends BaseActivity{
             startActivity(p);
             SharedPreferences.Editor editor = sharedPreferencesFirstRun.edit();
             editor.putBoolean(FirstRun,true);
-            editor.commit();
+            editor.apply();
         }
     }
 }

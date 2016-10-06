@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Menu;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
@@ -35,18 +34,4 @@ public class Backup extends BaseActivity {
                 .add(R.id.fragment_backup_Container, fragment)
                 .commit();
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.backup_data, menu);
-		return true;
-	}
-
-//	@Override
-//	public void onPause(){
-//		super.onPause();
-//		Log.i("myTest!!!!!!!!!!!!","PAUSED CALLED!");
-//		signInManager.signIn(country,county);
-//	}
 }
