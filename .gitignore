@@ -22,17 +22,14 @@ local.properties
 .targets
 
 # Java Specific files
-*.class
 *.discovery
 *.api
-
-.idea/workspace.xml
-.idea/libraries
 build
 *.iml
 gradle/
-gradle
 gradlew
 gradlew.bat
 
 *.log
+
+google-services.json
