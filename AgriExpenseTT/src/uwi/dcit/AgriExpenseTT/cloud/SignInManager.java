@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
+//import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
@@ -44,34 +44,39 @@ public class SignInManager {
 
     }
 
-	public void signIn(String country, String county) {                // TODO Change why do we ask for the country and county before we check for user
-		Log.d(TAG_NAME, "Attempting to Log in");
-		Account acc = isExisting(); 								// Check if Account is already created
-		if(acc == null) {
-			accountSetUp();                                        // Account doesn't exist so we've to setup a new one (means we never signed in)
-			this.country=country;
-			this.county=county;
-		} else {                                                        // Account exists already so we can Initiate Sign-in process
-			startSync(acc.getAccount());
-		}
+//	public void signIn(String country, String county) {                // TODO Change why do we ask for the country and county before we check for user
+//		Log.d(TAG_NAME, "Attempting to Log in");
+//		Account acc = isExistingOld(); 								// Check if Account is already created
+//		if(acc == null) {
+//			accountSetUpOld();                                        // Account doesn't exist so we've to setup a new one (means we never signed in)
+//			this.country=country;
+//			this.county=county;
+//		} else {                                                        // Account exists already so we can Initiate Sign-in process
+//			startSyncOld(acc.getAccount());
+//		}
+//	}
+
+	public void signIn(String country, String county){
+		Log.d(TAG_NAME, "Running new version of the sign in activity");
+
 	}
 
 	public void signIn(){
 		Log.d(TAG_NAME, "Attempting to Log in");
-		Account acc = isExisting(); 								// Check if Account is already created
+		Account acc = isExistingOld(); 								// Check if Account is already created
 		if(acc == null) {
-			accountSetUp(); // Account doesn't exist so we've to setup a new one (means we never signed in)
+			accountSetUpOld(); // Account doesn't exist so we've to setup a new one (means we never signed in)
 		}
 		else {
 			this.country=acc.getCountry();
 			this.county=acc.getCounty();
-			startSync(acc.getAccount());
+			startSyncOld(acc.getAccount());
 		}// Account exists already so we can Initiate Sign-in process
 		//Due to the fact that start sync is threaded, it will finish on its own timing...
 		//need to update the sign in method later down.
 	}
 
-    public Account isExisting(){
+    public Account isExistingOld(){
         Account acc = DbQuery.getUpAcc(db);// Attempts to retrieve the Account from the database Record in the app!
 		if (acc != null) Log.i("SignInManager", "Account Previously Created");
 		else Log.i("SignInManager", "No Account Previous Exists");
@@ -125,12 +130,12 @@ public class SignInManager {
 		return true;
 	}
 
-	private void startSync(final String namespace){
+	private void startSyncOld(final String namespace){
 		new SetupSignInTask(namespace).execute(); //The SetupSignInTask will handle the process of signing in within a new task/thread
 	}
 
 
-	public void accountSetUp(){
+	public void accountSetUpOld(){
         Log.d(TAG_NAME, "");
 		ArrayList<String> deviceAccounts = getAccounts();
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -153,7 +158,7 @@ public class SignInManager {
 				public void onClick(DialogInterface dialog, int item) {
                     String namespace = convertString2Namespace(items[item].toString());
 		            if (namespace != null)
-						startSync(namespace); //convert choice to name space and attempt to upload
+						startSyncOld(namespace); //convert choice to name space and attempt to upload
                     else
 						signInReturn(false, "Unable to create Account with the backup system");
 		        }
@@ -189,7 +194,9 @@ public class SignInManager {
 
 	private ArrayList<String> getAccounts(){
 		ArrayList<String> accountList = new ArrayList<>();
-		android.accounts.Account[] accounts = AccountManager.get(context).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+//		android.accounts.Account[] accounts = AccountManager.get(context).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
+
+		android.accounts.Account[] accounts = new android.accounts.Account[0];
 
 		for(android.accounts.Account a:accounts){
 		  accountList.add(a.name);
@@ -209,7 +216,7 @@ public class SignInManager {
 
 
 	public boolean isSignedIn(){
-		Account account = this.isExisting();
+		Account account = this.isExistingOld();
         return account != null && (account.getSignedIn() == 1);
     }
 
@@ -247,7 +254,7 @@ public class SignInManager {
 
 			CloudInterface cloudIF = new CloudInterface(context, db, dbh);
 			Account cloudAccount = cloudIF.getAccount(namespace);    //returns  Account if there is any to the onPostExecute
-			Account localAccount = isExisting();
+			Account localAccount = isExistingOld();
 			//It doesn't matter what is not present within the system, the insertAccount method wil lendure that both a
 			//cloud and local account is created.
 			if (cloudAccount == null || localAccount == null) {
@@ -261,7 +268,7 @@ public class SignInManager {
 
 		@Override
 		protected void onPostExecute(Account cloudAcc) {
-			Account localAccount = isExisting();
+			Account localAccount = isExistingOld();
 			DbQuery.signInAccount(db, localAccount);
 			if (localAccount != null && cloudAcc != null) {
 				Sync sync = new Sync(db, dbh, context, getSigninObject());

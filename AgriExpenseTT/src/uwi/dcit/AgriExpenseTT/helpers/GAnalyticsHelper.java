@@ -54,7 +54,7 @@ public class GAnalyticsHelper {
         if (canSend()) {
             Log.d(TAG, "Sending Screen View " + screenName);
             tracker.setScreenName(screenName);
-            tracker.send(new HitBuilders.AppViewBuilder().build());
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
         }
     }
 
