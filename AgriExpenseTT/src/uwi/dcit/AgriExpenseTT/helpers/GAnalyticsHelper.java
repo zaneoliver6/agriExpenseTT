@@ -22,7 +22,7 @@ public class GAnalyticsHelper {
 
     private GAnalyticsHelper(Context context){
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
-        this.tracker = analytics.newTracker(R.xml.ganalytics);
+        this.tracker = analytics.newTracker(R.xml.global_tracker);
         tracker.enableAdvertisingIdCollection(true);
     }
 
