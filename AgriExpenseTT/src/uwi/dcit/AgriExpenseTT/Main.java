@@ -3,7 +3,6 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,26 +15,18 @@ import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
 
 
 public class Main extends BaseActivity{
 
     public final static String APP_NAME = "AgriExpenseTT";
     public final static String TAG = "Main";
-    public static final String MyPREFERENCES = "MyAlarmPrefs" ;
-    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
-    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
-    public static final String MyAlarmSet = "MyAlarmSet";
-    public static final String MyPreferencesSet = "MyPrefSet";
-    public static final String FirstRunPreferences = "MyFirstRunPrefs";
-    public static final String FirstRun="MyPrefs-FirstRun";
     public String country = "";
     public String county = "";
     public SQLiteDatabase db;
     private CharSequence mTitle;
     private String focus = "cycle";
-    private SharedPreferences sharedpreferences;
-    private SharedPreferences sharedPreferencesFirstRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,9 +179,7 @@ public class Main extends BaseActivity{
     }
 
     public void setPreferencesCall(){
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        Boolean set = sharedpreferences.getBoolean(MyPreferencesSet,false);
-        if(!set) {
+        if(!PrefUtils.getAlarmSet(this)) {
           Intent i = new Intent(Main.this, AlarmActivity.class);
             startActivity(i);
             Log.i("PREF SET","PREFERENCES SET");
@@ -198,14 +187,10 @@ public class Main extends BaseActivity{
     }
 
     public void firstRunCheck(){
-        sharedPreferencesFirstRun = getSharedPreferences(FirstRunPreferences, Context.MODE_PRIVATE);
-        Boolean set = sharedPreferencesFirstRun.getBoolean(FirstRun, false);
-        if(!set){
+        if (!PrefUtils.isFirstUse(this)){
             Intent p = new Intent(Main.this, WelcomeScreen.class);
             startActivity(p);
-            SharedPreferences.Editor editor = sharedPreferencesFirstRun.edit();
-            editor.putBoolean(FirstRun,true);
-            editor.apply();
+            PrefUtils.setFirstUse(this, true);
         }
     }
 }

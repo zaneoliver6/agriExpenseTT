@@ -20,16 +20,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
+
 public class AlarmActivity extends AppCompatActivity {
-    public static final String MyPREFERENCES = "MyAlarmPrefs";
-    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay";
-    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour";
-    public static final String MyAlarmSet = "MyAlarmSet";
-    public static final String MyPreferencesSet = "MyPrefSet";
+
     Spinner timeSpinner;
     Spinner optionDaySpinner;
     RadioGroup rg;
-    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,45 +81,55 @@ public class AlarmActivity extends AppCompatActivity {
             Log.i("AlarmActivity", "Selected DAILY");
             weekDay="D";
         }
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString(MyAlarmPreferencesWeekDay, weekDay);
-        editor.putInt(MyAlarmPreferencesHour, hour);
-        editor.putBoolean(MyPreferencesSet, true);
-        editor.putBoolean(MyAlarmSet,false);
-        editor.apply();
-        Log.i("AlarmActivity", "PREFERENCES SET!");
-        runAlarm();
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to alarm icon from material library
-                .setTitle("Alarm")
-                .setMessage("Alarm Preferences was successfully set. The alarm options can be changed later in the settings menu.")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .show();
+
+        // If Preferences and Alarm Configured Correctly Notify the User
+        if (PrefUtils.setAlarmDetails(this, weekDay,  hour) && runAlarm(weekDay, hour)){
+            GAnalyticsHelper.getInstance(this).sendPreference("Alarm", "Alarm Set", 1);// Alarm was set successfully
+            Log.i("AlarmActivity", "Alarm Preferences Set Correctly");
+            PrefUtils.setAlarmSet(this, true);
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_popup_reminder)
+                    .setTitle("Alarm")
+                    .setMessage("Alarm Preferences was successfully set. The alarm options can be changed later in the settings menu.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }else{
+            GAnalyticsHelper.getInstance(this).sendPreference("Alarm", "Alarm Set", 1);
+            PrefUtils.setAlarmSet(this, false);
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Unable to Save Alarm Details. Try again later.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+
+
+
+
     }
 
-    public void runAlarm() {
-        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        boolean set = sharedpreferences.getBoolean(MyAlarmSet, false);
-        if (!set) {
-            String weekDay = sharedpreferences.getString(MyAlarmPreferencesWeekDay,"NIL");
-            int hour = sharedpreferences.getInt(MyAlarmPreferencesHour, 99);
-            if(hour!=99 && !weekDay.equals("NIL")) {
-                Context ctx = this.getApplicationContext();
+    public boolean runAlarm(String weekDay, int hour) {
+        try {
+            if (hour != -1 && weekDay != null && !weekDay.equals("NIL")) {
                 Intent intent = new Intent();
                 intent.setAction("android.intent.CustomAlarm");
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(ctx, 0, intent, 0);
+                PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
                 int timeValue;
                 if (weekDay.toUpperCase().equals("D"))  //A DAY
                     timeValue = 1440;
                 else                                    //A WEEK
                     timeValue = 10080;
-                AlarmManager alarmMgr = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 alarmMgr.cancel(alarmIntent);
                 //Set the alarm time.
                 Calendar calendar = Calendar.getInstance();
@@ -129,15 +137,15 @@ public class AlarmActivity extends AppCompatActivity {
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, 0);
                 // setRepeating() lets you specify a precise custom interval--in this case
-                alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(),
-                        1000 * 60 * timeValue, alarmIntent);
-                //Now that the alarm has been set, we can keep a track of this!
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.putBoolean(MyAlarmSet, true);
-                editor.apply();
-                Toast.makeText(this, "Alarm Set Successfully", Toast.LENGTH_SHORT).show();
-                Log.i("AlarmActivity", "ALARM SET");
+                alarmMgr.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 1000 * 60 * timeValue, alarmIntent);
+
+                Log.d("AlarmActivity", "Alarm was successfully configured using a PendingIntent");
             }
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            Log.e("AlarmActivity", "Alarm Failed To Set");
+            return false;
         }
     }
 }

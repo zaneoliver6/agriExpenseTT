@@ -16,16 +16,22 @@ public class GAnalyticsHelper {
 
     public static final String APP_TRACKER = "AgriExpense"; //Tracker used only in this app
     private static final String TAG = "GAnalytics";
+    private final String userEmail;
     private Tracker tracker;
+    private final Context context;
 
     private static final boolean enableTracking = false;
 
     private static GAnalyticsHelper instance = null;
 
     private GAnalyticsHelper(Context context){
+        this.context = context;
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         this.tracker = analytics.newTracker(R.xml.global_tracker);
         tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
+        tracker.enableExceptionReporting(true);
+        userEmail = PrefUtils.getUserEmail(context);
     }
 
     private boolean canSend(){
@@ -41,22 +47,38 @@ public class GAnalyticsHelper {
         return this.tracker;
     }
 
-     public void sendUserEvent(String eventName, String action){
+    /**
+     *
+     * @param category
+     * @param action
+     * @param eventName
+     * @param status
+     */
+     public void sendEvent(String category, String action, String eventName, int status){
          if (canSend()) {
              tracker.send(new HitBuilders.EventBuilder()
-                 .setCategory("userevent")
-                 .setAction("action")
+                 .setCategory(category)
+                 .setAction(action)
                  .setLabel(eventName)
-                 .setValue(1)
+                 .setValue(status)
+                 .setCustomDimension(1, userEmail)
                  .build());
          }
      }
+
+    public void sendPreference(String action, String eventName, int status){
+        sendEvent("Preferences", action, eventName, status); // 0 status for failed 1 for success
+    }
+
 
     public void sendScreenView(String screenName){
         if (canSend()) {
             Log.d(TAG, "Sending Screen View " + screenName);
             tracker.setScreenName(screenName);
-            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+            tracker.send(new HitBuilders.
+                    ScreenViewBuilder()
+                    .setCustomDimension(1, userEmail)
+                    .build());
         }
     }
 
