@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
@@ -89,8 +90,12 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 		namespace = result.getSignInAccount().getEmail();
 		if (namespace != null) {
 			Log.d(TAG_NAME, "Handle Sign in received: " + namespace);
+			// Store User Email to Local storage
+			PrefUtils.setUserEmail(context, namespace);
+			// Display a Dialog so the user is aware a background task is in operation
 			syncDialog = ProgressDialog.show(context, "Backup Information", "Uploading Information for " + namespace + " to the cloud to prevent data loss", true);
 			syncDialog.show();
+			// Run the Synchronizaiton process in the background using Async Task
 			new SetupSignInTask(namespace).execute();
 		}
 	}

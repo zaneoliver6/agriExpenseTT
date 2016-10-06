@@ -37,11 +37,6 @@ import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
-
-//import uwi.dcit.AgriExpenseTT.CycleUsage;
-
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
 public class FragmentPurchaseUse extends Fragment {
 	private View view;
 	private SQLiteDatabase db;

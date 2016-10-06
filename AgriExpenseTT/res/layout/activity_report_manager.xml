@@ -59,22 +59,7 @@
                 android:id="@+id/reportControlsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-
-                >
-
-                <TextView
-                    android:id="@+id/Add_Report_Subheader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Enter the start and end dates for the report."
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
+                android:layout_weight="5" >
 
                 <Button
                     android:id="@+id/btn_addReport"
@@ -84,6 +69,9 @@
                     android:text="@string/btn_reports_new"
                     android:onClick="createNewReport"  />
 
+
+
+                <!--
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -135,6 +123,21 @@
                     android:text="Format: (DD/MM/YYYY)"
                     android:id="@+id/textView"
                     android:layout_gravity="center_horizontal|top" />
+
+                <TextView
+                    android:id="@+id/Add_Report_Subheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Enter the start and end dates for the report."
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+                -->
 
             </FrameLayout>
         </LinearLayout>

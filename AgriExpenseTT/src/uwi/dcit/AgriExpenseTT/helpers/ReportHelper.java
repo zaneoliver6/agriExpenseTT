@@ -62,7 +62,6 @@ public class ReportHelper {
 	 */
 	public void createReport(long start, long end){
 		//Create a default name for the report file based on current date
-
 		Calendar c = Calendar.getInstance();
 		StringBuilder stb = new StringBuilder();
 		stb.append(defaultName)
@@ -73,7 +72,8 @@ public class ReportHelper {
 			.append("-")
 			.append(c.get(Calendar.YEAR))
 			.append(".xls");
-		
+
+		Log.d("ReportHelper", "Attempting to create a report called: " + stb.toString());
 		createReport(stb.toString(), start, end);
 	}
 	
@@ -83,21 +83,17 @@ public class ReportHelper {
 	 */
 	public void createReport(String filename, long start, long end){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
+		Log.d("ReportHelper", "Attempting to create a ");
 		if (!path.exists()) {
 			path.mkdirs();
 			Log.i("CSVHelper", " Folder does not exist, Creating folder at "+path.toString());
 		}
 		writeExcel(path, filename, start, end);
 	}
-
-	
-//	private void writeExcel(File path, String filename, long start, long end){
-//		this.writeExcel(path, filename, start, end);
-//	}
 	
 	private void writeExcel(File path, String filename, long start, long end){
 		
-		ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
+		ArrayList<LocalCycle> cycleList = new ArrayList<>();
 		DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
 		
 		

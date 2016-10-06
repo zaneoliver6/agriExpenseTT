@@ -20,39 +20,47 @@ import android.widget.Toast;
 import java.io.File;
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.ManageReport;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 public class FragmentReportList extends ListFragment {
 
 	private ArrayList<String> list;
     private File files[];
-		
+	private ManageReport activity;
+
 	@Override
 	public void onActivityCreated(Bundle savedState){
 		super.onActivityCreated(savedState);
 		this.registerForContextMenu(getListView());
+		if (activity != null && !activity.hasFilePermissions())
+			activity.requestFilePermission();
 	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ReportHelper.createReportDirectory();
-		populateList();
-//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Report List Fragment");
+		if(activity != null && activity.hasFilePermissions()){
+			ReportHelper.createReportDirectory();
+			populateList();
+		}
 	}
 	
 	public void populateList() {
-		list = new ArrayList<String>(); //Reinitialise to ensure always a empty list starting with		
+		list = new ArrayList<>(); //Reinitialise to ensure always a empty list starting with
         String path = Environment.getExternalStorageDirectory().toString() + "/" + ReportHelper.folderLocation;
 		files = (new File(path)).listFiles(); //Store the file in an array of files
-		Log.d(FragmentReportList.class.toString(), "Path: " + path + " Size: "+ files.length);
-		for (int i=0; i < files.length; i++){
-		    Log.d("Files", "FileName:" + files[i].getName());
-		    list.add(files[i].getName());
+		if (files != null) {
+			Log.d(FragmentReportList.class.toString(), "Path: " + path + " Size: " + files.length);
+			for (int i = 0; i < files.length; i++) {
+				Log.d("Files", "FileName:" + files[i].getName());
+				list.add(files[i].getName());
+			}
 		}
 //		Collections.sort(list); //Removed sorting because it would cause the order to be inconsistent with the file array
-        ArrayAdapter<String> listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<String> listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
 		setListAdapter(listAdapt);
 	}
 	
@@ -97,8 +105,7 @@ public class FragmentReportList extends ListFragment {
 		File f = files[position];
 		if (f.delete()){
 			Toast.makeText(this.getActivity(), "Report Successfully Deleted", Toast.LENGTH_LONG).show();
-			//Re-populate the List of Files
-			populateList();
+			populateList();//Re-populate the List of Files
 		}else
 			Toast.makeText(this.getActivity(), "Unable to Delete Report", Toast.LENGTH_LONG).show();
 	}
@@ -115,11 +122,14 @@ public class FragmentReportList extends ListFragment {
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		Log.d(FragmentReportList.class.toString(), this.list.get(position));
-		Log.d("FragmentReportList", files[position].toString() );		
+		Log.d("FragmentReportList", this.list.get(position) + " : " + files[position].toString());
 		this.viewReport(position);
 	}
-	
+
+	public void setReportActivity(ManageReport reportActivity) {
+		this.activity = reportActivity;
+	}
+
 	/**
 	 * Create an Onclicklistener class for the deletion of the report
 	 * @author kyle
