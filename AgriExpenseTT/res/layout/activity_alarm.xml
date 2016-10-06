@@ -15,7 +15,7 @@
         android:layout_marginTop="7dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:text="Select how often you want to be notified."
+        android:text="@string/select_notify_msg"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_size_list_head"
         android:textStyle="bold" />
@@ -27,7 +27,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="@dimen/lable_item_details_left_margin"
         android:layout_marginRight="@dimen/lable_item_details_left_margin"
-        android:text="Please select the following criteria to determine how often and at what time you will like to be notified to enter data."
+        android:text="@string/notify_criteria_msg"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_size_list_head" />
 
@@ -38,7 +38,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="@dimen/lable_item_details_left_margin"
         android:layout_marginRight="@dimen/lable_item_details_left_margin"
-        android:text="Select Time of Day"
+        android:text="@string/time_msg"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
@@ -51,22 +51,24 @@
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/hour"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            tools:ignore="UnusedAttribute"/>
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/am_pm"
             android:layout_width="150dip"
             android:layout_height="wrap_content"
-            android:spinnerMode="dialog" />
+            android:spinnerMode="dialog"
+            tools:ignore="UnusedAttribute"/>
     </LinearLayout>
 
 
     <RadioGroup
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/radioGroup"
+        android:id="@+id/interval_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -76,30 +78,29 @@
         android:weightSum="1">
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/daily_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.55"
-            android:checked="false"
+            android:checked="true"
             android:paddingLeft="10dp"
-            android:text="Daily"/>
+            android:text="@string/daily"/>
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/weekly_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.14"
             android:checked="false"
-            android:singleLine="false"
-            android:text="Weekly"/>
+            android:text="@string/weekly"/>
 
     </RadioGroup>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="buttonSelected"
-        android:text="Set Alarm" />
+        android:onClick="setAlarm"
+        android:text="@string/set_alarm"/>
 
 </LinearLayout>

@@ -159,4 +159,10 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="welcome_screen_2_desc">Cycles represent each individual plot of land that is planted. Each individual planting is usually represented as a crop cycle.</string>
     <string name="welcome_screen_3_title">Purchases</string>
     <string name="welcome_screen_3_desc">Purchases represents the total cost of the items purchased. As materials from the purchase is used during the life of the crop, the fraction of the cost will be added to the cycle.</string>
+    <string name="select_notify_msg">Select how often you want to be notified.</string>
+    <string name="notify_criteria_msg">Please select the following criteria to determine how often and at what time you will like to be notified to enter data.</string>
+    <string name="time_msg">Select Time of Day</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="set_alarm">Set Alarm</string>
 </resources>

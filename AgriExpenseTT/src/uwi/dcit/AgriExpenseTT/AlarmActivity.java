@@ -3,13 +3,13 @@ package uwi.dcit.AgriExpenseTT;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.RadioGroup;
@@ -26,8 +26,8 @@ public class AlarmActivity extends AppCompatActivity {
     public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour";
     public static final String MyAlarmSet = "MyAlarmSet";
     public static final String MyPreferencesSet = "MyPrefSet";
-    Spinner sItems;
-    Spinner sItems2;
+    Spinner timeSpinner;
+    Spinner optionDaySpinner;
     RadioGroup rg;
     private SharedPreferences sharedpreferences;
 
@@ -37,81 +37,50 @@ public class AlarmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alarm);
 
         List<String> spinnerArray = new ArrayList<>();
-
-        spinnerArray.add("1:00");
-        spinnerArray.add("2:00");
-        spinnerArray.add("3:00");
-        spinnerArray.add("4:00");
-        spinnerArray.add("5:00");
-        spinnerArray.add("6:00");
-        spinnerArray.add("7:00");
-        spinnerArray.add("8:00");
-        spinnerArray.add("9:00");
-        spinnerArray.add("10:00");
-        spinnerArray.add("11:00");
-        spinnerArray.add("12:00");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sItems = (Spinner) findViewById(R.id.spinner);
-        sItems.setAdapter(adapter);
-
-        List<String> spinnerArray2 = new ArrayList<>();
-        spinnerArray2.add(" AM ");
-        spinnerArray2.add(" PM ");
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, spinnerArray2);
-
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sItems2 = (Spinner) findViewById(R.id.spinner2);
-        sItems2.setAdapter(adapter2);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_alarm, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // Adding the text from 1 to 12
+        for (int i = 1; i < 13; i++) {
+            spinnerArray.add(i + ":00");
         }
-        return super.onOptionsItemSelected(item);
+
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        timeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        timeSpinner = (Spinner) findViewById(R.id.hour);
+        timeSpinner.setAdapter(timeAdapter);
+        timeSpinner.setSelection(4);
+
+        List<String> optionDay = new ArrayList<>();
+        optionDay.add(" AM ");
+        optionDay.add(" PM ");
+
+        ArrayAdapter<String> optionDayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, optionDay);
+        optionDayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        optionDaySpinner = (Spinner) findViewById(R.id.am_pm);
+        optionDaySpinner.setAdapter(optionDayAdapter);
+        optionDaySpinner.setSelection(1);
+
     }
 
 
-    public void buttonSelected(View view){
+    public void setAlarm(View view) {
 
-        int hour = sItems.getSelectedItemPosition()+1;
-        String amPm = sItems2.getSelectedItem().toString();
+        int hour = timeSpinner.getSelectedItemPosition() + 1;
+        String amPm = optionDaySpinner.getSelectedItem().toString();
         if(amPm.equals(" PM ") && hour==12)
-            hour=0;
+            hour = 0;
         else if(amPm.equals(" PM "))
-            hour+=12;
+            hour += 12;
 
-        Log.i("Hi","SELECTED:::::---"+hour);
+        Log.i("AlarmActivity", "SELECTED " + hour);
 
-        rg =(RadioGroup) findViewById(R.id.radioGroup);
+        rg = (RadioGroup) findViewById(R.id.interval_option);
         int id = rg.getCheckedRadioButtonId();
         String weekDay;
-        if(id==R.id.radioButton){
-            Log.i("WEEKLY","WEEKLY");
+        if (id == R.id.weekly_option) {
+            Log.i("AlarmActivity", "Selected WEEKLY");
             weekDay="W";
         }
         else{
-            Log.i("DAILY","DAILY");
+            Log.i("AlarmActivity", "Selected DAILY");
             weekDay="D";
         }
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -120,10 +89,20 @@ public class AlarmActivity extends AppCompatActivity {
         editor.putInt(MyAlarmPreferencesHour, hour);
         editor.putBoolean(MyPreferencesSet, true);
         editor.putBoolean(MyAlarmSet,false);
-        editor.commit();
-        Log.i("PREF SET","PREFERENCES SET!");
+        editor.apply();
+        Log.i("AlarmActivity", "PREFERENCES SET!");
         runAlarm();
-        finish();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to alarm icon from material library
+                .setTitle("Alarm")
+                .setMessage("Alarm Preferences was successfully set. The alarm options can be changed later in the settings menu.")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .show();
     }
 
     public void runAlarm() {
@@ -155,9 +134,9 @@ public class AlarmActivity extends AppCompatActivity {
                 //Now that the alarm has been set, we can keep a track of this!
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putBoolean(MyAlarmSet, true);
-                editor.commit();
+                editor.apply();
                 Toast.makeText(this, "Alarm Set Successfully", Toast.LENGTH_SHORT).show();
-                Log.i("ALARM", "ALARM SET");
+                Log.i("AlarmActivity", "ALARM SET");
             }
         }
     }
