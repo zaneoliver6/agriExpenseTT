@@ -96,7 +96,7 @@ public class AlarmActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to alarm icon from material library
                 .setTitle("Alarm")
                 .setMessage("Alarm Preferences was successfully set. The alarm options can be changed later in the settings menu.")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
