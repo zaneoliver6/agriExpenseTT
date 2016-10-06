@@ -18,6 +18,8 @@ public class GAnalyticsHelper {
     private static final String TAG = "GAnalytics";
     private Tracker tracker;
 
+    private static final boolean enableTracking = false;
+
     private static GAnalyticsHelper instance = null;
 
     private GAnalyticsHelper(Context context){
@@ -27,7 +29,7 @@ public class GAnalyticsHelper {
     }
 
     private boolean canSend(){
-        return true;
+        return enableTracking;
     }
     // Make sense to keep a singleton class to make sure trackers are not reinitialized every time its called
     public static GAnalyticsHelper getInstance(Context context){
