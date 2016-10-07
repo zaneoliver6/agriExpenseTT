@@ -2,6 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -25,8 +26,7 @@ import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 
-
-public class ManageReport extends BaseActivity {
+public class ManageReport extends BaseActivity implements ReportHelper.OnReportSuccess {
 
 	private static final int REQUEST_READ_CONTACTS = 23;
 	private int fromMonth;
@@ -36,6 +36,7 @@ public class ManageReport extends BaseActivity {
 	private int toYear;
 	private int toDay;
 	private AlertDialog optionDialog;
+	private ProgressDialog progressDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,6 @@ public class ManageReport extends BaseActivity {
 			public void onClick(View view) {
 				optionDialog.dismiss();
 				handleCustomReport();
-
 			}
 		});
 		// Handle Click Standard Button
@@ -125,7 +125,8 @@ public class ManageReport extends BaseActivity {
 		fromCalendar.set(Calendar.MONTH, fromMonth);
 		fromCalendar.set(Calendar.DAY_OF_MONTH, fromDay);
 
-		ReportHelper cvh = new ReportHelper(this);
+		progressDialog = ProgressDialog.show(this, "Report", "Creating the Report", true);
+		ReportHelper cvh = new ReportHelper(this, this);
 		cvh.createReport(toCalendar.getTimeInMillis(),fromCalendar.getTimeInMillis());
 	}
 
@@ -166,10 +167,13 @@ public class ManageReport extends BaseActivity {
 	}
 
 	private void handleStandardReport(){
-		ReportHelper cvh = new ReportHelper(this);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
-		long fromTimeStamp = calendar.getTimeInMillis() - (1000 * 60 * 60 * 24 * 365) ; // 60 secs in 60 mins 24 hrs
+		long timeYearinMilli = (long) 1000 * 60 * 60 * 24 * 365;
+		long fromTimeStamp = calendar.getTimeInMillis() - timeYearinMilli; // 60 secs in 60 mins 24 hrs
+
+		progressDialog = ProgressDialog.show(this, "Report", "Creating the Report", true);
+		ReportHelper cvh = new ReportHelper(this, this);
 		cvh.createReport(calendar.getTimeInMillis(), fromTimeStamp);
 	}
 
@@ -187,8 +191,22 @@ public class ManageReport extends BaseActivity {
 					Toast.makeText(this, "Unable to retrieve permission to create reports", Toast.LENGTH_SHORT).show();
 					finish();
 				}
-				return;
 			}
 		}
+	}
+
+	@Override
+	public void handleResult(boolean result, String msg) {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+		String title = "Error";
+		if (result) {
+			title = "Success";
+		}
+		new AlertDialog.Builder(this)
+				.setTitle(title)
+				.setMessage(msg)
+				.setNeutralButton("OK", null);
 	}
 }

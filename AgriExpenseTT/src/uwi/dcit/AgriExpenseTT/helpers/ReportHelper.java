@@ -38,23 +38,27 @@ import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 @SuppressWarnings("deprecation")
 public class ReportHelper {
-	SQLiteDatabase db;
-	DbHelper dbh;
-	Activity activity;
-	
 	public static final String folderLocation = "AgriExpense";
-	public static final String defaultName 	="AgriExpenseReport";
+	private static final String TAG = "ReportHelper";
+	private static final String defaultName = "AgriExpenseReport";
+	private final OnReportSuccess successHandler;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private Activity activity;
 	
-	public ReportHelper(Activity act){
+	public ReportHelper(Activity act, OnReportSuccess successHandler) {
 		dbh = new DbHelper(act.getBaseContext());
 		db = dbh.getWritableDatabase();
 		activity = act;
+		this.successHandler = successHandler;
 	}
-	
+
 	public static void createReportDirectory(){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
-		if (!path.exists()) 
-			path.mkdirs();
+		if (!path.exists()) {
+			if (path.mkdirs()) Log.d(TAG, "Path was created");
+			else Log.d(TAG, "Unable to create Path");
+		}
 	}
 	
 	/**
@@ -73,7 +77,7 @@ public class ReportHelper {
 			.append(c.get(Calendar.YEAR))
 			.append(".xls");
 
-		Log.d("ReportHelper", "Attempting to create a report called: " + stb.toString());
+		Log.d(TAG, "Attempting to create a report called: " + stb.toString());
 		createReport(stb.toString(), start, end);
 	}
 	
@@ -83,26 +87,31 @@ public class ReportHelper {
 	 */
 	public void createReport(String filename, long start, long end){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
-		Log.d("ReportHelper", "Attempting to create a ");
+		Log.d(TAG, "Attempting to create a report " + filename + " at " + path.toString());
 		if (!path.exists()) {
-			path.mkdirs();
-			Log.i("CSVHelper", " Folder does not exist, Creating folder at "+path.toString());
+			Log.d(TAG, "Path does not exist ... Attempting to Create at " + path);
+			if (path.mkdirs()) Log.d("ReportHelper", "Creating Folders was successful");
+			else Log.e(TAG, "Unable to create Folder");
 		}
 		writeExcel(path, filename, start, end);
 	}
 	
 	private void writeExcel(File path, String filename, long start, long end){
-		
+		Log.d(TAG, "Write Excel was executed");
 		ArrayList<LocalCycle> cycleList = new ArrayList<>();
-		DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
-		
-		
-		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
-		HSSFSheet useSheet = agriWrkbk.createSheet("Crop Cycle");
-		Log.i("Start-End",""+start+" "+end);
-		int rowNum=0;
-		for(LocalCycle cycle : cycleList){
-			if(cycle.getTime()>=start && cycle.getTime()<=end) {
+		try {
+			DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
+
+			Log.d(TAG, "Received " + cycleList.size() + " Cycles");
+			// Generate Excel File
+			HSSFWorkbook agriWrkbk = new HSSFWorkbook();
+			HSSFSheet useSheet = agriWrkbk.createSheet("Crop Cycle");
+			Log.i("Start-End", "" + start + " " + end);
+			int rowNum = 0;
+			for (LocalCycle cycle : cycleList) {
+				Log.d(TAG, "Found: " + cycle.getCycleName());
+//				if (cycle.getTime() >= start && cycle.getTime() <= end) {
+				Log.d(TAG, "Finding the following as in the criteria " + cycle.getCycleName());
 				HSSFRow row = useSheet.createRow(rowNum++);
 				HSSFCell a0 = row.createCell(0);
 				a0.setCellValue("Cycle#" + cycle.getCropId() + ": " + DbQuery.findResourceName(db, dbh, cycle.getCropId()));
@@ -110,12 +119,18 @@ public class ReportHelper {
 				a1.setCellValue(cycle.getTotalSpent());
 				rowNum = writeCategories(filename, path, agriWrkbk, useSheet, cycle.getId(), rowNum);
 				rowNum += 3;
-				Log.i("TIME","BETWEEN TIME");
+				Log.i("TIME", "BETWEEN TIME");
+//				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (successHandler != null)
+				successHandler.handleResult(false, "Unable to Create Excel Report");
 		}
 	}
 
 	private int writeCategories(String filename, File path, HSSFWorkbook agriWrkbk, HSSFSheet useSheet, int cycId, int rowNum) {
+		Log.d(TAG, "Calling Write Categories");
 		HSSFCellStyle styleGen = agriWrkbk.createCellStyle();
 
 	    int c=0;
@@ -129,7 +144,7 @@ public class ReportHelper {
 		cellHeadcostUse.setCellValue("Cost of Use");
 		HSSFCell cellHeadamtPur=rowHead.createCell(c++);
 		cellHeadamtPur.setCellValue("Amount Purchased");
-		HSSFCell cellHeadcostPur=rowHead.createCell(c++);
+		HSSFCell cellHeadcostPur = rowHead.createCell(c);
 		cellHeadcostPur.setCellValue("Cost of Purchase");
 		///rowNum++;
 		
@@ -166,8 +181,8 @@ public class ReportHelper {
 	}
 
 	private int writeCategory(String type, int cycId,HSSFSheet useSheet, int rowNum, HSSFCellStyle style){
-		ArrayList<LocalCycleUse> useList = new ArrayList<LocalCycleUse>();
-		ArrayList<LocalResourcePurchase> purList = new ArrayList<LocalResourcePurchase>();
+		ArrayList<LocalCycleUse> useList = new ArrayList<>();
+		ArrayList<LocalResourcePurchase> purList = new ArrayList<>();
 		populate(useList,purList,type,cycId);
 		if(useList.isEmpty())
 			return rowNum;
@@ -181,14 +196,14 @@ public class ReportHelper {
 		//HSSFFont fnt=new HSSFFont((short) 2);
 	
 		for( LocalCycleUse lcu:useList){
-			 rowNum++;int c=0;
-			 HSSFRow row=useSheet.createRow(rowNum);
-            ResourcePurchase p=DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
+			rowNum++;
+			int c = 0;
+			HSSFRow row = useSheet.createRow(rowNum);
+			ResourcePurchase p = DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
 			 
 			 HSSFCell resCell=row.createCell(c++);
 			 //resCell.setCellType(Cell.CELL_TYPE_STRING);
-			 resCell.setCellValue(DbQuery.findResourceName(db, dbh, p.getResourceId())
-					 +" "+p.getQuantifier());
+			resCell.setCellValue(DbQuery.findResourceName(db, dbh, p.getResourceId()) + " " + p.getQuantifier());
 			
 			 
 			 HSSFCell amtUsedCell=row.createCell(c++);
@@ -202,21 +217,20 @@ public class ReportHelper {
 			 HSSFCell amtPurCell=row.createCell(c++);
 			 //amtPurCell.setCellType(Cell.CELL_TYPE_NUMERIC);
 			 amtPurCell.setCellValue(p.getQty());
-			 
-			 HSSFCell costPurCell=row.createCell(c++);
+
+			HSSFCell costPurCell = row.createCell(c);
 			 //costPurCell.setCellType(Cell.CELL_TYPE_NUMERIC);
 			 costPurCell.setCellValue(p.getCost());
 		}
 		return ++rowNum;
 	}
 
-	private void populate(ArrayList<LocalCycleUse> useList,
-			ArrayList<LocalResourcePurchase> purList, String type, int cycId) {
+	private void populate(ArrayList<LocalCycleUse> useList, ArrayList<LocalResourcePurchase> purList, String type, int cycId) {
 		DbQuery.getPurchases(db, dbh, purList, type, null,true);
 		DbQuery.getCycleUse(db, dbh, cycId, useList, type);
 	}
 	
-	public void notify(String name,File path){
+	private void notify(String name, File path) {
 		//controls what activity is called when notification is clicked
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
@@ -239,5 +253,8 @@ public class ReportHelper {
 		notificationManager.notify(0, noti.build()); 
 		//activity.finish();
 	}
-	
+
+	public interface OnReportSuccess {
+		void handleResult(boolean result, String msg);
+	}
 }
