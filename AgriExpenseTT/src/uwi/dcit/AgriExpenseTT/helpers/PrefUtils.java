@@ -6,16 +6,14 @@ import android.preference.PreferenceManager;
 
 public class PrefUtils {
 
-    public static final String FIRST_LOGIN = "LOGIN";
-    public static final String DB_EXIST = "DBEXIST";
-    public static final String USER_EMAIL = "email";
-    public static final String REMINDER = "reminder_prefs" ;
-    public static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
-    public static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
-    public static final String MyAlarmSet = "MyAlarmSet";
-    public static final String MyPreferencesSet = "MyPrefSet";
-    public static final String FirstRunPreferences = "MyFirstRunPrefs";
-    public static final String FirstRun="MyPrefs-FirstRun";
+    private static final String FIRST_LOGIN = "LOGIN";
+    private static final String DB_EXIST = "DBEXIST";
+    private static final String USER_EMAIL = "email";
+    private static final String REMINDER = "reminder_prefs" ;
+    private static final String MyAlarmPreferencesWeekDay = "MyAlarmPrefsWeekDay" ;
+    private static final String MyAlarmPreferencesHour = "MyAlarmPrefsHour" ;
+    private static final String LocPrefCountry = "country";
+    private static final String LocPrefCounty = "country";
 
 
     // *** Check User Is First Time ***
@@ -67,6 +65,30 @@ public class PrefUtils {
                 .putString(MyAlarmPreferencesWeekDay, day)
                 .putInt(MyAlarmPreferencesHour, hour)
                 .commit();
+    }
 
+    public static String [] getAlarmDetails(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String [] alarm = new String[2];
+        alarm[0] = sp.getString(MyAlarmPreferencesWeekDay, null);
+        alarm[1] = sp.getString(MyAlarmPreferencesHour, null);
+        return alarm;
+    }
+
+
+    // **** Helper for Storing Location ****/
+    public static boolean setLocationDetails(Context context, String country, String county){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.edit().putString(LocPrefCountry, country)
+                .putString(LocPrefCounty, county)
+                .commit();
+    }
+
+    public static String [] getLocationDetails(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String [] locs = new String[2];
+        locs[0] = sp.getString(LocPrefCountry, null);
+        locs[1] = sp.getString(LocPrefCounty, null);
+        return locs;
     }
 }

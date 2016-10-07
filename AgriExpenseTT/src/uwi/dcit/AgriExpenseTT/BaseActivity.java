@@ -23,7 +23,7 @@ import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 public abstract class BaseActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks , NavigationControl {
 
-    protected final int RequestCode_backup = 2;
+    protected final int SIGN_IN_REQUEST = 2;
     protected SignInManager signInManager;
     protected Fragment leftFrag,rightFrag;
     protected NavigationDrawerFragment mNavigationDrawerFragment;
@@ -71,15 +71,16 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                     startActivity(new Intent(this,ManageData.class));
                 break;
             case 6: // sign in
-                signIn();
+                requestSignIn();
                 break;
             default:
                 startActivity(new Intent(this, Main.class));
         }
     }
 
-    public void signIn() {
+    public void requestSignIn() {
         Intent i = new Intent(getApplicationContext(), Backup.class);
+
         if (!this.signInManager.localAccountExists()) {
             if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
                 new AlertDialog.Builder(this) // Use Dialog to provide better feedback to ensure... toast are not easily seen
@@ -89,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                         .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                signIn();
+                                requestSignIn();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -103,7 +104,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
                 return;
             }
             // Connected to the Internet so we attempt to sign in
-            startActivityForResult(i, RequestCode_backup);  // Launch the Backup activity with the sign-up action passed
+            startActivityForResult(i, SIGN_IN_REQUEST);  // Launch the Backup activity with the sign-up action passed
         }
         else if (this.signInManager.isSignedIn()){
             // If not signed attempt to login with existing account
@@ -181,9 +182,20 @@ public abstract class BaseActivity extends AppCompatActivity implements Navigati
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == SignInManager.RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            this.signInManager.handleSignInResult(result);
+        switch (requestCode) {
+            case SignInManager.RC_SIGN_IN:
+                Log.d("BaseActivity", "Result produced" + data.toString());
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                this.signInManager.handleSignInResult(result);
+                break;
+            case SIGN_IN_REQUEST:
+                if (resultCode == 1) {
+                    final String country = data.getStringExtra("country");
+                    final String county = data.getStringExtra("county");
+                    Log.d("BaseActivity", "Sign In request returned with " + country + " - " + county);
+                    signInManager.signIn(country, county);
+                }
+                break;
         }
     }
 }

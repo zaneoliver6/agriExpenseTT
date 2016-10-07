@@ -159,14 +159,6 @@ public class Main extends BaseActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
-            case RequestCode_backup:
-                if (resultCode == 1) {
-                    country=data.getStringExtra("country");
-                    county=data.getStringExtra("county");
-                    Log.d("Main Activity","returned with "+country+" "+county);
-                    signInManager.signIn(country,county);
-                }
-                break;
             case DHelper.CYCLE_REQUEST_CODE:
                 focus = "cycle";
                 buildScreen();

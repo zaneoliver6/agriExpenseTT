@@ -32,8 +32,6 @@ import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
 import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
-//import com.google.android.gms.auth.GoogleAuthUtil;
-
 
 public class SignInManager implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 	public static final int RC_SIGN_IN = 412;
@@ -43,7 +41,6 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 	private DbHelper dbh;
 	private Activity activity;
 	private String county,country;
-	private GoogleApiClient mGoogleApiClient;
 	private ProgressDialog syncDialog;
 
 	public SignInManager(Activity activity, Activity ctx) {
@@ -51,20 +48,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 		this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
-
     }
-
-//	public void signIn(String country, String county) {                // TODO Change why do we ask for the country and county before we check for user
-//		Log.d(TAG_NAME, "Attempting to Log in");
-//		Account acc = isExistingOld(); 								// Check if Account is already created
-//		if(acc == null) {
-//			accountSetUpOld();                                        // Account doesn't exist so we've to setup a new one (means we never signed in)
-//			this.country=country;
-//			this.county=county;
-//		} else {                                                        // Account exists already so we can Initiate Sign-in process
-//			startSyncOld(acc.getAccount());
-//		}
-//	}
 
 	public void signIn(String country, String county){
 		this.country = country;
@@ -75,11 +59,13 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 		GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 				.requestEmail()
 				.build();
-		mGoogleApiClient = new GoogleApiClient.Builder(context)
+
+		GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(context)
 				.addApi(Auth.GOOGLE_SIGN_IN_API, gso)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this)
 				.build();
+
 		Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 		context.startActivityForResult(signInIntent, RC_SIGN_IN); // NB The activity callback is handled in the Base Activity
 	}
@@ -87,16 +73,21 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 
 	public void handleSignInResult(GoogleSignInResult result) {
 		String namespace;
-		namespace = result.getSignInAccount().getEmail();
-		if (namespace != null) {
-			Log.d(TAG_NAME, "Handle Sign in received: " + namespace);
-			// Store User Email to Local storage
-			PrefUtils.setUserEmail(context, namespace);
-			// Display a Dialog so the user is aware a background task is in operation
-			syncDialog = ProgressDialog.show(context, "Backup Information", "Uploading Information for " + namespace + " to the cloud to prevent data loss", true);
-			syncDialog.show();
-			// Run the Synchronizaiton process in the background using Async Task
-			new SetupSignInTask(namespace).execute();
+		if (result != null && result.getSignInAccount() != null) {
+			namespace = result.getSignInAccount().getEmail();
+			if (namespace != null) {
+				Log.d(TAG_NAME, "Handle Sign in received: " + namespace);
+				// Store User Email to Local storage
+				PrefUtils.setUserEmail(context, namespace);
+				// Display a Dialog so the user is aware a background task is in operation
+				syncDialog = ProgressDialog.show(context, "Backup Information", "Uploading Information for " + namespace + " to the cloud to prevent data loss", true);
+				syncDialog.show();
+				// Run the Synchronization process in the background using Async Task
+				new SetupSignInTask(namespace).execute();
+			}
+		}else{
+			Log.d(TAG_NAME, "Received Null From the Google Signed in Request");
+
 		}
 	}
 
@@ -108,7 +99,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 		Log.d(TAG_NAME, "Attempting to Log in");
 		Account acc = isExistingOld(); 								// Check if Account is already created
 		if(acc == null) {
-			accountSetUpOld(); // Account doesn't exist so we've to setup a new one (means we never signed in)
+//			accountSetUpOld(); // Account doesn't exist so we've to setup a new one (means we never signed in)
 		}
 		else {
 			this.country=acc.getCountry();
@@ -139,7 +130,8 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 		AccountApi accountApi = accountBuilder.build();
 
 		final CloudInterface cloudIF = new CloudInterface(context, db, dbh);
-		ArrayList<String> deviceAccounts = getAccounts(); //TODO Check if account from a shared preference instead
+
+		ArrayList<String> deviceAccounts = new ArrayList<>(); //TODO Check if account from a shared preference instead
 		//TODO Check why we only accessing the first from the list of accounts accessed
 		final String username = convertString2Namespace(deviceAccounts.get(0));
 		Log.i("SingInManager", "Selected: " + username);
@@ -178,35 +170,6 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 	}
 
 
-	private void accountSetUpOld() {
-		Log.d(TAG_NAME, "");
-		ArrayList<String> deviceAccounts = getAccounts();
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		if(deviceAccounts.isEmpty()){
-//			handleNoAccounts();
-			return;
-		}
-
-		final CharSequence[] items = new CharSequence[deviceAccounts.size()];
-		int i=0;
-
-		for(String account : deviceAccounts){
-			items[i++] = account;
-		}
-
-		//Display List to user for choosing account
-	    (new AlertDialog.Builder(context))
-	    	.setTitle("Select Account")
-	    	.setItems(items, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-                    String namespace = convertString2Namespace(items[item].toString());
-		            if (namespace != null)
-						startSyncOld(namespace); //convert choice to name space and attempt to upload
-                    else
-						signInReturn(false, "Unable to create Account with the backup system");
-		        }
-		    }).show();
-	}
 //
 	public void signInReturn(boolean success,String message){
 		if(success){
@@ -218,18 +181,6 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 	}
 
 	//--------------------------------------------------Helper stuff
-
-	private ArrayList<String> getAccounts(){
-		ArrayList<String> accountList = new ArrayList<>();
-//		android.accounts.Account[] accounts = AccountManager.get(context).getAccountsByType(GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE);
-
-		android.accounts.Account[] accounts = new android.accounts.Account[0];
-
-		for(android.accounts.Account a:accounts){
-		  accountList.add(a.name);
-		}
-		return accountList;
-	}
 
 	private String convertString2Namespace(String str){
         // Using the Android built in SimpleSplitter to delimit string
@@ -338,12 +289,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 						.setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to OK icon from material library
 						.setTitle("Backup")
 						.setMessage("Records was successfully backed up in the cloud")
-						.setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-
-							}
-						})
+						.setPositiveButton("Dismiss", null)
 						.show();
 			} else {
 				new AlertDialog.Builder(context) // Use Dialog to provide better feedback to ensure... toast are not easily seen
@@ -353,13 +299,10 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 						.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								reportFailures("Backup Data", "Unable to bakup information to server after first signing");
+								reportFailures("Backup Data", "Unable to backup information to server after first signing");
 							}
-						}).setNegativeButton("No", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialogInterface, int i) {
-					}
-				})
+						})
+						.setNegativeButton("No", null)
 						.show();
 			}
 		}
