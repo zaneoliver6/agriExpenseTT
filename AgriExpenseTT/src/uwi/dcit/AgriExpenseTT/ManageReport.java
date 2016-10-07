@@ -207,6 +207,10 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 		new AlertDialog.Builder(this)
 				.setTitle(title)
 				.setMessage(msg)
-				.setNeutralButton("OK", null);
+				.setNeutralButton("OK", null)
+				.show();
+
+		setupInitialFrag();
+
 	}
 }

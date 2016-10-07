@@ -42,9 +42,13 @@ public class ReportHelper {
 	private static final String TAG = "ReportHelper";
 	private static final String defaultName = "AgriExpenseReport";
 	private final OnReportSuccess successHandler;
+	private FileOutputStream out;
+	private File path;
+
 	private SQLiteDatabase db;
 	private DbHelper dbh;
 	private Activity activity;
+
 	
 	public ReportHelper(Activity act, OnReportSuccess successHandler) {
 		dbh = new DbHelper(act.getBaseContext());
@@ -53,12 +57,19 @@ public class ReportHelper {
 		this.successHandler = successHandler;
 	}
 
-	public static void createReportDirectory(){
+	public static File createReportDirectory(){
 		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
 		if (!path.exists()) {
-			if (path.mkdirs()) Log.d(TAG, "Path was created");
-			else Log.d(TAG, "Unable to create Path");
+			if (path.mkdirs()) {
+				Log.d(TAG, "Path was created");
+				return path;
+			}
+			else {
+				Log.d(TAG, "Unable to create Path");
+				return null;
+			}
 		}
+		return path;
 	}
 	
 	/**
@@ -86,21 +97,20 @@ public class ReportHelper {
 	 * @param filename This string will identify the name of the file that will be generated
 	 */
 	public void createReport(String filename, long start, long end){
-		File path = new File(Environment.getExternalStorageDirectory()+"/"+folderLocation);
-		Log.d(TAG, "Attempting to create a report " + filename + " at " + path.toString());
-		if (!path.exists()) {
-			Log.d(TAG, "Path does not exist ... Attempting to Create at " + path);
-			if (path.mkdirs()) Log.d("ReportHelper", "Creating Folders was successful");
-			else Log.e(TAG, "Unable to create Folder");
-		}
-		writeExcel(path, filename, start, end);
+		path = createReportDirectory();
+		if (path != null)
+			writeExcel(path, filename, start, end);
+		else
+			if (successHandler != null){
+				successHandler.handleResult(false, "Unable to create directory");
+			}
 	}
 	
 	private void writeExcel(File path, String filename, long start, long end){
 		Log.d(TAG, "Write Excel was executed");
 		ArrayList<LocalCycle> cycleList = new ArrayList<>();
 		try {
-			DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
+			DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the time-frame entered as parameters
 
 			Log.d(TAG, "Received " + cycleList.size() + " Cycles");
 			// Generate Excel File
@@ -122,11 +132,18 @@ public class ReportHelper {
 				Log.i("TIME", "BETWEEN TIME");
 //				}
 			}
+			if (rowNum > 0) { // We have process at least one cycle
+				notifyCompletion(filename, path);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (successHandler != null)
 				successHandler.handleResult(false, "Unable to Create Excel Report");
 		}
+	}
+
+	private void notifyCompletion(String filename, File path) {
+		notify(filename,path);
 	}
 
 	private int writeCategories(String filename, File path, HSSFWorkbook agriWrkbk, HSSFSheet useSheet, int cycId, int rowNum) {
@@ -170,11 +187,10 @@ public class ReportHelper {
 	    styleGen.setWrapText(true);
 		rowHead.setRowStyle(styleGen);
 		//useSheet.autoSizeColumn(1,false);
-		Log.i(null, "almost");  
+		Log.i(TAG, "almost");
 		try {
-			FileOutputStream out=new FileOutputStream(path+"/"+filename);
+			out = new FileOutputStream(path+"/"+filename);
 			agriWrkbk.write(out);
-			notify(filename,path);
 		} catch (IOException e1) {e1.printStackTrace();}
 	    return rowNum;
 
@@ -241,16 +257,19 @@ public class ReportHelper {
 		
 		//notification details
         NotificationCompat.Builder noti = new NotificationCompat.Builder(activity);
-		noti.setContentTitle("Excel generated")
+		noti.setContentTitle(activity.getString(R.string.excel_file_label))
 		    .setContentText("Your Report "+ name +" has been generated") //TODO Create Notification String Value
 		    .setSmallIcon(R.drawable.money_bag_down)
 		    .setAutoCancel(true)
 		    .setOnlyAlertOnce(true)
-		    .setTicker("AgriExpense excel file")//TODO Create Notification String Value
+		    .setTicker(activity.getString(R.string.excel_file_label))
 		    .setContentIntent(pIntent);
 
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.notify(0, noti.build()); 
+		notificationManager.notify(0, noti.build());
+		if (successHandler != null){
+			successHandler.handleResult(true, "Successfully completed generating report: " + name);
+		}
 		//activity.finish();
 	}
 

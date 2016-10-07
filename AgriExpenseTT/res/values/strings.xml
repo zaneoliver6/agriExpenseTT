@@ -168,4 +168,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="country_belong_msg">Select the country you belong to</string>
     <string name="standard_report">Standard Report</string>
     <string name="custom_report">Custom Report</string>
+    <string name="excel_file_label">AgriExpense Excel Report</string>
 </resources>
