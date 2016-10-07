@@ -57,7 +57,9 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			Log.d("ManageReport", "Launch the Request Activity for user confirmation");
 			return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED;
+                    == PackageManager.PERMISSION_GRANTED &&
+						ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+						== PackageManager.PERMISSION_GRANTED;
 		}else{
 			return true;
 		}
@@ -66,7 +68,7 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 	public void requestFilePermission(){
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
 			ActivityCompat.requestPermissions(this,
-				new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+				new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
 				REQUEST_READ_CONTACTS);
 	}
 

@@ -5,14 +5,12 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile project(path: ':AgriExpenseBackend', configuration: 'android-endpoints')
-    apply plugin: 'com.google.gms.google-services'
-
     compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.google.android.gms:play-services-auth:9.0.0'
-    compile 'com.google.android.gms:play-services-analytics:9.0.0'
-    compile 'com.google.android.gms:play-services-location:9.0.0'
+    compile 'com.google.android.gms:play-services-auth:9.6.1'
+    compile 'com.google.android.gms:play-services-analytics:9.6.1'
+    compile 'com.google.android.gms:play-services-location:9.6.1'
     // Google Cloud Messaging
-    compile "com.google.android.gms:play-services-gcm:9.0.0"
+    compile "com.google.android.gms:play-services-gcm:9.6.1"
     compile 'com.android.support:multidex:1.0.1'
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile 'com.android.support:support-v4:24.2.1'
@@ -63,7 +61,7 @@ afterEvaluate {
         it.name.startsWith('dex')
     }.each { dx ->
         if (dx.additionalParameters == null) {
-            dx.additionalParameters = []
+            dx.additionalParameters = ['--multi-dex']
         }
         dx.additionalParameters += '--multi-dex'
         //dx.additionalParameters += "--main-dex-list=$projectDir/multidex.keep".toString()

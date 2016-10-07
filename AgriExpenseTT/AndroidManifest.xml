@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="uwi.dcit.AgriExpenseTT"
     android:versionCode="13"
     android:versionName="6.6">
@@ -17,7 +18,8 @@
         android:label="@string/app_name"
         android:logo="@drawable/logo_agrinet_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".NewPurchase"
             android:label="@string/title_activity_new_purchase_redesign"
