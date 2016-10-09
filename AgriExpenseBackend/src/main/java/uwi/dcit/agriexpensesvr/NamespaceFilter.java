@@ -13,26 +13,25 @@ import javax.servlet.ServletResponse;
 
 public class NamespaceFilter implements javax.servlet.Filter {
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res,
-                         FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         System.out.println("mookeeneh");
-        // Make sure set() is only called if the current namespace is not
-        // already set.
+        // Make sure set() is only called if the current namespace is not already set.
         if (NamespaceManager.get() == null) {
-            NamespaceManager.set(UserServiceFactory.getUserService()
-                    .getCurrentUser().getUserId());// 623 6261 denise dickson
+            String namespace = UserServiceFactory
+                    .getUserService()
+                    .getCurrentUser()
+                    .getUserId();
+            NamespaceManager.set(namespace);// 623 6261 denise dickson
         }
     }
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void destroy() {
         // TODO Auto-generated method stub
-
     }
 }

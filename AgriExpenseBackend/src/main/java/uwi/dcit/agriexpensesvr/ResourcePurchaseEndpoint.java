@@ -1,4 +1,5 @@
 package uwi.dcit.agriexpensesvr;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -21,11 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
-import javax.annotation.Resource;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 
 @Api(name = "resourcePurchaseApi",
@@ -36,6 +35,11 @@ import javax.persistence.Query;
                 packagePath = ""
         ))
 public class ResourcePurchaseEndpoint {
+
+    private static EntityManager getEntityManager() {
+        //return EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
+    }
 
     /**
      * This method lists all the entities inserted in datastore. It uses HTTP
@@ -71,12 +75,8 @@ public class ResourcePurchaseEndpoint {
             cursor = JPACursorHelper.getCursor(execute);
             if (cursor != null)
                 cursorString = cursor.toWebSafeString();
-
-            // Tight loop for fetching all entities from datastore and
-            // accomodate
-            // for lazy fetch.
             for (ResourcePurchase obj : execute)
-                ;
+                System.out.println(obj.getElementName());
         } finally {
 //            mgr.close();
         }
@@ -199,15 +199,15 @@ public class ResourcePurchaseEndpoint {
         System.out.println("---000---");
         return rpurchase;
 		/*
-		 * DatastoreService
+         * DatastoreService
 		 * datastore=DatastoreServiceFactory.getDatastoreService(); Key
 		 * k=KeyFactory.stringToKey(id); Entity et = null; try {
 		 * et=datastore.get(k); } catch
 		 * (com.google.appengine.api.datastore.EntityNotFoundException e) {
-		 * 
+		 *
 		 * e.printStackTrace(); } RPurchase p=new RPurchase(); if(et==null){
 		 * return null; }
-		 * 
+		 *
 		 * p.setCost((Double) et.getProperty("cost")); p.setQty((Double)
 		 * et.getProperty("qty")); p.setQuantifier((String)
 		 * et.getProperty("quantifier")); p.setResourceId((Integer)
@@ -242,7 +242,6 @@ public class ResourcePurchaseEndpoint {
         System.out.println("---000---_");
         return rpurchase;
     }
-
 
     /**
      * This inserts a new entity into App Engine datastore. If the entity
@@ -325,6 +324,21 @@ public class ResourcePurchaseEndpoint {
         return currentRPurchase;
     }
 
+//    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
+//    public void deletePurchase(@Named("keyrep") String keyrep,
+//                               @Named("namespace") String namespace) {
+//        System.out.println("1111111111111");
+//        NamespaceManager.set(namespace);
+//        Key k = KeyFactory.stringToKey(keyrep);
+//        EntityManager mgr = getEntityManager();
+//        ResourcePurchase purchase = mgr.find(ResourcePurchase.class, k);
+//        try {
+//            mgr.remove(purchase);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     /**
      * This method removes the entity with primary key id. It uses HTTP DELETE
      * method.
@@ -360,21 +374,6 @@ public class ResourcePurchaseEndpoint {
         }
     }
 
-//    @ApiMethod(name = "deletePurchase", httpMethod = HttpMethod.DELETE)
-//    public void deletePurchase(@Named("keyrep") String keyrep,
-//                               @Named("namespace") String namespace) {
-//        System.out.println("1111111111111");
-//        NamespaceManager.set(namespace);
-//        Key k = KeyFactory.stringToKey(keyrep);
-//        EntityManager mgr = getEntityManager();
-//        ResourcePurchase purchase = mgr.find(ResourcePurchase.class, k);
-//        try {
-//            mgr.remove(purchase);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private boolean containsRPurchase(ResourcePurchase rpurchase) {
         NamespaceManager.set(rpurchase.getAccount());
         EntityManager mgr = getEntityManager();
@@ -388,10 +387,5 @@ public class ResourcePurchaseEndpoint {
 //            mgr.close();
         }
         return contains;
-    }
-
-    private static EntityManager getEntityManager() {
-        //return EMF.get().createEntityManager();
-        return EMF.getManagerInstance();
     }
 }

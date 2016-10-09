@@ -37,6 +37,9 @@ import javax.persistence.Query;
                 packagePath = ""
         ))
 public class TransLogEndpoint {
+    private static EntityManager getEntityManager() {
+        return EMF.getManagerInstance();
+    }
 
     /**
      * This method lists all the entities inserted in datastore. It uses HTTP
@@ -72,12 +75,8 @@ public class TransLogEndpoint {
             cursor = JPACursorHelper.getCursor(execute);
             if (cursor != null)
                 cursorString = cursor.toWebSafeString();
-
-            // Tight loop for fetching all entities from datastore and
-            // accomodate
-            // for lazy fetch.
             for (TransLog obj : execute)
-                ;
+                System.out.println(obj.getAccount());
         } finally {
 //            mgr.close();
         }
@@ -97,10 +96,9 @@ public class TransLogEndpoint {
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
         Iterator<Entity> i = results.iterator();
-        List<TransLog> tL = new ArrayList<TransLog>();
+        List<TransLog> tL = new ArrayList<>();
         while (i.hasNext()) {
             Entity e = i.next();
-            // System.out.println(e.toString());
             TransLog t = new TransLog();
 
             t.setId(Integer.parseInt("" + e.getProperty("id")));
@@ -134,6 +132,9 @@ public class TransLogEndpoint {
             removeTransLog(t.getId(), namespace);
         }
     }
+
+    // Tight loop for fetching all entities from datastore and accomodate
+    // for lazy fetch.
 
     /**
      * This method gets the entity having primary key id. It uses HTTP GET
@@ -172,9 +173,6 @@ public class TransLogEndpoint {
         }
         return tl;
     }
-
-    // Tight loop for fetching all entities from datastore and accomodate
-    // for lazy fetch.
 
     @ApiMethod(name = "getTransLog")
     public TransLog getTransLog(@Named ("NameSpace")String namespace, @Named("id") Long id) {
@@ -318,11 +316,6 @@ public class TransLogEndpoint {
 //            mgr.close();
         }
         return contains;
-    }
-
-    private static EntityManager getEntityManager() {
-        //return EMF.get().createEntityManager();
-        return EMF.getManagerInstance();
     }
 
 }
