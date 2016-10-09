@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="uwi.dcit.AgriExpenseTT"
-    android:versionCode="13"
-    android:versionName="6.6">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="uwi.dcit.AgriExpenseTT"
+          android:versionCode="14"
+          android:versionName="6.7">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -177,6 +177,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" >
                 </action>
             </intent-filter>
+
             <intent-filter>
                 <action android:name="android.intent.CustomAlarm" >
                 </action>

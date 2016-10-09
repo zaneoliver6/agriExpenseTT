@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 import uwi.dcit.agriexpensesvr.accountApi.AccountApi;
@@ -42,13 +43,15 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 	private Activity activity;
 	private String county,country;
 	private ProgressDialog syncDialog;
+	private GAnalyticsHelper gAnalyticsHelper;
 
 	public SignInManager(Activity activity, Activity ctx) {
 		this.context = ctx;
 		this.activity = activity;
         dbh = new DbHelper(context);
         db = dbh.getWritableDatabase();
-    }
+		gAnalyticsHelper = GAnalyticsHelper.getInstance(activity);
+	}
 
 	public void signIn(String country, String county){
 		this.country = country;
@@ -74,7 +77,8 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 	public void handleSignInResult(GoogleSignInResult result) {
 		String namespace;
 		if (result != null && result.getSignInAccount() != null) {
-			namespace = result.getSignInAccount().getEmail();
+			String email = result.getSignInAccount().getEmail();
+			namespace = email.split("@")[0]; // Get the first part of the email
 			if (namespace != null) {
 				Log.d(TAG_NAME, "Handle Sign in received: " + namespace);
 				// Store User Email to Local storage
@@ -82,10 +86,12 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 				// Display a Dialog so the user is aware a background task is in operation
 				syncDialog = ProgressDialog.show(context, "Backup Information", "Uploading Information for " + namespace + " to the cloud to prevent data loss", true);
 				syncDialog.show();
+				gAnalyticsHelper.sendEvent(GAnalyticsHelper.CLOUD_CATEGORY, "Signing", "completed signing", 1);
 				// Run the Synchronization process in the background using Async Task
 				new SetupSignInTask(namespace).execute();
 			}
 		}else{
+			gAnalyticsHelper.sendEvent(GAnalyticsHelper.CLOUD_CATEGORY, "Signing", "completed signing", 0);
 			Log.d(TAG_NAME, "Received Null From the Google Signed in Request");
 
 		}
@@ -219,7 +225,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
     }
 
 	/*
-		This method relates to handleing the google sign in connection
+		This method relates to handling the google sign in connection
 		https://developers.google.com/android/guides/api-client#manually_managed_connections
 	 */
 	@Override
@@ -285,6 +291,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 
 			syncDialog.cancel();
 			if (isSuccess) {
+				gAnalyticsHelper.sendEvent(GAnalyticsHelper.CLOUD_CATEGORY, "Signing", "synchronization successful", 1);
 				new AlertDialog.Builder(context) // Use Dialog to provide better feedback to ensure... toast are not easily seen
 						.setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to OK icon from material library
 						.setTitle("Backup")
@@ -292,6 +299,7 @@ public class SignInManager implements GoogleApiClient.OnConnectionFailedListener
 						.setPositiveButton("Dismiss", null)
 						.show();
 			} else {
+				gAnalyticsHelper.sendEvent(GAnalyticsHelper.CLOUD_CATEGORY, "Signing", "synchronization successful", 0);
 				new AlertDialog.Builder(context) // Use Dialog to provide better feedback to ensure... toast are not easily seen
 						.setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to OK icon from material library
 						.setTitle("Backup")

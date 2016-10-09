@@ -71,7 +71,7 @@ public class PrefUtils {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         String [] alarm = new String[2];
         alarm[0] = sp.getString(MyAlarmPreferencesWeekDay, null);
-        alarm[1] = sp.getString(MyAlarmPreferencesHour, null);
+        alarm[1] = Integer.toString(sp.getInt(MyAlarmPreferencesHour, 0));
         return alarm;
     }
 

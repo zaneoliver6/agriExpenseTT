@@ -59,7 +59,7 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 			return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED &&
 						ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-						== PackageManager.PERMISSION_GRANTED;
+								== PackageManager.PERMISSION_GRANTED;
 		}else{
 			return true;
 		}
@@ -171,8 +171,8 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 	private void handleStandardReport(){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
-		long timeYearinMilli = (long) 1000 * 60 * 60 * 24 * 365;
-		long fromTimeStamp = calendar.getTimeInMillis() - timeYearinMilli; // 60 secs in 60 mins 24 hrs
+		long timeYearInMilli = (long) 1000 * 60 * 60 * 24 * 365;
+		long fromTimeStamp = calendar.getTimeInMillis() - timeYearInMilli; // 60 secs in 60 mins 24 hrs
 
 		progressDialog = ProgressDialog.show(this, "Report", "Creating the Report", true);
 		ReportHelper cvh = new ReportHelper(this, this);
