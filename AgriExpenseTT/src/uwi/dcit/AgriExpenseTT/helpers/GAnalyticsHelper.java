@@ -18,7 +18,7 @@ public class GAnalyticsHelper {
     public static final String CLOUD_CATEGORY = "Cloud_Services";
 
     private static final String TAG = "GAnalytics";
-    private static final boolean enableTracking = false;
+    private static final boolean enableTracking = true;
     private static GAnalyticsHelper instance = null;
     private final String userEmail;
     private Tracker tracker;
@@ -42,16 +42,12 @@ public class GAnalyticsHelper {
         return enableTracking;
     }
 
-    public Tracker getTracker(){
-        return this.tracker;
-    }
-
     /**
-     *
-     * @param category
-     * @param action
-     * @param eventName
-     * @param status
+     * The method allows the recording of
+     * @param category The general section where its related to section
+     * @param action The action that the user is currently performed
+     * @param eventName The current event
+     * @param status the outcome of the event
      */
      public void sendEvent(String category, String action, String eventName, int status){
          if (canSend()) {
