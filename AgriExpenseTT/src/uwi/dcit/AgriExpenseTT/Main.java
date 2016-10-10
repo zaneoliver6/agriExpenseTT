@@ -35,9 +35,7 @@ public class Main extends BaseActivity{
         setupNavDrawer();
 
         // Added Google Analytics
-        GAnalyticsHelper
-                .getInstance(this.getApplicationContext())
-                .sendScreenView("Main Screen");
+        GAnalyticsHelper.getInstance(this).sendScreenView("Main Screen");
 
         setPreferencesCall();
         firstRunCheck();

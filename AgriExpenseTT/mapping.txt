@@ -21763,9 +21763,9 @@ uwi.dcit.AgriExpenseTT.WelcomeScreen$ScreenSlideAdapter -> uwi.dcit.AgriExpenseT
     void <init>(uwi.dcit.AgriExpenseTT.WelcomeScreen,android.support.v4.app.FragmentManager) -> <init>
     android.support.v4.app.Fragment getItem(int) -> a
     int getCount() -> c
-uwi.dcit.AgriExpenseTT.WelcomeScreenFragment -> uwi.dcit.AgriExpenseTT.x:
+uwi.dcit.AgriExpenseTT.fragments.WelcomeScreenFragment -> uwi.dcit.AgriExpenseTT.x:
     void <init>() -> <init>
-    uwi.dcit.AgriExpenseTT.WelcomeScreenFragment newInstance(int) -> a
+    uwi.dcit.AgriExpenseTT.fragments.WelcomeScreenFragment newInstance(int) -> a
     android.view.View onCreateView$469ccb8a(android.view.LayoutInflater,android.view.ViewGroup) -> a
 uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils -> uwi.dcit.AgriExpenseTT.a.a:
     com.google.api.client.googleapis.services.AbstractGoogleClient$Builder updateBuilder(com.google.api.client.googleapis.services.AbstractGoogleClient$Builder) -> a

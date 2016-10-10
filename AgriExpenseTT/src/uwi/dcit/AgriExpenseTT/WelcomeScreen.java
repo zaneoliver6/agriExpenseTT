@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 
 import com.nineoldandroids.view.ViewHelper;
 
+import uwi.dcit.AgriExpenseTT.fragments.WelcomeScreenFragment;
+
 public class WelcomeScreen extends AppCompatActivity {
 
     private final String TAG_NAME = "WelcomeScreen";

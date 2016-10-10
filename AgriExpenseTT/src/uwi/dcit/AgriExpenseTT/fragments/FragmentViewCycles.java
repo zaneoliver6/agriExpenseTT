@@ -37,6 +37,7 @@ import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.helpers.CropDataHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
@@ -47,18 +48,16 @@ import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class FragmentViewCycles extends ListFragment{
+	private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
+	final int req_edit = 1;
 	String type=null;
 	SQLiteDatabase db;
 	DbHelper dbh;
-	final int req_edit=1;
 //	final String className = "ViewCycles";
 	View view;
-
-    private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-
 	ArrayList<LocalCycle> cycleList = new ArrayList<>();
 	CycleListAdapter cycAdapt;
+	private int mActivatedPosition = ListView.INVALID_POSITION;
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -71,7 +70,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
-		db	= dbh.getWritableDatabase();
+		db = dbh.getReadableDatabase();
 
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
@@ -397,6 +396,11 @@ public class FragmentViewCycles extends ListFragment{
             ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(("Name: "+ cycleName));
 			if(closed.equals("closed")){
 				((ImageView)row.findViewById(R.id.icon_purchaseType)).setImageResource(R.drawable.ic_launcher_web);
+			} else {
+				int id = CropDataHelper.getCropsDrawable(myContext, txt);
+				if (id != -1) {
+					((ImageView) row.findViewById(R.id.icon_purchaseType)).setImageResource(id);
+				}
 			}
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 

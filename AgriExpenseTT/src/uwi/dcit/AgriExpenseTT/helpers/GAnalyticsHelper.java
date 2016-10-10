@@ -18,7 +18,7 @@ public class GAnalyticsHelper {
     public static final String CLOUD_CATEGORY = "Cloud_Services";
 
     private static final String TAG = "GAnalytics";
-    private static final boolean enableTracking = true;
+    private static final boolean enableTracking = false;
     private static GAnalyticsHelper instance = null;
     private final String userEmail;
     private Tracker tracker;

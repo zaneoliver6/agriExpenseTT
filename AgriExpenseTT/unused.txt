@@ -15326,7 +15326,7 @@ uwi.dcit.AgriExpenseTT.SelectLocation:
     26:38:public void setupInitialFrag()
 uwi.dcit.AgriExpenseTT.WelcomeScreen:
     158:159:public void moveNext()
-uwi.dcit.AgriExpenseTT.WelcomeScreenFragment:
+uwi.dcit.AgriExpenseTT.fragments.WelcomeScreenFragment:
     static final java.lang.String LAYOUT_ID
 uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils:
     public static final boolean LOCAL_ANDROID_RUN

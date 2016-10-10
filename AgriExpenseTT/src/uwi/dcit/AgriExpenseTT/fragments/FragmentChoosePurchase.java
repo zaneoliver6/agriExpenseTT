@@ -45,6 +45,7 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class FragmentChoosePurchase extends ListFragment {
+	final int req_edit = 1;
 	PurchaseListAdapter myListAdapter;
 	ArrayList<LocalResourcePurchase> pList;
 	SQLiteDatabase db;
@@ -54,8 +55,6 @@ public class FragmentChoosePurchase extends ListFragment {
 	int cycleId;
 	LocalCycle curr = null;
 	View view;
-	final int req_edit = 1;
-
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -103,7 +102,10 @@ public class FragmentChoosePurchase extends ListFragment {
 		Collections.sort(pList, new Comparator<LocalResourcePurchase>() {
 			@Override
 			public int compare(LocalResourcePurchase item1, LocalResourcePurchase item2) {
-				return item1.getType().compareTo(item2.getType());
+//				return item1.getType().compareTo(item2.getType());
+				if (item1.getDate() == item2.getDate()) return 0;
+				else if (item1.getDate() > item2.getDate()) return -1;
+				else return 1;
 			}
 		});
 	}
