@@ -42,8 +42,6 @@ public class ReportHelper {
 	private static final String TAG = "ReportHelper";
 	private static final String defaultName = "AgriExpenseReport";
 	private final OnReportSuccess successHandler;
-	private FileOutputStream out;
-	private File path;
 
 	private SQLiteDatabase db;
 	private DbHelper dbh;
@@ -97,7 +95,7 @@ public class ReportHelper {
 	 * @param filename This string will identify the name of the file that will be generated
 	 */
 	public void createReport(String filename, long start, long end){
-		path = createReportDirectory();
+		File path = createReportDirectory();
 		if (path != null)
 			writeExcel(path, filename, start, end);
 		else
@@ -189,7 +187,7 @@ public class ReportHelper {
 		//useSheet.autoSizeColumn(1,false);
 		Log.i(TAG, "almost");
 		try {
-			out = new FileOutputStream(path+"/"+filename);
+			FileOutputStream out = new FileOutputStream(path + "/" + filename);
 			agriWrkbk.write(out);
 		} catch (IOException e1) {e1.printStackTrace();}
 	    return rowNum;

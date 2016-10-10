@@ -170,4 +170,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="custom_report">Custom Report</string>
     <string name="excel_file_label">AgriExpense Excel Report</string>
     <string name="reminder_msg">Hi, Please Don\'t Forget to Enter Your Data!</string>
+    <string name="use_res_cycle">Using resources in crop cycle</string>
 </resources>

@@ -19,11 +19,6 @@ import uwi.dcit.AgriExpenseTT.R;
 public class IntroductionSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
-
-    private ViewPager mPager;
-
-    private PagerAdapter mPagerAdapter;
-
     int[] mResources = {
             R.drawable.introslide1,
             R.drawable.introslide2,
@@ -33,13 +28,14 @@ public class IntroductionSlides extends FragmentActivity {
             R.drawable.introslide6,
             R.drawable.cycledefinition,
     };
+    private ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_introtest);
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(this);
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setAdapter(mPagerAdapter);
     }
 
@@ -73,6 +69,11 @@ public class IntroductionSlides extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ReturnToMain(View view) {
+        Intent intent = new Intent(IntroductionSlides.this, Main.class);
+        startActivity(intent);
     }
 
     private class ScreenSlidePagerAdapter extends PagerAdapter {
@@ -110,8 +111,4 @@ public class IntroductionSlides extends FragmentActivity {
             (container).removeView((View) object);
         }
     }
-        public void ReturnToMain(View view){
-            Intent intent = new Intent(IntroductionSlides.this, Main.class);
-            startActivity(intent);
-        }
 }

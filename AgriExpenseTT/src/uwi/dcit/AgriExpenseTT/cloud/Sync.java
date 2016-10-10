@@ -16,16 +16,13 @@ import uwi.dcit.agriexpensesvr.accountApi.model.Account;
 
 
 public class Sync {
-    private Account cloudAccount;
+	private final String TAG_NAME = "Sync";
 	protected SignInManager signin;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	Context context;
 	TransactionLog tL;
-	private final String TAG_NAME = "Sync";
-	public enum Option{
-		updateCloudOpt,updateLocalOpt,overwriteCloudOpt,overwriteLocalOpt,createCloudNewOpt
-	}
+	private Account cloudAccount;
 	public Sync(SQLiteDatabase db, DbHelper dbh,Context context,SignInManager signin){
 		this.db=db;
 		this.dbh=dbh;
@@ -33,10 +30,9 @@ public class Sync {
 		this.signin=signin;
 		tL=new TransactionLog(dbh, db,context);
 	}
+
 	public void start(String namespace,Account cloudAccount){
         Account localAccount = DbQuery.getUpAcc(db);
-
-
 		//both exist
 		if (localAccount != null && cloudAccount != null) {
 			long localUpdateTime = localAccount.getLastUpdated();
@@ -97,6 +93,23 @@ public class Sync {
 			//create local account
 		}
 	}
+
+	private void confirmSync(long lastLocalUpdated, long lastCloudUpdated, String namespace) {
+		Log.d(TAG_NAME, "Confirm Sync Command Called Initiated");
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+		builder1.setMessage("Data found online ? Do you want to overwrite local or overwrite cloud");
+		builder1.setCancelable(true);
+		Confirm c = new Confirm(lastLocalUpdated, lastCloudUpdated, namespace);
+		builder1.setPositiveButton("Overwrite local", c);
+		builder1.setNegativeButton("Overwrite cloud", c);
+		AlertDialog alert1 = builder1.create();
+		alert1.show();
+	}
+
+	public enum Option {
+		updateCloudOpt, updateLocalOpt, overwriteCloudOpt, overwriteLocalOpt, createCloudNewOpt
+	}
+
 	public class SyncExec extends AsyncTask<Option,Void,Boolean>{
 		TransactionLog tL;
 		String namespace;
@@ -118,18 +131,18 @@ public class Sync {
 					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
 					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
-					
+
 				case updateLocalOpt:
 					tL.logsUpdateLocal(namespace, localUpdateTime);
 					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
 					db.update(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME, cv, UpdateAccountContract.UpdateAccountEntry._ID+"=1", null);
 					break;
-					
+
 				case overwriteCloudOpt:
 					tL.removeNamespace(namespace);
 					success=tL.createCloud(namespace);
 					break;
-					
+
 				case overwriteLocalOpt:
 //					success=tL.pullAllFromCloud(cloudAccount);
 					cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_SIGNEDIN, 1);
@@ -148,18 +161,8 @@ public class Sync {
 //			signin.signInReturn(result, null);
 			super.onPostExecute(result);
 		}
-		
-		
-	}
-	private void confirmSync(long lastLocalUpdated,long lastCloudUpdated,String namespace){
-		AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage("Data found online ? Do you want to overwrite local or overwrite cloud");
-        builder1.setCancelable(true);
-        Confirm c=new Confirm(lastLocalUpdated,lastCloudUpdated,namespace);
-        builder1.setPositiveButton("Overwrite local",c);
-        builder1.setNegativeButton("Overwrite cloud",c);
-        AlertDialog alert1 = builder1.create();
-        alert1.show();
+
+
 	}
 
 	private class Confirm implements DialogInterface.OnClickListener{

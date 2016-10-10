@@ -21,11 +21,9 @@ public class GAnalyticsHelper {
     private static final boolean enableTracking = false;
     private static GAnalyticsHelper instance = null;
     private final String userEmail;
-    private final Context context;
     private Tracker tracker;
 
     private GAnalyticsHelper(Context context){
-        this.context = context;
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         this.tracker = analytics.newTracker(R.xml.global_tracker);
         tracker.enableAdvertisingIdCollection(true);

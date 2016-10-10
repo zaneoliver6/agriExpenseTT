@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.ManageReport;
 import uwi.dcit.AgriExpenseTT.R;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.ReportHelper;
 
 public class FragmentReportList extends ListFragment {
@@ -54,9 +53,9 @@ public class FragmentReportList extends ListFragment {
 		files = (new File(path)).listFiles(); //Store the file in an array of files
 		if (files != null) {
 			Log.d(FragmentReportList.class.toString(), "Path: " + path + " Size: " + files.length);
-			for (int i = 0; i < files.length; i++) {
-				Log.d("Files", "FileName:" + files[i].getName());
-				list.add(files[i].getName());
+			for (File file : files) {
+				Log.d("Files", "FileName:" + file.getName());
+				list.add(file.getName());
 			}
 		}
 //		Collections.sort(list); //Removed sorting because it would cause the order to be inconsistent with the file array

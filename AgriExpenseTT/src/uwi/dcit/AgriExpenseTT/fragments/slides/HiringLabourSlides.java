@@ -17,11 +17,6 @@ import uwi.dcit.AgriExpenseTT.R;
 public class HiringLabourSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
-
-    private ViewPager mPager;
-
-    private PagerAdapter mPagerAdapter;
-
     int[] mResources = {
             R.drawable.hiringslide1,
             R.drawable.hiringslide2,
@@ -33,13 +28,14 @@ public class HiringLabourSlides extends FragmentActivity {
             R.drawable.hiringslide8,
             R.drawable.hiringslide9,
     };
+    private ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_introtest);
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(this);
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setAdapter(mPagerAdapter);
     }
 

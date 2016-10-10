@@ -3,7 +3,6 @@
     android:id="@+id/container_useResource"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uwi.dcit.AgriExpenseTT.UseResource"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
@@ -25,12 +24,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="7dp"
-                android:layout_marginTop="10dp"
-                android:text="Using resources in crop cycle"
-                android:textColor="@color/secondary_text"
-                android:textSize="@dimen/text_size_helpscreen"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/use_res_cycle"
+                android:textColor="@color/secondary_text"
+                android:textSize="@dimen/text_size_helpscreen"/>
         </LinearLayout>
 
 

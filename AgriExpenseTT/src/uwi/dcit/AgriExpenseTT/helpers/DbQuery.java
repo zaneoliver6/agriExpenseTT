@@ -188,7 +188,7 @@ public class DbQuery {
 	}
 	
 	public static ArrayList<String> getCountries(SQLiteDatabase db, ArrayList<String> list){
-		if (list == null)list = new ArrayList<String>();
+		if (list == null) list = new ArrayList<>();
 		String sqlStr = "SELECT country FROM " + CountryEntry.TABLE_NAME +";";
 		Cursor cursor = db.rawQuery(sqlStr, null);
 		while (cursor.moveToNext()) list.add(cursor.getString(cursor.getColumnIndex("country")));

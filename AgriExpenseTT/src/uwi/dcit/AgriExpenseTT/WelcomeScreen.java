@@ -23,16 +23,11 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private final String TAG_NAME = "WelcomeScreen";
     private final int TOTAL_PAGES = 4;
-
+    boolean isOpaque = true;
+    LinearLayout circles;
     private Button btnSkip, btnDone;
     private ImageButton btnNext;
-
     private ViewPager pager;
-    private PagerAdapter pagerAdapter;
-
-    boolean isOpaque = true;
-
-    LinearLayout circles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private void pagerInit() {
         pager = (ViewPager) findViewById(R.id.pager);
-        pagerAdapter = new ScreenSlideAdapter(getSupportFragmentManager());
+        PagerAdapter pagerAdapter = new ScreenSlideAdapter(getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         pager.setPageTransformer(true, new CrossfadePageTransformer());
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -60,7 +55,6 @@ public class WelcomeScreen extends AppCompatActivity {
                 } else {
                     if (!isOpaque) {
                         pager.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.primary_material_light));
-//                        pager.setBackgroundColor(getResources().getColor(R.color.primary_material_light));
                         isOpaque = true;
                     }
                 }

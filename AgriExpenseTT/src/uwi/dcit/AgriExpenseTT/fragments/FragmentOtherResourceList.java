@@ -42,14 +42,14 @@ public class FragmentOtherResourceList  extends ListFragment{
 		db=dbh.getWritableDatabase();
 		populateList();
 		Collections.sort(list);
-		listAdapt = new ArrayAdapter<String>(this.getActivity().getBaseContext(),android.R.layout.simple_list_item_1,list);
+		listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
 		setListAdapter(listAdapt);
 		
 	}
 		
 
 	private void populateList() {
-		list=new ArrayList<String>();
+		list = new ArrayList<>();
 		DbQuery.getResources(db, dbh, DHelper.cat_other, list);
 	}
 
@@ -83,6 +83,22 @@ public class FragmentOtherResourceList  extends ListFragment{
 		Click c=new Click();
 		btn_ntFnd.setOnClickListener(c);
 	 }
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		Fragment f = new FragmentNewPurchaseOther();
+		Bundle b = new Bundle();
+		b.putString("category", DHelper.cat_other);
+		b.putString("resource", list.get(position));
+		b.putString("found", "yes");
+		f.setArguments(b);
+		FragmentManager fm = getFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		ft.replace(R.id.NewCycleListContainer, f);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+
 	 public class Click implements OnClickListener{
 
 		@Override
@@ -100,24 +116,9 @@ public class FragmentOtherResourceList  extends ListFragment{
 				ft.commit();
 			}
 		}
-		 
+
 	 }
 
-
-	@Override
-		public void onListItemClick(ListView l, View v, int position, long id) {
-			Fragment f=new FragmentNewPurchaseOther();
-			Bundle b=new Bundle();
-			b.putString("category", DHelper.cat_other);
-			b.putString("resource", list.get(position));
-			b.putString("found","yes");
-			f.setArguments(b);
-			FragmentManager fm=getFragmentManager();
-			FragmentTransaction ft=fm.beginTransaction();
-			ft.replace(R.id.NewCycleListContainer, f);
-			ft.addToBackStack(null);
-			ft.commit();
-	 }
 	 public class TWatch implements TextWatcher{
 		 ArrayAdapter<String> adpt;
 		 public TWatch(ArrayAdapter<String> adpt){

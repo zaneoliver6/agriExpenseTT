@@ -36,7 +36,7 @@ public class EditChooseLists extends BaseActivity {
 		//get list
 		initialize();
 		populateList();
-		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
+		ArrayAdapter<String> listAdapt = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
 		lv.setAdapter(listAdapt);
 		ItemClick c=new ItemClick();
 		lv.setOnItemClickListener(c);
@@ -47,18 +47,6 @@ public class EditChooseLists extends BaseActivity {
 
         // Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Choose Lists Screen");
-	}
-	public class ItemClick implements OnItemClickListener{
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			Intent i=new Intent();
-			i.putExtra("desc",content);
-			i.putExtra("content", list.get(position));
-			setResult(1,i);//used to set the results for the parent activity ( the one that launched this one)
-			finish();
-		}
-		
 	}
 
 	private void populateList() {
@@ -106,7 +94,6 @@ public class EditChooseLists extends BaseActivity {
         Collections.sort(list);
 	}
 
-
 	private void initialize() {
 		dbh=new DbHelper(EditChooseLists.this);
 //		db=dbh.getReadableDatabase();
@@ -116,7 +103,6 @@ public class EditChooseLists extends BaseActivity {
 		Bundle data=getIntent().getExtras();
 		content=data.getString("desc");
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,6 +123,20 @@ public class EditChooseLists extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	public class ItemClick implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Intent i = new Intent();
+			i.putExtra("desc", content);
+			i.putExtra("content", list.get(position));
+			setResult(1, i);//used to set the results for the parent activity ( the one that launched this one)
+			finish();
+		}
+
+	}
+
 	public class TWatch implements TextWatcher{
 		 ArrayAdapter<String> adpt;
 		 public TWatch(ArrayAdapter<String> adpt){

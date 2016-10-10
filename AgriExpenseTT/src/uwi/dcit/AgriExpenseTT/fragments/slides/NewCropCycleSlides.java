@@ -19,24 +19,20 @@ import uwi.dcit.AgriExpenseTT.R;
 public class NewCropCycleSlides extends FragmentActivity {
 
     private static final int Num_pages = 3;
-
-    private ViewPager mPager;
-
-    private PagerAdapter mPagerAdapter;
-
     int[] mResources = {
             R.drawable.newcycle2,
             R.drawable.newcycle3,
             R.drawable.newcycle4,
             R.drawable.newcycle5,
     };
+    private ViewPager mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_introtest);
         mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(this);
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setAdapter(mPagerAdapter);
     }
 
@@ -70,6 +66,11 @@ public class NewCropCycleSlides extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ReturnToMain(View view) {
+        Intent intent = new Intent(NewCropCycleSlides.this, Main.class);
+        startActivity(intent);
     }
 
     private class ScreenSlidePagerAdapter extends PagerAdapter {
@@ -106,11 +107,6 @@ public class NewCropCycleSlides extends FragmentActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             (container).removeView((View) object);
         }
-    }
-
-    public void ReturnToMain(View view){
-        Intent intent = new Intent(NewCropCycleSlides.this, Main.class);
-        startActivity(intent);
     }
 
 }

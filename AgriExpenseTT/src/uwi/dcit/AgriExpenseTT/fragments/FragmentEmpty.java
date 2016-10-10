@@ -16,16 +16,16 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 
 public class FragmentEmpty extends Fragment{
-	View view;
-    private String type;
-    private String category;
     protected boolean isLabour = false;
+    View view;
+    private String type;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         type = getArguments().getString("type");
-        category = getArguments().getString("category");
-		
-		view = inflater.inflate(R.layout.fragment_empty_resourcelist, container, false);
+        String category = getArguments().getString("category");
+
+        view = inflater.inflate(R.layout.fragment_empty_resourcelist, container, false);
 		TextView desc = (TextView)view.findViewById(R.id.tv_empty_desc);
         final Button button = (Button) view.findViewById(R.id.AddResButton);
         setupButton(type);

@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.Menu;
@@ -35,19 +36,17 @@ import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
 public class EditPurchase extends BaseActivity {
+	final int REQ_RES = 1;
+	final int REQ_QTFR = 2;
 	Button btn_res;
 	Button btn_qtfr;
 	EditText et_qty;
 	EditText et_cost;
-	
 	TextView tv_res;
 	TextView tv_qtfr;
 	TextView tv_qty;
 	TextView tv_cost;
-	
-	final int REQ_RES=1;
 	String resource=null;
-	final int REQ_QTFR=2;
 	String quantifier=null;
 
 	double qty;
@@ -58,14 +57,12 @@ public class EditPurchase extends BaseActivity {
 	DbHelper dbh;
 	LocalResourcePurchase p;
     private TextView tv_date;
-    private Button btn_date;
 
-    @Override
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_purchase);
 		dbh=new DbHelper(this);
-//		db=dbh.getReadableDatabase();
         db = dbh.getWritableDatabase();
 		initialize();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Purchase");
@@ -81,8 +78,8 @@ public class EditPurchase extends BaseActivity {
         btn_res=(Button)findViewById(R.id.btn_editPurchase_crop);
         btn_qtfr=(Button)findViewById(R.id.btn_editPurchase_quantifier);
         Button btn_dne=(Button)findViewById(R.id.btn_editPurchase_done);
-        btn_date = (Button)findViewById((R.id.btn_editPurchase_date));
-        Click c=new Click();
+		Button btn_date = (Button) findViewById((R.id.btn_editPurchase_date));
+		Click c=new Click();
         btn_res.setOnClickListener(c);
 		btn_qtfr.setOnClickListener(c);
         btn_date.setOnClickListener(c);
@@ -151,33 +148,12 @@ public class EditPurchase extends BaseActivity {
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
-	public class Click implements OnClickListener{
-
-		@Override
-		public void onClick(View v) {
-			Intent i=new Intent(EditPurchase.this,EditChooseLists.class);
-			if(v.getId()==R.id.btn_editPurchase_crop){
-				i.putExtra("desc",p.getType());
-				startActivityForResult(i,REQ_RES);
-			}else if(v.getId()==R.id.btn_editPurchase_quantifier){
-				i.putExtra("desc", "quantifier");
-				i.putExtra("category", p.getType());
-				startActivityForResult(i,REQ_QTFR);
-			}else if(v.getId()==R.id.btn_editPurchase_done){
-				updatePurchase();
-			}else if (v.getId() == R.id.btn_editPurchase_date){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getSupportFragmentManager(), "Choose Date");
-            }
-		}
-	}
-	
 
 	private void updatePurchase() {
-		if(!(et_qty.getText().toString() == null||et_qty.getText().toString().equals(""))){
+		if (!et_qty.getText().toString().equals("")) {
 			qty=Double.parseDouble(et_qty.getText().toString());
 		}
-		if(!(et_cost.getText().toString() == null ||et_cost.getText().toString().equals(""))){
+		if (!et_cost.getText().toString().equals("")) {
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
 		ContentValues cv = new ContentValues();
@@ -194,6 +170,7 @@ public class EditPurchase extends BaseActivity {
 		setResult(1,i);
 		finish();
 	}
+	
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
@@ -210,24 +187,21 @@ public class EditPurchase extends BaseActivity {
 			t.setText(quantifier);
 		}
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.edit_purchase, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		return id == R.id.action_settings || super.onOptionsItemSelected(item);
 	}
 
     private void formatDisplayDate(Calendar cal) {
@@ -235,10 +209,31 @@ public class EditPurchase extends BaseActivity {
         date = cal.getTimeInMillis();
     }
 
+	public class Click implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			Intent i = new Intent(EditPurchase.this, EditChooseLists.class);
+			if (v.getId() == R.id.btn_editPurchase_crop) {
+				i.putExtra("desc", p.getType());
+				startActivityForResult(i, REQ_RES);
+			} else if (v.getId() == R.id.btn_editPurchase_quantifier) {
+				i.putExtra("desc", "quantifier");
+				i.putExtra("category", p.getType());
+				startActivityForResult(i, REQ_QTFR);
+			} else if (v.getId() == R.id.btn_editPurchase_done) {
+				updatePurchase();
+			} else if (v.getId() == R.id.btn_editPurchase_date) {
+				DialogFragment newFragment = new DatePickerFragment();
+				newFragment.show(getSupportFragmentManager(), "Choose Date");
+			}
+		}
+	}
+
     @SuppressLint("ValidFragment")
     public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-
-        @Override
+	    @NonNull
+	    @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);

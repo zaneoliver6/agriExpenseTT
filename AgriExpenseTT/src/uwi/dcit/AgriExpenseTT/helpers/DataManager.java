@@ -227,12 +227,10 @@ public class DataManager {
 
 		ArrayList<LocalCycleUse> list = new ArrayList<>();
 		DbQuery.getCycleUse(db, dbh, c.getId(), list, null);
-		Iterator<LocalCycleUse> itr=list.iterator();
 
-		while(itr.hasNext()){
-			LocalCycleUse l=itr.next();
-			Log.i("Cycle Removal",":"+l);
-			this.deleteCycleUse(l,"Cycle");//already does the recording into the redo log(cloud) and transaction log
+		for (LocalCycleUse l : list) {
+			Log.i("Cycle Removal", ":" + l);
+			this.deleteCycleUse(l, "Cycle");//already does the recording into the redo log(cloud) and transaction log
 		}
 		//delete cycle
 //		db.delete(CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID+"="+c.getId(), null);
