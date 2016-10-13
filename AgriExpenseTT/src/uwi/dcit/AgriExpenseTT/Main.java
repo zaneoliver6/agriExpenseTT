@@ -19,10 +19,7 @@ import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
 public class Main extends BaseActivity{
 
     public final static String APP_NAME = "AgriExpenseTT";
-    public final static String TAG = "Main";
-    public String country = "";
-    public String county = "";
-    public SQLiteDatabase db;
+    private final static String TAG = "Main";
     private CharSequence mTitle;
     private String focus = "cycle";
 
@@ -31,8 +28,7 @@ public class Main extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
         mTitle = getTitle();
-        // Needed after setContentView to refer to the appropriate XML View
-        setupNavDrawer();
+        setupNavDrawer(); // Needed after setContentView to refer to the appropriate XML View
 
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this).sendScreenView("Main Screen");
@@ -53,11 +49,13 @@ public class Main extends BaseActivity{
      */
     private void buildScreen(){
         Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
-        if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setupLand();
-        }else {
-            setupPort();
-        }
+//        if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            setupLand();
+//        }else {
+//            setupPort();
+//        }
+
+        setupPort();
     }
 
     /**
@@ -168,17 +166,17 @@ public class Main extends BaseActivity{
 
     public void setPreferencesCall(){
         if(!PrefUtils.getAlarmSet(this)) {
-          Intent i = new Intent(Main.this, AlarmActivity.class);
+            Intent i = new Intent(Main.this, AlarmActivity.class);
             startActivity(i);
-            Log.i("PREF SET","PREFERENCES SET");
+            Log.i(TAG,"Call to Set Alarm Preferences was made");
         }
     }
 
     public void firstRunCheck(){
-        if (!PrefUtils.isFirstUse(this)){
+        if (PrefUtils.isFirstUse(this)){
             Intent p = new Intent(Main.this, WelcomeScreen.class);
             startActivity(p);
-            PrefUtils.setFirstUse(this, true);
+            PrefUtils.setFirstUse(this, false);
         }
     }
 }

@@ -34,6 +34,7 @@ import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -43,9 +44,7 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract.ResourcePurchaseEntry;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
-//import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
-
-public class FragmentNewPurchaseLast extends Fragment{
+public class FragmentNewPurchaseLast extends Fragment implements DatePickerDialog.OnDateSetListener{
     private EditText et_qty;
 	private EditText et_cost;
 	private TextView helper_qty;
@@ -103,45 +102,47 @@ public class FragmentNewPurchaseLast extends Fragment{
             helper_cost.setText("Cost of all " + resource + " " + quantifier + "s");
         }
 
-        NewPurchaseClickListener c = new NewPurchaseClickListener(this.getActivity());
+        NewPurchaseClickListener c = new NewPurchaseClickListener(this);
         view.findViewById(R.id.btn_newpurchaselast_done).setOnClickListener(c);
         btnDate = (Button)view.findViewById(R.id.btn_newPurchaseLast_date);
         btnDate.setOnClickListener(c);
 
-        formatDisplayDate(null);
+        String format = DateFormatHelper.formatDisplayDate(null);
+        btnDate.setText(format);
+        unixDate = Calendar.getInstance().getTimeInMillis();
     }
 
-    private String formatDisplayDate(Calendar calendar) {
-        String strDate;
-        if ( calendar == null){
-            calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-        }
-
-        unixDate = calendar.getTimeInMillis();
-        Date d = calendar.getTime();
-        strDate = DateFormat.getDateInstance().format(d);
-        btnDate.setText(strDate);
-
-        return strDate;
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+        String format = DateFormatHelper.formatDisplayDate(cal);
+        btnDate.setText(format);
+        unixDate = cal.getTimeInMillis();
     }
 
     private class NewPurchaseClickListener implements OnClickListener{
 
         FragmentActivity activity;
+        FragmentNewPurchaseLast fragment;
 
-        public NewPurchaseClickListener(FragmentActivity activity) {
-            this.activity = activity;
+        public NewPurchaseClickListener(FragmentNewPurchaseLast fragment) {
+            this.fragment = fragment;
+            this.activity = fragment.getActivity();
         }
 
         @Override
 		public void onClick(View v) {
             if (v.getId() == R.id.btn_newPurchaseLast_date){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
+                final Calendar c = Calendar.getInstance();
+                final int year = c.get(Calendar.YEAR);
+                final int month = c.get(Calendar.MONTH);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
+                (new DatePickerDialog(fragment.getActivity(), fragment, year, month, day)).show();
+
+//                DialogFragment newFragment = new DatePickerFragment();
+//                newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
+
             }
 
 			else if(v.getId() == R.id.btn_newpurchaselast_done){
@@ -165,9 +166,6 @@ public class FragmentNewPurchaseLast extends Fragment{
                 }else{
 					cost=Double.parseDouble(et_cost.getText().toString());
                     et_cost.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
-                }
-                if(unixDate == 0){
-                    formatDisplayDate(null);
                 }
 
                 res = -1;
@@ -239,25 +237,4 @@ public class FragmentNewPurchaseLast extends Fragment{
 		}
 		
 	}
-    @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        @Override
-        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-            formatDisplayDate(cal);
-        }
-    }
 }

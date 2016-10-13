@@ -30,20 +30,20 @@ import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 import uwi.dcit.AgriExpenseTT.models.CycleContract.CycleEntry;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
-public class EditCycle extends BaseActivity {
-	EditText et_landQty;
+public class EditCycle extends BaseActivity implements DatePickerDialog.OnDateSetListener{
+    private EditText et_landQty;
 
-	TextView tv_crop;
-	TextView tv_landType;
-	TextView tv_landQty;
-	TextView tv_date;
-	
-	final int REQ_CROP = 1;
-	String crop = null;
-	final int REQ_LANDTYPE = 2;
-	String land = null;
-	double landQty;
-	long date;
+    private TextView tv_crop;
+    private TextView tv_landType;
+    private TextView tv_landQty;
+    private TextView tv_date;
+
+    private final int REQ_CROP = 1;
+    private String crop = null;
+    private final int REQ_LANDTYPE = 2;
+    private String land = null;
+    private double landQty;
+    private long date;
 	
 	SQLiteDatabase db;
 	DbHelper dbh;
@@ -56,28 +56,23 @@ public class EditCycle extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_cycle);
-		dbh = new DbHelper(this);
-//		db= dbh.getReadableDatabase();
-        db = dbh.getWritableDatabase();
-		initialize();
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Edit Cycle");
-        View v=findViewById(R.id.contEditCycle);
-        v.setOnTouchListener(new View.OnTouchListener() {
+        // Initialize Database
+		dbh = new DbHelper(this);
+        db = dbh.getWritableDatabase();
+
+        // Retrieve and populate UI With selected Cycle
+        initialize();
+
+        // Prevent unwanted display of the keyboard TODO Evaluate necessity
+        findViewById(R.id.contEditCycle).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(!(v instanceof EditText)){
-                    hideSoftKeyboard();
-                }
+                if(!(v instanceof EditText)) hideSoftKeyboard();
                 return false;
             }
         });
 	}
-
-    @Override
-    protected void onDestroy(){
-//        db.close(); //Close database when activity closes
-        super.onDestroy();
-    }
 
 	private void initialize() {
 
@@ -105,19 +100,19 @@ public class EditCycle extends BaseActivity {
 		Calendar cal=Calendar.getInstance();
 		cal.setTimeInMillis(date);
 
-		tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
+		tv_date.setText(DateFormatHelper.formatDisplayDate(cal));
 	}
 	
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==RESULT_CANCELED){
+		if(resultCode == RESULT_CANCELED){
 			return;
 		}
-		if(requestCode==REQ_CROP){
+		if(requestCode == REQ_CROP){
 			crop = data.getExtras().getString("content");
             ((TextView)findViewById(R.id.tv_editcycle_cropVal)).setText(crop);
-		}else if(requestCode==REQ_LANDTYPE){
+		}else if(requestCode == REQ_LANDTYPE){
 			land = data.getExtras().getString("content");
             ((TextView)findViewById(R.id.tv_editcycle_landVal)).setText(land);
 		}
@@ -144,12 +139,16 @@ public class EditCycle extends BaseActivity {
     }
 
     public void editDate(View v){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "Choose Date");
+        final Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(date);
+        final int year = c.get(Calendar.YEAR);
+        final int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        (new DatePickerDialog(this, this, year, month, day)).show();
     }
 	
 	public void updateCycle(View v) {
-		if(et_landQty.getText().toString() != null && !et_landQty.getText().toString().equals("")){
+		if(!et_landQty.getText().toString().equals("")){
 			landQty = Double.parseDouble(et_landQty.getText().toString());
 		}
         name = TextHelper.formatUserText(et_name.getText().toString());
@@ -172,40 +171,14 @@ public class EditCycle extends BaseActivity {
 
 		finish();
 	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.edit_cycle, menu);
-		return true;
-	}
 
-    private void formatDisplayDate(Calendar cal) {
-        tv_date.setText(DateFormatHelper.getDateStr(cal.getTime()));
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+        String format = DateFormatHelper.formatDisplayDate(cal);
+        tv_date.setText(format);
         date = cal.getTimeInMillis();
     }
-
-    @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        @Override
-        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-            formatDisplayDate(cal);
-        }
-    }
-
 
 }

@@ -116,9 +116,9 @@ public class NewCycleLists extends ListFragment {
             updateSub("Details: " + listAdapt.getItem(position) + ", ");                                //Change the details section of the fragment
             nextFragment = new NewCycleLists();                                        //Launch a new instance of the class to deal with the land type selection
         } else if (type.equals("land")) {
-            //Pass the crop specified in previous activity on to the next action
+            //Pass the crop specified in previous fragment on to the next action
             arguments.putString(DHelper.cat_plantingMaterial, getArguments().getString(DHelper.cat_plantingMaterial));
-            arguments.putString("land", listAdapt.getItem(position));                        //Pass on the land type selected to the next activity
+            arguments.putString("land", listAdapt.getItem(position));                        //Pass on the land type selected to the next fragment
 
             StringBuilder stb = new StringBuilder();                                //Using String builder to get details rather than concatenation
             stb.append("Details: ")

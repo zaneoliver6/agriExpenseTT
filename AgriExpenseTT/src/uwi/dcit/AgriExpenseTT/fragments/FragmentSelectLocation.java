@@ -126,7 +126,7 @@ public class FragmentSelectLocation extends ListFragment {
 			i.putExtra("country", this.country);
 			
 			
-			getActivity().setResult(1,i);//used to set the results for the parent activity ( the one that launched this one)
+			getActivity().setResult(1,i);//used to set the results for the parent fragment ( the one that launched this one)
 			getActivity().finish();
 		}
 		

@@ -229,7 +229,7 @@ public class FragmentPurchaseUse extends Fragment {
 	private void showPopup(final Activity context,int flag,ArrayList<String> items){
 		int pWidth=600;
 		int pHeight=550;
-		//gets layout inflator for the activity
+		//gets layout inflator for the fragment
 		LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		//using the layout inflator u js got, inflate a layout into a view
 		View simpList = inflater.inflate(R.layout.simple_plist, null);
@@ -249,7 +249,7 @@ public class FragmentPurchaseUse extends Fragment {
 	private void populateListView(View simpList,ArrayList<String> items) {
 		//build adaptor
 		ArrayAdapter<String> adapter = new ArrayAdapter<>(
-				getActivity().getBaseContext(),				//context for activity
+				getActivity().getBaseContext(),				//context for fragment
 				android.R.layout.simple_list_item_1,	//layout to use(Create) this is what the options in the list look like
 				items);			//items to be displayed
 		//configure list view

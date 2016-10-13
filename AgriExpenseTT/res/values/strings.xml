@@ -174,4 +174,5 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="add_cycle">Add Cycle</string>
     <string name="cycle_prefix">Total: $</string>
     <string name="cycle_other_prefix">Other: $</string>
+    <string name="enter_land_quantity">Enter the Land Quantity</string>
 </resources>
