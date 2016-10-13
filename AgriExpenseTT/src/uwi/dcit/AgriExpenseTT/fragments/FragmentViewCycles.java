@@ -50,11 +50,10 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 public class FragmentViewCycles extends ListFragment{
 	private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
 	final int req_edit = 1;
-	String type=null;
-//	final String className = "ViewCycles";
-	View view;
-	ArrayList<LocalCycle> cycleList;
-	CycleListAdapter cycAdapt;
+	private String type=null;
+	private View view;
+	private ArrayList<LocalCycle> cycleList;
+	private CycleListAdapter cycAdapt;
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 	private DbHelper dbh;
 	private SQLiteDatabase db;
