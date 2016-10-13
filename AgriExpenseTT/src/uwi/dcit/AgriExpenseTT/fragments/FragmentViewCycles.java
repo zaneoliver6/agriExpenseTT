@@ -109,7 +109,7 @@ public class FragmentViewCycles extends ListFragment{
 		final Button button = (Button) view.findViewById(R.id.fragment_choose_purchase_button);
 
 
-		button.setText("Add Cycle");
+		button.setText(R.string.add_cycle);
 		button.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
 				createNewCycle();
@@ -131,9 +131,9 @@ public class FragmentViewCycles extends ListFragment{
 
 		switch(item.getItemId()){
 			case R.id.crop_view:
-				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
+//				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
 //				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
-				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
+//				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
 				launchCycleUsage(info.position);
 				break;
 			case R.id.crop_edit: //Edit Cycle
@@ -207,7 +207,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void launchCycleUsage(int position){
         Bundle arguments = new Bundle();
 		arguments.putParcelable("cycleMain",cycleList.get(position));
-        Log.d("FragmentViewCycles", cycleList.get(position).toString());
+        Log.d("FragmentViewCycles", "Selected: " + cycleList.get(position).toString());
 
 		Fragment newFrag= new FragmentCycleUsage();
         newFrag.setArguments(arguments);

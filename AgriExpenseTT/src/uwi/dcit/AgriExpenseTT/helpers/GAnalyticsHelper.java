@@ -14,11 +14,11 @@ import uwi.dcit.AgriExpenseTT.R;
  */
 public class GAnalyticsHelper {
 
-    //    public static final String APP_TRACKER = "AgriExpense"; //Tracker used only in this app
     public static final String CLOUD_CATEGORY = "Cloud_Services";
+    private static final String PERFORMANCE_CATEGORY = "Performance_Metrics";
 
     private static final String TAG = "GAnalytics";
-    private static final boolean enableTracking = true;
+    private static final boolean enableTracking = false;
     private static GAnalyticsHelper instance = null;
     private final String userEmail;
     private Tracker tracker;
@@ -27,7 +27,7 @@ public class GAnalyticsHelper {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(context);
         this.tracker = analytics.newTracker(R.xml.global_tracker);
         tracker.enableAdvertisingIdCollection(true);
-        tracker.enableAutoActivityTracking(true);
+        tracker.enableAutoActivityTracking(false);
         tracker.enableExceptionReporting(true);
         userEmail = PrefUtils.getUserEmail(context);
     }
@@ -49,7 +49,7 @@ public class GAnalyticsHelper {
      * @param eventName The current event
      * @param status the outcome of the event
      */
-     public void sendEvent(String category, String action, String eventName, int status){
+     public void sendEvent(String category, String action, String eventName, long status){
          if (canSend()) {
              tracker.send(new HitBuilders.EventBuilder()
                  .setCategory(category)
@@ -63,6 +63,10 @@ public class GAnalyticsHelper {
 
     public void sendPreference(String action, String eventName, int status){
         sendEvent("Preferences", action, eventName, status); // 0 status for failed 1 for success
+    }
+
+    public void sendPerfMetrics(String action, String eventName, long value){
+        sendEvent(PERFORMANCE_CATEGORY, action, eventName, 1);
     }
 
 

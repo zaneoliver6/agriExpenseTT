@@ -23,39 +23,47 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 
 public class SalesCost extends BaseActivity {
 	
-	TextView harvestDesc;
-	TextView salesDesc;
-	TextView harvestDet1;
-	TextView harvestDet2;
-	TextView harvestDet3;
-	TextView salesDet1;
-	TextView salesDet2;
-	TextView salesDet3;
+	private TextView harvestDesc;
+	private TextView salesDesc;
+	private TextView harvestDet1;
+	private TextView harvestDet2;
+	private TextView harvestDet3;
+	private TextView salesDet1;
+	private TextView salesDet2;
+	private TextView salesDet3;
 	private final int REQ_HARVEST=1;
-	String qtfr;
-	
-	double amtHarvest;
-	double costPer;
-	LocalCycle currCycle;
-	EditText et_sell;
-	double sellp;
-	String crop;
-	SQLiteDatabase db;
-	DbHelper dbh;
+	private String qtfr;
+
+	private double amtHarvest;
+	private double costPer;
+	private LocalCycle currCycle;
+	private EditText et_sell;
+	private double sellp;
+	private String crop;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
     private int res = -1;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_sales_cost);
+		// Retrieve the Cycle specified
 		currCycle = getIntent().getParcelableExtra("cycle");
-		dbh = new DbHelper(this);
-		db  = dbh.getWritableDatabase();
-		crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
-		setup();
+
+		if (currCycle != null){
+			dbh = new DbHelper(this);
+			db  = dbh.getReadableDatabase();
+			crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
+			setup();
+		}else{
+			Toast.makeText(this, "Unable to load Cycle. Please try again", Toast.LENGTH_SHORT).show();
+			finish();
+		}
+
 
         // Added Google Analytics
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Sales cost Screen");
+        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Sales Cost");
 	}
 
 	private void setup() {
@@ -69,32 +77,36 @@ public class SalesCost extends BaseActivity {
 		salesDet2=(TextView)findViewById(R.id.tv_salesCost_saleDet2);
 		salesDet3=(TextView)findViewById(R.id.tv_salesCost_saleDet3);
 		et_sell=(EditText)findViewById(R.id.et_salsesCost_sell);
-		TWatch t =new TWatch();
+		TWatch t = new TWatch();
 		et_sell.addTextChangedListener(t);
-		Button harvestDet=(Button)findViewById(R.id.btn_salesCost_harvest);
-		Button btn_done=(Button)findViewById(R.id.btn_salesCost_dne);
-		Click c = new Click(this);
 
-		harvestDet.setOnClickListener(c);
-		btn_done.setOnClickListener(c);
-		currCycle=getIntent().getExtras().getParcelable("cycle");
-		qtfr=currCycle.getHarvestType();
+		// Create listener for buttons then assign
+		SalesCostUIClickListener localSalesCostListener = new SalesCostUIClickListener(this);
+		// Change Harvest Button
+		Button harvestDet=(Button)findViewById(R.id.btn_salesCost_harvest);
+		harvestDet.setOnClickListener(localSalesCostListener);
+		// Save Button
+		Button btn_done=(Button)findViewById(R.id.btn_salesCost_dne);
+		btn_done.setOnClickListener(localSalesCostListener);
+
+
+		qtfr = currCycle.getHarvestType();
 		amtHarvest=currCycle.getHarvestAmt();
 		costPer=currCycle.getCostPer();
 		
-		harvestDet1.setText("Measurement:"+qtfr);
-		harvestDet2.setText("Harvest amount:"+amtHarvest+" "+qtfr);
-		harvestDet3.setText("Cost per "+qtfr+":$"+costPer);
-		salesDet1.setText("$0 per "+qtfr+":loss of $"+costPer);
-		salesDet2.setText("Total loss:$"+currCycle.getTotalSpent());
+		harvestDet1.setText(String.format("Measurement: %s", qtfr));
+		harvestDet2.setText(String.format("Harvest amount: %s %s", amtHarvest, qtfr));
+		harvestDet3.setText(String.format("Cost per %s : $%s", qtfr, costPer));
+		salesDet1.setText(String.format("$0 per %s : loss of $%s", qtfr, costPer));
+		salesDet2.setText(String.format("Total loss : $%s", currCycle.getTotalSpent()));
 		salesDet3.setVisibility(View.GONE);
 	}
 
-	public class Click implements OnClickListener{
+	public class SalesCostUIClickListener implements OnClickListener{
 
         Context context;
 
-        public Click(Context context){
+        public SalesCostUIClickListener(Context context){
             this.context = context;
         }
 
@@ -109,12 +121,6 @@ public class SalesCost extends BaseActivity {
 
 			}else if(v.getId()==R.id.btn_salesCost_dne){
 				save();
-
-
-
-//                Intent n=new Intent(SalesCost.this,CycleUseage.class);
-//                n.putExtra("cycleMain", currCycle);
-//                startActivity(n);
 			}
 		}
 
