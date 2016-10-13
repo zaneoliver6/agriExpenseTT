@@ -49,13 +49,11 @@ public class Main extends BaseActivity{
      */
     private void buildScreen(){
         Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
-//        if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            setupLand();
-//        }else {
-//            setupPort();
-//        }
-
-        setupPort();
+        if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setupLand();
+        }else {
+            setupPort();
+        }
     }
 
     /**
