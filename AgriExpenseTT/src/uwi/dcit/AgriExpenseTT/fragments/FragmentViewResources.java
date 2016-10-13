@@ -1,6 +1,7 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,31 +22,58 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 
 public class FragmentViewResources extends ListFragment{
-	SQLiteDatabase db;
-	DbHelper dbh;
-	ArrayList<String> rList;
-	DataManager dm;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private ArrayList<String> rList;
+	private DataManager dm;
+	private View view;
+	private ArrayAdapter<String> listAdapt;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getWritableDatabase();
 		dm = new DataManager(getActivity(), db, dbh);
-		populateList();
-		Collections.sort(rList);
-		ArrayAdapter<String> listAdapt=new ArrayAdapter<>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
+		rList = new ArrayList<>();
+//		populateList();
+
+		listAdapt=new ArrayAdapter<>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
 		setListAdapter(listAdapt);
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
 	}
 	
-	private void populateList() {
-		rList = new ArrayList<>();
-		DbQuery.getResources(db, dbh, null, rList);
+	private void populateList(View v) {
+		if (rList == null || rList.size() > 0)rList = new ArrayList<>();
+
+		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
+		progressDialog.show();
+
+		//  Run Database Operation in thread other than UI
+		(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				DbQuery.getResources(db, dbh, null, rList);
+				Collections.sort(rList);
+
+				// Update the UI
+				view.post(new Runnable() {
+					@Override
+					public void run() {
+						listAdapt.notifyDataSetChanged();
+						progressDialog.dismiss();
+					}
+				});
+			}
+		})).start();
+
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+		view  =  inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+		populateList(view);
+		return view;
 	}
 
 	@Override
