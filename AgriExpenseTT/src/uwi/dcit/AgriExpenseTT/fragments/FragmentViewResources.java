@@ -43,10 +43,10 @@ public class FragmentViewResources extends ListFragment{
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
 	}
 	
-	private void populateList(View v) {
+	private void populateList(final View v) {
 		if (rList == null || rList.size() > 0)rList = new ArrayList<>();
 
-		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
+		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Resources", "Retrieving Purchases", true);
 		progressDialog.show();
 
 		//  Run Database Operation in thread other than UI
@@ -57,7 +57,7 @@ public class FragmentViewResources extends ListFragment{
 				Collections.sort(rList);
 
 				// Update the UI
-				view.post(new Runnable() {
+				v.post(new Runnable() {
 					@Override
 					public void run() {
 						listAdapt.notifyDataSetChanged();

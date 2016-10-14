@@ -2,7 +2,6 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,9 +28,13 @@ public class Main extends BaseActivity{
         setContentView(R.layout.activity_view_navigation);
         mTitle = getTitle();
         setupNavDrawer(); // Needed after setContentView to refer to the appropriate XML View
-
         // Added Google Analytics
         GAnalyticsHelper.getInstance(this).sendScreenView("Main Screen");
+        // Determine if the main is being displayed from somewhere else
+        if (getIntent().getExtras() != null) {
+            String f = getIntent().getExtras().getString("type");
+            if (f != null) focus = f;
+        }
 
         setPreferencesCall();
         firstRunCheck();
@@ -48,7 +51,6 @@ public class Main extends BaseActivity{
      * BuildScreen will be used to setup the screen based on the device type and the orientation
      */
     private void buildScreen(){
-        Log.d(TAG, "Value of Focus is: " + focus + " where build screen was called");
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -112,7 +114,7 @@ public class Main extends BaseActivity{
 
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
-        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(this.isTablet && this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
 
             Class reflectClass = oldFrag.getClass();

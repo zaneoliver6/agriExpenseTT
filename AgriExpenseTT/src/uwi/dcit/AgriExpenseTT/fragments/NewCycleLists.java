@@ -25,49 +25,63 @@ import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 
 public class NewCycleLists extends ListFragment {
-    String type;
-    ArrayList<String> list;
-    SQLiteDatabase db;
-    DbHelper dbh;
-    //	int cycleId;
-    TextView et_main;
-    TextView et_search;
-    ArrayAdapter<String> listAdapt;
-    View view;
+    private String type;
+    private ArrayList<String> list;
+    private SQLiteDatabase db;
+    private DbHelper dbh;
+    private TextView et_main;
+    private TextView et_search;
+    private ArrayAdapter<String> listAdapt;
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbh = new DbHelper(this.getActivity().getBaseContext());
         db = dbh.getReadableDatabase();
-
+        list = new ArrayList<>();
         type = getArguments().getString("type");
-
-        populateList();
+        // Create the List adapter
         listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
         setListAdapter(listAdapt);
-//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle List Fragment");
     }
 
     private void populateList() {
-        list = new ArrayList<>();
+        if (list == null || list.size() > 0) list = new ArrayList<>();
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Perform DB Operation
+                if (type.equals(DHelper.cat_plantingMaterial)) {
+                    DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
+                } else if (type.equals("land")) {
+                    list.add("Acre");
+                    list.add("Hectare");
+                    list.add("Bed");
+                }
+                // Update the UI on the Main Thread
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Collections.sort(list);
+                        listAdapt.notifyDataSetChanged();
+                    }
+                });
+            }
+        })).start();
 
-        if (type.equals(DHelper.cat_plantingMaterial)) {
-            DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
-        } else if (type.equals("land")) {
-            list.add("Acre");
-            list.add("Hectare");
-            list.add("Bed");
-        }
-        Collections.sort(list);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.list_reuse, container, false);
 
+        populateList();
+
         et_main = (TextView) view.findViewById(R.id.tv_frag_mainHead_new);
         et_search = (TextView) view.findViewById(R.id.et_listReuse_search);
+        et_search.setVisibility(View.INVISIBLE); //TODO Remove the search bar until more reliable performance is achieved
 
         if (type.equals("land")) {
             et_search.setVisibility(View.GONE);
@@ -80,8 +94,7 @@ public class NewCycleLists extends ListFragment {
         } else if (type.equals("land")) {
             et_main.setText("Select the type of land you are using");
         }
-        view.setOnTouchListener(
-                new View.OnTouchListener() {
+        view.setOnTouchListener(new View.OnTouchListener() {
                     public boolean onTouch(View v, MotionEvent event) {
                         if (v.getId() != (R.id.et_newCycleLast_landqty))
                             ((NewCycle) getActivity()).hideSoftKeyboard();
@@ -89,6 +102,7 @@ public class NewCycleLists extends ListFragment {
                     }
                 }
         );
+
         return view;
     }
 

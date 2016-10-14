@@ -27,14 +27,13 @@ import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 
 
 public class NewPurchaseLists extends ListFragment {
+	public final String TAG = "NewPurchaseList";
 	String type;
 	 ArrayList<String> list;
 	SQLiteDatabase db;
 	DbHelper dbh;
 	int cycleId;
 	ArrayAdapter<String> listAdapt;
-
-    public final String TAG = "NewPurchaseList";
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -104,6 +103,8 @@ public class NewPurchaseLists extends ListFragment {
 		View view= inflater.inflate(R.layout.list_reuse, container, false);
 		TextView et_main=(TextView)view.findViewById(R.id.tv_frag_mainHead_new);
 		TextView et_search=(TextView)view.findViewById(R.id.et_listReuse_search);
+		et_search.setVisibility(View.INVISIBLE); //TODO Remove the search bar until more reliable performance is achieved
+
 		if(getArguments().getString("type").equals("category")||getArguments().getString("type").equals("quantifier")){
 			et_search.setVisibility(View.GONE);
 		}else{

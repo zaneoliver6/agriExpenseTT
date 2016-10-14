@@ -28,8 +28,6 @@ import uwi.dcit.agriexpensesvr.cycleUseApi.model.CycleUse;
 import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 import uwi.dcit.agriexpensesvr.translogApi.model.TransLog;
 
-//import uwi.dcit.agriexpensesvr.rPurchaseApi.model.ResourcePurchase;
-//import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DbQuery {
 	
@@ -68,32 +66,16 @@ public class DbQuery {
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, qty);
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_RESOURCE, DbQuery.findResourceName(db, dbh, resourceId));
         cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE, time);
-		Log.i("TIMEEEEEEEEEEe",">>>>>>"+time);
 
         db.insert(ResourcePurchaseEntry.TABLE_NAME, null, cv);
         int rowId=getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
         tl.insertTransLog(ResourcePurchaseEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);//records the insert of a purchase
         return rowId;
     }
-	
-	//based on the material being used inserts USE of a particular material for a particular CYCLE
-//	public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty,String quantifier,double useCost,TransactionLog tl){
-//		ContentValues cv= new ContentValues();
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_TYPE, type);
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER, quantifier);
-//		cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, useCost);
-//		db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
-//		int rowId=getLast(db, dbh, CycleResourceEntry.TABLE_NAME);
-//		tl.insertTransLog(CycleResourceEntry.TABLE_NAME, rowId, TransactionLog.TL_INS);
-//		return rowId;
-//	}
+
 
     public static int insertResourceUse(SQLiteDatabase db, DbHelper dbh,int cycleId, String type, int resourcePurchasedId, double qty, String quantifier, double useCost, TransactionLog tl){
         ContentValues cv= new ContentValues();
-		Log.i("HII","WOIIIIIIII");
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_CYCLEID, cycleId);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_PURCHASE_ID, resourcePurchasedId);
         cv.put(CycleResourceEntry.CYCLE_RESOURCE_QTY, qty);
@@ -110,9 +92,7 @@ public class DbQuery {
     }
 
 	public static void insertAccountTask(SQLiteDatabase db, DbHelper dbh, Account acc){
-
 		ContentValues cv=new ContentValues();
-		Log.i("ACCOUNT TO BE INSERTED",""+acc);
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, acc.getAccount());
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY, acc.getCounty());
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS, acc.getAddress());
@@ -122,23 +102,6 @@ public class DbQuery {
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_UPDATED, acc.getLastUpdated());
 		db.insert(UpdateAccountContract.UpdateAccountEntry.TABLE_NAME,null,cv);
 	}
-	
-//	public static int insertCycle(SQLiteDatabase db, DbHelper dbh,int cropId, String landType, double landQty,TransactionLog tl,long time){
-//		ContentValues cv=new ContentValues();
-//		cv.put(CycleEntry.CROPCYCLE_CROPID, cropId);
-//		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
-//		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
-//		cv.put(CycleEntry.CROPCYCLE_DATE, time);
-//		cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
-//		cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
-//		cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
-//		cv.put(CycleEntry.CROPCYCLE_HARVEST_TYPE,"Lb");
-//		cv.put(CycleEntry.CROPCYCLE_RESOURCE, DbQuery.findResourceName(db, dbh, cropId));
-//		db.insert(CycleEntry.TABLE_NAME, null,cv);
-//		int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
-//		tl.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
-//		return rowId;
-//	}
 
     public static int insertCycle(SQLiteDatabase db, DbHelper dbh, int cropId, String name, String landType, double landQty, TransactionLog tL, long time, String closed) {
         ContentValues cv=new ContentValues();
@@ -146,9 +109,6 @@ public class DbQuery {
         cv.put(CycleEntry.CROPCYCLE_LAND_TYPE, landType);
         cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
         cv.put(CycleEntry.CROPCYCLE_DATE, time);
-		Log.i("insertion","time:"+time);
-		Log.i("insertion","cropId"+cropId);
-		Log.i("insertion","cropName:"+name);
         cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, 0.0);
         cv.put(CycleEntry.CROPCYCLE_COSTPER, 0.0);
         cv.put(CycleEntry.CROPCYCLE_HARVEST_AMT, 0.0);
@@ -159,7 +119,6 @@ public class DbQuery {
         db.insert(CycleEntry.TABLE_NAME, null,cv);
         int rowId=getLast(db, dbh, CycleEntry.TABLE_NAME);
         tL.insertTransLog(CycleEntry.TABLE_NAME,rowId,TransactionLog.TL_INS );
-		Log.i("HELLO", "WHAT I INSERTED:" + DbQuery.getCycle(db, dbh, rowId));
         return rowId;
     }
 	
@@ -271,7 +230,6 @@ public class DbQuery {
 			n.setCropName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_RESOURCE)));
             n.setCycleName(cursor.getString(cursor.getColumnIndex(CycleEntry.CROPCYCLE_NAME)));
 			list.add(n);
-			Log.i("GETTING CYCLES <-> View", "CYCLE FROM LOCAL:" + n);
 		}
 
         cursor.close();
@@ -314,7 +272,6 @@ public class DbQuery {
 			m.setQtyRemaining(cursor.getDouble(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING)));
             m.setDate(cursor.getLong(cursor.getColumnIndex(ResourcePurchaseEntry.RESOURCE_PURCHASE_DATE)));
 			list.add(m);
-			Log.i("RESOURCE PURCHASE PULL",">>>>>>>>>>>>>>>>>>>"+m);
 		}
 
         cursor.close();
@@ -386,7 +343,6 @@ public class DbQuery {
                     cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_TYPE)),
                     cursor.getDouble(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_USECOST)),
                     cursor.getString(cursor.getColumnIndex(CycleResourceEntry.CYCLE_RESOURCE_QUANTIFIER)));
-			Log.i("Checkkk","Local Cycle USE:::"+l);
 			list.add(l);
 		}
         cursor.close();
@@ -508,7 +464,6 @@ public class DbQuery {
 		cv.put(CloudKeyEntry.CLOUD_KEY, k);
 		cv.put(CloudKeyEntry.CLOUD_KEY_ROWID, id);
 		db.insert(CloudKeyEntry.TABLE_NAME, null, cv);
-		Log.i("KEY KEY",""+table+" "+k+""+id);
 	}
 
     public static String getKey(SQLiteDatabase db,DbHelper dbh,String table,int id){
@@ -611,9 +566,9 @@ public class DbQuery {
 		Cursor cursor=db.rawQuery(code ,null);
 		cursor.moveToFirst();
 		while(!cursor.isLast()){
-			Log.i("CURSOR","OPERATION:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_OPERATION)));
-			Log.i("CURSOR","ROWID:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_ROWID)));
-			Log.i("CURSOR","ID:"+cursor.getString(cursor.getColumnIndex(TransactionLogEntry._ID)));
+			Log.i("DbQuery", "getTransactionLog - OPERATION:" + cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_OPERATION)));
+			Log.i("CURSOR", "getTransactionLog - ROWID:" + cursor.getString(cursor.getColumnIndex(TransactionLogEntry.TRANSACTION_LOG_ROWID)));
+			Log.i("CURSOR", "getTransactionLog - ID:" + cursor.getString(cursor.getColumnIndex(TransactionLogEntry._ID)));
 			cursor.moveToNext();
 		}
 		cursor.close();
@@ -634,7 +589,6 @@ public class DbQuery {
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
 //		String res = cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC));
         cursor.close();
-		Log.i("findAccountTest", "Name of Account! ->>"+acc.getAccount());
         return acc;
 	}
 
@@ -654,7 +608,6 @@ public class DbQuery {
 		acc.setCounty(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTY)));
 		acc.setCountry(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_COUNTRY)));
 		acc.setAddress(cursor.getString(cursor.getColumnIndex(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ADDRESS)));
-		Log.i("DBQuery", "getUpAcc: Name of Account! ->>" + acc.getAccount());
 		cursor.close();
 		return acc;
 	}

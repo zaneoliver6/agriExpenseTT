@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           package="uwi.dcit.AgriExpenseTT"
-          android:versionCode="16"
-          android:versionName="6.9">
+          android:versionCode="17"
+          android:versionName="6.10">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,7 +23,7 @@
         <activity
             android:name=".NewPurchase"
             android:label="@string/title_activity_new_purchase_redesign"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -31,7 +31,7 @@
         <activity
             android:name=".NewCycle"
             android:label="@string/title_activity_new_cycle"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -39,7 +39,7 @@
         <activity
             android:name=".HireLabour"
             android:label="@string/title_activity_hire_labour"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -61,7 +61,7 @@
         <activity
             android:name=".DeleteData"
             android:label="Delete data"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -69,7 +69,7 @@
         <activity
             android:name=".EditCycle"
             android:label="Edit cycle"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -77,7 +77,7 @@
         <activity
             android:name=".EditPurchase"
             android:label="Edit purchase"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -92,7 +92,7 @@
         <activity
             android:name=".EditChooseLists"
             android:label="Edit data"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -100,7 +100,7 @@
         <activity
             android:name=".AddData"
             android:label="@string/title_activity_add_data"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -108,7 +108,7 @@
         <activity
             android:name=".ViewCycleUsege"
             android:label="@string/title_activity_view_cycle_usege"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -116,7 +116,7 @@
         <activity
             android:name=".SalesCost"
             android:label="@string/title_activity_sales_cost"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -124,7 +124,7 @@
         <activity
             android:name=".HarvestDetails"
             android:label="@string/title_activity_harvest_details"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -132,7 +132,7 @@
         <activity
             android:name=".SelectLocation"
             android:label="@string/title_activity_select_location"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />
@@ -154,7 +154,7 @@
         <activity
             android:name=".Backup"
             android:label="@string/title_activity_backup_data"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="uwi.dcit.AgriExpenseTT.Main" />

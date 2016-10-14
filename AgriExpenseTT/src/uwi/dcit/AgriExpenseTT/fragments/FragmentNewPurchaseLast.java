@@ -1,19 +1,15 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,9 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
@@ -60,33 +54,34 @@ public class FragmentNewPurchaseLast extends Fragment implements DatePickerDialo
     private long unixDate;
     private TextView helper_cost;
     private int res;
+    private double qty;
+    private double cost;
+    private ProgressDialog progressDialog;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newpurchase_last, container, false);
 
-		category=getArguments().getString("category");
-		resource=getArguments().getString("resource");
-		quantifier=getArguments().getString("quantifier");
+        category = getArguments().getString("category");
+        resource = getArguments().getString("resource");
+        quantifier = getArguments().getString("quantifier");
 
         dbh = new DbHelper(getActivity().getBaseContext());
         db = dbh.getWritableDatabase();
         resId = DbQuery.getNameResourceId(db, dbh, resource);
 
         setDetails(view);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
+        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase");
 
-        view.setOnTouchListener(
-            new View.OnTouchListener() {
+        view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (!(v instanceof EditText))((NewPurchase) getActivity()).hideSoftKeyboard();
                     return false;
                 }
-            }
-        );
-		return view;
-	}
+        });
+        return view;
+    }
 
     private void setDetails(View view){
         et_qty  = (EditText) view.findViewById(R.id.et_newPurchaselast_qty);
@@ -95,11 +90,11 @@ public class FragmentNewPurchaseLast extends Fragment implements DatePickerDialo
         helper_cost = (TextView) view.findViewById(R.id.tv_cycUseItem_sub1_2);
 
         if(category.equals(DHelper.cat_labour)){
-            helper_qty.setText("Number of " + quantifier + "'s " + resource + " is going to work"); //TODO Review wording for labour
-            helper_cost.setText("Cost of all " + quantifier + "'s " + resource + " will work for");
+            helper_qty.setText(String.format("Number of %s's %s is going to work", quantifier, resource)); //TODO Review wording for labour
+            helper_cost.setText(String.format("Cost of all %s's %s will work for", quantifier, resource));
         }else{
-            helper_qty.setText("Number/quantity of " + resource + " " + quantifier + "s");
-            helper_cost.setText("Cost of all " + resource + " " + quantifier + "s");
+            helper_qty.setText(String.format("Number/quantity of %s %ss", resource, quantifier));
+            helper_cost.setText(String.format("Cost of all %s %ss", resource, quantifier));
         }
 
         NewPurchaseClickListener c = new NewPurchaseClickListener(this);
@@ -121,7 +116,98 @@ public class FragmentNewPurchaseLast extends Fragment implements DatePickerDialo
         unixDate = cal.getTimeInMillis();
     }
 
-    private class NewPurchaseClickListener implements OnClickListener{
+    private void displayDateDialog() {
+        final Calendar c = Calendar.getInstance();
+        final int year = c.get(Calendar.YEAR);
+        final int month = c.get(Calendar.MONTH);
+        final int day = c.get(Calendar.DAY_OF_MONTH);
+        (new DatePickerDialog(getActivity(), this, year, month, day)).show();
+    }
+
+    private boolean isInputValid() {
+        // Validate Quantity Input
+        if ((et_qty.getText().toString()).equals("")) {
+            helper_qty.setText(R.string.enter_purchase_quantity);
+            helper_qty.setTextColor(ContextCompat.getColor(getActivity(), R.color.helper_text_error));
+            et_qty.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+            return false;
+        } else { // Set the Quantity Field
+            qty = Double.parseDouble(et_qty.getText().toString());
+            et_qty.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+        }
+
+        // Validate Cost Input
+        if ((et_cost.getText().toString()).equals("")) {
+            helper_cost.setText(R.string.enter_cost);
+            helper_cost.setTextColor(ContextCompat.getColor(getActivity(), R.color.helper_text_error));
+            et_cost.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+            return false;
+        } else { // Set the Cost Field
+            cost = Double.parseDouble(et_cost.getText().toString());
+            et_cost.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+        }
+
+        return true;
+    }
+
+    private void notifyUserResult() {
+        if (progressDialog != null) progressDialog.dismiss();
+        if (res != -1) {
+            Toast.makeText(getContext(), R.string.purchase_save_success, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), R.string.purchase_save_error, Toast.LENGTH_LONG).show();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putString("type", "purchase");
+        bundle.putInt("id", res);
+        Intent i = new Intent(getContext(), Main.class);
+        i.putExtras(bundle);
+        startActivity(i);
+    }
+
+    private int savePurchaseRecord() {
+        DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+        res = -1;
+        try {
+            currC = getArguments().getParcelable("cycle");
+            //this is for when labour is 'purchased'/hired for a single cycle
+            if (category.equals(DHelper.cat_labour) && currC != null) {
+                //insert purchase
+                res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
+                int pId = DbQuery.getLast(db, dbh, ResourcePurchaseEntry.TABLE_NAME);
+                ResourcePurchase p = DbQuery.getARPurchase(db, dbh, pId);
+
+                //use all of the qty of that purchase in the given cycle
+                dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(), quantifier, p.getCost());
+
+                //update purchase
+                p.setQtyRemaining(p.getQtyRemaining() - qty);
+                ContentValues cv = new ContentValues();
+                cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
+                dm.updatePurchase(p, cv);
+
+                //update cycle
+                currC.setTotalSpent(currC.getTotalSpent() + cost);
+                cv = new ContentValues();
+                cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
+                dm.updateCycle(currC, cv);
+            } else {
+                if (category.equals(DHelper.cat_other))//if its the other category
+                    if (resId == -1)//and the resource does not exist
+                        resId = DbQuery.insertResource(db, dbh, DHelper.cat_other, TextHelper.formatUserText(resource));//then insert it !
+                if (resId != -1)
+                    res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            res = -1;
+        }
+
+        return res;
+    }
+
+    private class NewPurchaseClickListener implements OnClickListener {
 
         FragmentActivity activity;
         FragmentNewPurchaseLast fragment;
@@ -132,109 +218,30 @@ public class FragmentNewPurchaseLast extends Fragment implements DatePickerDialo
         }
 
         @Override
-		public void onClick(View v) {
-            if (v.getId() == R.id.btn_newPurchaseLast_date){
-                final Calendar c = Calendar.getInstance();
-                final int year = c.get(Calendar.YEAR);
-                final int month = c.get(Calendar.MONTH);
-                final int day = c.get(Calendar.DAY_OF_MONTH);
-                (new DatePickerDialog(fragment.getActivity(), fragment, year, month, day)).show();
-
-//                DialogFragment newFragment = new DatePickerFragment();
-//                newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
-
-            }
-
-			else if(v.getId() == R.id.btn_newpurchaselast_done){
-				final double qty,cost;
-                if ((et_qty.getText().toString()).equals("")) {
-
-					helper_qty.setText("Enter Quantity Purchased");
-                    helper_qty.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_error));
-                    et_qty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-                    return;
-                }else{
-					qty=Double.parseDouble(et_qty.getText().toString());
-                    et_qty.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
-
-				}
-                if ((et_cost.getText().toString()).equals("")) {
-                    helper_cost.setText("Enter cost");
-                    helper_cost.setTextColor(ContextCompat.getColor(activity, R.color.helper_text_error));
-                    et_cost.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
-                    return;
-                }else{
-					cost=Double.parseDouble(et_cost.getText().toString());
-                    et_cost.getBackground().setColorFilter(ContextCompat.getColor(activity, R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+        public void onClick(View v) {
+            if (v.getId() == R.id.btn_newPurchaseLast_date) {
+                fragment.displayDateDialog();
+            } else if (v.getId() == R.id.btn_newpurchaselast_done) {
+                if (fragment.isInputValid()) { // Check input to ensure information entered
+                    // If we get to this point that fields have passed validation test
+                    progressDialog = ProgressDialog.show(getActivity(), "Resources", "Retrieving Purchases", true);
+                    progressDialog.show();
+                    // Run Operation to store the Purchase in a background thread
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fragment.savePurchaseRecord();
+                            // When completed run in UI thread
+                            fragment.getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fragment.notifyUserResult();
+                                }
+                            });
+                        }
+                    }).start();
                 }
-
-                res = -1;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        DataManager dm = new DataManager(getActivity().getBaseContext(),db,dbh);
-
-                        try{ currC=getArguments().getParcelable("cycle"); }
-                        catch (Exception e){ e.printStackTrace();}
-
-                        //this is for when labour is 'purchased'/hired for a single cycle
-                        if(category.equals(DHelper.cat_labour) && currC != null){
-
-                            //insert purchase
-                            res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
-                            int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
-                            ResourcePurchase p=DbQuery.getARPurchase(db, dbh, pId);
-
-                            //use all of the qty of that purchase in the given cycle
-                            dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
-
-                            //update purchase
-                            p.setQtyRemaining(p.getQtyRemaining() - qty);
-                            ContentValues cv=new ContentValues();
-                            cv.put(ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING,p.getQtyRemaining());
-                            dm.updatePurchase(p,cv);
-
-                            //update cycle
-                            currC.setTotalSpent(currC.getTotalSpent()+cost);
-                            cv=new ContentValues();
-                            cv.put(CycleEntry.CROPCYCLE_TOTALSPENT, currC.getTotalSpent());
-                            dm.updateCycle(currC,cv);
-
-                        }
-                        else{
-                            Log.i("ELSE>>>","RESID:----"+resId);
-                            if(category.equals(DHelper.cat_other))//if its the other category
-                                if(resId==-1)//and the resource does not exist
-                                    resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, TextHelper.formatUserText(resource));//then insert it !
-                            if (resId != -1)
-                                res = dm.insertPurchase(resId, quantifier, qty, category, cost, unixDate);
-                        }
-
-                        // When completed run in UI thread
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (res != -1)Toast.makeText(getActivity(), "Purchase Successfully Saved", Toast.LENGTH_SHORT).show();
-                                else Toast.makeText(getActivity(), "Unable to save Purchase", Toast.LENGTH_SHORT).show();
-
-                                Bundle bundle = new Bundle();
-                                bundle.putString("type", "purchase");
-                                bundle.putInt("id", res);
-                                Intent i = new Intent();
-                                i.putExtras(bundle);
-
-                                getActivity().setResult(DHelper.PURCHASE_REQUEST_CODE, i );
-
-                                if (!(getActivity() instanceof Main))
-                                    getActivity().finish();
-                            }
-                        });
-
-                    }
-                }).start();
-			}
-		}
-		
+            }
+        }
 	}
 }

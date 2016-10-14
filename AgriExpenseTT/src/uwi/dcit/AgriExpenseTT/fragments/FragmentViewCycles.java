@@ -57,6 +57,7 @@ public class FragmentViewCycles extends ListFragment{
 	private int mActivatedPosition = ListView.INVALID_POSITION;
 	private DbHelper dbh;
 	private SQLiteDatabase db;
+	private ProgressDialog progressDialog;
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -76,25 +77,20 @@ public class FragmentViewCycles extends ListFragment{
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
 
-//		populateList();
-
 		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
-
-//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 
 	public void populateList(final View v) {
 		if (cycleList == null || cycleList.size() > 0)cycleList = new ArrayList<>();
-		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
+		progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
 		progressDialog.show();
 
 		(new Thread(new Runnable() {
 			@Override
 			public void run() {
-
+				// Retrieve the cycles and store in the cycle list
 				DbQuery.getCycles(db, dbh, cycleList);
-
 				//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
 				Collections.sort(cycleList, new Comparator<LocalCycle>(){
 					@Override
@@ -104,15 +100,13 @@ public class FragmentViewCycles extends ListFragment{
 						else return 1;
 					}
 				});
-
-
 				// Update the UI
 				v.post(new Runnable() {
 					@Override
 					public void run() {
 						Log.d("FragmentViewCycles", "Retrieved:" + cycleList.size() +" records");
-						cycAdapt.notifyDataSetChanged();
 						progressDialog.dismiss();
+						cycAdapt.notifyDataSetChanged();
 					}
 				});
 			}
@@ -153,17 +147,12 @@ public class FragmentViewCycles extends ListFragment{
 
 		switch(item.getItemId()){
 			case R.id.crop_view:
-//				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
-//				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
-//				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
 				launchCycleUsage(info.position);
 				break;
 			case R.id.crop_edit: //Edit Cycle
-//				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
 				editCycleOption(info.position);
 				break;
 			case R.id.crop_delete:
-//				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
 				deletCycleOption(this.getListView(), info.position); //Use the same delete operation from list item click
 				break;
 			case R.id.crop_close:

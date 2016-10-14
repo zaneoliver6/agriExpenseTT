@@ -175,4 +175,11 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="cycle_prefix">Total: $</string>
     <string name="cycle_other_prefix">Other: $</string>
     <string name="enter_land_quantity">Enter the Land Quantity</string>
+    <string name="enter_purchase_quantity">Enter Quantity Purchased</string>
+    <string name="enter_cost">Enter cost</string>
+    <string name="purchase_save_success">Purchase Successfully Saved</string>
+    <string name="purchase_save_error">Purchase Successfully Saved</string>
+    <string name="list_search">Search</string>
+    <string name="create_new_crop_cyle">Creating new crop cycle</string>
+
 </resources>
