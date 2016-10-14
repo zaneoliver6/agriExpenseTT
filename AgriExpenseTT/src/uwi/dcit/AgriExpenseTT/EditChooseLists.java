@@ -58,7 +58,7 @@ public class EditChooseLists extends BaseActivity {
 			DbQuery.getResources(db, dbh, content, list);
 		}else if(content.equals("land")){
 			list.add("acre");
-			list.add("hectre");
+			list.add("hectare");
 			list.add("bed");
 		}else if(content.equals("quantifier")){
 			category=getIntent().getExtras().getString("category");

@@ -91,7 +91,7 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 		View dialogView = inflater.inflate(R.layout.dialog_create_report, null);
 		builder.setView(dialogView);
 
-		// Handle Click for Custom Button
+		// Handle SalesCostUIClickListener for Custom Button
 		Button customBtn = (Button)dialogView.findViewById(R.id.custom_btn);
 		customBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -100,7 +100,7 @@ public class ManageReport extends BaseActivity implements ReportHelper.OnReportS
 				handleCustomReport();
 			}
 		});
-		// Handle Click Standard Button
+		// Handle SalesCostUIClickListener Standard Button
 		Button standardBtn = (Button)dialogView.findViewById(R.id.standard_btn);
 		standardBtn.setOnClickListener(new View.OnClickListener() {
 			@Override

@@ -24,8 +24,6 @@ public class FragmentCycleUsage extends Fragment {
 
     private void setup() {
         Fragment catGeneral			= new FragmentGeneralCategory();
-
-
         Fragment catPlantMaterial	= new FragmentCycleUseCategory();
         Fragment catFertilizer		= new FragmentCycleUseCategory();
         Fragment catSoilAmendment	= new FragmentCycleUseCategory();

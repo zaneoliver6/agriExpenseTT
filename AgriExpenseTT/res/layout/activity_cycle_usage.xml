@@ -5,34 +5,12 @@
     android:layout_height="wrap_content"
     android:background="#d3d3d3"
     android:orientation="vertical"
-    tools:context="uwi.dcit.AgriExpenseTT.CycleUsage"
     tools:ignore="MergeRootFrame" >
-            
-    <!--<FrameLayout
-        android:layout_height="250dp"
-        android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp" >
-
-        <ImageView
-            android:id="@+id/icon_purchaseType_mainR"
-            android:layout_width="370dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/general_image_placeholder_text"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_default1" />
-    </FrameLayout>
--->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:fillViewport="true"
-         >
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"

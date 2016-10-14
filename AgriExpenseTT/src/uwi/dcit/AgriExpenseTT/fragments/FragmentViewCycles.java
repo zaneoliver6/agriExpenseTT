@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +35,6 @@ import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
-import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.CropDataHelper;
@@ -50,14 +50,13 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 public class FragmentViewCycles extends ListFragment{
 	private static final String STATE_ACTIVATED_POSITION = "cycle_activated_position";
 	final int req_edit = 1;
-	String type=null;
-	SQLiteDatabase db;
-	DbHelper dbh;
-//	final String className = "ViewCycles";
-	View view;
-	ArrayList<LocalCycle> cycleList = new ArrayList<>();
-	CycleListAdapter cycAdapt;
+	private String type=null;
+	private View view;
+	private ArrayList<LocalCycle> cycleList;
+	private CycleListAdapter cycAdapt;
 	private int mActivatedPosition = ListView.INVALID_POSITION;
+	private DbHelper dbh;
+	private SQLiteDatabase db;
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -69,13 +68,15 @@ public class FragmentViewCycles extends ListFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		dbh	= new DbHelper(this.getActivity().getBaseContext());
+		cycleList = new ArrayList<>();
+
+		dbh	= new DbHelper(getActivity().getBaseContext());
 		db = dbh.getReadableDatabase();
 
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
 
-		populateList();
+//		populateList();
 
 		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
@@ -83,18 +84,41 @@ public class FragmentViewCycles extends ListFragment{
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Cycles Fragment");
 	}
 
-	public void populateList() {
-		DbQuery.getCycles(db, dbh, cycleList);
+	public void populateList(final View v) {
+		if (cycleList == null || cycleList.size() > 0)cycleList = new ArrayList<>();
+		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
+		progressDialog.show();
 
-		//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
-		Collections.sort(cycleList, new Comparator<LocalCycle>(){
+		(new Thread(new Runnable() {
 			@Override
-			public int compare(LocalCycle item1, LocalCycle item2) {
-				if (item1.getTime() == item2.getTime())return 0;
-				else if (item1.getTime() > item2.getTime())return -1;
-				else return 1;
+			public void run() {
+
+				DbQuery.getCycles(db, dbh, cycleList);
+
+				//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
+				Collections.sort(cycleList, new Comparator<LocalCycle>(){
+					@Override
+					public int compare(LocalCycle item1, LocalCycle item2) {
+						if (item1.getTime() == item2.getTime())return 0;
+						else if (item1.getTime() > item2.getTime())return -1;
+						else return 1;
+					}
+				});
+
+
+				// Update the UI
+				v.post(new Runnable() {
+					@Override
+					public void run() {
+						Log.d("FragmentViewCycles", "Retrieved:" + cycleList.size() +" records");
+						cycAdapt.notifyDataSetChanged();
+						progressDialog.dismiss();
+					}
+				});
 			}
-		});
+		})).start();
+
+
 	}
 
 	private void createNewCycle(){
@@ -105,16 +129,14 @@ public class FragmentViewCycles extends ListFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_choose_purchase, container, false);
-
 		final Button button = (Button) view.findViewById(R.id.fragment_choose_purchase_button);
-
-
-		button.setText("Add Cycle");
+		button.setText(R.string.add_cycle);
 		button.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v){
 				createNewCycle();
 			}
 		});
+		populateList(view);
 		return view;
 	}
 
@@ -131,14 +153,14 @@ public class FragmentViewCycles extends ListFragment{
 
 		switch(item.getItemId()){
 			case R.id.crop_view:
-				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
+//				Log.i("Checking Fetch","::>>"+cycleList.get(info.position));
 //				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCropName());
-				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
+//				Log.i(Main.APP_NAME, "View The details for resource: "+cycleList.get(info.position).getCycleName());
 				launchCycleUsage(info.position);
 				break;
 			case R.id.crop_edit: //Edit Cycle
 //				Log.i(Main.APP_NAME, "Edit The details for resource: "+cycleList.get(info.position).getCropName());
-				editCycleCoption(info.position);
+				editCycleOption(info.position);
 				break;
 			case R.id.crop_delete:
 //				Log.i(Main.APP_NAME, "Delete The details for resource: "+cycleList.get(info.position).getCropName());
@@ -167,7 +189,7 @@ public class FragmentViewCycles extends ListFragment{
 				deletCycleOption(l, position);
 		}
 		else if(type.equals("edit")){//when called by edit data
-			editCycleCoption(position);
+			editCycleOption(position);
 		}
 		else if(type.equals("close"))
 			closeCycleOption(l, position);
@@ -207,7 +229,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void launchCycleUsage(int position){
         Bundle arguments = new Bundle();
 		arguments.putParcelable("cycleMain",cycleList.get(position));
-        Log.d("FragmentViewCycles", cycleList.get(position).toString());
+        Log.d("FragmentViewCycles", "Selected: " + cycleList.get(position).toString());
 
 		Fragment newFrag= new FragmentCycleUsage();
         newFrag.setArguments(arguments);
@@ -227,7 +249,7 @@ public class FragmentViewCycles extends ListFragment{
         }
 	}
 
-	public void editCycleCoption(int position){
+	public void editCycleOption(int position){
 		if(cycleList.get(position).getClosed().equals("closed")){
 			Toast.makeText(getActivity(), "Cannot edit a closed cycle", Toast.LENGTH_SHORT).show();
 		}
@@ -303,9 +325,7 @@ public class FragmentViewCycles extends ListFragment{
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
-		cycleList=new ArrayList<>();
-		DbQuery.getCycles(db, dbh, cycleList);
-		cycAdapt.notifyDataSetChanged();
+		populateList(view);
 	}
 
 	public class CloseConfirmator implements DialogInterface.OnClickListener{

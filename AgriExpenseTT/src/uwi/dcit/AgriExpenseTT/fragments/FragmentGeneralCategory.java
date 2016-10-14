@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 
 import uwi.dcit.AgriExpenseTT.R;
@@ -22,31 +23,28 @@ import uwi.dcit.AgriExpenseTT.SalesCost;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
+import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 
 public class FragmentGeneralCategory extends Fragment {
-	TextView totalLbl;
-	TextView cat_pm;//planting material
-	TextView cat_fer;//fertilizer
-	TextView cat_soil_amend;//soil amendment
-	TextView cat_chem;//chemical
-	TextView cat_labour;//labour
-	TextView cat_other;
-	TextView statement1;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	
-	double pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
-	View view;
-	
-	LocalCycle currCycle;
-	
+	private final String TAG = "FragmentGeneralCategory";
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private double pm=0,fer=0,soilam=0,chem=0,labr=0,other=0;//totals
+	private View view;
+	private LocalCycle currCycle;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view=inflater.inflate(R.layout.fragment_general_cat, container, false);
-		dbh=new DbHelper(getActivity());
-		db=dbh.getWritableDatabase();
+		view = inflater.inflate(R.layout.fragment_general_cat, container, false);
+		// Load crop cycle from Bundle
+		currCycle = getArguments().getParcelable("cycle");
+		// Retrieve Database Resources
+		dbh = new DbHelper(getActivity());
+		db = dbh.getReadableDatabase();
+
+
 		calcTotals();
 		setup();
 //        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("General Category Fragment");
@@ -54,13 +52,13 @@ public class FragmentGeneralCategory extends Fragment {
 	}
 	
 	private void setup() {
-		totalLbl    = (TextView)view.findViewById(R.id.tv_catTotal_lbl);
-		cat_pm      = (TextView)view.findViewById(R.id.tv_catTotal_pm);
-		cat_fer     = (TextView)view.findViewById(R.id.tv_catTotal_fertilizer);
-		cat_soil_amend = (TextView)view.findViewById(R.id.tv_catTotal_soilam);
-		cat_chem    = (TextView)view.findViewById(R.id.tv_catTotal_chemical);
-		cat_labour = (TextView)view.findViewById(R.id.tv_catTotal_labour);
-		cat_other   = (TextView)view.findViewById(R.id.tv_catTotal_other);
+		TextView totalLbl = (TextView) view.findViewById(R.id.tv_catTotal_lbl);
+		TextView cat_pm = (TextView) view.findViewById(R.id.tv_catTotal_pm);
+		TextView cat_fer = (TextView) view.findViewById(R.id.tv_catTotal_fertilizer);
+		TextView cat_soil_amend = (TextView) view.findViewById(R.id.tv_catTotal_soilam);
+		TextView cat_chem = (TextView) view.findViewById(R.id.tv_catTotal_chemical);
+		TextView cat_labour = (TextView) view.findViewById(R.id.tv_catTotal_labour);
+		TextView cat_other = (TextView) view.findViewById(R.id.tv_catTotal_other);
 
 		Button btn_calc=(Button)view.findViewById(R.id.btn_general_calculate);
 		btn_calc.setOnClickListener(new OnClickListener() {
@@ -73,31 +71,35 @@ public class FragmentGeneralCategory extends Fragment {
                 }
             }
         });
-		Log.i("CURRENT CYCLE",">>>>"+currCycle);
-        totalLbl.setText("Total Expenses For " + currCycle.getCycleName());
 
+		Log.i(TAG, "Loading Data for: " + currCycle);
+
+		//TODO Extract String prefixes
+        totalLbl.setText(String.format("Total Expenses For %s", currCycle.getCycleName()));
 		DecimalFormat df = new DecimalFormat("#.00"); 
-		cat_pm.setText("Planting Material: $" + Double.valueOf(df.format(pm)));
-		cat_fer.setText("Fertilizer: $" + Double.valueOf(df.format(fer)));
-		cat_soil_amend.setText("Soil Amendment: $" + Double.valueOf(df.format(soilam)));
-		cat_chem.setText("Chemical: $" + Double.valueOf(df.format(chem)));
-		cat_labour.setText("Labour: $" + Double.valueOf(df.format(labr)));
-		cat_other.setText("Other: $" + Double.valueOf(df.format(other)));
+		cat_pm.setText(String.format("Planting Material: $%s", Double.valueOf(df.format(pm))));
+		cat_fer.setText(String.format("Fertilizer: $%s", Double.valueOf(df.format(fer))));
+		cat_soil_amend.setText(String.format("Soil Amendment: $%s", Double.valueOf(df.format(soilam))));
+		cat_chem.setText(String.format("Chemical: $%s", Double.valueOf(df.format(chem))));
+		cat_labour.setText(String.format("Labour: $%s", Double.valueOf(df.format(labr))));
+		cat_other.setText(String.format("%s%s", getString(R.string.cycle_other_prefix), Double.valueOf(df.format(other))));
 
 		TextView sum     = (TextView)view.findViewById(R.id.tv_catTotal_sum);
         TextView harvest = (TextView)view.findViewById(R.id.tv_catTotal_harvest);
 
-		sum.setText("Total: $" + Double.valueOf(df.format(currCycle.getTotalSpent())));
+		sum.setText(String.format("%s%s", getString(R.string.cycle_prefix), Double.valueOf(df.format(currCycle.getTotalSpent()))));
 		harvest.setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
 
-		statement1      = (TextView)view.findViewById(R.id.tv_catTotal_sales);
+		TextView statement1 = (TextView) view.findViewById(R.id.tv_catTotal_sales);
 		statement1.setText("Sales: $" + Double.valueOf(df.format(currCycle.getCostPer()))+" "+currCycle.getHarvestType()+" = "+(currCycle.getCostPer()*currCycle.getHarvestAmt()));
 	}
 
     // TODO This operation is potentially intensive as data size grows. The process of calculating and assigning the value to the view should be done in its individual threads
 
     private void calcTotals(){
-		currCycle=getArguments().getParcelable("cycle");
+		Log.d(TAG, "Calculating Totals");
+		long start = GregorianCalendar.getInstance().getTimeInMillis();
+
 		ArrayList<LocalCycleUse> list = new ArrayList<>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_plantingMaterial);
 		pm=getTotal(list);
@@ -121,13 +123,16 @@ public class FragmentGeneralCategory extends Fragment {
 		list=new ArrayList<>();
 		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_other);
 		other=getTotal(list);
+
+		long timeDiff = GregorianCalendar.getInstance().getTimeInMillis() - start;
+		Log.d(TAG, "Took " + (timeDiff/1000) + " seconds to retrieve data and calculate totals");
+		GAnalyticsHelper.getInstance(getActivity()).sendPerfMetrics("View Cycles", "Calculate Totals", timeDiff);
 	}
 
 	private double getTotal(ArrayList<LocalCycleUse> list) {
-		Iterator<LocalCycleUse> i = list.iterator();
 		double total=0;
-		while(i.hasNext()){
-			total += i.next().getUseCost();
+		for (LocalCycleUse lc : list){
+			total += lc.getUseCost();
 		}
 		return total;
 	}
