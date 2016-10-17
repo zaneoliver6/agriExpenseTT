@@ -80,7 +80,7 @@ public class FragmentViewCycles extends ListFragment{
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
 
-		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
+		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList,this);
 		setListAdapter(cycAdapt);
 		Log.d(TAG, "Cycle was successfully Created");
 	}
@@ -391,12 +391,18 @@ public class FragmentViewCycles extends ListFragment{
 		}
 	}
 
-	public class CycleListAdapter extends ArrayAdapter<LocalCycle> {
-        Context myContext;
+	public static class CycleListAdapter extends ArrayAdapter<LocalCycle> {
+		private final FragmentViewCycles fragmentViewCycles;
+		private final DbHelper dbh;
+		private final SQLiteDatabase db;
+		Context myContext;
 
-        public CycleListAdapter(Context context, int textViewResourceId, ArrayList<LocalCycle> objects) {
+        public CycleListAdapter(Context context, int textViewResourceId, ArrayList<LocalCycle> objects, FragmentViewCycles fragmentViewCycles) {
 		    super(context, textViewResourceId, objects);
 		    myContext = context;
+			this.fragmentViewCycles = fragmentViewCycles;
+			dbh	= new DbHelper(fragmentViewCycles.getActivity().getBaseContext());
+			db = dbh.getReadableDatabase();
 		}
 
         @SuppressLint("ViewHolder")
@@ -405,13 +411,15 @@ public class FragmentViewCycles extends ListFragment{
             LayoutInflater inflater = ((Activity)myContext).getLayoutInflater();
             View row = inflater.inflate(R.layout.cycle_list_item, parent, false);
             //get the elements of that view and set them accordingly
-            LocalCycle currCycle = cycleList.get(position);
+            LocalCycle currCycle = fragmentViewCycles.cycleList.get(position);
 
             String txt = (currCycle.getCropName() != null ) ? currCycle.getCropName() : DbQuery.findResourceName(db, dbh, currCycle.getCropId());
-            String cycleName = (currCycle.getCycleName() != null) ? currCycle.getCycleName().toUpperCase() : txt;
+
+			String cycleName = (currCycle.getCycleName() != null) ? currCycle.getCycleName().toUpperCase() : txt;
 			String closed = currCycle.getClosed();
-            ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);
-            ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(("Name: "+ cycleName));
+            ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText(String.format("Crop: %s", txt));
+            ((TextView)row.findViewById(R.id.tv_cycleList_name)).setText(String.format("Name: %s", cycleName));
+
 			if(closed.equals("closed")){
 				((ImageView)row.findViewById(R.id.icon_purchaseType)).setImageResource(R.drawable.ic_launcher_web);
 			} else {
@@ -420,18 +428,18 @@ public class FragmentViewCycles extends ListFragment{
 					((ImageView) row.findViewById(R.id.icon_purchaseType)).setImageResource(id);
 				}
 			}
+
             // TODO Use this template to insert an appropriate image for the crop cycle based on crop type
 
             double qty = currCycle.getLandQty();
             txt = currCycle.getLandType();
-            txt = qty +" "+ txt + "s";
+            txt = String.format("%s %ss", qty, txt);
 
-            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText("Land: " + txt);
-//			Log.i("FREDDDDDDDd","Date:"+currCycle.getTime());
-            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText("Planted: " + DateFormatHelper.getDateStr(currCycle.getTime()));
-            ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText("Harvested: " + currCycle.getHarvestAmt()+" "+currCycle.getHarvestType());
+            ((TextView)row.findViewById(R.id.tv_cycleList_Land)).setText(String.format("Land: %s", txt));
+            ((TextView)row.findViewById(R.id.tv_cycleList_date)).setText(String.format("Planted: %s", DateFormatHelper.getDateStr(currCycle.getTime())));
+            ((TextView)row.findViewById(R.id.tv_cycleList_harvest)).setText(String.format("Harvested: %s %s", currCycle.getHarvestAmt(), currCycle.getHarvestType()));
 
-            if (position == getSelectedItemPosition()){
+            if (position == fragmentViewCycles.getSelectedItemPosition()){
 				row.setBackgroundColor(ContextCompat.getColor(myContext, android.R.color.darker_gray));
 			}
 
@@ -440,7 +448,7 @@ public class FragmentViewCycles extends ListFragment{
 
         @Override
         public int getCount(){
-            return cycleList.size();
+            return fragmentViewCycles.cycleList.size();
         }
 		  
 		  //register click  

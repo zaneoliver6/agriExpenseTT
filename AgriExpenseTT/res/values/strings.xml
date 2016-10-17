@@ -181,5 +181,6 @@ As seen here when you select manage data in fig 1.0, you are presented with this
     <string name="purchase_save_error">Purchase Successfully Saved</string>
     <string name="list_search">Search</string>
     <string name="create_new_crop_cyle">Creating new crop cycle</string>
+    <string name="add_purchase">Add Purchase</string>
 
 </resources>
