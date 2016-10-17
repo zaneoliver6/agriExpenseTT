@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,11 +60,17 @@ public class NewCycleLists extends ListFragment {
                     list.add("Hectare");
                     list.add("Bed");
                 }
+
+                for(String val : list){
+                    System.out.println(val);
+                }
+
+                Collections.sort(list);
                 // Update the UI on the Main Thread
                 view.post(new Runnable() {
                     @Override
                     public void run() {
-                        Collections.sort(list);
+                        Log.d("NewCycleList", "Retrieved: " + list.size() + " values");
                         listAdapt.notifyDataSetChanged();
                     }
                 });

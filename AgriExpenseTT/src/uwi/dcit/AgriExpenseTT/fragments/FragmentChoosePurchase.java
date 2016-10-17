@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,16 +46,18 @@ import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
 
 public class FragmentChoosePurchase extends ListFragment {
-	final int req_edit = 1;
-	PurchaseListAdapter myListAdapter;
-	ArrayList<LocalResourcePurchase> pList;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	DataManager dm;
-	String type = null;
-	int cycleId;
-	LocalCycle curr = null;
-	View view;
+	private final int req_edit = 1;
+	private PurchaseListAdapter myListAdapter;
+	private ArrayList<LocalResourcePurchase> pList;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private DataManager dm;
+	private String type = null;
+	private int cycleId;
+	private LocalCycle curr = null;
+	private View view;
+	private final String TAG = "FragmentChoosePurchase";
+	private ProgressDialog progressDialog;
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -65,25 +68,26 @@ public class FragmentChoosePurchase extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		pList = new ArrayList<>();
 		
 		dbh	= new DbHelper(this.getActivity().getBaseContext());
 		db	= dbh.getWritableDatabase();
 		dm	= new DataManager(getActivity(), db, dbh);
+		Log.d(TAG, "Setup Database was successful");
 
         if (getArguments() != null){
             curr = getArguments().getParcelable("cycle");
             type = getArguments().getString("det");
         }else{
-            Log.d("ChoosePurchase", "No Arguments Received");
+            Log.d(TAG, "No Arguments Received");
         }
 		
 		if(curr != null)cycleId = curr.getId();
 
-
-		populateList();
 		myListAdapter = new PurchaseListAdapter(getActivity(), R.layout.purchased_item, pList);
 		setListAdapter(myListAdapter);
-//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Choose Purchase Fragment");
+		Log.d(TAG, "Setup Database was successful");
+		populateList();
 	}
 
 	private void createNewPurchase(){
@@ -93,21 +97,40 @@ public class FragmentChoosePurchase extends ListFragment {
 
 	private void populateList() {
 		pList	= new ArrayList<>();
-		
-		if(type != null && (type.equals("delete") || type.equals("edit")))
-			DbQuery.getPurchases(db, dbh, pList, null, null, true);
-		else
-			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should
-	
-		Collections.sort(pList, new Comparator<LocalResourcePurchase>() {
+		if (progressDialog != null)progressDialog.dismiss();
+		progressDialog = ProgressDialog.show(getActivity(), "Purchases", "Retrieving Purchases", true);
+		progressDialog.show();
+
+		(new Thread(new Runnable() {
 			@Override
-			public int compare(LocalResourcePurchase item1, LocalResourcePurchase item2) {
-//				return item1.getType().compareTo(item2.getType());
-				if (item1.getDate() == item2.getDate()) return 0;
-				else if (item1.getDate() > item2.getDate()) return -1;
-				else return 1;
+			public void run() {
+				Log.d(TAG, "Attempting to retrieve Purchases");
+
+				if(type != null && (type.equals("delete") || type.equals("edit")))
+					DbQuery.getPurchases(db, dbh, pList, null, null, true);
+				else
+					DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should
+
+				Collections.sort(pList, new Comparator<LocalResourcePurchase>() {
+					@Override
+					public int compare(LocalResourcePurchase item1, LocalResourcePurchase item2) {
+						if (item1.getDate() == item2.getDate()) return 0;
+						else if (item1.getDate() > item2.getDate()) return -1;
+						else return 1;
+					}
+				});
+
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						progressDialog.dismiss();
+						myListAdapter.notifyDataSetChanged();
+					}
+				});
 			}
-		});
+		})).start();
+
+
 	}
 
 	@Override
@@ -192,11 +215,6 @@ public class FragmentChoosePurchase extends ListFragment {
              else
                  ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getRightFrag(),newFrag);
          }
-      /*   getFragmentManager()
-		 	.beginTransaction()
-		 	.replace(R.id.useExpenseFrag,newFragment)			// Replace whatever is in the fragment_container view with this fragment,
-		 	.addToBackStack(null)								// and add the transaction to the back stack
-		 	.commit();*/
 	 }
 	 
 	 public void deletePurchaseOption(ListView l, int position){
@@ -292,10 +310,10 @@ public class FragmentChoosePurchase extends ListFragment {
 
 			   //int pId=Integer.parseInt(ids[position]);		
 			 header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
-			 det1.setText("Purchased: "+curr.getQty()+" "+curr.getQuantifier());
-             det2.setText("Remaining: "+curr.getQtyRemaining()+" "+curr.getQuantifier());
-             det3.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
-             dateTV.setText("Date: " + DateFormatHelper.getDateStr(curr.getDate()));
+			 det1.setText(String.format("Purchased: %s %s", curr.getQty(), curr.getQuantifier()));
+             det2.setText(String.format("Remaining: %s %s", curr.getQtyRemaining(), curr.getQuantifier()));
+             det3.setText(String.format("Cost: $%s", CurrencyFormatHelper.getCurrency(curr.getCost())));
+             dateTV.setText(String.format("Date: %s", DateFormatHelper.getDateStr(curr.getDate())));
 			   
 			   
 			 //TODO Set a custom icon based on the type of the resource purchased

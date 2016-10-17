@@ -58,6 +58,7 @@ public class FragmentViewCycles extends ListFragment{
 	private DbHelper dbh;
 	private SQLiteDatabase db;
 	private ProgressDialog progressDialog;
+	private final String TAG = "FragmentViewCycles";
 
 	@Override
 	public void onActivityCreated(Bundle savedState){
@@ -71,26 +72,33 @@ public class FragmentViewCycles extends ListFragment{
 		super.onCreate(savedInstanceState);
 		cycleList = new ArrayList<>();
 
+
 		dbh	= new DbHelper(getActivity().getBaseContext());
 		db = dbh.getReadableDatabase();
+		Log.d(TAG, "Setup Database was successful");
 
         if (getArguments() != null && getArguments().containsKey("type"))
             type = getArguments().getString("type");
 
 		cycAdapt = new CycleListAdapter(getActivity(), R.layout.cycle_list_item, cycleList);
 		setListAdapter(cycAdapt);
+		Log.d(TAG, "Cycle was successfully Created");
 	}
 
 	public void populateList(final View v) {
 		if (cycleList == null || cycleList.size() > 0)cycleList = new ArrayList<>();
+		if (progressDialog != null)progressDialog.dismiss();
 		progressDialog = ProgressDialog.show(getActivity(), "Cycles", "Retrieving Cycles", true);
 		progressDialog.show();
+		Log.d(TAG, "Created a dialog");
 
 		(new Thread(new Runnable() {
 			@Override
 			public void run() {
+				Log.d(TAG, "Attempting to retrieve cycles");
 				// Retrieve the cycles and store in the cycle list
 				DbQuery.getCycles(db, dbh, cycleList);
+				Log.d(TAG, "Retrieved " + cycleList.size() + " cycles");
 				//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
 				Collections.sort(cycleList, new Comparator<LocalCycle>(){
 					@Override
@@ -100,13 +108,14 @@ public class FragmentViewCycles extends ListFragment{
 						else return 1;
 					}
 				});
+				Log.d(TAG, "Records was sorted successfully");
 				// Update the UI
-				v.post(new Runnable() {
+				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						Log.d("FragmentViewCycles", "Retrieved:" + cycleList.size() +" records");
 						progressDialog.dismiss();
 						cycAdapt.notifyDataSetChanged();
+						Log.d("FragmentViewCycles", "Retrieved: " + cycleList.size() +" records and notify the ui");
 					}
 				});
 			}
@@ -175,7 +184,7 @@ public class FragmentViewCycles extends ListFragment{
 			assignCycleToLabour(position);
 		}
 		else if(type.equals("delete")){ //When called by delete data
-				deletCycleOption(l, position);
+			deletCycleOption(l, position);
 		}
 		else if(type.equals("edit")){//when called by edit data
 			editCycleOption(position);

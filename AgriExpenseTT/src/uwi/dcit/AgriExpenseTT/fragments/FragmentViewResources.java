@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,25 +29,31 @@ public class FragmentViewResources extends ListFragment{
 	private DataManager dm;
 	private View view;
 	private ArrayAdapter<String> listAdapt;
+	private final String TAG = "FragmentViewResources";
+	private ProgressDialog progressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getWritableDatabase();
 		dm = new DataManager(getActivity(), db, dbh);
+		Log.d(TAG, "Setup Database was successful");
+
 		rList = new ArrayList<>();
-//		populateList();
 
 		listAdapt=new ArrayAdapter<>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
 		setListAdapter(listAdapt);
-//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
+		Log.d(TAG, "Adapter was configured");
 	}
 	
 	private void populateList(final View v) {
+		Log.d(TAG, "Populate the List");
 		if (rList == null || rList.size() > 0)rList = new ArrayList<>();
 
-		final ProgressDialog progressDialog = ProgressDialog.show(getActivity(), "Resources", "Retrieving Purchases", true);
+		Log.d(TAG, "Creating the Dialog");
+		progressDialog = ProgressDialog.show(getActivity(), "Resources", "Retrieving Purchases", true);
 		progressDialog.show();
 
 		//  Run Database Operation in thread other than UI
@@ -55,15 +62,22 @@ public class FragmentViewResources extends ListFragment{
 			public void run() {
 				DbQuery.getResources(db, dbh, null, rList);
 				Collections.sort(rList);
+				Log.d(TAG, "Retrieved " + rList.size() + " records from the database");
 
 				// Update the UI
-				v.post(new Runnable() {
-					@Override
-					public void run() {
-						listAdapt.notifyDataSetChanged();
-						progressDialog.dismiss();
-					}
-				});
+				if (v != null) {
+					v.post(new Runnable() {
+						@Override
+						public void run() {
+							listAdapt.notifyDataSetChanged();
+							progressDialog.dismiss();
+							Log.d(TAG, "Retrieved " + rList.size() + " records from the database and updated the UI");
+						}
+					});
+				}else{
+					progressDialog.dismiss();
+					Log.e(TAG, "Did not have a valid view to update the UI");
+				}
 			}
 		})).start();
 
@@ -93,6 +107,8 @@ public class FragmentViewResources extends ListFragment{
             alert1.show();
 		}
 	}
+
+
 	private class Confirm implements DialogInterface.OnClickListener{
 		int position;
 		int id;
