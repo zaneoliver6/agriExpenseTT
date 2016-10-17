@@ -115,7 +115,7 @@ public class FragmentViewCycles extends ListFragment{
 					public void run() {
 						progressDialog.dismiss();
 						cycAdapt.notifyDataSetChanged();
-						Log.d("FragmentViewCycles", "Retrieved: " + cycleList.size() +" records and notify the ui");
+						Log.d("FragmentViewCycles", "Retrieved: " + cycleList.size() +" cycles and notify the ui");
 					}
 				});
 			}

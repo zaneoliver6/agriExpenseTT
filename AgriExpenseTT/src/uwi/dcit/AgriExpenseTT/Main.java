@@ -95,6 +95,9 @@ public class Main extends BaseActivity{
             .commit();
     }
 
+    /**
+     *
+     */
     public void restoreActionBar() {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
