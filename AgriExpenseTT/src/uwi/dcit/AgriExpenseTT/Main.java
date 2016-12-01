@@ -1,6 +1,5 @@
 package uwi.dcit.AgriExpenseTT;
 
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,37 +7,50 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSlidingMain;
+import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.PrefUtils;
 
 
 public class Main extends BaseActivity{
 
-    private CharSequence mTitle;
     public final static String APP_NAME = "AgriExpenseTT";
-    public final static String TAG = "Main";
+    private final static String TAG = "Main";
+    private CharSequence mTitle;
+    private String focus = "cycle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_navigation);
-        // Needed after setContentView to refer to the appropriate XML View
-        setupNavDrawer();
-
         mTitle = getTitle();
-
+        setupNavDrawer(); // Needed after setContentView to refer to the appropriate XML View
         // Added Google Analytics
-        GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Main Screen");
+        GAnalyticsHelper.getInstance(this).sendScreenView("Main Screen");
+        // Determine if the main is being displayed from somewhere else
+        if (getIntent().getExtras() != null) {
+            String f = getIntent().getExtras().getString("type");
+            if (f != null) focus = f;
+        }
+
+        setPreferencesCall();
+        firstRunCheck();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        Log.d(TAG, "Running On Resume" );
-        // Check for orientation to determine which interface to load => if portrait will use leftfrag
+        Log.d(TAG, "onResume Method was called");
+        buildScreen();
+    }
+
+    /**
+     * BuildScreen will be used to setup the screen based on the device type and the orientation
+     */
+    private void buildScreen(){
         if(this.isTablet && this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setupLand();
         }else {
@@ -46,8 +58,14 @@ public class Main extends BaseActivity{
         }
     }
 
+    /**
+     * Setup the Screen if running in potrait mode
+     */
     private void setupPort() {
         Fragment frag = new FragmentSlidingMain();
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        frag.setArguments(bundle);
 
         getSupportFragmentManager()
             .beginTransaction()
@@ -55,12 +73,19 @@ public class Main extends BaseActivity{
             .commit();
     }
 
+    /**
+     * Used to implement the master-detail view for the details
+     */
     private void setupLand() {
         leftFrag = new FragmentSlidingMain();
         rightFrag = new FragmentEmpty();
 
+        Bundle bundle = new Bundle();
+        bundle.putString("type", focus);
+        leftFrag.setArguments(bundle);
+
         Bundle arguments=new Bundle();
-        arguments.putString("type","select");
+        arguments.putString("type", "select");
         rightFrag.setArguments(arguments);
 
         getSupportFragmentManager()
@@ -70,9 +95,14 @@ public class Main extends BaseActivity{
             .commit();
     }
 
+    /**
+     *
+     */
     public void restoreActionBar() {
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setTitle(mTitle);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setTitle(mTitle);
+        }
     }
 
     @Override
@@ -87,14 +117,16 @@ public class Main extends BaseActivity{
 
     @Override
     public void navigate(Fragment oldFrag,Fragment newFrag) {
-        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(this.isTablet && this.getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE){
 
             Class reflectClass = oldFrag.getClass();
             Bundle arguments=oldFrag.getArguments();
+
             try {
                 oldFrag = (Fragment)reflectClass.newInstance();
             } catch (Exception e){e.printStackTrace();}
+
             oldFrag.setArguments(arguments);
             ft.replace(R.id.navContentLeft, oldFrag);
             leftFrag=oldFrag;
@@ -102,7 +134,7 @@ public class Main extends BaseActivity{
             ft.replace(R.id.navContentRight,newFrag).addToBackStack("left");
             rightFrag=newFrag;
             rightFrag.setRetainInstance(false);
-        }else{
+        }else {
             ft.replace(R.id.navContentLeft,newFrag).addToBackStack("right");
         }
         ft.commit();
@@ -114,7 +146,7 @@ public class Main extends BaseActivity{
         if(findViewById(R.id.navContentRight)!=null){
             FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
             ft.remove(rightFrag).commit();
-            //have to put in someting here to purge transaction to ensure its still not running
+            //have to put in something here to purge transaction to ensure its still not running
             getSupportFragmentManager().executePendingTransactions();
         }
         super.onSaveInstanceState(outState);
@@ -122,23 +154,32 @@ public class Main extends BaseActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == RequestCode_backup) {
-            // Make sure the request was successful
-            if (resultCode == 1) {
-                String country=data.getStringExtra("country");
-                String county=data.getStringExtra("county");
-                Log.d("Main Activity","returned with "+country+" "+county);
-                signInManager.signIn();
-            }
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case DHelper.CYCLE_REQUEST_CODE:
+                focus = "cycle";
+                buildScreen();
+                break;
+            case DHelper.PURCHASE_REQUEST_CODE:
+                focus = "purchase";
+                buildScreen();
+                break;
         }
     }
 
-    public void openNewCycle(View view){
-        startActivity(new Intent(getApplicationContext(), NewCycle.class));
+    public void setPreferencesCall(){
+        if(!PrefUtils.getAlarmSet(this)) {
+            Intent i = new Intent(Main.this, AlarmActivity.class);
+            startActivity(i);
+            Log.i(TAG,"Call to Set Alarm Preferences was made");
+        }
     }
 
-    public void openNewPurchase(View view){
-        startActivity(new Intent(getApplicationContext(), NewPurchase.class));
+    public void firstRunCheck(){
+        if (PrefUtils.isFirstUse(this)){
+            Intent p = new Intent(Main.this, WelcomeScreen.class);
+            startActivity(p);
+            PrefUtils.setFirstUse(this, false);
+        }
     }
 }

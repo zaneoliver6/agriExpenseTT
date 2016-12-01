@@ -1,5 +1,6 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,20 @@ public class DateFormatHelper {
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
         return cal.getTimeInMillis();
+    }
+
+    public static String formatDisplayDate(Calendar calendar){
+        String strDate;
+        if ( calendar == null){
+            calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+        }
+        Date d = calendar.getTime();
+        strDate = DateFormat.getDateInstance().format(d);
+        return strDate;
     }
 
 }

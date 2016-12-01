@@ -20,7 +20,7 @@ public class CycleContract {
 			+CycleEntry.CROPCYCLE_HARVEST_TYPE + TEXT_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_COSTPER + REAL_TYPE + COMMA_SEP
 			+CycleEntry.CROPCYCLE_RESOURCE + TEXT_TYPE + COMMA_SEP
-			+CycleEntry.CROPCYCLE_COUNTY + TEXT_TYPE + COMMA_SEP
+			+CycleEntry.CROPCYCLE_CLOSED + TEXT_TYPE + COMMA_SEP
 			+"foreign key("+CycleEntry.CROPCYCLE_CROPID+") references "+ ResourceContract.ResourceEntry.TABLE_NAME+"("+ ResourceContract.ResourceEntry._ID+"));";
 		
 	
@@ -39,5 +39,6 @@ public class CycleContract {
 		public static final String CROPCYCLE_COUNTY="county";
 		public static final String CROPCYCLE_RESOURCE="cropName";
         public static final String CROPCYCLE_NAME="cyclename";
+		public static final String CROPCYCLE_CLOSED="closed";
 	}
 }

@@ -1,15 +1,15 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,30 +21,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
+import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
-public class FragmentNewCycleLast extends Fragment {
-	String plantMaterial;
-	String land;
-	int plantMaterialId;
-	long unixDate =0;
-	SQLiteDatabase db;
-	DbHelper dbh;
-	EditText et_landQty;
-	TextView error;
+public class FragmentNewCycleLast extends Fragment implements DatePickerDialog.OnDateSetListener {
+	private String plantMaterial;
+	private String land;
+    private int plantMaterialId;
+    private long unixDate =0;
+    private SQLiteDatabase db;
+    private DbHelper dbh;
+    private EditText et_landQty;
+    private TextView error;
     private Button btnDate;
     private EditText et_CycleName;
+    private int res = -1;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,132 +59,112 @@ public class FragmentNewCycleLast extends Fragment {
 		land = getArguments().getString("land");
 
         setDetails(view);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Cycle Fragment");
+        unixDate = Calendar.getInstance().getTimeInMillis();
 
-        view.setOnTouchListener(
-            new View.OnTouchListener() {
+        view.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (!(v instanceof EditText)) ((NewCycle) getActivity()).hideSoftKeyboard();
                     return false;
                 }
-            }
-        );
+            });
 
 		return view;
 	}
-	
+
 	private void setDetails(View view) {
 
         TextView landLbl = (TextView) view.findViewById(R.id.tv_newCyclelast_landQty);
-        landLbl.setText("Enter " + land + "s planted");
+        landLbl.setText(String.format("Enter %ss planted", land));
+        error = landLbl;
 
 		et_landQty   = (EditText)view.findViewById(R.id.et_newCycleLast_landqty);
         et_CycleName = (EditText)view.findViewById(R.id.et_newCycleLast_name);
         et_CycleName.setText(plantMaterial);
-		error = (TextView)view.findViewById(R.id.tv_newCyclelast_landQty);
-		
+
+
 		Button btnDone = (Button)view.findViewById(R.id.btn_newCyclelast_dne);
 		btnDate = (Button)view.findViewById(R.id.btn_newCycleLast_date);
 
-		NewCycleClickListener c = new NewCycleClickListener(getActivity());
+		NewCycleClickListener c = new NewCycleClickListener(this);
 		btnDate.setOnClickListener(c);
 		btnDone.setOnClickListener(c);
 		
-		formatDisplayDate(null);
+		String format = DateFormatHelper.formatDisplayDate(null);
+        btnDate.setText(format);
+        unixDate = Calendar.getInstance().getTimeInMillis();
 	}
-	
-	
-	public String formatDisplayDate(Calendar calendar){
-		String strDate;
-		if ( calendar == null){
-			calendar = Calendar.getInstance();
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.SECOND, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
-		}
-		unixDate = calendar.getTimeInMillis();
-		Date d = calendar.getTime();
-		strDate = DateFormat.getDateInstance().format(d);
-        btnDate.setText(strDate);
 
-		return strDate;
-	}
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+        String format = DateFormatHelper.formatDisplayDate(cal);
+        btnDate.setText(format);
+        unixDate = cal.getTimeInMillis();
+    }
+
 
     public class NewCycleClickListener implements OnClickListener{
-        FragmentActivity activity;
+        FragmentNewCycleLast fragment;
 
-        NewCycleClickListener(FragmentActivity c){
-            this.activity=c;
+        NewCycleClickListener(FragmentNewCycleLast c){
+            this.fragment =c;
         }
 
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.btn_newCycleLast_date){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(activity.getSupportFragmentManager(), "Choose Date");
+                final Calendar c = Calendar.getInstance();
+                final int year = c.get(Calendar.YEAR);
+                final int month = c.get(Calendar.MONTH);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
+                (new DatePickerDialog(fragment.getActivity(), fragment, year, month, day)).show();
+
             }else if(v.getId()==R.id.btn_newCyclelast_dne){
 
-                if(et_landQty.getText().toString() == null || et_landQty.getText().toString().equals("")){
-                    Toast.makeText(getActivity(), "Enter number of "+land+"s", Toast.LENGTH_SHORT).show();
-                    error.setText("Enter the Land Quantity");
-                    error.setTextColor(getResources().getColor(R.color.helper_text_error));
-                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
+                if (et_landQty.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), String.format("Enter number of %ss", land), Toast.LENGTH_SHORT).show();
+                    error.setText(R.string.enter_land_quantity);
+                    error.setTextColor(ContextCompat.getColor(fragment.getActivity(), R.color.helper_text_error));
+                    et_landQty.getBackground().setColorFilter(ContextCompat.getColor(fragment.getActivity(), R.color.helper_text_error), PorterDuff.Mode.SRC_ATOP);
                     return;
                 }else{
                     error.setText(getResources().getText(R.string.hint_new_cycle_land_quantity));
-                    error.setTextColor(getResources().getColor(R.color.helper_text_color));
-                    et_landQty.getBackground().setColorFilter(getResources().getColor(R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
+                    error.setTextColor(ContextCompat.getColor(fragment.getActivity(), R.color.helper_text_color));
+                    et_landQty.getBackground().setColorFilter(ContextCompat.getColor(fragment.getActivity(), R.color.helper_text_color), PorterDuff.Mode.SRC_ATOP);
                 }
                 if (et_CycleName.getText().toString().equals("")){
                     et_CycleName.setText(plantMaterial);
                 }
 
-                if(unixDate == 0){
-                    formatDisplayDate(null);
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
+//                        if(DbQuery.getAccount(db)!=null){
+                            res = dm.insertCycle(plantMaterialId, TextHelper.formatUserText(et_CycleName.getText().toString()) , land,Double.parseDouble(et_landQty.getText().toString()), unixDate, "open");
 
-                DataManager dm = new DataManager(getActivity().getBaseContext(), db, dbh);
-                int res = dm.insertCycle(plantMaterialId,et_CycleName.getText().toString() , land,Double.parseDouble(et_landQty.getText().toString()), unixDate);
-
-                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
-                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
-
-                Bundle args = new Bundle();
-                args.putString("type", "cycle");
-                Intent i=new Intent(getActivity(),Main.class);
-                i.putExtras(args);
-                startActivity(i);
-                new IntentLauncher().run();
-
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (res != -1)Toast.makeText(getActivity(), "Cycle Successfully Created", Toast.LENGTH_SHORT).show();
+                                else Toast.makeText(getActivity(), "Unable to create Cycle", Toast.LENGTH_SHORT).show();
+//
+                                Bundle bundle = new Bundle();
+                                bundle.putString("type", "cycle");
+                                bundle.putInt("id", res);
+                                Intent i = new Intent();
+                                i.putExtras(bundle);
+//
+                                getActivity().setResult(DHelper.CYCLE_REQUEST_CODE, i );
+                                if (!(getActivity() instanceof Main))
+                                    getActivity().finish();
+                            }
+                        });
+                    }
+                }).start();
             }
         }
     }
-
-    @SuppressLint("ValidFragment")
-    public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        @Override
-        public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-            formatDisplayDate(cal);
-        }
-    }
-    private class IntentLauncher extends Thread{
-        @Override
-        public void run(){getActivity().finish();}
-    }
-
 }

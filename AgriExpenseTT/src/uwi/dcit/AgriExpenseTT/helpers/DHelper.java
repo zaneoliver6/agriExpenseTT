@@ -42,4 +42,7 @@ public class DHelper {
 	public static final String location_country = "country";
 	public static final String location_county = "county";
 	public static final String location_display = "display";
+
+    public static final int PURCHASE_REQUEST_CODE = 12;
+    public static final int CYCLE_REQUEST_CODE = 13;
 }

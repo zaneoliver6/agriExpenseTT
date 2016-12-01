@@ -13,9 +13,7 @@
             android:layout_width="fill_parent"
             android:layout_height="60dp"
           />
-        
-            
-		 
+
         <ScrollView
             android:id="@+id/scroll_editPurchase"
             android:layout_width="match_parent"

@@ -1,31 +1,36 @@
 package uwi.dcit.AgriExpenseTT;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
+import uwi.dcit.AgriExpenseTT.helpers.NetworkHelper;
 
 
-public abstract class BaseActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks , NavigationControl {
+public abstract class BaseActivity extends AppCompatActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks , NavigationControl {
 
+    protected final int SIGN_IN_REQUEST = 2;
     protected SignInManager signInManager;
     protected Fragment leftFrag,rightFrag;
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected boolean isTablet = false;
-    protected final int RequestCode_backup =2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        requestWindowFeature(Window.FEATURE_ACTION_BAR); // Request Feature must be called before adding content
         super.onCreate(savedInstanceState);
         signInManager = new SignInManager(BaseActivity.this,BaseActivity.this);
         isTablet = this.getResources().getBoolean(R.bool.isTablet);
@@ -40,51 +45,71 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        switch (position){
-            case 0:
-                // Home
+        switch (position) { // Check to ensure that the we are not relaunching the current activity
+            case 0:// Home
+                if (!(this instanceof Main))
+                    startActivity(new Intent(this, Main.class));
+                break;
+            case 1://new cycle
+                if (!(this instanceof NewCycle))
+                    startActivity(new Intent(this, NewCycle.class));
+                break;
+            case 2://new purchase
+                if (!(this instanceof NewPurchase))
+                    startActivity(new Intent(this, NewPurchase.class));
+                break;
+            case 3://hire labour
+                if (!(this instanceof HireLabour))
+                    startActivity(new Intent(this, HireLabour.class));
+                break;
+            case 4://report manager
+                if (!(this instanceof ManageReport))
+                    startActivity(new Intent(this,ManageReport.class));
+                break;
+            case 5:// manage data
+                if (!(this instanceof ManageData))
+                    startActivity(new Intent(this,ManageData.class));
+                break;
+            case 6: // sign in
+                requestSignIn();
+                break;
+            default:
                 startActivity(new Intent(this, Main.class));
-                break;
-            case 1:
-                //new cycle
-                startActivity(new Intent(this, NewCycle.class));
-                break;
-            case 2:
-                //new purchase
-                startActivity(new Intent(this, NewPurchase.class));
-                break;
-            case 3:
-                //hire labour
-                startActivity(new Intent(this, HireLabour.class));
-                break;
-            case 4:
-                //report manager
-                startActivity(new Intent(this,ManageReport.class));
-                break;
-            case 5:
-                // manage data
-                startActivity(new Intent(this,ManageData.class));
-                break;
-            case 6:
-                backUpData();
-                break;
-
         }
     }
 
-    public void backUpData(){
-        Toast.makeText(getApplicationContext(), "Backing up data not available at this time. Please check back later", Toast.LENGTH_LONG).show();
+    public void requestSignIn() {
+        Intent i = new Intent(getApplicationContext(), Backup.class);
 
-//        Intent i = new Intent(getApplicationContext(), Backup.class);
-//        if (this.signInManager.isExisting() == null){ 			// User does not exist => check Internet and then create user
-//            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
-//                Toast.makeText(getApplicationContext(), "No internet connection, Unable to sign-in at the moment.", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//            startActivityForResult(i,RequestCode_backup);// Launch the Backup activity with the sign-up action passed
-//        }else if (!this.signInManager.isSignedIn()){ 			// If not signed attempt to login with existing account
-//            signInManager.signIn();
-//        }
+        if (!this.signInManager.localAccountExists()) {
+            if (!NetworkHelper.isNetworkAvailable(this)){ 		// No network available so display appropriate message
+                new AlertDialog.Builder(this) // Use Dialog to provide better feedback to ensure... toast are not easily seen
+                        .setIcon(android.R.drawable.ic_dialog_alert) //TODO Change to Error icon from material library
+                        .setTitle("No Internet Connection")
+                        .setMessage("Ensure that your device is connected to the internet before signing in.")
+                        .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                requestSignIn();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.d("BaseActivity", "Sign-in Activity Cancelled");
+                                //TODO Put activity log here for tracking
+                            }
+                        })
+                        .show();
+                return;
+            }
+            // Connected to the Internet so we attempt to sign in
+            startActivityForResult(i, SIGN_IN_REQUEST);  // Launch the Backup activity with the sign-up action passed
+        }
+        else if (this.signInManager.isSignedIn()){
+            // If not signed attempt to login with existing account
+            signInManager.signIn();
+        }
     }
 
     @Override
@@ -150,6 +175,27 @@ public abstract class BaseActivity extends ActionBarActivity implements Navigati
         if(getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        switch (requestCode) {
+            case SignInManager.RC_SIGN_IN:
+                Log.d("BaseActivity", "Result produced" + data.toString());
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                this.signInManager.handleSignInResult(result);
+                break;
+            case SIGN_IN_REQUEST:
+                if (resultCode == 1) {
+                    final String country = data.getStringExtra("country");
+                    final String county = data.getStringExtra("county");
+                    Log.d("BaseActivity", "Sign In request returned with " + country + " - " + county);
+                    signInManager.signIn(country, county);
+                }
+                break;
         }
     }
 }

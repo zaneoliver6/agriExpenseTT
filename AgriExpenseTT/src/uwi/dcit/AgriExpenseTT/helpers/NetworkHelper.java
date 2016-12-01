@@ -12,4 +12,9 @@ public class NetworkHelper {
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
+	public static boolean isWifiAvailable(Context ctx){
+		ConnectivityManager check = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = check.getActiveNetworkInfo();
+		return (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI);
+	}
 }

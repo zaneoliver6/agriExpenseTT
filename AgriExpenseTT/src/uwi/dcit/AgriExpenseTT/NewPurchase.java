@@ -25,19 +25,17 @@ public class NewPurchase extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_cycle);
 		setupUI();
-//		setupInitial();
-//        setupNavDrawer();
-
         //Google Analytics
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("New Purchase");
 	}
+
     @Override
     protected void onResume(){
         super.onResume();
         setupInitial();
     }
 	
-	private void setupInitial() {
+	private void setupInitial() {//to make the bundle for the add purchase button use the category argument
 		Bundle arguments = new Bundle();
 		arguments.putString("type","category");
 		
@@ -73,13 +71,13 @@ public class NewPurchase extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.new_purchase_redesign, menu);
+		getMenuInflater().inflate(R.menu.new_purchase, menu);
 		return true;
 	}
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         final Activity activity = this;
-        if (item.getItemId() == R.id.action_create_labour) {
+        if (item.getItemId() == R.id.action_create_purchase) {
             // Create Dialog to get the appropriate resource category
             final CharSequence [] items = new CharSequence[]{DHelper.cat_chemical, DHelper.cat_fertilizer, DHelper.cat_other, DHelper.cat_soilAmendment, DHelper.cat_plantingMaterial};
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

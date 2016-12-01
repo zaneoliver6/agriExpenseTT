@@ -2,6 +2,7 @@ package uwi.dcit.AgriExpenseTT.fragments.help;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,17 @@ public class HelpGenerateReportFragment extends Fragment {
 		View view =  inflater.inflate(R.layout.fragment_help_article_view, container, false);
 		
 		TextView txtHeading = (TextView)view.findViewById(R.id.article_heading);
-		txtHeading.setText("Introduction");
-		
-		ImageView img = (ImageView)view.findViewById(R.id.article_image);
-		img.setImageDrawable(getResources().getDrawable(R.drawable.help_homescreen));
-		
-		
-		TextView txtContent = (TextView)view.findViewById(R.id.article_text);
-		txtContent.setText(getResources().getString(R.string.help_intro));
+		txtHeading.setText("Generate Reports");
+
+		ImageView imgView1 = (ImageView) view.findViewById(R.id.article_image);
+		imgView1.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable
+				.reportslide2, null));
+
+
+		TextView txt1 = (TextView) view.findViewById(R.id.article_text);
+		txt1.setText(getResources().getString(R.string.help_generate_report));
+
+
 
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Help Generate Report Fragment");
 		return view;

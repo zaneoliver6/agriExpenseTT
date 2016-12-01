@@ -18,12 +18,14 @@ import uwi.dcit.AgriExpenseTT.widgets.SlidingTabLayout;
 public abstract class FragmentSlidingTabs extends Fragment {
     protected ArrayList<FragItem> fragments;
     protected ResourcePageAdapter adapter;
+    protected SlidingTabLayout mSlidingTabLayout;
+    protected ViewPager mViewPager;
     private boolean configured;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragments=new ArrayList<>();
+        fragments = new ArrayList<>();
         populateList();
         configured = true;
     }
@@ -42,16 +44,12 @@ public abstract class FragmentSlidingTabs extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_manage_resources, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
-        ViewPager mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
+        View view = inflater.inflate(R.layout.fragment_manage_resources, container, false);
+        mViewPager = (ViewPager) view.findViewById(R.id.viewpager_manage_resources);
         adapter = new ResourcePageAdapter(getChildFragmentManager());
         mViewPager.setAdapter(adapter);
 
-        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
+        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs_manage_resources);
         mSlidingTabLayout.setViewPager(mViewPager);
         mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
@@ -59,8 +57,8 @@ public abstract class FragmentSlidingTabs extends Fragment {
             @Override
             public int getDividerColor(int position) { return fragments.get(position).getColour(); }
         });
+        return view;
     }
-
 
     protected class ResourcePageAdapter extends FragmentPagerAdapter {
         public ResourcePageAdapter(FragmentManager fm) {

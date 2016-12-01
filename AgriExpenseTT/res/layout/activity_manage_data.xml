@@ -51,6 +51,19 @@
             android:onClick="openDataAdd"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
+
+        <Button
+            android:id="@+id/btn_manageData_alarmPreferences"
+            android:layout_width="match_parent"
+            android:background="@drawable/btn_custom"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/manage_alarm_preferences"
+            android:onClick="alarmPreferencesEdit"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp" />
+
     </LinearLayout>
 
     <fragment

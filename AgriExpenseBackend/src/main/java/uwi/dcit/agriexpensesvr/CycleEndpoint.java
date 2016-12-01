@@ -1,4 +1,5 @@
 package uwi.dcit.agriexpensesvr;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
@@ -24,8 +25,8 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
+
 
 @Api( name = "cycleApi",
         version = "v1",
@@ -50,13 +51,13 @@ public class CycleEndpoint {
             @Nullable @Named("limit") Integer limit) {
 
         EntityManager mgr = null;
-        Cursor cursor = null;
+        Cursor cursor;
         List<Cycle> execute = null;
 
         try {
             mgr = getEntityManager();
             Query query = mgr.createQuery("select from Cycle as Cycle");
-            if (cursorString != null && cursorString != "") {
+            if (cursorString != null && !cursorString.equals("")) {
                 cursor = Cursor.fromWebSafeString(cursorString);
                 query.setHint(JPACursorHelper.CURSOR_HINT, cursor);
             }
@@ -88,16 +89,16 @@ public class CycleEndpoint {
     @ApiMethod(name = "fetchAllCycles")
     public List<Cycle> fetchAllCycles() {
 
-        EntityManager mgr = null;
-        List<Cycle> execute = null;
-        Query query = null;
+        EntityManager mgr;
+        List<Cycle> execute;
+        Query query;
 
 		/* For namespace list fetching */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
                 Entities.NAMESPACE_METADATA_KIND);
 
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
         for (Entity e : ds.prepare(q).asIterable()) {
             if (e.getKey().getId() != 0) {
                 System.out.println("<default>");
@@ -111,7 +112,7 @@ public class CycleEndpoint {
 
         // Set each namespace then return all results under that given namespace
 
-        List<Cycle> cycleList = new ArrayList<Cycle>();
+        List<Cycle> cycleList = new ArrayList<>();
 
         for (String i : results) {
 
@@ -135,7 +136,7 @@ public class CycleEndpoint {
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
         Iterator<Entity> i = results.iterator();
-        List<Cycle> cL = new ArrayList<Cycle>();
+        List<Cycle> cL = new ArrayList<>();
         while (i.hasNext()) {
             Entity e = i.next();
             // System.out.println(e.toString());
@@ -150,6 +151,7 @@ public class CycleEndpoint {
             c.setHarvestType((String) e.getProperty("harvestType"));
             c.setCostPer((Double) e.getProperty("costPer"));
             c.setKeyrep((String) e.getProperty("keyrep"));
+            c.setClosed((String) e.getProperty("closed"));
             cL.add(c);
         }
         return cL;
@@ -162,16 +164,16 @@ public class CycleEndpoint {
                                         @Named("start_date") String start_date,
                                         @Named("end_date") String end_date) {
 
-        EntityManager mgr = null;
-        List<Cycle> execute = null;
-        Query query = null;
+        EntityManager mgr;
+        List<Cycle> execute;
+        Query query;
 
 		/* For namespace list fetching */
         DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
         com.google.appengine.api.datastore.Query q = new com.google.appengine.api.datastore.Query(
                 Entities.NAMESPACE_METADATA_KIND);
 
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
         for (Entity e : ds.prepare(q).asIterable()) {
             if (e.getKey().getId() != 0) {
                 System.out.println("<default>");
@@ -200,7 +202,7 @@ public class CycleEndpoint {
 
         // Set each namespace then return all results under that given namespace
 
-        List<Cycle> cycleList = new ArrayList<Cycle>();
+        List<Cycle> cycleList = new ArrayList<>();
 
         for (String i : results) {
 
@@ -223,11 +225,10 @@ public class CycleEndpoint {
 
         PreparedQuery pq = datastore.prepare(q);
         List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
-        Iterator<Entity> i = results.iterator();
 
-        while (i.hasNext()) {
-            String keyrep = (String) i.next().getProperty("keyrep");
-            removeCycle(keyrep, namespace);
+        for (Entity result : results) {
+            String key = (String) result.getProperty("key");
+            removeCycle(key, namespace);
         }
     }
 
@@ -240,8 +241,8 @@ public class CycleEndpoint {
      * @return The entity with primary key id.
      */
     @ApiMethod(name = "getCycle")
-    public Cycle getCycle(@Named("namespace") String namespace,
-                          @Named("keyrep") String keyrep) {
+     public Cycle getCycle(@Named("namespace") String namespace,
+                           @Named("keyrep") String keyrep) {
         NamespaceManager.set(namespace);
         EntityManager mgr = getEntityManager();
         Key k = KeyFactory.stringToKey(keyrep);
@@ -253,6 +254,34 @@ public class CycleEndpoint {
         }
         return c;
     }
+
+    /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *It is mainly used when updating a cycle with respect to the cloud's database.
+     * Note that a Transaction Log's Key Representation cannot be used to find that of a cycle
+     * hence we pass the ID of the cycle and create the key in this method itself.
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "CycleWithID")
+    public Cycle CycleIdOnly(@Named("namespace") String namespace,
+                         @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        EntityManager mgr = getEntityManager();
+        Key k = KeyFactory.createKey("Cycle", id);
+        String keyString = KeyFactory.keyToString(k);
+        Cycle c = null;
+        try {
+            c = mgr.find(Cycle.class, keyString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return c;
+    }
+
+
 
     /**
      * This inserts a new entity into App Engine datastore. If the entity
@@ -273,25 +302,33 @@ public class CycleEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycle(cycle)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists!" +
+                        "");
             }
-            mgr.persist(cycle);
-        } catch (Exception e) {
-            return null;
-        } finally {
-            mgr.close();
-        }
-        cycle.setKeyrep(KeyFactory.keyToString(k));
-        cycle.setAccount(KeyFactory.keyToString(k)); // using account to store
-        // the string rep of the
-        // key
-        return cycle;
+            else {
+                // using account to store
+                // the string rep of the
+                // key
+                cycle.setKeyrep(KeyFactory.keyToString(k));
+                cycle.setAccount(KeyFactory.keyToString(k));
+                mgr.getTransaction().begin();
+                mgr.persist(cycle);
+                mgr.getTransaction().commit();
 
+            }
+        }
+        catch (Exception e) {
+            return null;
+        }
+//        finally {
+//            mgr.close();
+//        }
+        return cycle;
     }
 
     /**
      * This method is used for updating an existing entity. If the entity does
-     * not exist in the datastore, an exception is thrown. It uses HTTP PUT
+     * not exist in the datastore, an exception  is thrown. It uses HTTP PUT
      * method.
      *
      * @param cycle
@@ -300,19 +337,36 @@ public class CycleEndpoint {
      */
     @ApiMethod(name = "updateCycle")
     public Cycle updateCycle(Cycle cycle) {
-        System.out.println(cycle.getKeyrep());
-        Key k = KeyFactory.stringToKey(cycle.getKeyrep());
-        cycle.setKey(k);
+        //System.out.println(cycle.getKeyrep());
+        NamespaceManager.set(cycle.getAccount());
+        Key k = KeyFactory.createKey("Cycle", cycle.getId());
         EntityManager mgr = getEntityManager();
+        Cycle c = null;
         try {
-            if (!containsCycle(cycle)) {
-                throw new EntityNotFoundException("Object does not exist");
-            }
-            mgr.persist(cycle);
-        } finally {
-            mgr.close();
+            c = mgr.find(Cycle.class, k);
         }
-        return cycle;
+        catch(Exception e){
+            e.printStackTrace();
+        }
+//        finally {
+//            mgr.close();
+//        }
+        if(c!=null){
+            if(cycle.getHarvestAmt()!=0)
+                c.setHarvestAmt(cycle.getHarvestAmt());
+            if(cycle.getHarvestType()!=null)
+                c.setHarvestType(cycle.getHarvestType());
+            if(cycle.getTotalSpent()!=0.0)
+                c.setTotalSpent(cycle.getTotalSpent());
+            if(cycle.getTotalSpent()==-1.00)
+                c.setTotalSpent(0.00);
+            if(cycle.getClosed().equals("closed"))
+                c.setClosed("closed");
+            mgr.getTransaction().begin();
+            mgr.persist(c);
+            mgr.getTransaction().commit();
+        }
+        return c;
     }
 
     /**
@@ -323,16 +377,23 @@ public class CycleEndpoint {
      *            the primary key of the entity to be deleted.
      */
     @ApiMethod(name = "removeCycle", httpMethod = HttpMethod.DELETE)
-    public void removeCycle(@Named("keyrep") String keyrep, @Named("namespace") String namespace) {
+    public void removeCycle(@Named("KeyRep") String keyRep, @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
+        //DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.createKey("Cycle", id);
+        EntityManager mgr = getEntityManager();
         try {
-            d.delete(k);
-        } catch (Exception e) {
+//            d.delete(k);
+            Cycle findCycle = mgr.find(Cycle.class, KeyFactory.stringToKey(keyRep));
+            mgr.getTransaction().begin();
+            mgr.remove(findCycle);
+            mgr.getTransaction().commit();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private boolean containsCycle(Cycle cycle) {
         NamespaceManager.set(cycle.getAccount());
@@ -343,14 +404,16 @@ public class CycleEndpoint {
             if (item == null) {
                 contains = false;
             }
-        } finally {
-            mgr.close();
-        }
+        }catch(Exception e){System.out.println(e.getMessage());}
+//        finally {
+//            mgr.close();
+//        }
         return contains;
     }
 
     private static EntityManager getEntityManager() {
-        return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        //return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

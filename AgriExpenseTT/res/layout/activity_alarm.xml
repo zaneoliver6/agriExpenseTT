@@ -1,0 +1,106 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="uwi.dcit.AgriExpenseTT.AlarmActivity">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
+        android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+        android:layout_marginTop="7dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/select_notify_msg"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_size_list_head"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+        android:layout_marginRight="@dimen/lable_item_details_left_margin"
+        android:text="@string/notify_criteria_msg"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text_size_list_head" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+        android:layout_marginRight="@dimen/lable_item_details_left_margin"
+        android:text="@string/time_msg"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+        android:layout_marginRight="@dimen/lable_item_details_left_margin"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/hour"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            tools:ignore="UnusedAttribute"/>
+
+        <Spinner
+            android:id="@+id/am_pm"
+            android:layout_width="150dip"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            tools:ignore="UnusedAttribute"/>
+    </LinearLayout>
+
+
+    <RadioGroup
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/interval_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+        android:layout_marginRight="@dimen/lable_item_details_left_margin"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <RadioButton
+            android:id="@+id/daily_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.55"
+            android:checked="true"
+            android:paddingLeft="10dp"
+            android:text="@string/daily"/>
+
+        <RadioButton
+            android:id="@+id/weekly_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:checked="false"
+            android:text="@string/weekly"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="setAlarm"
+        android:text="@string/set_alarm"/>
+
+</LinearLayout>

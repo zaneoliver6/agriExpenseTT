@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/tv_catTotal_lbl"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginBottom="7dp"
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
@@ -16,94 +16,102 @@
 		android:textStyle="bold"
 		android:layout_gravity="fill"
 		android:textSize="20sp"
-        android:text="Totals" />
+        android:text="Totals"
+        android:layout_marginRight="5dp" />
 	<View
-        android:layout_width="280dp"
+        android:layout_width="fill_parent"
         android:layout_height="2dp" 
         android:background="#80000000"
         />
 	<TextView
         android:id="@+id/tv_catTotal_sum"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 	    android:textColor="@color/primary_text"
 		android:textStyle="bold"
 		android:layout_gravity="fill"
 		android:textSize="18sp"
-        android:text="Total" />
+        android:text="Total"
+        android:layout_marginRight="10dp" />
 	
     <TextView
         android:id="@+id/tv_catTotal_pm"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Planting material:" />
+	    android:textColor="@color/primary_text"
+        android:text="Planting material:"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:id="@+id/tv_catTotal_fertilizer"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Fertilizer" />
+	    android:textColor="@color/primary_text"
+        android:text="Fertilizer"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:id="@+id/tv_catTotal_soilam"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-       	android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+       	android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Soil Amendment" />
+	    android:textColor="@color/primary_text"
+        android:text="Soil Amendment"
+        android:layout_marginRight="10dp" />
 
     <TextView
         android:id="@+id/tv_catTotal_chemical"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Chemical" />
+	    android:textColor="@color/primary_text"
+        android:text="Chemical"
+        android:layout_marginRight="10dp" />
     
     <TextView
         android:id="@+id/tv_catTotal_labour"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Labour" />
+	    android:textColor="@color/primary_text"
+        android:text="Labour"
+        android:layout_marginRight="10dp" />
      <TextView
         android:id="@+id/tv_catTotal_other"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
         android:textSize="17sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Other" />
+	    android:textColor="@color/primary_text"
+        android:text="Other"
+         android:layout_marginRight="10dp" />
     
     <TextView
         android:id="@+id/tv_catTotal_harvest"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginTop="7dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,15 +122,17 @@
         android:text="Harvest" />
     
     <TextView
-        android:id="@+id/tv_catTotal_harvest1"
+        android:id="@+id/tv_catTotal_sales"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="7dp"
-        android:layout_marginTop="7dp"
-        android:textSize="17sp"
+        android:layout_marginTop="2dp"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-	    android:textColor="@color/secondary_text"
-        android:text="Labour" />
+	    android:textColor="@color/primary_text"
+        android:layout_gravity="fill"
+        android:text="Sales"
+        android:textStyle="bold" />
     <View
         android:layout_width="match_parent"
         android:layout_height="40dp" 
@@ -137,6 +147,6 @@
 		android:text="Calculate sales"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="2dp" />
+        android:layout_marginBottom="5dp" />
 
 </LinearLayout>

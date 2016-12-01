@@ -32,7 +32,7 @@ public class ResourcePurchaseContract {
 		public static final String RESOURCE_PURCHASE_QTY = "qty";
 		public static final String RESOURCE_PURCHASE_COST = "cost";
 		public static final String RESOURCE_PURCHASE_REMAINING = "remaining";
-		public static final String RESOURCE_PURCHASE_DATE = "date";
+		public static final String RESOURCE_PURCHASE_DATE = "purchasedate";
 		public static final String RESOURCE_PURCHASE_RESOURCE = "resource";
 	}
 }

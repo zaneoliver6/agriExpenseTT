@@ -166,6 +166,46 @@ public class CycleUseEndpoint {
 		 */
     }
 
+
+    /**
+     * This method gets the entity having primary key id. It uses HTTP GET
+     * method.
+     *
+     * //@param id
+     *            the primary key of the java bean.
+     * @return The entity with primary key id.
+     */
+    @ApiMethod(name = "cycleUseWithId")
+    public CycleUse cycleUseWithIdOnly(@Named("namespace") String namespace,
+                                @Named("ID") int id) {
+        NamespaceManager.set(namespace);
+        EntityManager mgr = getEntityManager();
+        CycleUse cycleuse = null;
+        Key k = KeyFactory.createKey("CycleUse",id);
+        String keyString = KeyFactory.keyToString(k);
+        try {
+            cycleuse = mgr.find(CycleUse.class, keyString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cycleuse;
+        // DatastoreService
+        // datastore=DatastoreServiceFactory.getDatastoreService();
+		/*
+		 * Entity et = null; try { et=datastore.get(k); } catch
+		 * (com.google.appengine.api.datastore.EntityNotFoundException e) { //
+		 * TODO Auto-generated catch block e.printStackTrace(); } if(et==null)
+		 * return null; cycleuse.setAmount((Double) et.getProperty("amount"));
+		 * cycleuse.setCost((Double) et.getProperty("cost"));
+		 * cycleuse.setCycleid((Integer) et.getProperty("cycleid"));
+		 * cycleuse.setPurchaseId((Integer) et.getProperty("purchaseId"));
+		 * cycleuse.setResource((String) et.getProperty("resource")); /*try {
+		 * cycleuse = mgr.find(CycleUse.class, id); } finally { mgr.close(); }
+		 */
+    }
+
+
+
     /**
      * This inserts a new entity into App Engine datastore. If the entity
      * already exists in the datastore, an exception is thrown. It uses HTTP
@@ -185,16 +225,18 @@ public class CycleUseEndpoint {
         EntityManager mgr = getEntityManager();
         try {
             if (containsCycleUse(cycleuse)) {
-                throw new EntityExistsException("Object already exists");
+                throw new EntityExistsException("Object already exists ");
             }
+            cycleuse.setKeyrep(KeyFactory.keyToString(k));
+            cycleuse.setAccount(KeyFactory.keyToString(k));// using account to store
+            // the string rep of the
+            // key
+            mgr.getTransaction().begin();
             mgr.persist(cycleuse);
+            mgr.getTransaction().commit();
         } finally {
-            mgr.close();
+//            mgr.close();
         }
-        cycleuse.setKeyrep(KeyFactory.keyToString(k));
-        cycleuse.setAccount(KeyFactory.keyToString(k));// using account to store
-        // the string rep of the
-        // key
         return cycleuse;
     }
 
@@ -203,22 +245,38 @@ public class CycleUseEndpoint {
      * not exist in the datastore, an exception is thrown. It uses HTTP PUT
      * method.
      *
-     * @param cycleuse
+     * @param cycleUse
      *            the entity to be updated.
      * @return The updated entity.
      */
     @ApiMethod(name = "updateCycleUse")
-    public CycleUse updateCycleUse(CycleUse cycleuse) {
+    public CycleUse updateCycleUse(CycleUse cycleUse){
         EntityManager mgr = getEntityManager();
+        Key k = KeyFactory.stringToKey(cycleUse.getKeyrep());
+        CycleUse findCycleUse = null;
+        mgr.find(CycleUse.class,k);
         try {
-            if (!containsCycleUse(cycleuse)) {
-                throw new EntityNotFoundException("Object does not exist");
+            findCycleUse=mgr.find(CycleUse.class,k);
+            if (findCycleUse==null) {
+                throw new EntityNotFoundException("Object does not exist   ");
             }
-            mgr.persist(cycleuse);
-        } finally {
-            mgr.close();
+            else{
+                if(cycleUse.getResource()!=null)
+                    findCycleUse.setResource(cycleUse.getResource());
+                if(cycleUse.getAmount()!=0)
+                    findCycleUse.setAmount(cycleUse.getAmount());
+                mgr.getTransaction().begin();
+                mgr.persist(findCycleUse);
+                mgr.getTransaction().commit();
+            }
         }
-        return cycleuse;
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+//            mgr.close();
+        }
+        return findCycleUse;
     }
 
     /**
@@ -231,11 +289,24 @@ public class CycleUseEndpoint {
     @ApiMethod(name = "removeCycleUse", httpMethod = HttpMethod.DELETE)
     public void removeCycleUse(@Named("keyrep") String keyrep,  @Named("namespace") String namespace) {
         NamespaceManager.set(namespace);
-        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
-        Key k = KeyFactory.stringToKey(keyrep);
-        try {
-            d.delete(k);
-        } catch (Exception e) {
+//        DatastoreService d = DatastoreServiceFactory.getDatastoreService();
+//        Key k = KeyFactory.stringToKey(keyrep);
+//        try {
+//            d.delete(k);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+        EntityManager mgr = getEntityManager();
+//        CycleUse findCycleUse=mgr.find(CycleUse.class,keyrep);
+        try{
+//            CycleUse findCycleUse=mgr.find(CycleUse.class,keyrep);
+            CycleUse findCycleUse = mgr.find(CycleUse.class,KeyFactory.stringToKey(keyrep));
+            mgr.getTransaction().begin();
+            mgr.remove(findCycleUse);
+            mgr.getTransaction().commit();
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -250,13 +321,14 @@ public class CycleUseEndpoint {
                 contains = false;
             }
         } finally {
-            mgr.close();
+//            mgr.close();
         }
         return contains;
     }
 
     private static EntityManager getEntityManager() {
-        return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        //return uwi.dcit.agriexpensesvr.EMF.get().createEntityManager();
+        return EMF.getManagerInstance();
     }
 
 }

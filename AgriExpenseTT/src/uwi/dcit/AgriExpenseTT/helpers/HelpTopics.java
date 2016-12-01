@@ -6,11 +6,11 @@ public class HelpTopics {
 		"Introduction",
 		"Purchasing a New Resource",
 		"Creating a New Crop Cycle",
-		"Manage Resources",
+		"Manage Resources/Settings",
 		"Hiring Labour",
-		"Manage Data / Settings",
+			"Manage Data",
 		"Calculating Expected Sales",
-		"Generating Reports"
+		"Generating Reports",
 	};
 	
 	public static int [] Layouts = new int[] {

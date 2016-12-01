@@ -1,0 +1,255 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	package
+		ADDED from AndroidManifest.xml:4:5
+	android:versionName
+		ADDED from AndroidManifest.xml:6:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:5:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:3:5
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from AndroidManifest.xml:8:5
+	android:name
+		ADDED from AndroidManifest.xml:8:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+application
+ADDED from AndroidManifest.xml:13:5
+MERGED from com.android.support:appcompat-v7:21.0.3:16:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
+MERGED from com.google.android.gms:play-services:6.5.87:20:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
+	android:label
+		ADDED from AndroidManifest.xml:17:9
+	android:supportsRtl
+		ADDED from AndroidManifest.xml:19:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:15:9
+	android:icon
+		ADDED from AndroidManifest.xml:16:9
+	android:theme
+		ADDED from AndroidManifest.xml:20:9
+	android:logo
+		ADDED from AndroidManifest.xml:18:9
+	android:name
+		ADDED from AndroidManifest.xml:14:9
+activity#uwi.dcit.AgriExpenseTT.NewPurchase
+ADDED from AndroidManifest.xml:23:9
+	android:label
+		ADDED from AndroidManifest.xml:25:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:26:13
+	android:name
+		ADDED from AndroidManifest.xml:24:13
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from AndroidManifest.xml:27:13
+	android:value
+		ADDED from AndroidManifest.xml:29:17
+	android:name
+		ADDED from AndroidManifest.xml:28:17
+activity#uwi.dcit.AgriExpenseTT.NewCycle
+ADDED from AndroidManifest.xml:31:9
+	android:label
+		ADDED from AndroidManifest.xml:33:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:34:13
+	android:name
+		ADDED from AndroidManifest.xml:32:13
+activity#uwi.dcit.AgriExpenseTT.HireLabour
+ADDED from AndroidManifest.xml:39:9
+	android:label
+		ADDED from AndroidManifest.xml:41:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:42:13
+	android:name
+		ADDED from AndroidManifest.xml:40:13
+activity#uwi.dcit.AgriExpenseTT.ManageData
+ADDED from AndroidManifest.xml:48:9
+	android:label
+		ADDED from AndroidManifest.xml:50:13
+	android:name
+		ADDED from AndroidManifest.xml:49:13
+activity#uwi.dcit.AgriExpenseTT.AboutScreen
+ADDED from AndroidManifest.xml:55:9
+	android:label
+		ADDED from AndroidManifest.xml:57:13
+	android:name
+		ADDED from AndroidManifest.xml:56:13
+activity#uwi.dcit.AgriExpenseTT.CycleUsage
+ADDED from AndroidManifest.xml:62:9
+	android:label
+		ADDED from AndroidManifest.xml:64:13
+	android:name
+		ADDED from AndroidManifest.xml:63:13
+activity#uwi.dcit.AgriExpenseTT.UseResource
+ADDED from AndroidManifest.xml:70:9
+	android:label
+		ADDED from AndroidManifest.xml:72:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:73:13
+	android:name
+		ADDED from AndroidManifest.xml:71:13
+activity#uwi.dcit.AgriExpenseTT.DeleteData
+ADDED from AndroidManifest.xml:78:9
+	android:label
+		ADDED from AndroidManifest.xml:80:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:81:13
+	android:name
+		ADDED from AndroidManifest.xml:79:13
+activity#uwi.dcit.AgriExpenseTT.EditCycle
+ADDED from AndroidManifest.xml:86:9
+	android:label
+		ADDED from AndroidManifest.xml:88:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:89:13
+	android:name
+		ADDED from AndroidManifest.xml:87:13
+activity#uwi.dcit.AgriExpenseTT.EditPurchase
+ADDED from AndroidManifest.xml:94:9
+	android:label
+		ADDED from AndroidManifest.xml:96:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:97:13
+	android:name
+		ADDED from AndroidManifest.xml:95:13
+activity#uwi.dcit.AgriExpenseTT.EditData
+ADDED from AndroidManifest.xml:102:9
+	android:label
+		ADDED from AndroidManifest.xml:104:13
+	android:name
+		ADDED from AndroidManifest.xml:103:13
+activity#uwi.dcit.AgriExpenseTT.EditChooseLists
+ADDED from AndroidManifest.xml:109:9
+	android:label
+		ADDED from AndroidManifest.xml:111:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:112:13
+	android:name
+		ADDED from AndroidManifest.xml:110:13
+activity#uwi.dcit.AgriExpenseTT.AddData
+ADDED from AndroidManifest.xml:117:9
+	android:label
+		ADDED from AndroidManifest.xml:119:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:120:13
+	android:name
+		ADDED from AndroidManifest.xml:118:13
+activity#uwi.dcit.AgriExpenseTT.ViewCycleUsege
+ADDED from AndroidManifest.xml:125:9
+	android:label
+		ADDED from AndroidManifest.xml:127:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:128:13
+	android:name
+		ADDED from AndroidManifest.xml:126:13
+activity#uwi.dcit.AgriExpenseTT.SalesCost
+ADDED from AndroidManifest.xml:133:9
+	android:label
+		ADDED from AndroidManifest.xml:135:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:136:13
+	android:name
+		ADDED from AndroidManifest.xml:134:13
+activity#uwi.dcit.AgriExpenseTT.HarvestDetails
+ADDED from AndroidManifest.xml:141:9
+	android:label
+		ADDED from AndroidManifest.xml:143:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:144:13
+	android:name
+		ADDED from AndroidManifest.xml:142:13
+activity#uwi.dcit.AgriExpenseTT.SelectLocation
+ADDED from AndroidManifest.xml:149:9
+	android:label
+		ADDED from AndroidManifest.xml:151:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:152:13
+	android:name
+		ADDED from AndroidManifest.xml:150:13
+activity#uwi.dcit.AgriExpenseTT.HelpScreen
+ADDED from AndroidManifest.xml:157:9
+	android:label
+		ADDED from AndroidManifest.xml:159:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:160:13
+	android:name
+		ADDED from AndroidManifest.xml:158:13
+activity#uwi.dcit.AgriExpenseTT.ManageReport
+ADDED from AndroidManifest.xml:165:9
+	android:label
+		ADDED from AndroidManifest.xml:167:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:168:13
+	android:name
+		ADDED from AndroidManifest.xml:166:13
+activity#uwi.dcit.AgriExpenseTT.Backup
+ADDED from AndroidManifest.xml:173:9
+	android:label
+		ADDED from AndroidManifest.xml:175:13
+	android:parentActivityName
+		ADDED from AndroidManifest.xml:176:13
+	android:windowSoftInputMode
+		ADDED from AndroidManifest.xml:177:13
+	android:name
+		ADDED from AndroidManifest.xml:174:13
+activity#uwi.dcit.AgriExpenseTT.Main
+ADDED from AndroidManifest.xml:183:9
+	android:label
+		ADDED from AndroidManifest.xml:185:13
+	android:name
+		ADDED from AndroidManifest.xml:184:13
+activity#uwi.dcit.AgriExpenseTT.SplashScreen
+ADDED from AndroidManifest.xml:188:9
+	android:name
+		ADDED from AndroidManifest.xml:189:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:190:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:191:17
+	android:name
+		ADDED from AndroidManifest.xml:191:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:192:17
+	android:name
+		ADDED from AndroidManifest.xml:192:27
+receiver#uwi.dcit.AgriExpenseTT.helpers.ReminderBroadcaster
+ADDED from AndroidManifest.xml:197:9
+	android:name
+		ADDED from AndroidManifest.xml:197:19
+meta-data#com.google.android.gms.version
+ADDED from AndroidManifest.xml:199:9
+MERGED from com.google.android.gms:play-services:6.5.87:21:9
+	android:value
+		ADDED from AndroidManifest.xml:201:13
+	android:name
+		ADDED from AndroidManifest.xml:200:13
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:multidex:1.0.1:18:5
+MERGED from com.android.support:appcompat-v7:21.0.3:15:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.google.android.gms:play-services:6.5.87:18:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
+MERGED from com.android.support:multidex:1.0.1:18:5
+MERGED from com.cocosw:undobar:1.7.1:23:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0

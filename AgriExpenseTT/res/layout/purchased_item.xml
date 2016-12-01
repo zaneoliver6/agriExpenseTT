@@ -3,7 +3,7 @@
     android:id="@+id/purchase_item_cont"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -11,13 +11,13 @@
 
         <ImageView
             android:id="@+id/icon_pitem_next"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
             android:adjustViewBounds="false"
             android:src="@drawable/money_doller1"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
 
     </FrameLayout>
 
@@ -34,7 +34,7 @@
             android:textColor="@color/primary_text"
             android:textStyle="bold"
             android:layout_gravity="fill"
-            android:layout_marginBottom="@dimen/lable_item_details_bottom_margin"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
             android:layout_marginLeft="@dimen/lable_item_details_left_margin"
             android:layout_marginTop="7dp"
             android:textSize="@dimen/text_size_list_head"
@@ -45,37 +45,52 @@
 			android:layout_width="match_parent"
 			android:layout_height="2dp"
 			android:background="@android:color/darker_gray"
-            android:layout_marginBottom="@dimen/lable_item_details_bottom_margin"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
             android:layout_marginLeft="5dp" />
+
         <TextView
             android:id="@+id/tv_pitem_det1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
-            android:layout_marginBottom="@dimen/lable_item_details_bottom_margin"
-            android:layout_marginLeft="@dimen/lable_item_details_left_margin"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
+            android:layout_marginLeft="10dp"
             android:text="TextView"
-            android:textSize="@dimen/text_size_list" />
+            android:textSize="@dimen/text_size_list"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:id="@+id/tv_pitem_det2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
+            android:layout_marginLeft="10dp"
             android:text="TextView"
-            android:textSize="@dimen/text_size_list" />
+            android:textSize="@dimen/text_size_list"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:id="@+id/tv_pitem_det3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_text"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
+            android:layout_marginLeft="10dp"
+            android:text="TextView"
+            android:textSize="@dimen/text_size_list"
+            android:layout_marginRight="10dp" />
 
         <TextView
             android:id="@+id/tv_pitem_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginBottom="@dimen/label_item_details_bottom_margin"
+            android:layout_marginLeft="10dp"
             android:text="TextView"
-            android:textSize="@dimen/text_size_list" />
+            android:textSize="@dimen/text_size_list"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 
 

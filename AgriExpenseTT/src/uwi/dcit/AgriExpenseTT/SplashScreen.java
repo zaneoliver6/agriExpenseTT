@@ -3,6 +3,7 @@ package uwi.dcit.AgriExpenseTT;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -19,7 +20,8 @@ public class SplashScreen extends Activity {
             public void run(){
                 try{
                     // Get the database will invoke the onCreate or onUpgrade method based on state of the application
-                    (new DbHelper(c)).getWritableDatabase();
+                    SQLiteDatabase db = (new DbHelper(c)).getWritableDatabase();
+                    db.close();
 
                     if (!PrefUtils.dbExist(c)) PrefUtils.setDbExist(c, true);
                     else sleep(2*1000); // Just to show the splash screen for 2 seconds
