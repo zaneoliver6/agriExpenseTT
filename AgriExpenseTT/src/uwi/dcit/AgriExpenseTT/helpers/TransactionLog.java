@@ -103,7 +103,7 @@ public class TransactionLog {
 
 		List<TransLog> translogList = responseTranslog.getItems();
 		
-		dbh.dropTables(db);
+		dbh.tblMnger.dropTables(db);
 		dbh.onCreate(db);
 		
 		ContentValues cv;
