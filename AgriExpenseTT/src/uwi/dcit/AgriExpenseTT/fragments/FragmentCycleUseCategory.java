@@ -8,7 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,11 +28,10 @@ import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 import uwi.dcit.AgriExpenseTT.helpers.NavigationControl;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
-import uwi.dcit.agriexpensesvr.rPurchaseApi.model.RPurchase;
+import uwi.dcit.agriexpensesvr.resourcePurchaseApi.model.ResourcePurchase;
 
 //import com.dcit.agriexpensett.rPurchaseApi.model.RPurchase;
 
@@ -55,14 +56,19 @@ public class FragmentCycleUseCategory extends Fragment {
 		calculate();
 		setupClick();
 
-        //set color of action bar
-        if (this.getActivity() instanceof ActionBarActivity){
-            ((ActionBarActivity)this.getActivity())
-                    .getSupportActionBar()
-                    .setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.primary)));
-        }
+		try {
+			//set color of action bar
+			if (this.getActivity() instanceof AppCompatActivity) {
+				((AppCompatActivity) this.getActivity())
+						.getSupportActionBar()
+						.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this.getActivity(), R.color.primary)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
+
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Cycle Use Category Fragment");
 		return view;
 	}
 
@@ -79,33 +85,42 @@ public class FragmentCycleUseCategory extends Fragment {
 
 		//getting data
 		category=getArguments().getString("category");
-		
-		if(category.equals(DHelper.cat_labour)){
-			btn_useage.setText(category+" usage");
-			btn_useMore.setText("Add Labour");
-			line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
-			btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
-		}else if(category.equals(DHelper.cat_other)){
-			btn_useage.setText("useage of"+category);
-			btn_useMore.setText("Add other expense");
-			line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
-			btn_useMore.setBackgroundResource(R.drawable.btn_custom_other);
-		}else{
-			btn_useage.setText(category+" usage");
-			btn_useMore.setText("Use more "+category);
-			if(category.equals(DHelper.cat_plantingMaterial)){
-				btn_useMore.setBackgroundResource(R.drawable.btn_custom_plantmaterial);
-				line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
-			}else if(category.equals(DHelper.cat_chemical)){
-				btn_useMore.setBackgroundResource(R.drawable.btn_custom_chem);
-				line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
-			}else if(category.equals(DHelper.cat_fertilizer)){
-				btn_useMore.setBackgroundResource(R.drawable.btn_custom_fertilizer);
-				line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
-			}else if(category.equals(DHelper.cat_soilAmendment)){
-				btn_useMore.setBackgroundResource(R.drawable.btn_custom_soilam);
-				line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
-			}
+
+		switch (category) {
+			case DHelper.cat_labour:
+				btn_useage.setText(category + " usage");
+				btn_useMore.setText("Add Labour");
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_labour));
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_labour);
+				break;
+			case DHelper.cat_other:
+				btn_useage.setText("Usage of Other Expenses");
+				btn_useMore.setText("Use more Other Expense");
+				line.setBackgroundColor(Color.parseColor(DHelper.colour_other));
+				btn_useMore.setBackgroundResource(R.drawable.btn_custom_other);
+				break;
+			default:
+				btn_useage.setText(category + " usage");
+				btn_useMore.setText("Use more " + category);
+				switch (category) {
+					case DHelper.cat_plantingMaterial:
+						btn_useMore.setBackgroundResource(R.drawable.btn_custom_plantmaterial);
+						line.setBackgroundColor(Color.parseColor(DHelper.colour_pm));
+						break;
+					case DHelper.cat_chemical:
+						btn_useMore.setBackgroundResource(R.drawable.btn_custom_chem);
+						line.setBackgroundColor(Color.parseColor(DHelper.colour_chemical));
+						break;
+					case DHelper.cat_fertilizer:
+						btn_useMore.setBackgroundResource(R.drawable.btn_custom_fertilizer);
+						line.setBackgroundColor(Color.parseColor(DHelper.colour_fertilizer));
+						break;
+					case DHelper.cat_soilAmendment:
+						btn_useMore.setBackgroundResource(R.drawable.btn_custom_soilam);
+						line.setBackgroundColor(Color.parseColor(DHelper.colour_soilam));
+						break;
+				}
+				break;
 		}
 		//getArguments().getParcelable("Cycle");
 		currCycle=getArguments().getParcelable("cycle");
@@ -121,8 +136,8 @@ public class FragmentCycleUseCategory extends Fragment {
 		SQLiteDatabase db=dbh.getWritableDatabase();
 
 		//getting aggregate and complex data 
-		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
+		ArrayList<LocalCycleUse> useList = new ArrayList<>();
+		DbQuery.getCycleUse(db, dbh, currCycle.getId(),useList,category);//fills list with currCycle uses of type category
 
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> names = null;
@@ -132,33 +147,31 @@ public class FragmentCycleUseCategory extends Fragment {
 			names = new ArrayList<>();
 			totals = new double[useList.size()];
 
-			Iterator<LocalCycleUse> itr = useList.iterator();
-
-			while(itr.hasNext()){
-				LocalCycleUse lcu = itr.next();
-                Log.d(TAG, "Processing: " + lcu.toString());
+			for (LocalCycleUse lcu : useList) {
+				Log.d(TAG, "Processing: " + lcu.toString());
 				catTotal += lcu.getUseCost();//stores the total amount of money spent on plantMaterials
-						
-				RPurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
+
+				ResourcePurchase purchaseUse = DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
 				String name = DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
-						
+
 				//calculates the total spent on each plantMaterial
-				Iterator<String> i=names.iterator();//list of plantMaterial names' iterator
+				Iterator<String> i = names.iterator();//list of plantMaterial names' iterator
 
-				int pos=0;//start position for totals corresponding to each name
+				int pos = 0;//start position for totals corresponding to each name
 
-				boolean found=false;
-				while(i.hasNext()){//goes through the names of the plantMaterials
-					if(name.equals(i.next())){
+				boolean found = false;
+				while (i.hasNext()) {//goes through the names of the plantMaterials
+					if (name.equals(i.next())) {
 						totals[pos] += lcu.getUseCost();
-						found=true;
-					}else{
+						Log.i("Totalzzz", "------" + totals[pos]);
+						found = true;
+					} else {
 						pos++;
 					}
 				}
-				if(!found){//if we didnt find the name in the list
+				if (!found) {//if we didnt find the name in the list
 					names.add(name);//add the name to the list
-					totals[pos]=lcu.getUseCost();//set the corresponding cost
+					totals[pos] = lcu.getUseCost();//set the corresponding cost
 				}
 			}
 		}
@@ -201,18 +214,36 @@ public class FragmentCycleUseCategory extends Fragment {
                 startActivity(n);
                 return;
 			}else if(v.getId()==R.id.btn_Cycle_useMore){
-                newFrag=new FragmentUseResource();
-                Bundle arguments = new Bundle();
-                arguments.putString("type",category);
-                arguments.putParcelable("cycle", currCycle);
-                arguments.putString("total",""+catTotal);
-                newFrag.setArguments(arguments);
+				if( currCycle.getClosed().equals("closed")) {
+					Intent n = new Intent(getActivity(),ViewCycleUsege.class);
+					Bundle arguments = new Bundle();
+					arguments .putString("type", category);
+					currCycle=getArguments().getParcelable("cycle");
+					arguments.putString("id", "" + currCycle.getId());
+					n.putExtras(arguments);
+					startActivity(n);
+					Toast.makeText(getActivity(), "Cannot purchase items for a closed cycle!", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				else {
+					newFrag = new FragmentUseResource();
+					Bundle arguments = new Bundle();
+					arguments.putString("type", category);
+					arguments.putParcelable("cycle", currCycle);
+					arguments.putString("total", "" + catTotal);
+					newFrag.setArguments(arguments);
+				}
+				//}
+				//else{
+				//	Toast.makeText(getActivity(), "Cannot purchase items for a closed cycle!", Toast.LENGTH_SHORT).show();
+				//}
 			}
 
-            if(getActivity().getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+            if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
                 ((NavigationControl) getActivity()).navigate(((NavigationControl) getActivity()).getLeftFrag(),newFrag);
                 return;
             }
+
             if(getActivity() instanceof NavigationControl) {
                 if(((NavigationControl) getActivity()).getRightFrag() instanceof  FragmentEmpty
                         || (newFrag != null &&  (((NavigationControl) getActivity()).getRightFrag().getClass() == newFrag.getClass())))

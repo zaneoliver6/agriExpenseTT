@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_mainNew_header"
@@ -47,39 +47,100 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
             <FrameLayout
                 android:id="@+id/reportListContainer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_weight="5.67">
             </FrameLayout>
+
 
             <FrameLayout
                 android:id="@+id/reportControlsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5">
+                android:layout_weight="5" >
+
                 <Button
                     android:id="@+id/btn_addReport"
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/btn_custom"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal|bottom"
                     android:text="@string/btn_reports_new"
                     android:onClick="createNewReport"  />
+
+
+
+                <!--
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:ems="10"
+                    android:id="@+id/editText2"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:paddingLeft="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editText3"
+                    android:layout_gravity="left|center_vertical"
+                    android:text="To:" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:id="@+id/Report_end_date"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:paddingLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editText4"
+                    android:layout_gravity="left|top"
+                    android:paddingTop="50dp"
+                    android:text="From:" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:ems="10"
+                    android:textAlignment="center"
+                    android:id="@+id/report_start_date"
+                    android:paddingTop="50dp"
+                    android:layout_gravity="center_horizontal|top" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="30dp"
+                    android:text="Format: (DD/MM/YYYY)"
+                    android:id="@+id/textView"
+                    android:layout_gravity="center_horizontal|top" />
+
+                <TextView
+                    android:id="@+id/Add_Report_Subheader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Enter the start and end dates for the report."
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+                -->
+
             </FrameLayout>
         </LinearLayout>
     </FrameLayout>
-    <fragment
-        android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="uwi.dcit.AgriExpenseTT.fragments.NavigationDrawerFragment"
-        tools:layout="@layout/fragment_navigation_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -24,4 +24,5 @@ public class HelpScreen extends BaseActivity {
         	.replace(R.id.help_lists, fragment)
         	.commit();
 	}
+
 }

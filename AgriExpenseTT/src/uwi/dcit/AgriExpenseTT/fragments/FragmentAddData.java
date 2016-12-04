@@ -20,7 +20,6 @@ import uwi.dcit.AgriExpenseTT.AddData;
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentAddData extends ListFragment {
 	String type;
@@ -45,7 +44,7 @@ public class FragmentAddData extends ListFragment {
             Collections.sort(list);
             listAdapt = new ArrayAdapter<>(this.getActivity().getBaseContext(), android.R.layout.simple_list_item_1, list);
             setListAdapter(listAdapt);
-            GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Data Fragment");
+//            GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Add Data Fragment");
         }
 	}
 		

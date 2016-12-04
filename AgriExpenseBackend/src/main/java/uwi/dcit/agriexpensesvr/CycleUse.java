@@ -20,6 +20,7 @@ public class CycleUse {
     private double amount;
     private double cost;
     private String resource;
+    private String quantifier;
 
     public double getCost() {
         return cost;
@@ -95,6 +96,13 @@ public class CycleUse {
 
     public void setAccount(String account) {
         Account = account;
+    }
+
+    public void setQuantifier(String quantifier){
+        this.quantifier=quantifier;
+    }
+    public String getQuantifier(){
+        return quantifier;
     }
 
     @Override

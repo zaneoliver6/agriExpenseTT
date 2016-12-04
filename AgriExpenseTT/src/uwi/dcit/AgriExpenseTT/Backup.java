@@ -2,9 +2,7 @@ package uwi.dcit.AgriExpenseTT;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
 
 import uwi.dcit.AgriExpenseTT.cloud.SignInManager;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentSelectLocation;
@@ -37,10 +35,5 @@ public class Backup extends BaseActivity {
                 .commit();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.backup_data, menu);
-		return true;
-	}
+
 }

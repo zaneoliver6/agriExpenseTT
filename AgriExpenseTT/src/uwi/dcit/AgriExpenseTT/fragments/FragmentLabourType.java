@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
+import uwi.dcit.AgriExpenseTT.helpers.TextHelper;
 
 
 public class FragmentLabourType extends Fragment{
@@ -26,7 +26,7 @@ public class FragmentLabourType extends Fragment{
 		view=inflater.inflate(R.layout.fragment_labour_type, container, false);
 		
 		setDetails();
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Labour Type Fragment");
+//        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("Labour Type Fragment");
 		return view;
 	}
 	private void setDetails() {
@@ -34,7 +34,15 @@ public class FragmentLabourType extends Fragment{
 		Button btn_many=(Button)view.findViewById(R.id.btn_labour_multipleCycle);
 		Button btn_one=(Button)view.findViewById(R.id.btn_labour_oneCycle);
 		Click c=new Click();
-		tv_head.setText("Will "+getArguments().getString("name")+" be working on one or many cycles");
+//
+
+        String message = tv_head.getText().toString();
+        if (message.equals(""))tv_head.setText("Will "+getArguments().getString("name")+" be working on one or many cycles");
+        else{
+            message = TextHelper.replaceNthWord(message, 1, getArguments().getString("name"));
+            tv_head.setText(message);
+        }
+
 		btn_many.setOnClickListener(c);
 		btn_one.setOnClickListener(c);
 	}

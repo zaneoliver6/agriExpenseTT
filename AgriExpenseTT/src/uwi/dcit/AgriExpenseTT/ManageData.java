@@ -16,18 +16,21 @@ public class ManageData extends BaseActivity {
         GAnalyticsHelper.getInstance(this.getApplicationContext()).sendScreenView("Manage Data");
 	}
 
-	
-	
-	public void openDataEdit(View view){		
+	public void openDataEdit(View view){
 		startActivity(new Intent(ManageData.this,EditData.class));
 	}
-	public void openDataDelete(View view){		
+
+    public void openDataDelete(View view){
 		startActivity(new Intent(ManageData.this,DeleteData.class));
 	}
-	public void openDataAdd(View view){		
+
+    public void openDataAdd(View view){
 		startActivity(new Intent(ManageData.this,AddData.class));
 	}
 
+	public void alarmPreferencesEdit(View view){
+		startActivity(new Intent(ManageData.this,AlarmActivity.class));
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

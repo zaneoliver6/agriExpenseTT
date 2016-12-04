@@ -59,42 +59,14 @@ public class HarvestDetails extends BaseActivity {
             }
         });
 	}
-	public class Click implements OnClickListener{
 
-		@Override
-		public void onClick(View v) {
-			if(v.getId()==R.id.btn_harvestDet_qtfr){
-				Intent i=new Intent(HarvestDetails.this,EditChooseLists.class);
-				i.putExtra("desc","measurement");
-				startActivityForResult(i, REQ_MEASURE);
-			}else if(v.getId()==R.id.btn_harvestDet_done){
-					if(!(et_amt.getText().toString() == null||(et_amt.getText().toString().equals(""))))
-							qty=Double.parseDouble(et_amt.getText().toString());
-					save();
-					Intent i=new Intent();
-					i.putExtra("qtfr",qtfr);
-					i.putExtra("amt",qty);
-					setResult(1,i);//used to set the results for the parent activity ( the one that launched this one)
-					finish();
-			}
-		}
-
-		private void save() {
-			ContentValues cv=new ContentValues();
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, qty);
-			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, qtfr);
-			DbHelper dbh=new DbHelper(HarvestDetails.this);
-			SQLiteDatabase db=dbh.getWritableDatabase();
-			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID+"="+currCycle.getId(), null);
-		}
-		
-	}
     public void hideSoftKeyboard() {
         if(getCurrentFocus()!=null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
+
 	@Override
 	public void onActivityResult(int requestCode,int resultCode,Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
@@ -123,9 +95,37 @@ public class HarvestDetails extends BaseActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		return id == R.id.action_settings || super.onOptionsItemSelected(item);
+	}
+
+	public class Click implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			if (v.getId() == R.id.btn_harvestDet_qtfr) {
+				Intent i = new Intent(HarvestDetails.this, EditChooseLists.class);
+				i.putExtra("desc", "measurement");
+				startActivityForResult(i, REQ_MEASURE);
+			} else if (v.getId() == R.id.btn_harvestDet_done) {
+				if (!(et_amt.getText().toString() == null || (et_amt.getText().toString().equals(""))))
+					qty = Double.parseDouble(et_amt.getText().toString());
+				save();
+				Intent i = new Intent();
+				i.putExtra("qtfr", qtfr);
+				i.putExtra("amt", qty);
+				setResult(1, i);//used to set the results for the parent activity ( the one that launched this one)
+				finish();
+			}
 		}
-		return super.onOptionsItemSelected(item);
+
+		private void save() {
+			ContentValues cv = new ContentValues();
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_AMT, qty);
+			cv.put(CycleContract.CycleEntry.CROPCYCLE_HARVEST_TYPE, qtfr);
+			DbHelper dbh = new DbHelper(HarvestDetails.this);
+			SQLiteDatabase db = dbh.getWritableDatabase();
+			db.update(CycleContract.CycleEntry.TABLE_NAME, cv, CycleContract.CycleEntry._ID + "=" + currCycle.getId(), null);
+		}
+
 	}
 }

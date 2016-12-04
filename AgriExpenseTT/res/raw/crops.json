@@ -1,0 +1,182 @@
+{
+  "ANISE SEED": {
+	"image": "anise_seed"
+  },
+  "BANANA": {
+	"image": "banana"
+  },
+  "BASIL": {},
+  "BAY LEAF": {},
+  "BEET": {
+	"image": "beet"
+  },
+  "BHAGI": {},
+  "BORA (BODI) BEAN": {
+	"image": "bodi_bean"
+  },
+  "BREADFRUIT": {},
+  "BREADNUT (CHATAIGNE)": {},
+  "BROCCOLI": {},
+  "CABBAGE": {
+	"image": "cabbage"
+  },
+  "CARAILLI": {
+	"image": "caraillie"
+  },
+  "CARAMBOLA": {},
+  "CARROTS": {
+	"image": "carrot"
+  },
+  "CASSAVA": {
+	"image": "cassava"
+  },
+  "CAULIFLOWER": {
+	"image": "cauliflower"
+  },
+  "CELERY": {
+	"image": "celery"
+  },
+  "CHERRY": {},
+  "CHIVE": {
+	"image": "chive"
+  },
+  "CHOI SUM (CHINESE CABBAGE)": {},
+  "CHRISTOPHENE": {
+	"image": "christophene"
+  },
+  "COCOA": {},
+  "COCONUT": {
+	"image": "coconut"
+  },
+  "CORN": {
+	"image": "corn"
+  },
+  "COWPEA (GUB GUB)": {},
+  "CUCUMBER": {
+	"image": "cucumber"
+  },
+  "CULANTRO (SHADON BENI / BANDANIA)": {
+	"image": "shadon_beni"
+  },
+  "CURRY LEAF": {},
+  "CUSH CUSH": {},
+  "DASHEEN": {
+	"image": "dasheen"
+  },
+  "DASHEEN BUSH": {},
+  "DILL": {},
+  "EDDOES": {
+	"image": "eddoe"
+  },
+  "EGGPLANT": {},
+  "ESCALLION": {},
+  "FENNEL": {},
+  "GINGER": {
+	"image": "ginger"
+  },
+  "GOLDEN APPLE": {},
+  "GRAPEFRUIT": {
+	"image": "grapefruit"
+  },
+  "GREEN FIG": {},
+  "HORSERADISH": {},
+  "HOT PEPPER": {
+	"image": "hot_pepper"
+  },
+  "JACK BEAN": {},
+  "JHINGI": {},
+  "LAUKI": {},
+  "LEMON": {},
+  "LEREN (TOPI TAMBU)": {},
+  "LETTUCE": {
+	"image": "lettuce"
+  },
+  "LIME": {
+	"image": "lime"
+  },
+  "MAIZE (CORN)": {},
+  "MANGO": {},
+  "MARJORAM": {},
+  "MINT": {},
+  "NUTMEG": {},
+  "OCHRO": {
+	"image": "ochro"
+  },
+  "ONIONS": {},
+  "ORANGES": {
+	"image": "orange"
+  },
+  "OREGANO": {},
+  "PAKCHOY": {},
+  "PARSLEY": {},
+  "PAW PAW": {
+	"image": "paw_paw"
+  },
+  "PEANUTS": {},
+  "PIGEON PEAS": {
+	"image": "pigeon_pea"
+  },
+  "PIMENTO PEPPER": {
+	"image": "pimento"
+  },
+  "PINEAPPLE": {},
+  "PLANTAIN": {
+	"image": "plantain"
+  },
+  "PORTUGAL": {
+	"image": "portugal"
+  },
+  "PUMPKIN": {
+	"image": "pumpkin"
+  },
+  "RADISH (MOORAI)": {},
+  "RICE": {},
+  "ROSEMARY": {},
+  "SAIJAN": {},
+  "SATPUTIYA (LOOFAH)": {},
+  "SEIM": {
+	"image": "seim_bean"
+  },
+  "SORREL": {
+	"image": "sorrel"
+  },
+  "SOYABEAN": {
+	"image": "soybean"
+  },
+  "SQUASH": {
+	"image": "squash"
+  },
+  "STRING BEAN": {},
+  "SUGARCANE": {},
+  "SWEET PEPPER": {
+	"image": "sweet_pepper"
+  },
+  "SWEET POTATO": {
+	"image": "sweet_potato"
+  },
+  "TANGERINE": {},
+  "TANNIA": {},
+  "TARRAGON": {},
+  "THYME - FINE": {
+	"image": "thyme"
+  },
+  "THYME - FRENCH": {
+	"image": "thyme"
+  },
+  "THYME - SPANISH": {
+	"image": "thyme"
+  },
+  "TOMATO": {
+	"image": "tomato"
+  },
+  "TUMERIC (SAFFRON)": {},
+  "VINE SPINACH (POI BHAGI)": {},
+  "WATERCRESS": {},
+  "WATERMELON": {
+	"image": "watermelon"
+  },
+  "WING BEAN": {},
+  "YAM": {
+	"image": "yam"
+  }
+}

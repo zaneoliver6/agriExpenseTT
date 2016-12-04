@@ -1,10 +1,12 @@
 package uwi.dcit.AgriExpenseTT.fragments;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,36 +21,73 @@ import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
-import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
 
 public class FragmentViewResources extends ListFragment{
-	SQLiteDatabase db;
-	DbHelper dbh;
-	ArrayList<String> rList;
-	DataManager dm;
+	private SQLiteDatabase db;
+	private DbHelper dbh;
+	private ArrayList<String> rList;
+	private DataManager dm;
+	private View view;
+	private ArrayAdapter<String> listAdapt;
+	private final String TAG = "FragmentViewResources";
+	private ProgressDialog progressDialog;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		dbh=new DbHelper(this.getActivity().getBaseContext());
 		db=dbh.getWritableDatabase();
 		dm = new DataManager(getActivity(), db, dbh);
-		populateList();
-		Collections.sort(rList);
-		ArrayAdapter<String> listAdapt=new ArrayAdapter<String>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
+		Log.d(TAG, "Setup Database was successful");
+
+		rList = new ArrayList<>();
+
+		listAdapt=new ArrayAdapter<>(getActivity().getBaseContext(),android.R.layout.simple_list_item_1, rList);
 		setListAdapter(listAdapt);
-        GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("View Resources Fragment");
+		Log.d(TAG, "Adapter was configured");
 	}
 	
-	private void populateList() {
-		rList=new ArrayList<String>();
-		DbQuery.getResources(db, dbh, null, rList);
+	private void populateList(final View v) {
+		Log.d(TAG, "Populate the List");
+		if (rList == null || rList.size() > 0)rList = new ArrayList<>();
+
+		Log.d(TAG, "Creating the Dialog");
+		progressDialog = ProgressDialog.show(getActivity(), "Resources", "Retrieving Purchases", true);
+		progressDialog.show();
+
+		//  Run Database Operation in thread other than UI
+		(new Thread(new Runnable() {
+			@Override
+			public void run() {
+				DbQuery.getResources(db, dbh, null, rList);
+				Collections.sort(rList);
+				Log.d(TAG, "Retrieved " + rList.size() + " records from the database");
+
+				// Update the UI
+				if (v != null) {
+					v.post(new Runnable() {
+						@Override
+						public void run() {
+							listAdapt.notifyDataSetChanged();
+							progressDialog.dismiss();
+							Log.d(TAG, "Retrieved " + rList.size() + " records from the database and updated the UI");
+						}
+					});
+				}else{
+					progressDialog.dismiss();
+					Log.e(TAG, "Did not have a valid view to update the UI");
+				}
+			}
+		})).start();
+
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-		//returns the inflated layout which contains the listview
-		return inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		view  =  inflater.inflate(R.layout.fragment_choose_purchase, container, false);
+		populateList(view);
+		return view;
 	}
 
 	@Override
@@ -68,23 +107,26 @@ public class FragmentViewResources extends ListFragment{
             alert1.show();
 		}
 	}
+
+
 	private class Confirm implements DialogInterface.OnClickListener{
 		int position;
 		int id;
-		ArrayAdapter<String> adpt;
-		public Confirm(int position,ArrayAdapter<String> adpt){
-			this.id=DbQuery.getNameResourceId(db, dbh, rList.get(position));
-			this.adpt=adpt;
-			this.position=position;
+		ArrayAdapter<String> adapter;
+		public Confirm(int position,ArrayAdapter<String> adapter){
+			this.id = DbQuery.getNameResourceId(db, dbh, rList.get(position));
+			this.adapter = adapter;
+			this.position = position;
 		}
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			if(which==DialogInterface.BUTTON_POSITIVE){
 				dm.deleteResource(id);
 				rList.remove(position);
-				adpt.notifyDataSetChanged();
+				adapter.notifyDataSetChanged();
 				Toast.makeText(getActivity(),"Resource deleted", Toast.LENGTH_SHORT).show();
-				dialog.cancel();
+                dialog.dismiss();
+//				dialog.cancel();
 				//DeleteExpenseList.this.finish();
 			}else if(which==DialogInterface.BUTTON_NEGATIVE){
 				dialog.cancel();

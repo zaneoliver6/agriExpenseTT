@@ -67,7 +67,7 @@ public class LocalCycleUse {
 
     @Override
     public String toString(){
-        return "cycleid: " + cycleid + " purchaseid: " + purchaseId + " amount: "+amount + " resource: "+resource +" usecost: "+useCost;
+        return "cycleid: " + cycleid + " purchaseid: " + purchaseId + " amount: "+amount + " resource: "+resource +" usecost: "+useCost +"quantifier:"+quantifier;
     }
 	
 }

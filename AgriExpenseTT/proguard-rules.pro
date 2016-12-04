@@ -41,9 +41,17 @@
 -dontwarn javax.imageio.metadata.IIOMetadata
 -dontwarn org.apache.commons.logging.LogFactory
 -dontwarn org.apache.commons.codec.digest.DigestUtils
+-dontwarn com.google.**
+-dontwarn org.apache.**
 
--optimizations !class/unboxing/enum
 
 # Printing proguard results to better understand what its doing
 -printusage unused.txt
 -printmapping mapping.txt
+-verbose
+
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/,!class/merging/,!class/unboxing/enum
+-optimizationpasses 1
+-allowaccessmodification
+-dontpreverify
+-dontskipnonpubliclibraryclasses

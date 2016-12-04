@@ -4,9 +4,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * Created by kyledef on 2/25/15.
- */
 public class CurrencyFormatHelper {
 
     public static String getCurrency(double val){
