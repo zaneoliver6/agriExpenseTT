@@ -12,24 +12,21 @@ import uwi.dcit.AgriExpenseTT.models.TransactionLogContract.TransactionLogEntry;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 public class DbModifier {
-
-    private DbOmniPotent omniPotent = new DbOmniPotent();
-
-    public void tableColumnModify(SQLiteDatabase db){
+    public static void tableColumnModify(SQLiteDatabase db){
         // Using Transactions to help ensure some level of security
         db.beginTransaction();
 
         // Backup old data by renaming tables
-        this.createBackup(db);
+        createBackup(db);
 
         // Create table with new structures
-        omniPotent.createDb(db);
+        DbOmniPotent.createDb(db);
 
         // Translate the data from
-        this.translateData(db);
+        translateData(db);
 
         //delete the existing old tables
-        this.dropBackups(db);
+        dropBackups(db);
 
         // mark the transaction as successful
         db.setTransactionSuccessful();
@@ -37,7 +34,7 @@ public class DbModifier {
     }
 
 
-    private void createBackup(SQLiteDatabase db){
+    private static void createBackup(SQLiteDatabase db){
         db.execSQL("ALTER TABLE " + ResourceContract.ResourceEntry.TABLE_NAME + " RENAME TO " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
         db.execSQL("ALTER TABLE " + CycleContract.CycleEntry.TABLE_NAME + " RENAME TO " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
         db.execSQL("ALTER TABLE " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + " RENAME TO " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
@@ -49,7 +46,7 @@ public class DbModifier {
         db.execSQL("ALTER TABLE " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + " RENAME TO " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
     }
 
-    private void dropBackups(SQLiteDatabase db){
+    private static void dropBackups(SQLiteDatabase db){
         db.execSQL("DROP TABLE IF EXISTS " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
         db.execSQL("DROP TABLE IF EXISTS " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
         db.execSQL("DROP TABLE IF EXISTS " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");
@@ -61,7 +58,7 @@ public class DbModifier {
         db.execSQL("DROP TABLE IF EXISTS " + UpdateAccountContract.UpdateAccountEntry.TABLE_NAME + "_orig");
     }
 
-    private void translateData(SQLiteDatabase db){
+    private static void translateData(SQLiteDatabase db){
         db.execSQL("INSERT INTO " + ResourceContract.ResourceEntry.TABLE_NAME + "(" + ResourceContract.ResourceEntry._ID  + ", name, type)  SELECT _id, name, type FROM  " + ResourceContract.ResourceEntry.TABLE_NAME + "_orig");
         db.execSQL("INSERT INTO " + CycleContract.CycleEntry.TABLE_NAME + "(" + CycleContract.CycleEntry._ID +", cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName ) SELECT _id, cropId, landType, landAmt, cycledate, tspent, hType, hAmt, costPer, county, cropName FROM " + CycleContract.CycleEntry.TABLE_NAME + "_orig");
         db.execSQL("INSERT INTO " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "(" + ResourcePurchaseContract.ResourcePurchaseEntry._ID  + ", rId, type, quantifier, qty, cost, remaining, date, resource)  SELECT _id, rId, type, quantifier, qty, cost, remaining, date, resource FROM " + ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME + "_orig");

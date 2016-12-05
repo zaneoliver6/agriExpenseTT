@@ -29,7 +29,6 @@ public class DbHelper extends SQLiteOpenHelper{
 	public static final String DATABASE_NAME="agriDb";
 	public static final String TAG_NAME = "AgriExpenseDBHelper";
 	public Context ctx;
-	public TblMnger tblMnger = new TblMnger();
 	
 	public DbHelper(Context context) {
 		super(context, DATABASE_NAME, null,VERSION);
@@ -39,7 +38,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
         Log.i(TAG_NAME, "Creating AgriExpense DB for first time");
-		tblMnger.createDb(db);
+		TblMnger.createDb(db);
 		populate(db, new TransactionLog(this,db,ctx));
 	}
 	
@@ -54,20 +53,20 @@ public class DbHelper extends SQLiteOpenHelper{
 
 		if (oldVersion < 170){
 			Log.d(TAG_NAME, "version too old to support Removing all tables so far and restart");
-			tblMnger.dropTables(db);
+			TblMnger.dropTables(db);
 			this.onCreate(db);
 		}
         if (oldVersion  <= 171 && !columnExists(db, CycleContract.CycleEntry.TABLE_NAME, CycleContract.CycleEntry._ID)) {
 			
 			Log.d(TAG_NAME, "Running Update of table structure");
-			tblMnger.tableColumnModify(db);
+			TblMnger.tableColumnModify(db);
 			
 			Log.d(TAG_NAME, "Running installation of countries");
-			tblMnger.createCountries(db); // Create if not exist so if previously created this will do nothing
+			TblMnger.createCountries(db); // Create if not exist so if previously created this will do nothing
 			//this.insertDefaultCountries(db);
 			
 			Log.d(TAG_NAME, "Running installation of counties");
-			tblMnger.createCounties(db);
+			TblMnger.createCounties(db);
 			//this.insertDefaultCounties(db);
 			
 			Log.d(TAG_NAME, "Running upgrade of crop/plating material lists");

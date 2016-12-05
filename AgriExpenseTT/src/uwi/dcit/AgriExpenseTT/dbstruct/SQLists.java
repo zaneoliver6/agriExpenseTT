@@ -13,10 +13,9 @@ import uwi.dcit.AgriExpenseTT.models.TransactionLogContract;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
 class SQLists {
-    private String[] list;
 
-    public String[] getCreateList(){
-        this.list = new String[]{ ResourceContract.SQL_CREATE_RESOURCE,
+    public static String[] getCreateList(){
+        String[] list = new String[]{ ResourceContract.SQL_CREATE_RESOURCE,
                 CycleContract.SQL_CREATE_CYCLE,
                 ResourcePurchaseContract.SQL_CREATE_RESOURCE_PURCHASE,
                 CycleResourceContract.SQL_CREATE_CYCLE_RESOURCE,
@@ -29,11 +28,11 @@ class SQLists {
                 CountyContract.SQL_CREATE_COUNTIES
         };
 
-        return this.list;
+        return list;
     }
 
-    public String[] getDestroyList(){
-        this.list = new String[] {
+    public static String[] getDestroyList(){
+        String[] list = new String[] {
                 CycleResourceContract.SQL_DELETE_CYCLE_RESOURCE,
                 ResourcePurchaseContract.SQL_DELETE_RESOURCE_PURCHASE,
                 CycleContract.SQL_DELETE_CYCLE,
@@ -45,6 +44,6 @@ class SQLists {
                 CountryContract.SQL_DELETE_COUNTRIES,
                 CountyContract.SQL_DELETE_COUNTIES
         };
-        return this.list;
+        return list;
     }
 }

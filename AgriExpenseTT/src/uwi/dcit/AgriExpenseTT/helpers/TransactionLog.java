@@ -14,6 +14,7 @@ import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils;
 import uwi.dcit.AgriExpenseTT.cloud.CloudInterface;
+import uwi.dcit.AgriExpenseTT.dbstruct.TblMnger;
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.Account;
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cloud;
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.Redo;
@@ -106,8 +107,8 @@ public class TransactionLog {
 		} catch (IOException e) {e.printStackTrace(); return false;}
 
 		List<TransLog> translogList = responseTranslog.getItems();
-		
-		dbh.tblMnger.dropTables(db);
+
+		TblMnger.dropTables(db);
 		dbh.onCreate(db);
 		
 		ContentValues cv;

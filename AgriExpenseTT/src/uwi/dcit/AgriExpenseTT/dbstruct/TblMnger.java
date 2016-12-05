@@ -3,27 +3,21 @@ package uwi.dcit.AgriExpenseTT.dbstruct;
 import android.database.sqlite.SQLiteDatabase;
 
 public class TblMnger {
+    public static void tableColumnModify(SQLiteDatabase db){DbModifier.tableColumnModify(db);}
 
-    private DbOmniPotent omniPotent = new DbOmniPotent();
-    private DbModifier modifier = new DbModifier();
-
-    public void tableColumnModify(SQLiteDatabase db){
-        modifier.tableColumnModify(db);
+    public static void createDb(SQLiteDatabase db) {
+        DbOmniPotent.createDb(db);
+    }
+    public static void dropTables(SQLiteDatabase db){
+        DbOmniPotent.dropTables(db);
     }
 
-    public void createDb(SQLiteDatabase db) {
-        omniPotent.createDb(db);
-    }
-    public void dropTables(SQLiteDatabase db){
-        omniPotent.dropTables(db);
+    public static void createCountries(SQLiteDatabase db){
+        DbOmniPotent.createCountries(db);
     }
 
-    public void createCountries(SQLiteDatabase db){
-        omniPotent.createCountries(db);
-    }
-
-    public void createCounties(SQLiteDatabase db){
-        omniPotent.createCounties(db);
+    public static void createCounties(SQLiteDatabase db){
+        DbOmniPotent.createCounties(db);
     }
 
 
