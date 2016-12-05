@@ -14,6 +14,10 @@ import java.util.List;
 
 import uwi.dcit.AgriExpenseTT.cloud.CloudEndpointUtils;
 import uwi.dcit.AgriExpenseTT.cloud.CloudInterface;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Account;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cloud;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Redo;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.UpAccount;
 import uwi.dcit.AgriExpenseTT.models.CycleContract;
 import uwi.dcit.AgriExpenseTT.models.CycleResourceContract.CycleResourceEntry;
 import uwi.dcit.AgriExpenseTT.models.ResourcePurchaseContract;
@@ -118,7 +122,7 @@ public class TransactionLog {
 			cv.put(CycleContract.CycleEntry.CROPCYCLE_TOTALSPENT, c.getTotalSpent());
 			//cv.put(DbHelper.CROPCYCLE_DATE, c.get);
 			db.insert(CycleContract.CycleEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME,c.getKeyrep(), c.getId());
+			Cloud.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME,c.getKeyrep(), c.getId());
 		}
 		
 		System.out.println("CycleUses now");
@@ -134,7 +138,7 @@ public class TransactionLog {
 			//cv.put(DbHelper.CYCLE_RESOURCE_QUANTIFIER, c.g);
 			cv.put(CycleResourceEntry.CYCLE_RESOURCE_USECOST, c.getCost());
 			db.insert(CycleResourceEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
+			Cloud.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
 
 		System.out.println("Purchases");
@@ -149,7 +153,7 @@ public class TransactionLog {
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, p.getCost());
 			cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_REMAINING, p.getQtyRemaining());
 			db.insert(ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, null, cv);
-			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
+			Cloud.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
 		}
 		
 		System.out.println("transactions");
@@ -163,7 +167,7 @@ public class TransactionLog {
 			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_OPERATION, t.getOperation());
 			cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME, t.getTransTime());
 			db.insert(TransactionLogContract.TransactionLogEntry.TABLE_NAME, null, cv);
-			DbQuery.updateAccount(db, t.getTransTime());
+			UpAccount.updateAccount(db, t.getTransTime());
 		}
 		cv=new ContentValues();
 		cv.put(UpdateAccountContract.UpdateAccountEntry.UPDATE_ACCOUNT_ACC, cloudAcc.getAcc());
@@ -184,7 +188,7 @@ public class TransactionLog {
 		cv.put(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME, unixTime);
 		db.insert(TransactionLogContract.TransactionLogEntry.TABLE_NAME, null, cv);
 		int row=DbQuery.getLast(db, dbh, TransactionLogContract.TransactionLogEntry.TABLE_NAME);
-		DbQuery.updateAccount(db, unixTime);
+		UpAccount.updateAccount(db, unixTime);
 		return row;//returns the row number of the record just inserted
 	}
 	//given a time the cloud was last updated will try to update the cloud based on the transactions that happened after that point
@@ -203,7 +207,7 @@ public class TransactionLog {
 			int rowId=cursor.getInt(cursor.getColumnIndex(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_ROWID));
 			//now that i have the table, row and operation i can insert a record into the redo log
 			//by inserting it into the redo log I can be assured it will be inserted when possible
-			DbQuery.insertRedoLog(db, dbh, table, rowId, operation);
+			Redo.insertRedoLog(db, dbh, table, rowId, operation);
 		}
         cursor.close();
 		CloudInterface c=new CloudInterface(context, db, dbh);
@@ -253,7 +257,7 @@ public class TransactionLog {
 			} catch (IOException e) {e.printStackTrace();
 				return false;}
 			System.out.println(c.getKeyrep()+"  "+c.getId());
-			DbQuery.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getKeyrep(), c.getId());
+			Cloud.insertCloudKey(db, dbh, CycleContract.CycleEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
         cursor.close();
 
@@ -274,7 +278,7 @@ public class TransactionLog {
 				c=endpointUse.insertCycleUse(c).execute();
 			} catch (IOException e) {e.printStackTrace();
 				return false;}
-			DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
+			Cloud.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getKeyrep(), c.getId());
 		}
         cursor.close();
 
@@ -294,7 +298,7 @@ public class TransactionLog {
 				p=endpointPurchase.insertRPurchase(p).execute();
 			} catch (IOException e) {e.printStackTrace();
 				return false;}
-			DbQuery.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
+			Cloud.insertCloudKey(db, dbh, ResourcePurchaseContract.ResourcePurchaseEntry.TABLE_NAME, p.getKeyrep(), p.getPId());
 		}
 		cursor.close();
 
@@ -314,7 +318,7 @@ public class TransactionLog {
 			t.setTableKind(cursor.getString(cursor.getColumnIndex(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TABLE)));
 			t.setRowId(cursor.getInt(cursor.getColumnIndex(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_ROWID)));
 			t.setTransTime(cursor.getLong(cursor.getColumnIndex(TransactionLogContract.TransactionLogEntry.TRANSACTION_LOG_TRANSTIME)));
-			t.setKeyrep(DbQuery.getKey(db, dbh, t.getTableKind(), t.getRowId()));
+			t.setKeyrep(Cloud.getKey(db, dbh, t.getTableKind(), t.getRowId()));
 			try {
 				System.out.println(t.toPrettyString());
 				t=endpointTranslog.insertTransLog(t).execute();

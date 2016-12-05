@@ -23,6 +23,7 @@ import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -50,7 +51,7 @@ public class FragmentOtherResourceList  extends ListFragment{
 
 	private void populateList() {
 		list=new ArrayList<String>();
-		DbQuery.getResources(db, dbh, DHelper.cat_other, list);
+		Resource.getResources(db, dbh, DHelper.cat_other, list);
 	}
 
 	@Override

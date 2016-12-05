@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
@@ -90,7 +91,7 @@ public class EditPurchase extends BaseActivity {
 		
 		//get data
 		p = getIntent().getExtras().getParcelable("purchase");
-		resource = DbQuery.findResourceName(db, dbh, p.getResourceId());
+		resource = Resource.findResourceName(db, dbh, p.getResourceId());
 		quantifier = p.getQuantifier();
 		qty = p.getQty();
 		cost = p.getCost();
@@ -181,7 +182,7 @@ public class EditPurchase extends BaseActivity {
 			cost=Double.parseDouble(et_cost.getText().toString());
 		}
 		ContentValues cv = new ContentValues();
-		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, DbQuery.getNameResourceId(db, dbh, resource));
+		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_RESID, Resource.getNameResourceId(db, dbh, resource));
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QUANTIFIER, quantifier);
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_QTY, qty);
 		cv.put(ResourcePurchaseContract.ResourcePurchaseEntry.RESOURCE_PURCHASE_COST, cost);

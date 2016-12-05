@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.UpAccount;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
@@ -33,7 +34,7 @@ public class Sync {
 		tL=new TransactionLog(dbh, db,context);
 	}
 	public void start(String namespace,UpAcc cloudAcc){
-        UpAcc localAcc = DbQuery.getUpAcc(db);
+        UpAcc localAcc = UpAccount.getUpAcc(db);
 		this.cloudAcc=cloudAcc;
 		//both exist
 		if(cloudAcc!=null){

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -67,7 +68,7 @@ public class EditChooseLists extends BaseActivity {
 				||content.equals(DHelper.cat_chemical)
 				||content.equals(DHelper.cat_soilAmendment)
 				||content.equals(DHelper.cat_labour)){
-			DbQuery.getResources(db, dbh, content, list);
+			Resource.getResources(db, dbh, content, list);
 		}else if(content.equals("land")){
 			list.add("acre");
 			list.add("hectre");

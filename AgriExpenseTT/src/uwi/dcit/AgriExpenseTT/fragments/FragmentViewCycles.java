@@ -32,6 +32,8 @@ import uwi.dcit.AgriExpenseTT.EditCycle;
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cycles;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
@@ -79,7 +81,7 @@ public class FragmentViewCycles extends ListFragment{
 	}
 	
 	public void populateList() {
-		DbQuery.getCycles(db, dbh, cycleList);
+		Cycles.getCycles(db, dbh, cycleList);
 
 		//Attempt to solve the List of Cycles in Descending order of time (Most recent cycle first)
 		Collections.sort(cycleList, new Comparator<LocalCycle>(){
@@ -244,7 +246,7 @@ public class FragmentViewCycles extends ListFragment{
 		super.onActivityResult(requestCode, resultCode, data);
 		//refill list
 		cycleList=new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, cycleList);
+		Cycles.getCycles(db, dbh, cycleList);
 		cycAdapt.notifyDataSetChanged();
 	}
 
@@ -293,7 +295,7 @@ public class FragmentViewCycles extends ListFragment{
             //get the elements of that view and set them accordingly
             LocalCycle currCycle = cycleList.get(position);
 
-            String txt = (currCycle.getCropName() != null ) ? currCycle.getCropName() : DbQuery.findResourceName(db, dbh, currCycle.getCropId());
+            String txt = (currCycle.getCropName() != null ) ? currCycle.getCropName() : Resource.findResourceName(db, dbh, currCycle.getCropId());
             String cycleName = (currCycle.getCycleName() != null) ? currCycle.getCycleName().toUpperCase() : txt;
 
             ((TextView)row.findViewById(R.id.tv_cycleList_crop)).setText("Crop: " + txt);

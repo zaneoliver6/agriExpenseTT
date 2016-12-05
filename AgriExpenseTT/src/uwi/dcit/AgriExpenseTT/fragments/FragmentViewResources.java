@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -41,7 +42,7 @@ public class FragmentViewResources extends ListFragment{
 	
 	private void populateList() {
 		rList=new ArrayList<String>();
-		DbQuery.getResources(db, dbh, null, rList);
+		Resource.getResources(db, dbh, null, rList);
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public class FragmentViewResources extends ListFragment{
 		int id;
 		ArrayAdapter<String> adpt;
 		public Confirm(int position,ArrayAdapter<String> adpt){
-			this.id=DbQuery.getNameResourceId(db, dbh, rList.get(position));
+			this.id=Resource.getNameResourceId(db, dbh, rList.get(position));
 			this.adpt=adpt;
 			this.position=position;
 		}

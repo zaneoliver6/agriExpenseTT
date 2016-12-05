@@ -28,6 +28,7 @@ import java.util.Date;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -54,7 +55,7 @@ public class FragmentNewCycleLast extends Fragment {
 		db = dbh.getWritableDatabase();
 		
 		plantMaterial = getArguments().getString(DHelper.cat_plantingMaterial);
-        plantMaterialId= DbQuery.getNameResourceId(db, dbh, plantMaterial);
+        plantMaterialId= Resource.getNameResourceId(db, dbh, plantMaterial);
 
 		land = getArguments().getString("land");
 

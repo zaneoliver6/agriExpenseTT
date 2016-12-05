@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Country;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -64,7 +65,7 @@ public class FragmentSelectLocation extends ListFragment {
 		list = new ArrayList<>();
 
 		if (type.equals(DHelper.location_country)){     // Country selection
-            DbQuery.getCountries(db,list);
+            Country.getCountries(db,list);
 		}else if (type.equals(DHelper.location_county)){ // County selection
 
             countyTerm = null;

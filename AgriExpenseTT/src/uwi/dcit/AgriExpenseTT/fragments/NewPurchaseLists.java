@@ -21,6 +21,7 @@ import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -58,7 +59,7 @@ public class NewPurchaseLists extends ListFragment {
 			list.add(DHelper.cat_soilAmendment);
 			list.add(DHelper.cat_other);
 		}else if(type.equals("resource")){
-			DbQuery.getResources(db, dbh, getArguments().getString("category"), list);
+			Resource.getResources(db, dbh, getArguments().getString("category"), list);
 		}else if(type.equals("quantifier")){
 			String cat=getArguments().getString("category");
 			if(cat.equals(DHelper.cat_plantingMaterial)){
@@ -136,7 +137,7 @@ public class NewPurchaseLists extends ListFragment {
 				((NewPurchase)getActivity()).replaceSub("Details: "+listAdapt.getItem(position));
 				if(listAdapt.getItem(position).equals(DHelper.cat_other)){
 					ArrayList<String> test=new ArrayList<String>();
-					DbQuery.getResources(db, dbh, DHelper.cat_other, test);
+					Resource.getResources(db, dbh, DHelper.cat_other, test);
 					if(test.isEmpty()){
 						newFragment= new FragmentNewPurchaseOther();
 						b.putString("category",DHelper.cat_other);

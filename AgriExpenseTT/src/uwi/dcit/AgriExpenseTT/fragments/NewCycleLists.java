@@ -21,6 +21,7 @@ import java.util.Collections;
 
 import uwi.dcit.AgriExpenseTT.NewCycle;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -55,7 +56,7 @@ public class NewCycleLists extends ListFragment {
 		list = new ArrayList<String>();
 		
 		if(type.equals(DHelper.cat_plantingMaterial)){
-			DbQuery.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
+			Resource.getResources(db, dbh, DHelper.cat_plantingMaterial, list);
 		}else if(type.equals("land")){
 			list.add("Acre");
 			list.add("Hectre");

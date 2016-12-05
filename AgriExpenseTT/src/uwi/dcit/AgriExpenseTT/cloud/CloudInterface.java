@@ -12,6 +12,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Account;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cloud;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cycles;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.CyclesUse;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Redo;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.UpAccount;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.TransactionLog;
@@ -72,13 +79,13 @@ public class CloudInterface {
             CycleApi endpoint= builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, CycleEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, CycleEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-                Cycle c = DbQuery.getCycle(db, dbh, rowId);
-				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
+                Cycle c = Cycles.getCycle(db, dbh, rowId);
+				String keyrep= Cloud.getKey(db, dbh, CycleEntry.TABLE_NAME, c.getId());
 				c.setKeyrep(keyrep);
 				try{
 					//c=endpoint.insertCycle(c).execute();
@@ -113,7 +120,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
 				}
 			}
@@ -133,13 +140,13 @@ public class CloudInterface {
 			RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_UPDATE, ResourcePurchaseEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();//the current primary key of CROP CYCLE Table
-				RPurchase p=DbQuery.getARPurchase(db, dbh, rowId);
-				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
+				RPurchase p= ResourcePuchase.getARPurchase(db, dbh, rowId);
+				String keyrep=Cloud.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, p.getPId());
 				try{
 					p.setKeyrep(keyrep);
 					p=endpoint.updateRPurchase(p).execute();
@@ -165,7 +172,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
 				}
 			}
@@ -189,7 +196,7 @@ public class CloudInterface {
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleEntry.TABLE_NAME);
 
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
@@ -198,8 +205,8 @@ public class CloudInterface {
 				int logId=logI.next(),
                         rowId=rowI.next();              // The current primary key of CROP CYCLE Table
 
-                Cycle c = DbQuery.getCycle(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccount(db));   // Uses the account rep as the namespace
+                Cycle c = Cycles.getCycle(db, dbh, rowId);
+				c.setAccount(Account.getAccount(db));   // Uses the account rep as the namespace
 
 				try{
 					c=endpoint.insertCycle(c).execute();
@@ -211,7 +218,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(c.getAccount());
 					//store key of inserted cycle into cloud - cloud key table
-					DbQuery.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
+					Cloud.insertCloudKey(db, dbh, CycleEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
                     try {
                         DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
@@ -225,7 +232,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
 				}
 			}
@@ -251,13 +258,13 @@ public class CloudInterface {
             CycleUseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleResourceEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, CycleResourceEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				CycleUse c=DbQuery.getACycleUse(db, dbh, rowId);
-				c.setAccount(DbQuery.getAccount(db));
+				CycleUse c= CyclesUse.getACycleUse(db, dbh, rowId);
+				c.setAccount(Account.getAccount(db));
 				
 				try{
 					c=endpoint.insertCycleUse(c).execute();
@@ -268,7 +275,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(c.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
-					DbQuery.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getAccount(),rowId);
+					Cloud.insertCloudKey(db, dbh, CycleResourceEntry.TABLE_NAME, c.getAccount(),rowId);
 					//remove from redo log
                     try {
                         DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
@@ -283,7 +290,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
 				}
 			}
@@ -305,13 +312,13 @@ public class CloudInterface {
             RPurchaseApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, ResourcePurchaseEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
-				RPurchase purchase=DbQuery.getARPurchase(db, dbh, rowId);
-				purchase.setAccount(DbQuery.getAccount(db));
+				RPurchase purchase=ResourcePuchase.getARPurchase(db, dbh, rowId);
+				purchase.setAccount(Account.getAccount(db));
 				try{
 					purchase=endpoint.insertRPurchase(purchase).execute();
 				}catch(Exception e){
@@ -321,7 +328,7 @@ public class CloudInterface {
 					//we stored they key as text in the account field of c when we returned
 					System.out.println(purchase.getAccount());
 					//store key of inserted cycleuse into cloud - cloud key table
-					DbQuery.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getAccount(),rowId);
+					Cloud.insertCloudKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, purchase.getAccount(),rowId);
 					//remove from redo log
                     try {
                         DbQuery.deleteRecord(db, dbh, RedoLogEntry.TABLE_NAME, logId);
@@ -336,7 +343,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, id, TransactionLog.TL_INS);
 					insertLog();
 				}
 			}
@@ -361,15 +368,15 @@ public class CloudInterface {
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
-			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", CycleEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds,"del", CycleEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				Cycle c=new Cycle();
 				c.setId(rowId);
-				c.setAccount(DbQuery.getAccount(db));
-				String keyrep=DbQuery.getKey(db, dbh, CycleEntry.TABLE_NAME, rowId);
+				c.setAccount(Account.getAccount(db));
+				String keyrep=Cloud.getKey(db, dbh, CycleEntry.TABLE_NAME, rowId);
 				if(keyrep != null){//was never inserted :o
 					try{
 						endpoint.removeCycle(c.getKeyrep(),c.getAccount()).execute();
@@ -379,7 +386,7 @@ public class CloudInterface {
 				}
 				
 				if(c!=null){//transactioon was succesful or keyrep was not found
-					int id=DbQuery.getCloudKeyId(db, dbh, CycleEntry.TABLE_NAME, rowId);
+					int id=Cloud.getCloudKeyId(db, dbh, CycleEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
                         try {
@@ -401,7 +408,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();
 				}
 
@@ -439,15 +446,15 @@ public class CloudInterface {
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
-			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", CycleResourceEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds,"del", CycleResourceEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				CycleUse c=new CycleUse();
 				c.setId(rowId);
-				c.setAccount(DbQuery.getAccount(db));
-				String keyrep=DbQuery.getKey(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
+				c.setAccount(Account.getAccount(db));
+				String keyrep=Cloud.getKey(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 				c.setKeyrep(keyrep);
 				if(keyrep == null){
 					try{
@@ -457,7 +464,7 @@ public class CloudInterface {
 					}
 				}
 				if(c != null){
-					int id=DbQuery.getCloudKeyId(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
+					int id=Cloud.getCloudKeyId(db, dbh, CycleResourceEntry.TABLE_NAME, rowId);
 					if(id!=-1){
 						//remove key of cycle that was deleted from cloud
                         try {
@@ -479,7 +486,7 @@ public class CloudInterface {
 					cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();
 					
 				}
@@ -505,15 +512,15 @@ public class CloudInterface {
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
 
 			//DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, dbh.TABLE_RESOURCE_PURCHASES);
-			DbQuery.getRedo(db, dbh, rowIds, logIds,"del", ResourcePurchaseEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds,"del", ResourcePurchaseEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
 				int logId=logI.next(),rowId=rowI.next();
 				RPurchase p=new RPurchase();
 				p.setPId(rowId);
-				p.setAccount(DbQuery.getAccount(db));
-				String keyrep=DbQuery.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
+				p.setAccount(Account.getAccount(db));
+				String keyrep=Cloud.getKey(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
 				p.setKeyrep(keyrep);
 				if(keyrep!=null){
 					try{
@@ -524,7 +531,7 @@ public class CloudInterface {
 					}
 				}
 				if(p!=null){//the removal was successful OR there was not ever inserted into the cloud
-					int id=DbQuery.getCloudKeyId(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
+					int id=Cloud.getCloudKeyId(db, dbh, ResourcePurchaseEntry.TABLE_NAME, rowId);
 					if(id!=-1){//if the key exists
                         try {
                             DbQuery.deleteRecord(db, dbh, CloudKeyEntry.TABLE_NAME, id);
@@ -547,7 +554,7 @@ public class CloudInterface {
                     cursor.close();
 
 					//inserting this record of the transaction to the redo log to later be inserted into the cloud
-					DbQuery.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
+					Redo.insertRedoLog(db, dbh, TransactionLogEntry.TABLE_NAME, Tid, TransactionLog.TL_INS);
 					insertLog();
 					
 				}
@@ -571,7 +578,7 @@ public class CloudInterface {
             TranslogApi endpoint = builder.build();
 			ArrayList<Integer> rowIds=new ArrayList<Integer>();
 			ArrayList<Integer> logIds=new ArrayList<Integer>();
-			DbQuery.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, TransactionLogEntry.TABLE_NAME);
+			Redo.getRedo(db, dbh, rowIds, logIds, TransactionLog.TL_INS, TransactionLogEntry.TABLE_NAME);
 			Iterator<Integer> logI=logIds.iterator();
 			Iterator<Integer> rowI=rowIds.iterator();
 			while(logI.hasNext()){
@@ -579,10 +586,10 @@ public class CloudInterface {
 				//Cycle c=DbQuery.getCycle(db, dbh, rowId);
 				
 				TransLog t=DbQuery.getLog(db,dbh,rowId);
-				String k=DbQuery.getKey(db, dbh, t.getTableKind(), t.getRowId());//gets the key for the related object in the cloud
+				String k=Cloud.getKey(db, dbh, t.getTableKind(), t.getRowId());//gets the key for the related object in the cloud
 				t.setKeyrep(k);//stores the keyrep for its relating object
 				
-				t.setAccount(DbQuery.getAccount(db));
+				t.setAccount(Account.getAccount(db));
 				try{
 					t=endpoint.insertTransLog(t).execute();
 					updateUpAccC(t.getTransTime());
@@ -628,7 +635,7 @@ public class CloudInterface {
             acc.setCountry(country);
 			try {
 				acc=endpoint.insertUpAcc(acc).execute();
-				DbQuery.insertUpAcc(db, acc);
+				UpAccount.insertUpAcc(db, acc);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -637,7 +644,7 @@ public class CloudInterface {
 		
 	}
 	public void updateUpAccC(Long time){
-		UpAcc acc=DbQuery.getUpAcc(db);
+		UpAcc acc=UpAccount.getUpAcc(db);
 		acc.setLastUpdated(time);
 		new updateUpAcc().execute(acc);
 	}

@@ -28,6 +28,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cycles;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.CyclesUse;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.models.LocalCycle;
 import uwi.dcit.AgriExpenseTT.models.LocalCycleUse;
 import uwi.dcit.AgriExpenseTT.models.LocalResourcePurchase;
@@ -101,7 +105,7 @@ public class ReportHelper {
 	private void writeExcel(File path, String filename, long endDate, long beginDate){
 		
 		ArrayList<LocalCycle> cycleList = new ArrayList<LocalCycle>();
-		DbQuery.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
+		Cycles.getCycles(db, dbh, cycleList); //TODO Develop Query based on the timeframe entered as parameters
 		
 		
 		HSSFWorkbook agriWrkbk = new HSSFWorkbook();
@@ -111,7 +115,7 @@ public class ReportHelper {
 		for(LocalCycle cycle : cycleList){
 			HSSFRow row = useSheet.createRow(rowNum++);
 			HSSFCell a0 = row.createCell(0);
-			a0.setCellValue("Cycle#"+cycle.getCropId()+": "+DbQuery.findResourceName(db, dbh, cycle.getCropId()));
+			a0.setCellValue("Cycle#"+cycle.getCropId()+": "+Resource.findResourceName(db, dbh, cycle.getCropId()));
 			HSSFCell a1 = row.createCell(1);
 			a1.setCellValue(cycle.getTotalSpent());
 			rowNum = writeCategories(filename, path,agriWrkbk,useSheet,cycle.getId(),rowNum);
@@ -187,11 +191,11 @@ public class ReportHelper {
 		for( LocalCycleUse lcu:useList){
 			 rowNum++;int c=0;
 			 HSSFRow row=useSheet.createRow(rowNum);
-			 RPurchase p=DbQuery.getARPurchase(db, dbh, lcu.getPurchaseId());
+			 RPurchase p=ResourcePuchase.getARPurchase(db, dbh, lcu.getPurchaseId());
 			 
 			 HSSFCell resCell=row.createCell(c++);
 			 //resCell.setCellType(Cell.CELL_TYPE_STRING);
-			 resCell.setCellValue(DbQuery.findResourceName(db, dbh, p.getResourceId())
+			 resCell.setCellValue(Resource.findResourceName(db, dbh, p.getResourceId())
 					 +" "+p.getQuantifier());
 			
 			 
@@ -216,8 +220,8 @@ public class ReportHelper {
 
 	private void populate(ArrayList<LocalCycleUse> useList,
 			ArrayList<LocalResourcePurchase> purList, String type, int cycId) {
-		DbQuery.getPurchases(db, dbh, purList, type, null,true);
-		DbQuery.getCycleUse(db, dbh, cycId, useList, type);
+		ResourcePuchase.getPurchases(db, dbh, purList, type, null,true);
+		CyclesUse.getCycleUse(db, dbh, cycId, useList, type);
 	}
 	
 	public void notify(String name,File path){

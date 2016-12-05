@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.HireLabour;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -47,7 +48,7 @@ public class HireLabourLists extends ListFragment {
 	private void populateList() {
 		list=new ArrayList<>();
 		if(type.equals("workers")){
-			DbQuery.getResources(db, dbh, DHelper.cat_labour, list);
+			Resource.getResources(db, dbh, DHelper.cat_labour, list);
 		}else if(type.equals("quantifier")){
 			list.add("hour");
 			list.add("day");

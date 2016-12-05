@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.CyclesUse;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -39,10 +41,10 @@ public class ViewCycleUsege extends BaseActivity {
 		db=dbh.getWritableDatabase();
 		
 		pList=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, type, null,true);
+		ResourcePuchase.getPurchases(db, dbh, pList, type, null,true);
 		ListView listview=(ListView)findViewById(R.id.listview_cycleUse);
 		
-		DbQuery.getCycleUse(db, dbh, cycleId, list, type);
+		CyclesUse.getCycleUse(db, dbh, cycleId, list, type);
 		CycUseAdpt c=new CycUseAdpt(this,R.layout.cycleuse_item,list);
 		listview.setAdapter(c);
 	}

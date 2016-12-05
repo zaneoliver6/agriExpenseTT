@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -40,7 +41,7 @@ public class FragmentUseResource extends Fragment{
     private void setup() {
         SQLiteDatabase db=new DbHelper(getActivity().getApplicationContext()).getWritableDatabase();
 
-        if(!DbQuery.resourceExist(db, type)){
+        if(!ResourcePuchase.resourceExist(db, type)){
             Fragment fragment	= new FragmentEmpty();
             Bundle parameter 	= new Bundle();
             parameter.putString("type","purchase");

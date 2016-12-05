@@ -19,6 +19,7 @@ import com.google.android.gms.auth.GoogleAuthUtil;
 import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.Main;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.UpAccount;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
@@ -135,7 +136,7 @@ public class SignInManager {
 	}
 
 	public UpAcc isExisting(){
-		UpAcc acc = DbQuery.getUpAcc(db);   // Attempts to retrieve the Account from the database Record
+		UpAcc acc = UpAccount.getUpAcc(db);   // Attempts to retrieve the Account from the database Record
 		if(acc.getAcc() == null || acc.getAcc().equals(""))
             return null;                    // The information returned will be null if no record exists
 		return acc;                         // Return the Account if received.

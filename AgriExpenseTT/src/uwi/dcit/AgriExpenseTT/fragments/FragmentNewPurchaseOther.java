@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -107,7 +108,7 @@ public class FragmentNewPurchaseOther extends Fragment{
                 resource = resource.trim();
                 quantifier = quantifier.trim();
 
-                if (!DbQuery.resourceExistByName(db, dbh, resource)) { // Resource does not exist
+                if (!Resource.resourceExistByName(db, dbh, resource)) { // Resource does not exist
 
                     Bundle b = new Bundle();
 

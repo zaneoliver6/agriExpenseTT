@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Cycles;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 
@@ -18,7 +20,7 @@ public class FragmentSlidingMain extends FragmentSlidingTabs {
         Fragment cycleFrag, resFrag;
         Bundle arguments = new Bundle();
 
-        if(DbQuery.cyclesExist(db)){
+        if(Cycles.cyclesExist(db)){
             cycleFrag = new FragmentViewCycles();
         }else{
 
@@ -27,7 +29,7 @@ public class FragmentSlidingMain extends FragmentSlidingTabs {
             cycleFrag.setArguments(arguments);
         }
 
-        if(DbQuery.resourceExist(db)){
+        if(ResourcePuchase.resourceExist(db)){
             resFrag = new FragmentChoosePurchase();
         }else{
             resFrag=new FragmentEmpty();

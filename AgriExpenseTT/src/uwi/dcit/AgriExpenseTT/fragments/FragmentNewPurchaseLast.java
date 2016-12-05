@@ -30,6 +30,8 @@ import java.util.Date;
 import uwi.dcit.AgriExpenseTT.Main;
 import uwi.dcit.AgriExpenseTT.NewPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -68,7 +70,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 
         dbh = new DbHelper(getActivity().getBaseContext());
         db = dbh.getWritableDatabase();
-        resId = DbQuery.getNameResourceId(db, dbh, resource);
+        resId = Resource.getNameResourceId(db, dbh, resource);
 
         setDetails(view);
         GAnalyticsHelper.getInstance(this.getActivity()).sendScreenView("New Purchase Fragment");
@@ -176,7 +178,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 					//insert purchase
 					res = dm.insertPurchase(resId, quantifier, qty, category, cost);
 					int pId=DbQuery.getLast(db, dbh,ResourcePurchaseEntry.TABLE_NAME);
-					RPurchase p=DbQuery.getARPurchase(db, dbh, pId);
+					RPurchase p= ResourcePuchase.getARPurchase(db, dbh, pId);
 
 					//use all of the qty of that purchase in the given cycle
 					dm.insertCycleUse(currC.getId(), p.getPId(), qty, p.getType(),quantifier,p.getCost());
@@ -196,7 +198,7 @@ public class FragmentNewPurchaseLast extends Fragment{
 				}else{
 					if(category.equals(DHelper.cat_other)){//if its the other category
 						if(resId==-1){//and the resource does not exist
-							resId=DbQuery.insertResource(db, dbh, DHelper.cat_other, resource);//then insert it !
+							resId=Resource.insertResource(db, dbh, DHelper.cat_other, resource);//then insert it !
 						}
 					}
 //					dm.insertPurchase(resId, quantifier, qty, category, cost);

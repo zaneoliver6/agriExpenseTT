@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
 import uwi.dcit.AgriExpenseTT.helpers.GAnalyticsHelper;
@@ -49,7 +50,7 @@ public class SalesCost extends BaseActivity {
 		currCycle = getIntent().getParcelableExtra("cycle");
 		dbh = new DbHelper(this);
 		db  = dbh.getWritableDatabase();
-		crop= DbQuery.findResourceName(db, dbh, currCycle.getCropId());
+		crop= Resource.findResourceName(db, dbh, currCycle.getCropId());
 		setup();
 
         // Added Google Analytics

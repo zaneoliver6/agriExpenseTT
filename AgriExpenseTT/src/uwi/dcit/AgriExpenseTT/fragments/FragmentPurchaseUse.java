@@ -29,6 +29,8 @@ import java.util.ArrayList;
 
 import uwi.dcit.AgriExpenseTT.CycleUseage;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
@@ -83,7 +85,7 @@ public class FragmentPurchaseUse extends Fragment {
 	}
 	
 	private void setDetails(int pId,int cycleId) {
-		p = DbQuery.getARPurchase(db, dbh, pId);
+		p = ResourcePuchase.getARPurchase(db, dbh, pId);
 		c = getArguments().getParcelable("cycleMain");
 
         Log.i("Fragment Purchase",c.getCropName());
@@ -120,7 +122,7 @@ public class FragmentPurchaseUse extends Fragment {
 	//sets labels to match data
 	private void label(){
 		DecimalFormat df = new DecimalFormat("#.00"); 
-		String res=DbQuery.findResourceName(db, dbh,p.getResourceId());
+		String res= Resource.findResourceName(db, dbh,p.getResourceId());
 		description.setText("" + res + " has " + quantifier + " " + amtRem + " remaining");
 		
 		section1.setText("Using " + useAmount + " " + quantifier + " adds $" + calCost + " to the current crop cycle");

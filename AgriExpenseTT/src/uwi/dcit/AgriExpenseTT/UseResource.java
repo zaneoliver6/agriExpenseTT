@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentChoosePurchase;
 import uwi.dcit.AgriExpenseTT.fragments.FragmentEmpty;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
@@ -60,7 +61,7 @@ public class UseResource extends BaseActivity {
 		DbHelper dbh=new DbHelper(this);
 		SQLiteDatabase db=dbh.getWritableDatabase();
 		ArrayList<LocalResourcePurchase> pList=new ArrayList<LocalResourcePurchase>();
-		DbQuery.getPurchases(db, dbh, pList, type, null, false);
+		ResourcePuchase.getPurchases(db, dbh, pList, type, null, false);
 //		db.close();
 		if(pList.isEmpty()){
 			Fragment fragment	= new FragmentEmpty();

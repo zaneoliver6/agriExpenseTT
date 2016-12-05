@@ -31,6 +31,8 @@ import java.util.Comparator;
 
 import uwi.dcit.AgriExpenseTT.EditPurchase;
 import uwi.dcit.AgriExpenseTT.R;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.CurrencyFormatHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
@@ -88,9 +90,9 @@ public class FragmentChoosePurchase extends ListFragment {
 		pList	= new ArrayList<>();
 		
 		if(type != null && (type.equals("delete") || type.equals("edit")))
-			DbQuery.getPurchases(db, dbh, pList, null, null, true);
+			ResourcePuchase.getPurchases(db, dbh, pList, null, null, true);
 		else
-			DbQuery.getPurchases(db, dbh, pList, type, null,false);//also the type should 
+			ResourcePuchase.getPurchases(db, dbh, pList, type, null,false);//also the type should
 	
 		Collections.sort(pList, new Comparator<LocalResourcePurchase>(){
 			@Override
@@ -197,7 +199,7 @@ public class FragmentChoosePurchase extends ListFragment {
 		 super.onActivityResult(requestCode, resultCode, data);
 		 //refill list
 		 pList=new ArrayList<>();
-		 DbQuery.getPurchases(db, dbh, pList, null, null,true);
+		 ResourcePuchase.getPurchases(db, dbh, pList, null, null,true);
 		 myListAdapter.notifyDataSetChanged();
 	 }
 	 
@@ -261,7 +263,7 @@ public class FragmentChoosePurchase extends ListFragment {
              TextView dateTV = (TextView)row.findViewById(R.id.tv_pitem_date);
 
 			   //int pId=Integer.parseInt(ids[position]);		
-			 header.setText(DbQuery.findResourceName(db, dbh,curr.getResourceId()));
+			 header.setText(Resource.findResourceName(db, dbh,curr.getResourceId()));
 			 det1.setText("Quantity: "+curr.getQty()+" "+curr.getQuantifier());
              det2.setText("Cost: $" + CurrencyFormatHelper.getCurrency(curr.getCost()));
              dateTV.setText("Date: " + DateFormatHelper.getDateStr(curr.getDate()));

@@ -18,6 +18,7 @@ import java.util.Iterator;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.SalesCost;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.CyclesUse;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -97,27 +98,27 @@ public class FragmentGeneralCategory extends Fragment {
 	private void calcTotals(){
 		currCycle=getArguments().getParcelable("cycle");
 		ArrayList<LocalCycleUse> list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_plantingMaterial);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_plantingMaterial);
 		pm=getTotal(list);
 		
 		list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_fertilizer);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_fertilizer);
 		fer=getTotal(list);
 		
 		list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_soilAmendment);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_soilAmendment);
 		soilam=getTotal(list);
 		
 		list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_chemical);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_chemical);
 		chem=getTotal(list);
 		
 		list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_labour);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_labour);
 		labr=getTotal(list);
 
 		list=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_other);
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), list, DHelper.cat_other);
 		other=getTotal(list);
 	}
 

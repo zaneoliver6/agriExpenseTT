@@ -23,6 +23,9 @@ import java.util.Iterator;
 
 import uwi.dcit.AgriExpenseTT.R;
 import uwi.dcit.AgriExpenseTT.ViewCycleUsege;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.CyclesUse;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.ResourcePuchase;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DbQuery;
@@ -122,7 +125,7 @@ public class FragmentCycleUseCategory extends Fragment {
 
 		//getting aggregate and complex data 
 		ArrayList<LocalCycleUse> useList=new ArrayList<LocalCycleUse>();
-		DbQuery.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
+		CyclesUse.getCycleUse(db, dbh, currCycle.getId(), useList,category);//fills list with currCycle uses of type category
 
 		//DbQuery.getCycleUse(db, dbh, cycleid, list, type);
 		ArrayList<String> names = null;
@@ -139,8 +142,8 @@ public class FragmentCycleUseCategory extends Fragment {
                 Log.d(TAG, "Processing: " + lcu.toString());
 				catTotal += lcu.getUseCost();//stores the total amount of money spent on plantMaterials
 						
-				RPurchase purchaseUse = DbQuery.getARPurchase(db, dbh,lcu.getPurchaseId());
-				String name = DbQuery.findResourceName(db, dbh, purchaseUse.getResourceId());
+				RPurchase purchaseUse = ResourcePuchase.getARPurchase(db, dbh,lcu.getPurchaseId());
+				String name = Resource.findResourceName(db, dbh, purchaseUse.getResourceId());
 						
 				//calculates the total spent on each plantMaterial
 				Iterator<String> i=names.iterator();//list of plantMaterial names' iterator

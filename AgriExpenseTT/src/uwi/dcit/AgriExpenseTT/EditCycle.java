@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
 import uwi.dcit.AgriExpenseTT.helpers.DHelper;
 import uwi.dcit.AgriExpenseTT.helpers.DataManager;
 import uwi.dcit.AgriExpenseTT.helpers.DateFormatHelper;
@@ -81,7 +82,7 @@ public class EditCycle extends BaseActivity {
 	private void initialize() {
 
         cycle   = getIntent().getExtras().getParcelable("cycle");
-		crop    = DbQuery.findResourceName(db, dbh, cycle.getCropId());
+		crop    = Resource.findResourceName(db, dbh, cycle.getCropId());
 		land    = cycle.getLandType();
 		landQty = cycle.getLandQty();
 		date    = cycle.getTime();
@@ -156,7 +157,7 @@ public class EditCycle extends BaseActivity {
         name = et_name.getText().toString();
 
 		ContentValues cv = new ContentValues();
-		cv.put(CycleEntry.CROPCYCLE_CROPID, DbQuery.getNameResourceId(db, dbh, crop));
+		cv.put(CycleEntry.CROPCYCLE_CROPID, Resource.getNameResourceId(db, dbh, crop));
         cv.put(CycleEntry.CROPCYCLE_RESOURCE, crop);
 		cv.put(CycleEntry.CROPCYCLE_LAND_TYPE,land);
 		cv.put(CycleEntry.CROPCYCLE_LAND_AMOUNT, landQty);
