@@ -5,10 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import uwi.dcit.AgriExpenseTT.models.UpdateAccountContract;
 
-/**
- * Created by gh0st on 04/12/2016.
- */
-
 public class Account {
 
     public static String getAccount(SQLiteDatabase db){
