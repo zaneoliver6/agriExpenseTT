@@ -50,15 +50,15 @@ public class DefaultDataHelper {
         dfm.insertListToDB();
     }
 
-    public static void insertDefaultCountries(SQLiteDatabase db){
+    public static void insertDefaultCountries(DefaultDataManager dfm){
         for (String [] country : CountryContract.countries){
-            Country.insertCountry(db, country[0], country[1]);
+            Country.insertCountry(dfm.getDB(), country[0], country[1]);
         }
     }
 
-    public static void insertDefaultCounties(SQLiteDatabase db) {
+    public static void insertDefaultCounties(DefaultDataManager dfm) {
         for (String [] county : CountyContract.counties){
-            County.insertCounty(db, county[0], county[1]);
+            County.insertCounty(dfm.getDB(), county[0], county[1]);
         }
     }
 
@@ -74,7 +74,7 @@ public class DefaultDataHelper {
         insertDefaultFertilizers(dfm);
         insertDefaultSoilAdds(dfm);
         insertDefaultChemicals(dfm);
-        insertDefaultCountries(dfm.getDB());
-        insertDefaultCounties(dfm.getDB());
+        insertDefaultCountries(dfm);
+        insertDefaultCounties(dfm);
     }
 }
