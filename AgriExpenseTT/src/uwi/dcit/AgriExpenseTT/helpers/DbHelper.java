@@ -32,13 +32,16 @@ public class DbHelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db) {
         Log.i(TAG_NAME, "Creating AgriExpense DB for first time");
         TblMnger.createDb(db);
-		DefaultDataManager dfm = new DefaultDataManager(db,this);
-		DefaultDataHelper.populate(dfm);
+		DefaultDataManager manager = new DefaultDataManager(db,this);
+        DefaultDataHelper.manager = manager;
+		DefaultDataHelper.populate();
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		DefaultDataManager dfm = new DefaultDataManager(db,this);
+		/*DefaultDataManager manager = new DefaultDataManager(db,this);
+        DefaultDataHelper.manager = manager;*/
+
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
 		Log.i(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
 
@@ -58,14 +61,14 @@ public class DbHelper extends SQLiteOpenHelper{
 			
 			Log.d(TAG_NAME, "Running installation of countries");
 			TblMnger.createCountries(db); // Create if not exist so if previously created this will do nothing
-			DefaultDataHelper.insertDefaultCountries(db);
+			DefaultDataHelper.insertDefaultCountries();
 			
 			Log.d(TAG_NAME, "Running installation of counties");
 			TblMnger.createCounties(db);
-			DefaultDataHelper.insertDefaultCounties(db);
+			DefaultDataHelper.insertDefaultCounties();
 			
 			Log.d(TAG_NAME, "Running upgrade of crop/plating material lists");
-			DefaultDataHelper.updateCropList(dfm);
+			DefaultDataHelper.updateCropList();
 		}
         if (oldVersion < 172){
             db.beginTransaction();

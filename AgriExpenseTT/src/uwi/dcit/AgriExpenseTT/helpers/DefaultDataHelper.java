@@ -1,7 +1,5 @@
 package uwi.dcit.AgriExpenseTT.helpers;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.Country;
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.County;
 import uwi.dcit.AgriExpenseTT.dbstruct.structs.UpAccount;
@@ -19,62 +17,58 @@ import uwi.dcit.agriexpensesvr.upAccApi.model.UpAcc;
 
 public class DefaultDataHelper {
 
-    public static void insertDefaultCrops(DefaultDataManager dfm){
-        dfm.setDataCategory(DHelper.cat_plantingMaterial);
-        dfm.setPlist(Crops.plist);
-        dfm.insertListToDB();
+    public static DefaultDataManager manager;
+
+    public static void insertDefaultCrops(){
+        manager.setListAndCategory(Crops.plist,DHelper.cat_plantingMaterial);
+        manager.insertListToDB();
     }
 
-
-    public static  void updateCropList(DefaultDataManager dfm ){
-        dfm.setDataCategory(DHelper.cat_plantingMaterial);
-        dfm.setPlist(Crops.toUpdatelist);
-        dfm.insertListToDB();
+    public static  void updateCropList(){
+        manager.setListAndCategory(Crops.toUpdatelist,DHelper.cat_plantingMaterial);
+        manager.insertListToDB();
     }
 
-    public static  void insertDefaultFertilizers(DefaultDataManager dfm ){
-        dfm.setDataCategory(DHelper.cat_fertilizer);
-        dfm.setPlist(Fertilizers.plist);
-        dfm.insertListToDB();
+    public static  void insertDefaultFertilizers(){
+        manager.setListAndCategory(Fertilizers.plist,DHelper.cat_fertilizer);
+        manager.insertListToDB();
     }
 
-    public static  void insertDefaultSoilAdds(DefaultDataManager dfm ){
-        dfm.setDataCategory(DHelper.cat_soilAmendment);
-        dfm.setPlist(Soils.plist);
-        dfm.insertListToDB();
+    public static  void insertDefaultSoilAdds(){
+        manager.setListAndCategory(Soils.plist,DHelper.cat_soilAmendment);
+        manager.insertListToDB();
     }
 
-    public static  void insertDefaultChemicals(DefaultDataManager dfm ){
-        dfm.setDataCategory(DHelper.cat_chemical);
-        dfm.setPlist(Chemicals.plist);
-        dfm.insertListToDB();
+    public static  void insertDefaultChemicals(){
+        manager.setListAndCategory(Chemicals.plist,DHelper.cat_chemical);
+        manager.insertListToDB();
     }
 
-    public static void insertDefaultCountries(DefaultDataManager dfm){
+    public static void insertDefaultCountries(){
         for (String [] country : CountryContract.countries){
-            Country.insertCountry(dfm.getDB(), country[0], country[1]);
+            Country.insertCountry(manager.getDB(), country[0], country[1]);
         }
     }
 
-    public static void insertDefaultCounties(DefaultDataManager dfm) {
+    public static void insertDefaultCounties() {
         for (String [] county : CountyContract.counties){
-            County.insertCounty(dfm.getDB(), county[0], county[1]);
+            County.insertCounty(manager.getDB(), county[0], county[1]);
         }
     }
 
 
-    public static void populate(DefaultDataManager dfm ){
+    public static void populate(){
         //create user Account
         UpAcc acc = new UpAcc();
         acc.setSignedIn(0);
         acc.setLastUpdated(System.currentTimeMillis() / 1000L);
-        UpAccount.insertUpAcc(dfm.getDB(), acc);
+        UpAccount.insertUpAcc(manager.getDB(), acc);
 
-        insertDefaultCrops(dfm);
-        insertDefaultFertilizers(dfm);
-        insertDefaultSoilAdds(dfm);
-        insertDefaultChemicals(dfm);
-        insertDefaultCountries(dfm);
-        insertDefaultCounties(dfm);
+        insertDefaultCrops();
+        insertDefaultFertilizers();
+        insertDefaultSoilAdds();
+        insertDefaultChemicals();
+        insertDefaultCountries();
+        insertDefaultCounties();
     }
 }
