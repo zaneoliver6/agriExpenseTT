@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import uwi.dcit.AgriExpenseTT.dbstruct.structs.Resource;
+
 
 /**
  * Created by rcjasmin on 12/3/2016.
@@ -58,7 +60,7 @@ public class DefaultDataManager {
     void insertListToDB() {
         Iterator<String> iterator = this.plist.iterator();
         while (iterator.hasNext()) {
-            DbQuery.insertResource(this.db, this.dbh, this.dataCategory, iterator.next());
+            Resource.insertResource(this.db, this.dbh, this.dataCategory, iterator.next());
         }
     }
 }

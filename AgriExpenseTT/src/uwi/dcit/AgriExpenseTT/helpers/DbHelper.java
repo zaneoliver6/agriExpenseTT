@@ -31,6 +31,7 @@ public class DbHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
         Log.i(TAG_NAME, "Creating AgriExpense DB for first time");
+        TblMnger.createDb(db);
 		DefaultDataManager dfm = new DefaultDataManager(db,this);
 		DefaultDataHelper.populate(dfm);
 	}
