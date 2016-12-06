@@ -20,34 +20,33 @@ public class DefaultDataManager {
     private DbHelper dbh;
 
 
-
     public DefaultDataManager(SQLiteDatabase db, DbHelper dbh) {
         this.db = db;
         this.dbh = dbh;
     }
-    ArrayList<String> getPlist() {
+
+    public ArrayList<String> getPlist() {
         return this.plist;
     }
 
-    void setPlist(ArrayList<String> plist) {
+    public void setPlist(ArrayList<String> plist) {
         this.plist = plist;
     }
-
 
     public SQLiteDatabase getDB() {
         return this.db;
     }
 
-    void setDataCategory(String dataCategory) {
+    public void setDataCategory(String dataCategory) {
         this.category = dataCategory;
     }
 
-    void setListAndCategory(ArrayList<String> plist,String dataCategory ) {
+    public void setListAndCategory(ArrayList<String> plist, String dataCategory) {
         this.setPlist(plist);
         this.setDataCategory(dataCategory);
     }
 
-    void insertListToDB() {
+    public void insertListToDB() {
         Iterator<String> iterator = this.plist.iterator();
         while (iterator.hasNext()) {
             Resource.insertResource(this.db, this.dbh, this.category, iterator.next());
