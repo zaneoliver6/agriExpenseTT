@@ -31,16 +31,16 @@ public class DbHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
         Log.i(TAG_NAME, "Creating AgriExpense DB for first time");
-        TblMnger.createDb(db);
-		DefaultDataManager manager = new DefaultDataManager(db,this);
+        DefaultDataManager manager = new DefaultDataManager(db,this);
+        TblMnger.createDb(manager.getDB());
         DefaultDataHelper.manager = manager;
 		DefaultDataHelper.populate();
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		/*DefaultDataManager manager = new DefaultDataManager(db,this);
-        DefaultDataHelper.manager = manager;*/
+		/*DefaultDataManager manager = new DefaultDataManager(db,this);*/
+        DefaultDataHelper.updateCropList();
 
 		//We will be required to implement upgrade functionality that is specific to each version of the upgrade
 		Log.i(TAG_NAME, "Upgrade detected. Old version: "+ oldVersion + " New version: "+newVersion);
